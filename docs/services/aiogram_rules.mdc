@@ -65,8 +65,8 @@ Define a unified standard for developing Telegram bots on Aiogram in the context
    - **MUST:** Ensure all external service operations are compatible with Aiogram's event loop.
 
 ### Priorities and Compatibility
-- Depends on: `ms_best_practices_rules.mdc` (system-wide standard), `logging_rules.mdc` (observability), `redis_rules.mdc` (Redis integration), `rabbitmq_rules.mdc` (messaging).
-- Does not duplicate: FastAPI rules (see `fastapi_rules.mdc`), Redis patterns (see `redis_rules.mdc`), RabbitMQ patterns (see `rabbitmq_rules.mdc`).
+- Depends on: `../architecture/ms_best_practices_rules.mdc` (system-wide standard), `../observability/logging_rules.mdc` (observability), `../infrastructure/redis_rules.mdc` (Redis integration), `../infrastructure/rabbitmq_rules.mdc` (messaging).
+- Does not duplicate: FastAPI rules (see `fastapi_rules.mdc`), Redis patterns (see `../infrastructure/redis_rules.mdc`), RabbitMQ patterns (see `../infrastructure/rabbitmq_rules.mdc`).
 - Conflicts: none; explicitly separated from `FastAPI`.
 
 ### Examples

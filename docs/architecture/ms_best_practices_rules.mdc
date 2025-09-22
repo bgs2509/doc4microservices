@@ -18,7 +18,7 @@ Define a single, system-wide standard for Python microservices covering design, 
 
 ### Scope
 - Covers: service structure, coding standards, typing, testing, CI quality gates, observability, dependencies, deployment hints, and operational endpoints.
-- Excludes: FastAPI specifics (see `fastapi_rules.mdc`) and logging specifics (see `logging_rules.mdc`).
+- Excludes: FastAPI specifics (see `../services/fastapi_rules.mdc`) and logging specifics (see `../observability/logging_rules.mdc`).
 
 ### Terms and Definitions
 - Service: A deployable, independently versioned unit exposing APIs, workers, or both.
@@ -54,7 +54,7 @@ Define a single, system-wide standard for Python microservices covering design, 
    - MUST version APIs with `/api/v1` prefix and consistent status codes; use `response_model` (see `fastapi_rules.mdc`).
    - SHOULD provide `/health` and `/ready` endpoints without the versioned prefix via a system router.
 6) Testing and quality gates
-   - MUST follow testing requirements as defined in `testing-standards.mdc`.
+   - MUST follow testing requirements as defined in `../quality/testing-standards.mdc`.
    - MUST run lint (`ruff`), type checks (`mypy`/`pyright`), and security scan (`bandit`) in CI; builds MUST fail on violations.
 7) Performance and resilience
    - SHOULD apply caching and backpressure where applicable; avoid n+1 patterns; use streaming for large responses.
@@ -80,11 +80,11 @@ Define a single, system-wide standard for Python microservices covering design, 
    - MAY include explicit anchor comments in scaffolding files (e.g., `# @cursor-include-router-anchor`) to support automated generators while keeping changes localized.
 12) Event loop management and service separation
    - MUST follow the canonical architecture guidelines defined in the main project documentation.
-   - For complete service separation requirements, see [Architecture Guidelines](../../../CLAUDE.md#architecture-guidelines).
+   - For complete service separation requirements, see [Architecture Guidelines](../../CLAUDE.md#architecture-guidelines).
    - For detailed technology specifications, see [Technology Stack](../../../docs/tech_stack.md).
 13) Python runtime and technology requirements
    - MUST follow the unified technology stack as specified in the canonical documentation.
-   - For complete version requirements and technology specifications, see [Technology Stack](../../../docs/tech_stack.md).
+   - For complete version requirements and technology specifications, see [Technology Stack](../reference/tech_stack.md).
 
 ### Priorities and Compatibility
 - Depends on: `testing-standards.mdc` (testing requirements), `naming_conventions.mdc` (naming standards).

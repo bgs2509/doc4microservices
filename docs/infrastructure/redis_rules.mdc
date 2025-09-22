@@ -90,8 +90,8 @@ Define a single, verifiable standard for Redis interaction in Python, ensuring c
    - **SHOULD:** Mock external dependencies in unit tests while using real Redis in integration tests.
 
 ### Priorities and Compatibility
-- Depends on: `ms_best_practices_rules.mdc` (system-wide standard), `logging_rules.mdc` (observability), `fastapi_rules.mdc` (FastAPI integration), `aiogram_rules.mdc` (Aiogram integration), `asyncio_rules.mdc` (Asyncio integration).
-- Does not duplicate: general microservice rules (see `ms_best_practices_rules.mdc`) and logging rules (see `logging_rules.mdc`).
+- Depends on: `../architecture/ms_best_practices_rules.mdc` (system-wide standard), `../observability/logging_rules.mdc` (observability), `../services/fastapi_rules.mdc` (FastAPI integration), `../services/aiogram_rules.mdc` (Aiogram integration), `../services/asyncio_rules.mdc` (Asyncio integration).
+- Does not duplicate: general microservice rules (see `../architecture/ms_best_practices_rules.mdc`) and logging rules (see `../observability/logging_rules.mdc`).
 - Conflicts: none.
 
 ### Examples

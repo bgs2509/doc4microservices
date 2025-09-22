@@ -437,8 +437,8 @@ docker-compose logs -f elasticsearch
 
 ### Required Cursor Rules
 - **`logging_rules.mdc`** - Foundation logging system with Request ID correlation
-- **`ms_best_practices_rules.mdc`** - Core microservice architecture patterns
-- **Service-specific rules**: `fastapi_rules.mdc`, `aiogram_rules.mdc`, `asyncio_rules.mdc`
+- **`../architecture/ms_best_practices_rules.mdc`** - Core microservice architecture patterns
+- **Service-specific rules**: `../services/fastapi_rules.mdc`, `../services/aiogram_rules.mdc`, `../services/asyncio_rules.mdc`
 
 ### Technology Documentation
 - **Prometheus**: https://prometheus.io/docs/

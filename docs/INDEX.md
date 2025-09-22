@@ -80,14 +80,14 @@ Code quality and testing standards:
 
 ### For Service Development
 1. Follow [guides/USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md)
-2. Check relevant service rules in [services/](services/)
+2. Check relevant service rules in the `services` directory.
 3. Use examples from [reference/service-examples.md](reference/service-examples.md)
 4. Verify setup with [reference/tech_stack.md](reference/tech_stack.md)
 
 ### For Infrastructure Setup
 1. Use [guides/DEVELOPMENT_COMMANDS.md](guides/DEVELOPMENT_COMMANDS.md) for Docker operations
-2. Follow infrastructure rules in [infrastructure/](infrastructure/)
-3. Setup observability with [observability/](observability/) rules
+2. Follow infrastructure rules in the `infrastructure` directory.
+3. Setup observability with the rules in the `observability` directory.
 4. Troubleshoot with [reference/troubleshooting.md](reference/troubleshooting.md)
 
 ### For Code Quality

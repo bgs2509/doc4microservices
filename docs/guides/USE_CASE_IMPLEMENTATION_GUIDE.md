@@ -1,8 +1,8 @@
 # Complete Use Case Implementation Guide
 
-This guide provides comprehensive instructions for creating production-ready use cases using the project's microservices architecture. All implementations must follow the established project patterns documented in [../CLAUDE.md](../CLAUDE.md) and comply with the mandatory naming conventions.
+This guide provides comprehensive instructions for creating production-ready use cases using the project's microservices architecture. All implementations must follow the established project patterns documented in [../../CLAUDE.md](../../CLAUDE.md) and comply with the mandatory naming conventions.
 
-**CRITICAL**: This guide is specifically designed for the existing microservices architecture. For architectural details, see [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) and [tech_stack.md](tech_stack.md). For development commands, see [DEVELOPMENT_COMMANDS.md](DEVELOPMENT_COMMANDS.md).
+**CRITICAL**: This guide is specifically designed for the existing microservices architecture. For architectural details, see [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) and [../reference/tech_stack.md](../reference/tech_stack.md). For development commands, see [DEVELOPMENT_COMMANDS.md](DEVELOPMENT_COMMANDS.md).
 
 ## Table of Contents
 
@@ -33,7 +33,7 @@ This guide provides comprehensive instructions for creating production-ready use
 - **Technology**: Follow [complete technology specifications](../reference/tech_stack.md)
 - **Architecture**: Follow [comprehensive architecture guide](ARCHITECTURE_GUIDE.md)
 - **Naming**: Follow [../architecture/naming_conventions.mdc](../architecture/naming_conventions.mdc)
-- **Patterns**: See [../](../) for service-specific implementation patterns in services/, architecture/, infrastructure/, observability/, quality/
+- **Patterns**: See [../INDEX.md](../INDEX.md) for service-specific implementation patterns in services/, architecture/, infrastructure/, observability/, quality/
 
 **Violation of these constraints will result in non-functional use cases. This guide provides compliant implementation patterns.**
 

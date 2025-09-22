@@ -19,7 +19,7 @@ Establish a single, production‑grade logging standard for DDD/Hex‑aligned mi
 
 ### Scope
 - Covers: formatting, context propagation, middleware, handlers/formatters, sanitization, levels/policies, observability integration, performance/rotation, and verification.
-- Excludes: general microservice guidance (`ms_best_practices_rules.mdc`) and FastAPI HTTP specifics (`fastapi_rules.mdc`).
+- Excludes: general microservice guidance (`../architecture/ms_best_practices_rules.mdc`) and FastAPI HTTP specifics (`../services/fastapi_rules.mdc`).
 
 ### Target Audience
 Engineers (backend, platform), Tech Leads, DevOps/SRE, library/adapter authors.

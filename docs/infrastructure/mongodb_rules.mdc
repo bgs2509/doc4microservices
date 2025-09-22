@@ -18,7 +18,7 @@ Define comprehensive rules for MongoDB integration in Python microservices using
 
 ### Scope
 - Covers: Motor driver usage, document schema design, indexing strategies, aggregation pipelines, error handling, performance optimization, and testing patterns.
-- Excludes: general microservice practices (see `ms_best_practices_rules.mdc`) and data access patterns (see `data-access-rules.mdc`).
+- Excludes: general microservice practices (see `../architecture/ms_best_practices_rules.mdc`) and data access patterns (see `../architecture/data-access-rules.mdc`).
 
 ### Terms and Definitions
 - **Motor**: Async MongoDB driver for Python built on top of PyMongo.

@@ -104,8 +104,8 @@ Define FastAPI-specific, testable rules for building clean, DDD/Hex‑aligned HT
    - PROHIBITED: Direct database connections in business services (api_service, bot_service, worker_service).
 
 ### Priorities and Compatibility
-- Depends on: `ms_best_practices_rules.mdc` (system-wide standard), `logging_rules.mdc` (observability), `testing-standards.mdc` (testing requirements), `redis_rules.mdc` (Redis integration), `rabbitmq_rules.mdc` (RabbitMQ integration), `data-access-rules.mdc` (database operations).
-- Does not duplicate: logging configuration/policies (see `logging_rules.mdc`), testing requirements (see `testing-standards.mdc`), Redis patterns (see `redis_rules.mdc`), RabbitMQ patterns (see `rabbitmq_rules.mdc`), data access patterns (see `data-access-rules.mdc`), or general microservice guidance (see `ms_best_practices_rules.mdc`).
+- Depends on: `../architecture/ms_best_practices_rules.mdc` (system-wide standard), `../observability/logging_rules.mdc` (observability), `../quality/testing-standards.mdc` (testing requirements), `../infrastructure/redis_rules.mdc` (Redis integration), `../infrastructure/rabbitmq_rules.mdc` (RabbitMQ integration), `../architecture/data-access-rules.mdc` (database operations).
+- Does not duplicate: logging configuration/policies (see `../observability/logging_rules.mdc`), testing requirements (see `../quality/testing-standards.mdc`), Redis patterns (see `../infrastructure/redis_rules.mdc`), RabbitMQ patterns (see `../infrastructure/rabbitmq_rules.mdc`), data access patterns (see `../architecture/data-access-rules.mdc`), or general microservice guidance (see `../architecture/ms_best_practices_rules.mdc`).
 - Conflicts: if guidance here conflicts with higher‑level rules, the higher‑level rule is the source of truth; update this file accordingly.
 
 ### Examples

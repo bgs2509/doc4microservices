@@ -411,7 +411,7 @@ async def handle_user_created_event(event_data: dict) -> None:
 - **Troubleshooting**: [../reference/troubleshooting.md](../reference/troubleshooting.md)
 
 ### Implementation Rules
-- **Service Patterns**: [../](../) (15 rule files in architecture/, services/, infrastructure/, observability/, quality/)
+- **Service Patterns**: [../INDEX.md](../INDEX.md) (15 rule files in architecture/, services/, infrastructure/, observability/, quality/)
 - **FastAPI Rules**: [../services/fastapi_rules.mdc](../services/fastapi_rules.mdc)
 - **Aiogram Rules**: [../services/aiogram_rules.mdc](../services/aiogram_rules.mdc)
 - **AsyncIO Rules**: [../services/asyncio_rules.mdc](../services/asyncio_rules.mdc)
