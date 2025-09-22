@@ -1,15 +1,15 @@
-# Пример: Бизнес-сервис Aiogram
+# Example: Aiogram Business Service
 
-Этот документ демонстрирует реализацию Telegram-бота на Aiogram как **Бизнес-сервиса**. Сервис не имеет прямого доступа к базе данных и взаимодействует с другими компонентами системы через HTTP-клиенты и брокер сообщений.
+This document demonstrates the implementation of a Telegram bot using Aiogram as a **Business Service**. The service has no direct database access and interacts with other system components through HTTP clients and message broker.
 
-## Ключевые характеристики
-- **Ответственность:** Взаимодействие с пользователем через Telegram, обработка команд и медиафайлов.
-- **Доступ к данным:** Только через HTTP-вызовы к Сервисам Данных.
-- **Коммуникации:** Публикует события в RabbitMQ, может вызывать другие сервисы по HTTP.
+## Key Characteristics
+- **Responsibility:** User interaction through Telegram, command and media file processing.
+- **Data Access:** Only through HTTP calls to Data Services.
+- **Communications:** Publishes events to RabbitMQ, can call other services via HTTP.
 
 ---
 
-## 1. Структура проекта (bot_service)
+## 1. Project Structure (bot_service)
 
 ```
 services/bot_service/
@@ -33,9 +33,9 @@ services/bot_service/
 
 ---
 
-## 2. Логика обработчиков (`src/bot/handlers.py`)
+## 2. Handler Logic (`src/bot/handlers.py`)
 
-Обработчики команд и сообщений используют HTTP-клиент для работы с данными и сервисный слой для бизнес-логики.
+Command and message handlers use HTTP client for data operations and service layer for business logic.
 
 ```python
 import logging
@@ -49,7 +49,7 @@ from ..clients.user_data_client import UserDataClient
 router = Router()
 logger = logging.getLogger(__name__)
 
-# Зависимости будут внедрены через middleware или фабрику
+# Dependencies will be injected through middleware or factory
 def get_media_service(**kwargs) -> MediaService:
     return MediaService(**kwargs)
 
@@ -59,21 +59,21 @@ def get_user_data_client() -> UserDataClient:
 @router.message(Command("start"))
 async def handle_start(message: Message):
     user_client = get_user_data_client()
-    request_id = "some-request-id" # Должен генерироваться в middleware
+    request_id = "some-request-id" # Should be generated in middleware
 
-    # Проверяем, существует ли пользователь, через Сервис Данных
+    # Check if user exists through Data Service
     user_data = await user_client.get_user_by_id(message.from_user.id, request_id)
     if not user_data:
-        # Если нет, создаем его через Сервис Данных
+        # If not, create user through Data Service
         create_payload = {
             "id": message.from_user.id,
             "username": message.from_user.username,
             "email": f"{message.from_user.id}@telegram.bot"
         }
         await user_client.create_user_from_bot(create_payload, request_id)
-        await message.reply(f"Привет, новый пользователь {message.from_user.first_name}!")
+        await message.reply(f"Hello, new user {message.from_user.first_name}!")
     else:
-        await message.reply(f"С возвращением, {message.from_user.first_name}!")
+        await message.reply(f"Welcome back, {message.from_user.first_name}!")
 
 @router.message(F.photo)
 async def handle_photo(message: Message, rabbitmq_channel, redis_client):
@@ -82,24 +82,24 @@ async def handle_photo(message: Message, rabbitmq_channel, redis_client):
         redis_client=redis_client
     )
     
-    # Логика обработки фото остается в сервисном слое
-    # Этот сервис будет публиковать событие в RabbitMQ для дальнейшей обработки воркером
+    # Photo processing logic remains in service layer
+    # This service will publish event to RabbitMQ for further processing by worker
     result = await media_service.process_photo_upload(
         user_id=message.from_user.id,
         photo=message.photo[-1]
     )
 
     if result["success"]:
-        await message.reply(f"Фото принято в обработку! ID задачи: {result['task_id']}")
+        await message.reply(f"Photo accepted for processing! Task ID: {result['task_id']}")
     else:
-        await message.reply("Не удалось обработать фото.")
+        await message.reply("Failed to process photo.")
 ```
 
 ---
 
-## 3. Сервисный слой (`src/services/media_service.py`)
+## 3. Service Layer (`src/services/media_service.py`)
 
-Сервис отвечает за публикацию событий в RabbitMQ.
+The service is responsible for publishing events to RabbitMQ.
 
 ```python
 import orjson
@@ -109,7 +109,7 @@ import uuid
 class MediaService:
     def __init__(self, rabbitmq_channel, redis_client):
         self.rabbitmq_channel = rabbitmq_channel
-        self.redis_client = redis_client # Может использоваться для проверки дубликатов
+        self.redis_client = redis_client # Can be used for duplicate checking
 
     async def process_photo_upload(self, user_id: int, photo) -> dict:
         task_id = str(uuid.uuid4())
@@ -125,7 +125,7 @@ class MediaService:
             headers={"X-Request-ID": task_id}
         )
 
-        # Публикуем задачу в очередь для обработки воркером
+        # Publish task to queue for worker processing
         await self.rabbitmq_channel.default_exchange.publish(
             message,
             routing_key="media.process"
@@ -135,9 +135,9 @@ class MediaService:
 
 ---
 
-## 4. Основной файл приложения (`src/main.py`)
+## 4. Main Application File (`src/main.py`)
 
-`main.py` инициализирует бота, диспетчер и зависимости, такие как RabbitMQ и Redis.
+`main.py` initializes the bot, dispatcher, and dependencies such as RabbitMQ and Redis.
 
 ```python
 import asyncio
@@ -155,12 +155,12 @@ async def main():
     bot = Bot(token=settings.BOT_TOKEN)
     dp = Dispatcher()
 
-    # Инициализация зависимостей
+    # Initialize dependencies
     redis_client = redis.from_url(settings.REDIS_URL, decode_responses=True)
     rabbitmq_connection = await aio_pika.connect_robust(settings.RABBITMQ_URL)
     rabbitmq_channel = await rabbitmq_connection.channel()
 
-    # Внедрение зависимостей в диспетчер
+    # Inject dependencies into dispatcher
     dp["redis_client"] = redis_client
     dp["rabbitmq_channel"] = rabbitmq_channel
 
@@ -175,6 +175,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-```
-(main())
 ```

@@ -1,17 +1,17 @@
-# Пример: Бизнес-сервис FastAPI
+# Example: FastAPI Business Service
 
-Этот документ демонстрирует реализацию **Бизнес-сервиса** на FastAPI. В соответствии с архитектурой "Improved Hybrid Approach", этот сервис **не имеет прямого доступа к базе данных**. Вместо этого он использует HTTP-клиент для обращения к **Сервису Данных**.
+This document demonstrates the implementation of a **Business Service** using FastAPI. In accordance with the "Improved Hybrid Approach" architecture, this service **has no direct database access**. Instead, it uses an HTTP client to communicate with **Data Services**.
 
-## Ключевые характеристики
-- **Ответственность:** Реализация бизнес-логики (например, управление пользователями, аутентификация).
-- **Доступ к данным:** Только через HTTP-вызовы к другим сервисам (например, `postgres_data_service`).
-- **Инфраструктура:** Может использовать Redis для кэширования и RabbitMQ для публикации событий.
+## Key Characteristics
+- **Responsibility:** Implementation of business logic (e.g., user management, authentication).
+- **Data Access:** Only through HTTP calls to other services (e.g., `postgres_data_service`).
+- **Infrastructure:** Can use Redis for caching and RabbitMQ for event publishing.
 
 ---
 
-## 1. Структура проекта (api_service)
+## 1. Project Structure (api_service)
 
-Структура упрощается, так как из нее уходят модели и репозитории БД.
+The structure is simplified as database models and repositories are removed.
 
 ```
 services/api_service/
@@ -26,7 +26,7 @@ services/api_service/
 │   ├── core/
 │   │   ├── __init__.py
 │   │   ├── config.py
-│   │   └── dependencies.py # Зависимости, включая клиенты
+│   │   └── dependencies.py # Dependencies, including clients
 │   ├── schemas/
 │   │   ├── __init__.py
 │   │   └── user.py
@@ -36,15 +36,15 @@ services/api_service/
 │   │   └── auth_service.py
 │   └── clients/
 │       ├── __init__.py
-│       └── user_data_client.py # HTTP-клиент для доступа к данным
+│       └── user_data_client.py # HTTP client for data access
 └── Dockerfile
 ```
 
 ---
 
-## 2. HTTP-клиент для доступа к данным (`src/clients/user_data_client.py`)
+## 2. HTTP Client for Data Access (`src/clients/user_data_client.py`)
 
-Этот клиент инкапсулирует логику HTTP-запросов к `postgres_data_service`.
+This client encapsulates HTTP request logic to `postgres_data_service`.
 
 ```python
 import httpx
@@ -69,7 +69,7 @@ class UserDataClient:
                 response.raise_for_status()
                 return response.json()
             except httpx.HTTPError as e:
-                # Здесь должна быть логика обработки ошибок, например, логирование
+                # Error handling logic should be here, e.g., logging
                 print(f"HTTP error getting user {user_id}: {e}")
                 return None
 
@@ -105,9 +105,9 @@ class UserDataClient:
 
 ---
 
-## 3. Обновленный сервис (`src/services/user_service.py`)
+## 3. Updated Service (`src/services/user_service.py`)
 
-Сервис теперь использует `UserDataClient` вместо репозитория.
+The service now uses `UserDataClient` instead of a repository.
 
 ```python
 import logging
@@ -133,7 +133,7 @@ class UserService:
         self.rabbitmq_channel = rabbitmq_channel
 
     async def create_user(self, user_data: UserCreate, request_id: str) -> Optional[UserResponse]:
-        # Логика хеширования пароля должна быть здесь, в бизнес-сервисе
+        # Password hashing logic should be here, in the business service
         # hashed_password = ...
         # user_data.password = hashed_password
 
@@ -141,38 +141,38 @@ class UserService:
         if not created_user_data:
             return None
 
-        # Публикуем событие в RabbitMQ
+        # Publish event to RabbitMQ
         await self._publish_user_event("user.created", created_user_data)
 
         logger.info(f"User created: {created_user_data['id']}")
         return UserResponse(**created_user_data)
 
     async def get_user_by_id(self, user_id: int, request_id: str) -> Optional[UserResponse]:
-        # Попытка получить из кэша Redis
+        # Try to get from Redis cache
         cache_key = f"user:{user_id}"
         cached_data = await self.redis_client.get(cache_key)
         if cached_data:
             return UserResponse(**orjson.loads(cached_data))
 
-        # Если в кэше нет, идем в сервис данных по HTTP
+        # If not in cache, go to data service via HTTP
         user_data = await self.user_client.get_user_by_id(user_id, request_id)
         if not user_data:
             return None
 
-        # Кэшируем результат
+        # Cache the result
         await self.redis_client.setex(cache_key, 3600, orjson.dumps(user_data))
         return UserResponse(**user_data)
 
     async def _publish_user_event(self, event_type: str, user_data: dict) -> None:
-        # ... (логика публикации события остается прежней)
+        # ... (event publishing logic remains the same)
         pass
 ```
 
 ---
 
-## 4. Основной файл приложения (`src/main.py`)
+## 4. Main Application File (`src/main.py`)
 
-`lifespan` теперь управляет только подключениями к Redis и RabbitMQ.
+`lifespan` now only manages connections to Redis and RabbitMQ.
 
 ```python
 from fastapi import FastAPI
@@ -185,15 +185,15 @@ from .api.v1 import users, auth
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Инициализация Redis
+    # Initialize Redis
     app.state.redis = redis.from_url(settings.REDIS_URL, decode_responses=True)
-    # Инициализация RabbitMQ
+    # Initialize RabbitMQ
     app.state.rabbitmq_connection = await aio_pika.connect_robust(settings.RABBITMQ_URL)
     app.state.rabbitmq_channel = await app.state.rabbitmq_connection.channel()
-    
+
     yield
-    
-    # Закрытие соединений
+
+    # Close connections
     await app.state.redis.close()
     await app.state.rabbitmq_connection.close()
 
@@ -202,7 +202,7 @@ def create_app() -> FastAPI:
         title="User Management Business Service",
         lifespan=lifespan
     )
-    # ... (подключение роутеров)
+    # ... (router registration)
     app.include_router(users.router, prefix="/api/v1/users", tags=["Users"])
     app.include_router(auth.router, prefix="/api/v1/auth", tags=["Auth"])
     return app

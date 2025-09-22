@@ -1,34 +1,34 @@
-# Примеры реализации сервисов и паттернов
+# Service Implementation Examples and Patterns
 
-Этот раздел содержит полный набор практических примеров кода, демонстрирующих реализацию различных типов сервисов и архитектурных паттернов в соответствии с принципом **"Improved Hybrid Approach"**.
+This section contains a comprehensive set of practical code examples demonstrating the implementation of various service types and architectural patterns in accordance with the **"Improved Hybrid Approach"** principle.
 
-## Архитектура примеров
+## Example Architecture
 
-Примеры разделены на два типа сервисов:
+Examples are divided into two service types:
 
-1.  **Сервис Данных (`Data Service`)**: Отвечает за прямое взаимодействие с базой данных и предоставляет HTTP API для доступа к данным.
-2.  **Бизнес-сервисы (`Business Services`)**: Реализуют бизнес-логику и получают доступ к данным исключительно через HTTP-вызовы к Сервису Данных.
+1.  **Data Service**: Responsible for direct database interaction and provides HTTP API for data access.
+2.  **Business Services**: Implement business logic and access data exclusively through HTTP calls to Data Services.
 
 ---
 
-## Основные примеры сервисов
+## Core Service Examples
 
-- **[Пример Сервиса Данных (PostgreSQL)](./postgres_data_service.md)**: Реализация сервиса, который инкапсулирует всю логику работы с PostgreSQL, включая модели, репозитории и миграции.
+- **[PostgreSQL Data Service Example](./postgres_data_service.md)**: Implementation of a service that encapsulates all PostgreSQL interaction logic, including models, repositories, and migrations.
 
-- **[Пример Бизнес-сервиса (FastAPI)](./fastapi_service.md)**: Реализация API на FastAPI, который использует Сервис Данных для выполнения операций и не имеет прямого доступа к БД.
+- **[FastAPI Business Service Example](./fastapi_service.md)**: FastAPI API implementation that uses Data Services for operations and has no direct database access.
 
-- **[Пример Бизнес-сервиса (Aiogram)](./aiogram_service.md)**: Готовый Telegram-бот, который также следует архитектуре и работает с данными через HTTP.
+- **[Aiogram Business Service Example](./aiogram_service.md)**: Ready-to-use Telegram bot that follows the architecture and works with data through HTTP.
 
-- **[Пример Бизнес-сервиса (Worker)](./worker_service.md)**: Асинхронный воркер для фоновых задач, взаимодействующий с другими сервисами по HTTP и через брокер сообщений.
+- **[Worker Business Service Example](./worker_service.md)**: Asynchronous worker for background tasks, interacting with other services via HTTP and message broker.
 
-## Архитектурные паттерны и практики
+## Architectural Patterns and Practices
 
-- **[Аутентификация и авторизация в Бизнес-сервисе](./authentication.md)**: Пример реализации JWT-аутентификации, адаптированный для архитектуры с разделением сервисов.
+- **[Authentication and Authorization in Business Service](./authentication.md)**: JWT authentication implementation example adapted for service separation architecture.
 
-- **[Паттерны межсервисного взаимодействия](./communication_patterns.md)**: Примеры синхронного (REST) и асинхронного (событийного) взаимодействия.
+- **[Inter-Service Communication Patterns](./communication_patterns.md)**: Examples of synchronous (REST) and asynchronous (event-driven) communication.
 
-- **[Паттерны отказоустойчивости](./resilience_patterns.md)**: Реализация паттернов, таких как Dead-Letter Queue и Circuit Breaker.
+- **[Resilience Patterns](./resilience_patterns.md)**: Implementation of patterns such as Dead-Letter Queue and Circuit Breaker.
 
-- **[Наблюдаемость (Observability)](./observability.md)**: Практические примеры структурированного логирования, трассировки и сбора метрик.
+- **[Observability](./observability.md)**: Practical examples of structured logging, tracing, and metrics collection.
 
-- **[Стратегии тестирования](./testing_strategies.md)**: Примеры написания unit- и интеграционных тестов для всех типов сервисов.
+- **[Testing Strategies](./testing_strategies.md)**: Examples of writing unit and integration tests for all service types.

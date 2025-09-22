@@ -4,6 +4,7 @@
 ```python
 # In api_service: calling another API service
 import httpx
+import uuid
 from typing import Optional, Dict, Any
 
 class ExternalAPIService:
@@ -34,6 +35,9 @@ class ExternalAPIService:
 ### Event-Driven Communication via RabbitMQ
 ```python
 # Publishing events (in any service)
+import aio_pika
+import orjson
+from datetime import datetime
 async def publish_user_updated_event(
     rabbitmq_channel: aio_pika.Channel,
     user_id: int,

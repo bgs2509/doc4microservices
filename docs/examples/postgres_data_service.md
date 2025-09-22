@@ -1,16 +1,16 @@
-# Пример: Сервис Данных PostgreSQL
+# Example: PostgreSQL Data Service
 
-Этот документ демонстрирует реализацию **Сервиса Данных** (`Data Service`) в соответствии с архитектурой "Improved Hybrid Approach". Этот сервис является единственной точкой доступа к базе данных PostgreSQL для всех бизнес-сервисов.
+This document demonstrates the implementation of a **Data Service** in accordance with the "Improved Hybrid Approach" architecture. This service is the single point of access to PostgreSQL database for all business services.
 
-## Ключевые характеристики
-- **Технология:** FastAPI.
-- **Ответственность:** Управление моделями данных (SQLAlchemy), выполнение CRUD-операций, обеспечение транзакционной целостности.
-- **Интерфейс:** Предоставляет RESTful HTTP API для доступа к данным.
-- **Изоляция:** Полностью инкапсулирует логику работы с базой данных.
+## Key Characteristics
+- **Technology:** FastAPI.
+- **Responsibility:** Managing data models (SQLAlchemy), performing CRUD operations, ensuring transactional integrity.
+- **Interface:** Provides RESTful HTTP API for data access.
+- **Isolation:** Completely encapsulates database interaction logic.
 
 ---
 
-## 1. Структура проекта (db_postgres_service)
+## 1. Project Structure (db_postgres_service)
 
 ```
 services/db_postgres_service/
@@ -45,10 +45,10 @@ services/db_postgres_service/
 
 ---
 
-## 2. Модели, Репозиторий и Миграции
+## 2. Models, Repository and Migrations
 
-### Модель SQLAlchemy (`src/models/user.py`)
-Это определение таблицы в базе данных.
+### SQLAlchemy Model (`src/models/user.py`)
+This is the database table definition.
 
 ```python
 from sqlalchemy import String, DateTime, Boolean
@@ -68,8 +68,8 @@ class User(Base):
     )
 ```
 
-### Паттерн "Репозиторий" (`src/repositories/user_repository.py`)
-Репозиторий инкапсулирует логику доступа к данным, предоставляя чистый интерфейс для работы с моделями.
+### Repository Pattern (`src/repositories/user_repository.py`)
+The repository encapsulates data access logic, providing a clean interface for working with models.
 
 ```python
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -102,17 +102,17 @@ class UserRepository:
         return result.scalar_one_or_none()
 ```
 
-### Миграции базы данных (Alembic)
-Alembic используется для управления изменениями схемы БД.
-- **Настройка:** `alembic.ini` и `alembic/env.py` настраиваются для работы с асинхронным драйвером и моделями SQLAlchemy.
-- **Создание миграции:** `alembic revision --autogenerate -m "Create user table"`
-- **Применение миграции:** `alembic upgrade head`
+### Database Migrations (Alembic)
+Alembic is used for managing database schema changes.
+- **Configuration:** `alembic.ini` and `alembic/env.py` are configured to work with async driver and SQLAlchemy models.
+- **Creating migration:** `alembic revision --autogenerate -m "Create user table"`
+- **Applying migration:** `alembic upgrade head`
 
 ---
 
-## 3. API эндпоинты (`src/api/v1/users.py`)
+## 3. API Endpoints (`src/api/v1/users.py`)
 
-Эндпоинты предоставляют HTTP-интерфейс для доступа к данным пользователя.
+Endpoints provide HTTP interface for user data access.
 
 ```python
 from fastapi import APIRouter, Depends, HTTPException
@@ -120,7 +120,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..schemas.user import UserCreate, UserResponse
 from ..repositories.user_repository import UserRepository
 from ..core.database import get_db_session
-# В реальном сервисе тут будет хеширование пароля, но для простоты опустим
+# In real service password hashing would be here, but simplified for example
 # from ...services.auth_service import get_password_hash 
 
 router = APIRouter()
@@ -133,10 +133,10 @@ async def create_user(
     user_data: UserCreate,
     repo: UserRepository = Depends(get_user_repository)
 ):
-    # В реальном приложении пароль должен хешироваться в бизнес-сервисе
-    # и передаваться сюда уже в виде хеша.
-    # Для упрощения примера, представим, что пароль уже хеширован.
-    hashed_password = user_data.password + "_hashed" # Упрощенное "хеширование"
+    # In real application password should be hashed in business service
+    # and passed here already as hash.
+    # For example simplification, assume password is already hashed.
+    hashed_password = user_data.password + "_hashed" # Simplified "hashing"
     db_user = await repo.create_user(user_data, hashed_password)
     return db_user
 
@@ -163,7 +163,7 @@ async def get_user_by_username(
 
 ---
 
-## 4. Основной файл приложения (`src/main.py`)
+## 4. Main Application File (`src/main.py`)
 
 ```python
 from fastapi import FastAPI
@@ -172,12 +172,12 @@ from .core.database import engine, Base
 
 app = FastAPI(
     title="PostgreSQL Data Service",
-    description="Сервис для прямого доступа к данным PostgreSQL."
+    description="Service for direct PostgreSQL data access."
 )
 
 @app.on_event("startup")
 async def startup():
-    # В реальном приложении здесь должны быть миграции Alembic
+    # In real application Alembic migrations should be here
     # async with engine.begin() as conn:
     #     await conn.run_sync(Base.metadata.create_all)
     pass

@@ -1,14 +1,14 @@
-## Паттерны отказоустойчивости
+## Resilience Patterns
 
-Отказоустойчивость — ключевая характеристика распределенных систем. В этом разделе мы рассмотрим два важных паттерна, которые помогают повысить надежность и стабильность микросервисов: **Dead-Letter Queue (DLQ)** и **Circuit Breaker**.
+Resilience is a key characteristic of distributed systems. In this section, we'll examine two important patterns that help improve microservices reliability and stability: **Dead-Letter Queue (DLQ)** and **Circuit Breaker**.
 
-### 1. Dead-Letter Queue (DLQ) в RabbitMQ
+### 1. Dead-Letter Queue (DLQ) in RabbitMQ
 
-DLQ — это специальная очередь, куда перенаправляются сообщения, которые не могут быть успешно обработаны. Это позволяет избежать потери данных и проанализировать причину сбоя, не блокируя основную очередь.
+DLQ is a special queue where messages that cannot be successfully processed are redirected. This allows avoiding data loss and analyzing the cause of failure without blocking the main queue.
 
-#### Настройка
+#### Configuration
 
-Настройка DLQ выполняется в воркере-потребителе. Мы создаем основную очередь и связываем ее с "мертвой" очередью.
+DLQ configuration is performed in the consumer worker. We create the main queue and link it with the "dead" queue.
 
 `src/workers/notification_sender.py`
 ```python
@@ -20,20 +20,20 @@ class NotificationSender:
     async def start(self) -> None:
         self.running = True
 
-        # 1. Объявляем "мертвую" очередь и exchange
+        # 1. Declare "dead" queue and exchange
         dlx_exchange = await self.rabbitmq_channel.declare_exchange(
-            "notifications.dlx", 
+            "notifications.dlx",
             aio_pika.ExchangeType.FANOUT
         )
         dlq_queue = await self.rabbitmq_channel.declare_queue(
-            "notifications.dlq", 
+            "notifications.dlq",
             durable=True
         )
         await dlq_queue.bind(dlx_exchange)
 
-        # 2. Объявляем основную очередь с аргументами для DLQ
+        # 2. Declare main queue with DLQ arguments
         main_exchange = await self.rabbitmq_channel.declare_exchange(
-            "notifications", 
+            "notifications",
             aio_pika.ExchangeType.DIRECT
         )
         main_queue = await self.rabbitmq_channel.declare_queue(
@@ -41,79 +41,81 @@ class NotificationSender:
             durable=True,
             arguments={
                 "x-dead-letter-exchange": "notifications.dlx",
-                # "x-dead-letter-routing-key": "some_key" # Опционально
+                # "x-dead-letter-routing-key": "some_key" # Optional
             }
         )
         await main_queue.bind(main_exchange, routing_key="notifications.send")
 
-        # 3. Начинаем потребление
+        # 3. Start consuming
         async with main_queue.iterator() as queue_iter:
             async for message in queue_iter:
                 try:
-                    # Имитируем ошибку обработки для каждого второго сообщения
+                    # Simulate processing error for every second message
                     if message.delivery_tag % 2 == 0:
                         raise ValueError("Simulated processing error")
 
-                    # Успешная обработка
+                    # Successful processing
                     logger.info(f"Successfully processed message: {message.body.decode()}")
-                    await message.ack() # Подтверждаем успешную обработку
-                
+                    await message.ack() # Acknowledge successful processing
+
                 except Exception as e:
                     logger.error(f"Failed to process message. Rejecting. Error: {e}")
-                    # 4. Отклоняем сообщение. `requeue=False` отправит его в DLQ.
+                    # 4. Reject message. `requeue=False` will send it to DLQ.
                     await message.reject(requeue=False)
 ```
 
-**Как это работает:**
-- Когда `message.reject(requeue=False)` вызывается для сообщения из `notifications.send`, RabbitMQ перенаправляет его в exchange, указанный в `x-dead-letter-exchange` (т.е. в `notifications.dlx`).
-- `notifications.dlx` (типа `FANOUT`) отправляет сообщение во все связанные с ним очереди, то есть в `notifications.dlq`.
-- Теперь "проблемные" сообщения хранятся в `notifications.dlq`, и их можно изучить или переотправить позже, не мешая работе основного воркера.
+**How it works:**
+- When `message.reject(requeue=False)` is called for a message from `notifications.send`, RabbitMQ redirects it to the exchange specified in `x-dead-letter-exchange` (i.e., to `notifications.dlx`).
+- `notifications.dlx` (FANOUT type) sends the message to all queues bound to it, i.e., to `notifications.dlq`.
+- Now "problematic" messages are stored in `notifications.dlq`, and they can be examined or resent later without interfering with the main worker's operation.
 
-### 2. Circuit Breaker (Предохранитель)
+### 2. Circuit Breaker
 
-Паттерн "Предохранитель" используется для защиты системы от каскадных сбоев. Если какой-то внешний сервис (например, другое микро-API) начинает постоянно возвращать ошибки, Circuit Breaker "размыкается" и перестает отправлять на него запросы на некоторое время, возвращая ошибку немедленно. Это дает сбойному сервису время на восстановление.
+The Circuit Breaker pattern is used to protect the system from cascading failures. If some external service (e.g., another micro-API) starts constantly returning errors, Circuit Breaker "opens" and stops sending requests to it for some time, returning an error immediately. This gives the failing service time to recover.
 
-Мы будем использовать библиотеку `pybreaker`.
+We'll use the `pybreaker` library.
 
-#### Установка
+#### Installation
 ```bash
 pip install pybreaker
 ```
 
-#### Реализация
+#### Implementation
 
-Создадим декоратор, который оборачивает HTTP-вызовы в `CircuitBreaker`.
+Let's create a decorator that wraps HTTP calls in `CircuitBreaker`.
 
 `src/utils/circuit_breaker.py`
 ```python
 from __future__ import annotations
 
 import functools
+import logging
 from typing import Callable, Any
 
 import httpx
 from pybreaker import CircuitBreaker, CircuitBreakerError
 
-# Создаем предохранитель: 5 сбоев подряд открывают цепь на 60 секунд
+# Create circuit breaker: 5 consecutive failures open circuit for 60 seconds
 breaker = CircuitBreaker(fail_max=5, reset_timeout=60)
+logger = logging.getLogger(__name__)
 
 
 def with_circuit_breaker(func: Callable) -> Callable:
-    """Декоратор для обертывания функции в Circuit Breaker."""
+    """Decorator for wrapping function in Circuit Breaker."""
 
     @functools.wraps(func)
     async def wrapper(*args, **kwargs) -> Any:
         try:
             return await breaker.call_async(func, *args, **kwargs)
         except CircuitBreakerError:
-            # Цепь разомкнута, возвращаем ошибку немедленно
+            # Circuit is open, return error immediately
             logger.error("Circuit is open. Call failed immediately.")
-            # Можно вернуть кэшированный результат или стандартный ответ
-            return None 
+            # Can return cached result or default response
+            return None
         except httpx.HTTPStatusError as e:
-            # Ловим HTTP ошибки и передаем их в предохранитель
+            # Catch HTTP errors and pass them to circuit breaker
             logger.error(f"HTTP error occurred: {e}")
-            raise # Передаем исключение дальше, чтобы breaker его засчитал
+            raise # Pass exception further so breaker counts it
         except Exception as e:
             logger.error(f"An unexpected error occurred: {e}")
             raise
@@ -121,9 +123,9 @@ def with_circuit_breaker(func: Callable) -> Callable:
     return wrapper
 ```
 
-#### Применение
+#### Application
 
-Теперь применим этот декоратор к методу, который вызывает внешний сервис.
+Now let's apply this decorator to a method that calls an external service.
 
 `src/services/external_api_service.py`
 ```python
@@ -139,17 +141,17 @@ class ExternalAPIService:
 
     @with_circuit_breaker
     async def get_product_details(self, product_id: int) -> Optional[Dict[str, Any]]:
-        """Получить детали продукта из внешнего сервиса."""
+        """Get product details from external service."""
         async with httpx.AsyncClient(timeout=self.timeout) as client:
             response = await client.get(f"{self.base_url}/products/{product_id}")
-            response.raise_for_status() # Вызовет исключение для 4xx/5xx ответов
+            response.raise_for_status() # Will raise exception for 4xx/5xx responses
             return response.json()
 ```
 
-**Как это работает:**
-- Декоратор `@with_circuit_breaker` оборачивает вызов `get_product_details`.
-- Если `get_product_details` успешно выполняется, `pybreaker` сбрасывает счетчик сбоев.
-- Если `response.raise_for_status()` вызывает исключение `httpx.HTTPStatusError`, `pybreaker` увеличивает счетчик сбоев.
-- После 5 сбоев подряд (`fail_max=5`), предохранитель "размыкается".
-- В течение следующих 60 секунд (`reset_timeout=60`) любые вызовы `get_product_details` будут немедленно завершаться с ошибкой `CircuitBreakerError`, даже не пытаясь отправить HTTP-запрос.
-- По истечении 60 секунд предохранитель перейдет в состояние "полуоткрыто" и пропустит один вызов. Если он будет успешным, цепь замкнется. Если нет — снова разомкнется на 60 секунд.
+**How it works:**
+- The `@with_circuit_breaker` decorator wraps the `get_product_details` call.
+- If `get_product_details` executes successfully, `pybreaker` resets the failure counter.
+- If `response.raise_for_status()` raises an `httpx.HTTPStatusError` exception, `pybreaker` increments the failure counter.
+- After 5 consecutive failures (`fail_max=5`), the circuit breaker "opens".
+- For the next 60 seconds (`reset_timeout=60`), any calls to `get_product_details` will immediately fail with `CircuitBreakerError`, without even attempting to send an HTTP request.
+- After 60 seconds, the circuit breaker will enter "half-open" state and allow one call through. If it's successful, the circuit closes. If not, it opens again for 60 seconds.

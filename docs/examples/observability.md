@@ -1,19 +1,19 @@
-## Наблюдаемость (Observability)
+## Observability
 
-Наблюдаемость — это способность понимать внутреннее состояние системы по ее внешним выходным данным. Три столпа наблюдаемости — это **логи (Logs)**, **метрики (Metrics)** и **трассировки (Traces)**. В этом разделе мы рассмотрим, как реализовать их в наших сервисах.
+Observability is the ability to understand the internal state of a system from its external outputs. The three pillars of observability are **Logs**, **Metrics**, and **Traces**. In this section, we'll explore how to implement them in our services.
 
-### 1. Структурированное логирование с Correlation ID
+### 1. Structured Logging with Correlation ID
 
-Структурированные логи (например, в формате JSON) легко парсить и анализировать. `Correlation ID` — это уникальный идентификатор, который присваивается запросу и передается через все сервисы, которые этот запрос затрагивает. Это позволяет отследить полный путь запроса в распределенной системе.
+Structured logs (e.g., in JSON format) are easy to parse and analyze. `Correlation ID` is a unique identifier assigned to a request and passed through all services that the request affects. This allows tracking the complete request path in a distributed system.
 
-Мы будем использовать `structlog` и кастомный middleware для FastAPI.
+We'll use `structlog` and custom middleware for FastAPI.
 
-#### Установка
+#### Installation
 ```bash
 pip install structlog "uvicorn[standard]"
 ```
 
-#### Реализация
+#### Implementation
 
 `src/middlewares/correlation_id.py`
 ```python
@@ -26,33 +26,33 @@ from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.responses import Response
 
-# Контекстная переменная для хранения ID запроса
+# Context variable for storing request ID
 CORRELATION_ID_CTX_KEY = "correlation_id"
 correlation_id_ctx: ContextVar[str] = ContextVar(CORRELATION_ID_CTX_KEY, default=None)
 
 
 class CorrelationIdMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
-        # Пытаемся получить ID из заголовка или генерируем новый
+        # Try to get ID from header or generate new one
         correlation_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
-        
-        # Устанавливаем ID в контекстную переменную
+
+        # Set ID in context variable
         token = correlation_id_ctx.set(correlation_id)
 
         response = await call_next(request)
-        
-        # Добавляем ID в заголовок ответа
+
+        # Add ID to response header
         response.headers["X-Request-ID"] = correlation_id
 
-        # Сбрасываем контекстную переменную
+        # Reset context variable
         correlation_id_ctx.reset(token)
 
         return response
 ```
 
-#### Настройка `structlog`
+#### Configuring `structlog`
 
-Теперь настроим `structlog` для добавления `correlation_id` в каждую запись лога.
+Now let's configure `structlog` to add `correlation_id` to each log entry.
 
 `src/logging_config.py`
 ```python
@@ -62,10 +62,10 @@ import structlog
 from .middlewares.correlation_id import correlation_id_ctx
 
 def setup_logging():
-    """Настройка структурированного логирования."""
-    
+    """Configure structured logging."""
+
     def add_correlation_id(logger, method_name, event_dict):
-        """Добавить correlation_id в запись лога, если он есть в контексте."""
+        """Add correlation_id to log entry if it exists in context."""
         correlation_id = correlation_id_ctx.get()
         if correlation_id:
             event_dict["correlation_id"] = correlation_id
@@ -88,28 +88,28 @@ def setup_logging():
     )
 ```
 
-#### Подключение в `main.py`
+#### Integration in `main.py`
 ```python
 from .logging_config import setup_logging
 from .middlewares.correlation_id import CorrelationIdMiddleware
 
-# Вызываем в самом начале
+# Call at the very beginning
 setup_logging()
 
 app = FastAPI(...)
 app.add_middleware(CorrelationIdMiddleware)
 ```
 
-### 2. Метрики с Prometheus
+### 2. Metrics with Prometheus
 
-Prometheus — стандарт де-факто для сбора метрик. Мы можем легко добавить эндпоинт `/metrics` в наше FastAPI приложение.
+Prometheus is the de facto standard for metrics collection. We can easily add a `/metrics` endpoint to our FastAPI application.
 
-#### Установка
+#### Installation
 ```bash
 pip install prometheus-fastapi-instrumentator
 ```
 
-#### Реализация
+#### Implementation
 
 `src/main.py`
 ```python
@@ -120,21 +120,21 @@ app = FastAPI(...)
 
 # ... (middleware)
 
-# Добавляем инструментор Prometheus
+# Add Prometheus instrumentor
 Instrumentator().instrument(app).expose(app)
 
 # ... (routers)
 ```
 
-Теперь, если запустить приложение, по адресу `/metrics` будет доступен эндпоинт с базовыми метриками (задержка запросов, количество и т.д.).
+Now, if you run the application, the `/metrics` endpoint will be available with basic metrics (request latency, count, etc.).
 
-#### Добавление кастомных метрик
+#### Adding Custom Metrics
 
 ```python
 # src/services/user_service.py
 from prometheus_client import Counter
 
-# Создаем счетчик для созданных пользователей
+# Create counter for created users
 USERS_CREATED_COUNTER = Counter("users_created_total", "Total number of users created", ["source"])
 
 class UserService:
@@ -142,26 +142,26 @@ class UserService:
     async def create_user(self, user_data: UserCreate) -> UserResponse:
         # ...
         created_user = await self.user_repository.create(user)
-        
-        # Увеличиваем счетчик
+
+        # Increment counter
         USERS_CREATED_COUNTER.labels(source="api").inc()
-        
+
         # ...
         return UserResponse.model_validate(created_user)
 ```
 
-### 3. Распределенная трассировка с OpenTelemetry
+### 3. Distributed Tracing with OpenTelemetry
 
-Трассировка позволяет визуализировать полный путь запроса через несколько сервисов. OpenTelemetry — это стандарт для сбора трассировок.
+Tracing allows visualizing the complete request path through multiple services. OpenTelemetry is the standard for trace collection.
 
-#### Установка
+#### Installation
 ```bash
 pip install opentelemetry-sdk opentelemetry-instrumentation-fastapi opentelemetry-instrumentation-httpx
 ```
 
-#### Реализация
+#### Implementation
 
-Настроим экспорт трассировок в консоль (в реальном проекте это будет Jaeger, Zipkin или другой коллектор).
+Let's configure trace export to console (in a real project this would be Jaeger, Zipkin, or another collector).
 
 `src/tracing_config.py`
 ```python
@@ -172,25 +172,25 @@ from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
 
 def setup_tracing(app: FastAPI):
-    """Настройка распределенной трассировки."""
-    # Устанавливаем провайдер трассировок
+    """Configure distributed tracing."""
+    # Set up tracer provider
     provider = TracerProvider()
     trace.set_tracer_provider(provider)
 
-    # Настраиваем экспорт в консоль
+    # Configure console export
     processor = BatchSpanProcessor(ConsoleSpanExporter())
     provider.add_span_processor(processor)
 
-    # Инструментируем FastAPI приложение
+    # Instrument FastAPI application
     FastAPIInstrumentor.instrument_app(app)
-    
-    # Инструментируем HTTPX клиент для проброса заголовков трассировки
+
+    # Instrument HTTPX client for trace header propagation
     HTTPXClientInstrumentor().instrument()
 
     print("OpenTelemetry tracing configured.")
 ```
 
-#### Подключение в `main.py`
+#### Integration in `main.py`
 ```python
 from .tracing_config import setup_tracing
 
@@ -198,10 +198,10 @@ app = FastAPI(...)
 
 # ... (middleware)
 
-# Настраиваем трассировку
+# Configure tracing
 setup_tracing(app)
 
 # ... (routers)
 ```
 
-Теперь при каждом запросе к API в консоли будут появляться спаны трассировки. Если из одного сервиса будет сделан HTTP-запрос в другой (также инструментированный), OpenTelemetry автоматически свяжет их в единую трассировку благодаря `HTTPXClientInstrumentor`.
+Now with each API request, trace spans will appear in the console. If an HTTP request is made from one service to another (also instrumented), OpenTelemetry will automatically link them into a single trace thanks to `HTTPXClientInstrumentor`.

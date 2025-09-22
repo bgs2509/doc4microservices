@@ -1,30 +1,30 @@
-# Пример: Аутентификация в Бизнес-сервисе
+# Example: Authentication in Business Service
 
-Этот раздел демонстрирует, как реализовать JWT-аутентификацию в **Бизнес-сервисе**, который не имеет прямого доступа к базе данных. Проверка учетных данных и получение информации о пользователе происходят через HTTP-вызовы к **Сервису Данных**.
+This section demonstrates how to implement JWT authentication in a **Business Service** that has no direct database access. Credential verification and user information retrieval occur through HTTP calls to **Data Service**.
 
 ---
 
-## 1. HTTP-клиент для доступа к данным
+## 1. HTTP Client for Data Access
 
-Нам понадобится метод в `UserDataClient` для получения пользователя по имени пользователя.
+We need a method in `UserDataClient` to get user by username.
 
-`src/clients/user_data_client.py` (дополнение)
+`src/clients/user_data_client.py` (addition)
 ```python
-# UserDataClient теперь определен в fastapi_service.md
-# и включает get_user_by_username.
-# Этот клиент должен быть импортирован и доступен для использования.
+# UserDataClient is now defined in fastapi_service.md
+# and includes get_user_by_username.
+# This client should be imported and available for use.
 ```
 
 ---
 
-## 2. Сервис аутентификации (`src/services/auth_service.py`)
+## 2. Authentication Service (`src/services/auth_service.py`)
 
-Этот сервис по-прежнему отвечает за работу с паролями и JWT-токенами. Его код практически не меняется, но теперь он будет работать в паре с `UserDataClient`.
+This service still handles passwords and JWT tokens. Its code remains virtually unchanged, but now it will work in conjunction with `UserDataClient`.
 
 ```python
 from passlib.context import CryptContext
 from jose import jwt
-# ... и другие импорты
+# ... and other imports
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -33,19 +33,19 @@ class AuthService:
         return pwd_context.verify(plain_password, hashed_password)
 
     def create_access_token(self, data: dict) -> str:
-        # ... (логика создания токена)
+        # ... (token creation logic)
         pass
 
     def verify_token(self, token: str) -> Optional[str]:
-        # ... (логика верификации токена, возвращает username)
+        # ... (token verification logic, returns username)
         pass
 ```
 
 ---
 
-## 3. Зависимость (Dependency) для получения пользователя
+## 3. Dependency for Getting Current User
 
-Это ключевое изменение. `get_current_user` теперь использует `UserDataClient` для получения данных о пользователе.
+This is the key change. `get_current_user` now uses `UserDataClient` to retrieve user data.
 
 `src/core/dependencies.py`
 ```python
@@ -54,7 +54,7 @@ from fastapi.security import OAuth2PasswordBearer
 
 from ..clients.user_data_client import UserDataClient
 from ..services.auth_service import AuthService
-from ..schemas.user import UserResponse # Используем схему для ответа
+from ..schemas.user import UserResponse # Use response schema
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
@@ -75,22 +75,22 @@ async def get_current_user(
             detail="Could not validate credentials",
         )
     
-    # Получаем пользователя из Сервиса Данных по HTTP
-    # request_id нужно пробрасывать из middleware
+    # Get user from Data Service via HTTP
+    # request_id should be passed from middleware
     user_data = await user_client.get_user_by_username(username, request_id="some-request-id")
-    
+
     if not user_data:
         raise HTTPException(status_code=404, detail="User not found")
 
-    # Возвращаем Pydantic модель, а не объект SQLAlchemy
+    # Return Pydantic model, not SQLAlchemy object
     return UserResponse(**user_data)
 ```
 
 ---
 
-## 4. Эндпоинт для получения токена (`src/api/v1/auth.py`)
+## 4. Token Endpoint (`src/api/v1/auth.py`)
 
-Этот эндпоинт также меняется, чтобы использовать `UserDataClient`.
+This endpoint also changes to use `UserDataClient`.
 
 ```python
 from fastapi import APIRouter, Depends, HTTPException
@@ -109,7 +109,7 @@ async def login_for_access_token(
 ):
     auth_service = AuthService()
     
-    # Получаем пользователя из Сервиса Данных
+    # Get user from Data Service
     user_data = await user_client.get_user_by_username(form_data.username, request_id="some-request-id")
     
     if not user_data or not auth_service.verify_password(form_data.password, user_data["hashed_password"]):
@@ -125,4 +125,4 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "bearer"}
 ```
 
-Таким образом, бизнес-сервис по-прежнему управляет логикой аутентификации (проверка паролей, создание токенов), но больше не имеет прямого доступа к хранилищу пользователей, полностью полагаясь на API Сервиса Данных.иса Данных.
+Thus, the business service still manages authentication logic (password verification, token creation), but no longer has direct access to user storage, relying entirely on the Data Service API.

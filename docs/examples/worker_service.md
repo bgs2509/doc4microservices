@@ -1,15 +1,15 @@
-# Пример: Бизнес-сервис Worker
+# Example: Worker Business Service
 
-Этот документ демонстрирует реализацию фонового обработчика (Worker) как **Бизнес-сервиса**. Он не имеет прямого доступа к базе данных и взаимодействует с другими частями системы через HTTP-вызовы (к Сервисам Данных) и брокер сообщений (RabbitMQ).
+This document demonstrates the implementation of a background processor (Worker) as a **Business Service**. It has no direct database access and interacts with other system components through HTTP calls (to Data Services) and message broker (RabbitMQ).
 
-## Ключевые характеристики
-- **Ответственность:** Выполнение фоновых задач, таких как обработка медиафайлов, отправка уведомлений или анализ данных.
-- **Доступ к данным:** Только через HTTP-клиенты.
-- **Коммуникации:** Получает задачи из RabbitMQ и может вызывать другие сервисы по HTTP.
+## Key Characteristics
+- **Responsibility:** Execution of background tasks such as media file processing, notification sending, or data analysis.
+- **Data Access:** Only through HTTP clients.
+- **Communications:** Receives tasks from RabbitMQ and can call other services via HTTP.
 
 ---
 
-## 1. Структура проекта (worker_service)
+## 1. Project Structure (worker_service)
 
 ```
 services/worker_service/
@@ -30,24 +30,25 @@ services/worker_service/
 
 ---
 
-## 2. Логика Воркера (`src/workers/media_processor.py`)
+## 2. Worker Logic (`src/workers/media_processor.py`)
 
-Воркер получает сообщение из RabbitMQ и использует HTTP-клиент для обновления информации в базе данных через Сервис Данных.
+The worker receives messages from RabbitMQ and uses HTTP client to update information in the database through Data Service.
 
 ```python
 import asyncio
 import logging
+import uuid
 import aio_pika
 import orjson
 
-from ..clients.user_data_client import UserDataClient # Предполагаем, что клиент есть
+from ..clients.user_data_client import UserDataClient # Assume client exists
 
 logger = logging.getLogger(__name__)
 
 class MediaProcessor:
     def __init__(self, rabbitmq_channel: aio_pika.Channel):
         self.rabbitmq_channel = rabbitmq_channel
-        self.user_client = UserDataClient() # Инициализируем HTTP-клиент
+        self.user_client = UserDataClient() # Initialize HTTP client
 
     async def start(self):
         queue = await self.rabbitmq_channel.declare_queue("media.process", durable=True)
@@ -68,12 +69,12 @@ class MediaProcessor:
                     return
 
                 logger.info(f"Processing media for user {user_id}")
-                
-                # Логика обработки файла...
+
+                # File processing logic...
                 processed_result = {"status": "processed", "path": "/path/to/processed/file"}
 
-                # Обновляем статус пользователя через Сервис Данных по HTTP
-                # Например, добавляем информацию о новом файле
+                # Update user status through Data Service via HTTP
+                # For example, add information about new file
                 update_payload = {"new_file": processed_result}
                 update_success = await self.user_client.update_user_files(user_id, update_payload, request_id)
 
@@ -88,9 +89,9 @@ class MediaProcessor:
 
 ---
 
-## 3. Основной файл приложения (`src/main.py`)
+## 3. Main Application File (`src/main.py`)
 
-`main.py` отвечает за запуск воркера и управление его жизненным циклом.
+`main.py` is responsible for starting the worker and managing its lifecycle.
 
 ```python
 import asyncio
