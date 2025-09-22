@@ -61,7 +61,7 @@ class MediaProcessor:
                 data = orjson.loads(message.body)
                 user_id = data.get("user_id")
                 file_info = data.get("file_info")
-                request_id = message.headers.get("X-Request-ID", "generated-worker-id")
+                request_id = message.headers.get("X-Request-ID", f"worker_{uuid.uuid4().hex}")
 
                 if not all([user_id, file_info]):
                     logger.error("Invalid message data")

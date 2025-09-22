@@ -122,7 +122,7 @@ class MediaService:
 
         message = aio_pika.Message(
             body=message_body,
-            headers={"X-Request-ID": "some-request-id"}
+            headers={"X-Request-ID": task_id}
         )
 
         # Публикуем задачу в очередь для обработки воркером
@@ -175,4 +175,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+```
+(main())
 ```

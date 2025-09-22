@@ -150,7 +150,7 @@ async def get_user(
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-@router.get("/by-username/{username}", response_model=UserResponse)
+@router.get("/by_username/{username}", response_model=UserResponse)
 async def get_user_by_username(
     username: str,
     repo: UserRepository = Depends(get_user_repository)

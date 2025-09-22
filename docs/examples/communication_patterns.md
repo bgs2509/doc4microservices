@@ -19,7 +19,7 @@ class ExternalAPIService:
             try:
                 response = await client.get(
                     f"{self.base_url}/api/v1/users/{user_id}",
-                    headers={"X-Request-ID": "unique-request-id"}
+                    headers={"X-Request-ID": f"req_{uuid.uuid4().hex}"}
                 )
                 response.raise_for_status()
                 return response.json()

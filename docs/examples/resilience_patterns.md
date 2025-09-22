@@ -41,7 +41,7 @@ class NotificationSender:
             durable=True,
             arguments={
                 "x-dead-letter-exchange": "notifications.dlx",
-                # "x-dead-letter-routing-key": "some-key" # Опционально
+                # "x-dead-letter-routing-key": "some_key" # Опционально
             }
         )
         await main_queue.bind(main_exchange, routing_key="notifications.send")

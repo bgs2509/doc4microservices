@@ -48,6 +48,7 @@ services/api_service/
 
 ```python
 import httpx
+import uuid
 from typing import Optional, Dict, Any
 from ..core.config import settings
 from ..schemas.user import UserCreate
@@ -84,6 +85,21 @@ class UserDataClient:
                 return response.json()
             except httpx.HTTPError as e:
                 print(f"HTTP error creating user: {e}")
+                return None
+
+    async def get_user_by_username(self, username: str, request_id: str) -> Optional[Dict[str, Any]]:
+        async with httpx.AsyncClient() as client:
+            try:
+                response = await client.get(
+                    f"{self.base_url}/api/v1/users/by_username/{username}",
+                    headers={"X-Request-ID": request_id}
+                )
+                if response.status_code == 404:
+                    return None
+                response.raise_for_status()
+                return response.json()
+            except httpx.HTTPError as e:
+                print(f"HTTP error getting user by username {username}: {e}")
                 return None
 ```
 

@@ -10,23 +10,9 @@
 
 `src/clients/user_data_client.py` (дополнение)
 ```python
-class UserDataClient:
-    # ... (существующие методы get_user_by_id, create_user)
-
-    async def get_user_by_username(self, username: str, request_id: str) -> Optional[Dict[str, Any]]:
-        async with httpx.AsyncClient() as client:
-            try:
-                response = await client.get(
-                    f"{self.base_url}/api/v1/users/by-username/{username}",
-                    headers={"X-Request-ID": request_id}
-                )
-                if response.status_code == 404:
-                    return None
-                response.raise_for_status()
-                return response.json()
-            except httpx.HTTPError as e:
-                print(f"HTTP error getting user by username {username}: {e}")
-                return None
+# UserDataClient теперь определен в fastapi_service.md
+# и включает get_user_by_username.
+# Этот клиент должен быть импортирован и доступен для использования.
 ```
 
 ---
@@ -139,4 +125,4 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "bearer"}
 ```
 
-Таким образом, бизнес-сервис по-прежнему управляет логикой аутентификации (проверка паролей, создание токенов), но больше не имеет прямого доступа к хранилищу пользователей, полностью полагаясь на API Сервиса Данных.
+Таким образом, бизнес-сервис по-прежнему управляет логикой аутентификации (проверка паролей, создание токенов), но больше не имеет прямого доступа к хранилищу пользователей, полностью полагаясь на API Сервиса Данных.иса Данных.
