@@ -28,11 +28,11 @@
 
 ## Architecture Overview
 
-> **📖 CANONICAL ARCHITECTURE**: For complete architectural guidelines, see [CLAUDE.md - Architecture Guidelines](../../CLAUDE.md#architecture-guidelines). This section provides technology-specific implementation details.
+> **📖 ARCHITECTURE**: For complete architectural guidelines, see [ARCHITECTURE_GUIDE.md](../guides/ARCHITECTURE_GUIDE.md). This section provides technology-specific implementation details.
 
 ### Improved Hybrid Approach - Technology Implementation
 
-The project implements the **Improved Hybrid Approach** with centralized data services. For architectural principles and rules, see the [canonical architecture documentation](../../CLAUDE.md#architecture-guidelines).
+The project implements the **Improved Hybrid Approach** with centralized data services. For architectural principles and rules, see the [canonical architecture documentation](../guides/ARCHITECTURE_GUIDE.md).
 
 #### Technology Stack Summary
 - **Data Services**: FastAPI + SQLAlchemy 2.x (PostgreSQL) / Motor (MongoDB)
@@ -436,7 +436,7 @@ This technology stack must be implemented according to detailed guides in docs r
 
 ### Development Commands Reference
 
-> **📋 COMMANDS**: For all development commands, see the [canonical command reference in CLAUDE.md](../../CLAUDE.md#development-commands). This includes Docker, testing, linting, and deployment commands.
+> **📋 COMMANDS**: For all development commands, see the [canonical command reference in DEVELOPMENT_COMMANDS.md](../guides/DEVELOPMENT_COMMANDS.md). This includes Docker, testing, linting, and deployment commands.
 
 ### Working Examples Reference
 
