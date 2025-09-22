@@ -1,44 +1,42 @@
 # Example: Authentication in Business Service
 
-This section demonstrates how to implement JWT authentication in a **Business Service** that has no direct database access. Credential verification and user information retrieval occur through HTTP calls to **Data Service**.
+This section demonstrates how to implement JWT authentication in a **Business Service** following the "Improved Hybrid Approach" architecture. This service has no direct database access and uses the unified HTTP client approach defined in [`fastapi_service.md`](./fastapi_service.md).
+
+## Key Changes from Standard Authentication
+- **No Direct Database Access**: Uses `UserDataClient` for all user data operations
+- **Centralized HTTP Client**: Reuses the unified client architecture
+- **Security Best Practices**: Proper password hashing, JWT handling, and error responses
+- **RFC 7807 Compliance**: Standardized error responses for authentication failures
 
 ---
 
-## 1. HTTP Client for Data Access
+## 1. Unified Client Usage
 
-We need a method in `UserDataClient` to get user by username.
+The authentication service uses the `UserDataClient` defined in [`fastapi_service.md`](./fastapi_service.md). This client provides all necessary methods:
 
-`src/clients/user_data_client.py` (addition)
-```python
-# UserDataClient is now defined in fastapi_service.md
-# and includes get_user_by_username.
-# This client should be imported and available for use.
-```
+- `get_user_by_username(username: str) -> Optional[UserResponse]`
+- `get_user_by_email(email: str) -> Optional[UserResponse]`
+- `verify_user_credentials(username: str, password_hash: str) -> Optional[UserResponse]`
+
+> **📋 IMPORTANT**: This example builds upon the FastAPI service implementation. Ensure you have reviewed [`fastapi_service.md`](./fastapi_service.md) for the complete client implementation.
 
 ---
 
-## 2. Authentication Service (`src/services/auth_service.py`)
+## 2. Authentication Service Reference
 
-This service still handles passwords and JWT tokens. Its code remains virtually unchanged, but now it will work in conjunction with `UserDataClient`.
+The `AuthService` class is fully implemented in [`fastapi_service.md`](./fastapi_service.md#6-authentication-service-srcservicesauth_servicepy). It provides:
 
+- **Password Hashing**: Secure bcrypt-based password hashing
+- **JWT Token Management**: Creation and verification of JWT tokens
+- **Security Best Practices**: Proper salt generation and token validation
+
+The implementation includes:
 ```python
-from passlib.context import CryptContext
-from jose import jwt
-# ... and other imports
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 class AuthService:
-    def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        return pwd_context.verify(plain_password, hashed_password)
-
-    def create_access_token(self, data: dict) -> str:
-        # ... (token creation logic)
-        pass
-
-    def verify_token(self, token: str) -> Optional[str]:
-        # ... (token verification logic, returns username)
-        pass
+    def hash_password(self, password: str) -> str
+    def verify_password(self, plain_password: str, hashed_password: str) -> bool
+    def create_access_token(self, data: dict, expires_delta: Optional[timedelta] = None) -> str
+    def verify_token(self, token: str) -> Optional[str]
 ```
 
 ---

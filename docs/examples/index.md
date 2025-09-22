@@ -1,13 +1,22 @@
 # Service Implementation Examples and Patterns
 
-This section contains a comprehensive set of practical code examples demonstrating the implementation of various service types and architectural patterns in accordance with the **"Improved Hybrid Approach"** principle.
+This section contains comprehensive, production-ready code examples demonstrating the implementation of various service types and architectural patterns following the **"Improved Hybrid Approach"** architecture. All examples implement patterns from `docs/` rules and include:
 
-## Example Architecture
+- **RFC 7807 Error Handling**: Standardized problem details responses
+- **Request Tracking**: Correlation ID and request ID middleware
+- **Security Best Practices**: Proper password hashing, JWT authentication
+- **Real Testing**: Testcontainers integration for database testing
+- **Pagination & Filtering**: Complete data access patterns
+- **Observability**: Structured logging and tracing integration
 
-Examples are divided into two service types:
+## Architecture Overview
 
-1.  **Data Service**: Responsible for direct database interaction and provides HTTP API for data access.
-2.  **Business Services**: Implement business logic and access data exclusively through HTTP calls to Data Services.
+Examples demonstrate the two-tier service architecture:
+
+1. **Data Services**: Centralized database access with HTTP APIs (`db_postgres_service`, `db_mongo_service`)
+2. **Business Services**: HTTP-only data access with business logic (`api_service`, `bot_service`, `worker_service`)
+
+All examples follow the principles defined in [`../guides/ARCHITECTURE_GUIDE.md`](../guides/ARCHITECTURE_GUIDE.md) and implement patterns from [`../INDEX.md`](../INDEX.md).
 
 ---
 
