@@ -42,17 +42,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Reference Materials
 
-7. **[docs/reference/tech_stack.md](docs/reference/tech_stack.md)** - **TECHNOLOGY AUTHORITY**
-   - 🔧 Complete technology specifications and versions
-   - 📦 Library compatibility and requirements
-   - ⚙️ Infrastructure configuration details
-
-8. **[docs/reference/service-examples.md](docs/reference/service-examples.md)** - **WORKING EXAMPLES**
+7. **[docs/reference/service-examples.md](docs/reference/service-examples.md)** - **WORKING EXAMPLES**
    - 💻 Complete, runnable service implementations
    - 🎯 Real-world patterns and best practices
    - 🧪 Testing examples and patterns
 
-9. **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** - **PROBLEM SOLVING**
+8. **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** - **PROBLEM SOLVING**
    - 🐛 Common issues and solutions
    - 🔍 Diagnostic procedures
    - 🚨 Emergency troubleshooting steps

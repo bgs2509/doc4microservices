@@ -27,7 +27,7 @@ base_template:
 infrastructure_services:
   # PostgreSQL Database
   postgres:
-    image: "postgres:15-alpine"
+    image: "postgres:16"
     container_name: "{{project_name}}_postgres"
     environment:
       POSTGRES_DB: "{{project_name}}_db"
@@ -69,7 +69,7 @@ infrastructure_services:
 
   # RabbitMQ Message Broker
   rabbitmq:
-    image: "rabbitmq:3.12-management"
+    image: "rabbitmq:3.13-management"
     container_name: "{{project_name}}_rabbitmq"
     environment:
       RABBITMQ_DEFAULT_USER: "{{rabbitmq_user}}"

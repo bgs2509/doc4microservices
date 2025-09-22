@@ -45,9 +45,9 @@ deployment_pipeline:
         name: "pull_base_images"
         description: "Pull required Docker images"
         images:
-          - "postgres:15-alpine"
+          - "postgres:16"
           - "mongo:7.0"
-          - "rabbitmq:3.12-management"
+          - "rabbitmq:3.13-management"
           - "redis:7-alpine"
 
       2:
