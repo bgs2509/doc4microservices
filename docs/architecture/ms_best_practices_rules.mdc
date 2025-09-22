@@ -81,7 +81,7 @@ Define a single, system-wide standard for Python microservices covering design, 
 12) Event loop management and service separation
    - MUST follow the canonical architecture guidelines defined in the main project documentation.
    - For complete service separation requirements, see [Architecture Guidelines](../../CLAUDE.md#architecture-guidelines).
-   - For detailed technology specifications, see [Technology Stack](../../../docs/tech_stack.md).
+   - For detailed technology specifications, see [Technology Stack](../reference/tech_stack.md).
 13) Python runtime and technology requirements
    - MUST follow the unified technology stack as specified in the canonical documentation.
    - For complete version requirements and technology specifications, see [Technology Stack](../reference/tech_stack.md).

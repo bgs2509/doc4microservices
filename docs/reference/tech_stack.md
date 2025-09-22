@@ -512,7 +512,7 @@ try_microservices/                    # Root project directory
 - **Simplified Development**: Single `docker-compose up` starts entire stack including monitoring
 
 #### Deployment Commands:
-See [CLAUDE.md](../CLAUDE.md#development-commands) for complete command reference including development, production, and observability operations.
+See [CLAUDE.md](../../CLAUDE.md#development-commands) for complete command reference including development, production, and observability operations.
 
 ### Compliance Verification
 
