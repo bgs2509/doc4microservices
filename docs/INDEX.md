@@ -11,7 +11,7 @@ This is the comprehensive documentation index for the microservices project. All
 | 📋 **Run commands** | [guides/DEVELOPMENT_COMMANDS.md](guides/DEVELOPMENT_COMMANDS.md) |
 | 🎯 **Create new use case** | [guides/USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md) |
 | 🔧 **Check tech specs** | [reference/tech_stack.md](reference/tech_stack.md) |
-| 💻 **See working examples** | [reference/service-examples.md](reference/service-examples.md) |
+| 💻 **See working examples** | [examples/index.md](examples/index.md) |
 | 🐛 **Solve problems** | [reference/troubleshooting.md](reference/troubleshooting.md) |
 | 🤖 **IDE rules & patterns** | [#ide-rules--patterns](#ide-rules--patterns) |
 
@@ -28,7 +28,7 @@ Essential documentation for development and architecture understanding.
 Technical specifications, examples, and troubleshooting resources.
 
 - **[reference/tech_stack.md](reference/tech_stack.md)** - Technology specifications and versions
-- **[reference/service-examples.md](reference/service-examples.md)** - Working code examples for all service types
+- **[examples/index.md](examples/index.md)** - Working code examples for all service types
 - **[reference/troubleshooting.md](reference/troubleshooting.md)** - Common issues and solutions
 
 ## 🤖 IDE Rules & Patterns
@@ -81,7 +81,7 @@ Code quality and testing standards:
 ### For Service Development
 1. Follow [guides/USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md)
 2. Check relevant service rules in the `services` directory.
-3. Use examples from [reference/service-examples.md](reference/service-examples.md)
+3. Use examples from [examples/index.md](examples/index.md)
 4. Verify setup with [reference/tech_stack.md](reference/tech_stack.md)
 
 ### For Infrastructure Setup

@@ -423,7 +423,7 @@ docker-compose logs -f task_bot_service
 
 - **Architecture Details**: [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md)
 - **Technology Specifications**: [../reference/tech_stack.md](../reference/tech_stack.md)
-- **Working Examples**: [../reference/service-examples.md](../reference/service-examples.md)
+- **Working Examples**: [../examples/index.md](../examples/index.md)
 - **Troubleshooting Guide**: [../reference/troubleshooting.md](../reference/troubleshooting.md)
 - **Main Development Guide**: [../../CLAUDE.md](../../CLAUDE.md)
 

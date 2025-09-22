@@ -94,7 +94,7 @@ graph TB
 |----------|---------|-------------|
 | **[CLAUDE.md](CLAUDE.md)** | Main development guide | Start here - architecture, commands, setup |
 | **[docs/reference/tech_stack.md](docs/reference/tech_stack.md)** | Technology specifications | Check versions, configurations |
-| **[docs/reference/service-examples.md](docs/reference/service-examples.md)** | Working code examples | Implement new services |
+| **[docs/examples/index.md](docs/examples/index.md)** | Working code examples | Implement new services |
 | **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** | Problem solving | Fix issues, debug problems |
 | **[docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md)** | Create use cases | Build production features |
 
@@ -126,7 +126,7 @@ This project uses a carefully selected technology stack optimized for microservi
 - **🏗️ Architecture Guide**: [docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md)
 - **📋 Development Commands**: [docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md)
 - **🔧 Technology Specifications**: [docs/reference/tech_stack.md](docs/reference/tech_stack.md)
-- **💻 Working Examples**: [docs/reference/service-examples.md](docs/reference/service-examples.md)
+- **💻 Working Examples**: [docs/examples/index.md](docs/examples/index.md)
 - **🐛 Troubleshooting**: [docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)
 
 ## 📄 License

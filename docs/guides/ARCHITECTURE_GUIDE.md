@@ -407,7 +407,7 @@ async def handle_user_created_event(event_data: dict) -> None:
 ### Implementation Resources
 - **Development Commands**: [DEVELOPMENT_COMMANDS.md](DEVELOPMENT_COMMANDS.md)
 - **Technology Specifications**: [../reference/tech_stack.md](../reference/tech_stack.md)
-- **Working Examples**: [../reference/service-examples.md](../reference/service-examples.md)
+- **Working Examples**: [../examples/index.md](../examples/index.md)
 - **Troubleshooting**: [../reference/troubleshooting.md](../reference/troubleshooting.md)
 
 ### Implementation Rules
