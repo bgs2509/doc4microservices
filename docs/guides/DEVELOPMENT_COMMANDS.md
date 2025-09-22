@@ -422,10 +422,10 @@ docker-compose logs -f task_bot_service
 ## 📚 Related Documentation
 
 - **Architecture Details**: [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md)
-- **Technology Specifications**: [docs/tech_stack.md](docs/tech_stack.md)
-- **Working Examples**: [docs/service-examples.md](docs/service-examples.md)
-- **Troubleshooting Guide**: [docs/troubleshooting.md](docs/troubleshooting.md)
-- **Main Development Guide**: [CLAUDE.md](CLAUDE.md)
+- **Technology Specifications**: [../reference/tech_stack.md](../reference/tech_stack.md)
+- **Working Examples**: [../reference/service-examples.md](../reference/service-examples.md)
+- **Troubleshooting Guide**: [../reference/troubleshooting.md](../reference/troubleshooting.md)
+- **Main Development Guide**: [../../CLAUDE.md](../../CLAUDE.md)
 
 ---
 
@@ -456,4 +456,4 @@ docker-compose exec redis redis-cli -a redis123 BGSAVE
 
 ---
 
-> **📖 Documentation Hierarchy**: For complete project guidance, see [../CLAUDE.md](../CLAUDE.md). For architectural details, see [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md). For technology specifications, see [tech_stack.md](tech_stack.md).
+> **📖 Documentation Hierarchy**: For complete project guidance, see [../../CLAUDE.md](../../CLAUDE.md). For architectural details, see [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md). For technology specifications, see [../reference/tech_stack.md](../reference/tech_stack.md).

@@ -109,6 +109,30 @@ When adding new documentation:
 - Place IDE rules in appropriate category folders at root level
 - Update this index with new content
 
+### 🔗 Link Validation
+
+To maintain documentation quality, all internal links should be validated:
+
+```bash
+# Check for broken internal links (example command)
+find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \; | \
+  xargs grep -n "\[.*\](" | \
+  grep -v "http" | \
+  awk -F: '{print $1":"$2}' | \
+  sort | uniq
+
+# Recommended: Add link checker to CI/CD pipeline
+# Example: markdown-link-check or similar tool
+```
+
+### 📋 Documentation Standards
+
+- **Always use relative paths** for internal links
+- **Update INDEX.md** when adding new documentation
+- **Follow naming conventions** from [architecture/naming_conventions.mdc](architecture/naming_conventions.mdc)
+- **Avoid duplication** between documentation files
+- **Reference canonical sources** for shared information
+
 ---
 
 > **📖 Main Entry Point**: For project overview and getting started, see [../CLAUDE.md](../CLAUDE.md)

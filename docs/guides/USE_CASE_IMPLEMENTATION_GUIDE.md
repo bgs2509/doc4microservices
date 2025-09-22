@@ -30,7 +30,7 @@ This guide provides comprehensive instructions for creating production-ready use
 
 ### 2. **Development Standards**
 - **Commands**: Use [canonical development commands](DEVELOPMENT_COMMANDS.md)
-- **Technology**: Follow [complete technology specifications](docs/tech_stack.md)
+- **Technology**: Follow [complete technology specifications](../reference/tech_stack.md)
 - **Architecture**: Follow [comprehensive architecture guide](ARCHITECTURE_GUIDE.md)
 - **Naming**: Follow [../architecture/naming_conventions.mdc](../architecture/naming_conventions.mdc)
 - **Patterns**: See [../](../) for service-specific implementation patterns in services/, architecture/, infrastructure/, observability/, quality/
@@ -979,7 +979,7 @@ A complete use case implementation using the **Improved Hybrid Approach** requir
 **Estimated Implementation Time:** 2-4 days for business logic implementation when following established patterns and integrating with existing infrastructure, vs 6-10 days if trying to create separate infrastructure.
 
 **Next Steps:**
-1. Study `../CLAUDE.md` and `tech_stack.md` thoroughly
+1. Study `../../CLAUDE.md` and `../reference/tech_stack.md` thoroughly
 2. Examine existing service implementations in `services/` directory
 3. Follow `../services/` patterns for your service type
 4. Implement business logic using HTTP clients for data access

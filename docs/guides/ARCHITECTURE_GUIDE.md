@@ -95,7 +95,7 @@ These constraints are **NON-NEGOTIABLE** and must be followed in all implementat
 - **MANDATORY**: Async Libraries - Use only async-compatible libraries (asyncpg, aio-pika, redis.asyncio)
 - **MANDATORY**: Database Strategy - Dual database approach (PostgreSQL + MongoDB)
 
-> **📋 COMPLETE TECHNOLOGY SPECIFICATIONS**: For detailed versions, configurations, and compatibility information, see [docs/tech_stack.md](docs/tech_stack.md).
+> **📋 COMPLETE TECHNOLOGY SPECIFICATIONS**: For detailed versions, configurations, and compatibility information, see [../reference/tech_stack.md](../reference/tech_stack.md).
 
 #### 4. **Naming Conventions** (Enforced Project-Wide)
 - **MANDATORY**: Underscore-Only Policy - Use snake_case for ALL identifiers
@@ -406,9 +406,9 @@ async def handle_user_created_event(event_data: dict) -> None:
 
 ### Implementation Resources
 - **Development Commands**: [DEVELOPMENT_COMMANDS.md](DEVELOPMENT_COMMANDS.md)
-- **Technology Specifications**: [docs/tech_stack.md](docs/tech_stack.md)
-- **Working Examples**: [docs/service-examples.md](docs/service-examples.md)
-- **Troubleshooting**: [docs/troubleshooting.md](docs/troubleshooting.md)
+- **Technology Specifications**: [../reference/tech_stack.md](../reference/tech_stack.md)
+- **Working Examples**: [../reference/service-examples.md](../reference/service-examples.md)
+- **Troubleshooting**: [../reference/troubleshooting.md](../reference/troubleshooting.md)
 
 ### Implementation Rules
 - **Service Patterns**: [../](../) (15 rule files in architecture/, services/, infrastructure/, observability/, quality/)
@@ -419,9 +419,9 @@ async def handle_user_created_event(event_data: dict) -> None:
 - **Testing Standards**: [../quality/testing-standards.mdc](../quality/testing-standards.mdc)
 
 ### Project Organization
-- **Main Guide**: [CLAUDE.md](CLAUDE.md)
+- **Main Guide**: [../../CLAUDE.md](../../CLAUDE.md)
 - **Use Case Implementation**: [USE_CASE_IMPLEMENTATION_GUIDE.md](USE_CASE_IMPLEMENTATION_GUIDE.md)
-- **Example Use Case**: [use_cases/task_management/README.md](use_cases/task_management/README.md)
+- **Example Use Case**: [../../use_cases/task_management/README.md](../../use_cases/task_management/README.md)
 
 ---
 

@@ -193,10 +193,10 @@ Start a chat with your bot and use these commands:
 
 ### Local Development Setup
 
-> **📋 DEVELOPMENT COMMANDS**: For complete development setup and commands, see [../../docs/DEVELOPMENT_COMMANDS.md](../../docs/DEVELOPMENT_COMMANDS.md).
+> **📋 DEVELOPMENT COMMANDS**: For complete development setup and commands, see [../../docs/guides/DEVELOPMENT_COMMANDS.md](../../docs/guides/DEVELOPMENT_COMMANDS.md).
 
 ```bash
-# Follow the standard development workflow from ../../docs/DEVELOPMENT_COMMANDS.md
+# Follow the standard development workflow from ../../docs/guides/DEVELOPMENT_COMMANDS.md
 # Quick version:
 uv sync --dev                    # Install dependencies
 docker-compose up -d            # Start infrastructure
