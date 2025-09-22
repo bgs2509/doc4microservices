@@ -2,6 +2,12 @@
 
 This document demonstrates the implementation of a **Business Service** using FastAPI following the "Improved Hybrid Approach" architecture. This service **has no direct database access** and implements all patterns from `docs/services/fastapi_rules.mdc` and `docs/architecture/data-access-rules.mdc`.
 
+> **🔗 Related Examples:**
+> - **Dependencies**: [PostgreSQL Data Service](./postgres_data_service.md), [MongoDB Data Service](./mongodb_data_service.md)
+> - **HTTP Client**: [Shared HTTP Client Module](./shared_http_client.md) (used for all data service communication)
+> - **Testing**: [Comprehensive Testing Examples](./comprehensive_testing.md#unit-testing-examples)
+> - **Architecture**: [Communication Patterns](./communication_patterns.md) (HTTP + events)
+
 ## Key Characteristics
 - **Responsibility:** Implementation of business logic (e.g., user management, authentication).
 - **Data Access:** Only through HTTP calls to Data Services via standardized HTTP clients.
@@ -53,6 +59,8 @@ services/api_service/
 ---
 
 ## 2. Base HTTP Client (`src/clients/base_client.py`)
+
+> **💡 Note**: This example shows inline HTTP client implementation for demonstration. In production, use the [Shared HTTP Client Module](./shared_http_client.md) to eliminate code duplication and get enterprise-grade features like circuit breakers and advanced retry logic.
 
 Base client with proper error handling, retries, and RFC 7807 compliance.
 

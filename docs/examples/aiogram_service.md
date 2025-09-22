@@ -2,6 +2,12 @@
 
 This document demonstrates the implementation of a Telegram bot using Aiogram as a **Business Service**. The service has no direct database access and interacts with other system components through HTTP clients and message broker.
 
+> **🔗 Related Examples:**
+> - **Dependencies**: [PostgreSQL Data Service](./postgres_data_service.md#6-api-endpoints) (user data), [MongoDB Data Service](./mongodb_data_service.md#6-api-endpoints) (analytics)
+> - **HTTP Client**: [Shared HTTP Client Module](./shared_http_client.md) (for data service communication)
+> - **Event Processing**: [Worker Service](./worker_service.md) (for media processing), [Communication Patterns](./communication_patterns.md) (RabbitMQ events)
+> - **Testing**: [Comprehensive Testing](./comprehensive_testing.md#end-to-end-testing-examples) (bot interaction testing)
+
 ## Key Characteristics
 - **Responsibility:** User interaction through Telegram, command and media file processing.
 - **Data Access:** Only through HTTP calls to Data Services.

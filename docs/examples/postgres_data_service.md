@@ -2,6 +2,12 @@
 
 This document demonstrates the implementation of a **PostgreSQL Data Service** following the "Improved Hybrid Approach" architecture. This service is the single point of access to PostgreSQL database for all business services and implements all patterns from `docs/architecture/data-access-rules.mdc`.
 
+> **🔗 Related Examples:**
+> - **Used by**: [FastAPI Business Service](./fastapi_service.md#3-user-data-client), [Aiogram Bot Service](./aiogram_service.md), [Worker Service](./worker_service.md)
+> - **HTTP Communication**: [Shared HTTP Client](./shared_http_client.md#usage-examples) (for client implementation)
+> - **Companion**: [MongoDB Data Service](./mongodb_data_service.md) (for analytics and documents)
+> - **Testing**: [Comprehensive Testing](./comprehensive_testing.md#integration-testing-examples) (real database testing)
+
 ## Key Characteristics
 - **Technology:** FastAPI + SQLAlchemy 2.x with async support
 - **Responsibility:** Data models, CRUD operations, transactions, migrations, pagination

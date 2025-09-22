@@ -22,22 +22,64 @@ All examples follow the principles defined in [`../guides/ARCHITECTURE_GUIDE.md`
 
 ## Core Service Examples
 
-- **[PostgreSQL Data Service Example](./postgres_data_service.md)**: Implementation of a service that encapsulates all PostgreSQL interaction logic, including models, repositories, and migrations.
+### Data Services (Centralized Database Access)
 
-- **[FastAPI Business Service Example](./fastapi_service.md)**: FastAPI API implementation that uses Data Services for operations and has no direct database access.
+- **[PostgreSQL Data Service Example](./postgres_data_service.md)**: Complete implementation of centralized PostgreSQL access service with SQLAlchemy 2.x, repositories, migrations, and HTTP API endpoints.
+  - *Related*: [FastAPI Service Example](./fastapi_service.md#4-user-data-client-srcclientsuser_data_clientpy) (HTTP client usage), [Shared HTTP Client](./shared_http_client.md) (client implementation)
 
-- **[Aiogram Business Service Example](./aiogram_service.md)**: Ready-to-use Telegram bot that follows the architecture and works with data through HTTP.
+- **[MongoDB Data Service Example](./mongodb_data_service.md)**: Comprehensive MongoDB data service with Motor driver, aggregation pipelines, analytics collections, and document validation.
+  - *Related*: [Worker Service Example](./worker_service.md) (analytics tracking), [Shared HTTP Client](./shared_http_client.md#usage-examples) (client integration)
 
-- **[Worker Business Service Example](./worker_service.md)**: Asynchronous worker for background tasks, interacting with other services via HTTP and message broker.
+### Business Services (HTTP-Only Data Access)
+
+- **[FastAPI Business Service Example](./fastapi_service.md)**: Complete FastAPI business service with HTTP-only data access, authentication, caching, event publishing, and proper middleware.
+  - *Dependencies*: [PostgreSQL Data Service](./postgres_data_service.md), [MongoDB Data Service](./mongodb_data_service.md)
+  - *Uses*: [Shared HTTP Client](./shared_http_client.md#1-fastapi-service-integration-api_servicesrcclientsdata_clientspy), [Comprehensive Testing](./comprehensive_testing.md#unit-testing-examples)
+
+- **[Aiogram Business Service Example](./aiogram_service.md)**: Telegram bot implementation with HTTP data access, media processing, and RabbitMQ event publishing.
+  - *Dependencies*: [PostgreSQL Data Service](./postgres_data_service.md#6-api-endpoints-srcapiv1userspy), [MongoDB Data Service](./mongodb_data_service.md#6-api-endpoints-srcapiv1analyticspy)
+  - *Related*: [Worker Service Example](./worker_service.md) (media processing), [Communication Patterns](./communication_patterns.md) (event handling)
+
+- **[Worker Business Service Example](./worker_service.md)**: AsyncIO background workers with HTTP data access, queue processing, and batch operations.
+  - *Dependencies*: [MongoDB Data Service](./mongodb_data_service.md#5-analytics-repository) (analytics), [PostgreSQL Data Service](./postgres_data_service.md) (user data)
+  - *Integrates*: [Shared HTTP Client](./shared_http_client.md), [Resilience Patterns](./resilience_patterns.md)
+
+## Shared Infrastructure and Utilities
+
+### HTTP Communication
+
+- **[Shared HTTP Client Module](./shared_http_client.md)**: Enterprise-grade HTTP client with RFC 7807 error handling, circuit breakers, retry logic, and type safety.
+  - *Used by*: [FastAPI Service](./fastapi_service.md#2-user-data-client), [Aiogram Service](./aiogram_service.md), [Worker Service](./worker_service.md)
+  - *Testing*: [Comprehensive Testing](./comprehensive_testing.md#unit-testing-examples) (mocking patterns)
+
+### Testing Framework
+
+- **[Comprehensive Testing Examples](./comprehensive_testing.md)**: Complete testing suite with testcontainers, performance testing, E2E workflows, and mocking strategies.
+  - *Tests*: All service examples above
+  - *Patterns*: [Shared HTTP Client](./shared_http_client.md#testing-the-shared-client) testing, service integration testing
 
 ## Architectural Patterns and Practices
 
-- **[Authentication and Authorization in Business Service](./authentication.md)**: JWT authentication implementation example adapted for service separation architecture.
+### Core Architecture Patterns
 
-- **[Inter-Service Communication Patterns](./communication_patterns.md)**: Examples of synchronous (REST) and asynchronous (event-driven) communication.
+- **[Authentication and Authorization in Business Service](./authentication.md)**: JWT authentication implementation adapted for HTTP-only data access architecture.
+  - *Implements*: [FastAPI Service](./fastapi_service.md#6-authentication-service) patterns
+  - *Uses*: [PostgreSQL Data Service](./postgres_data_service.md) for user verification
 
-- **[Resilience Patterns](./resilience_patterns.md)**: Implementation of patterns such as Dead-Letter Queue and Circuit Breaker.
+- **[Inter-Service Communication Patterns](./communication_patterns.md)**: Examples of HTTP synchronous and RabbitMQ asynchronous communication between services.
+  - *Demonstrates*: [FastAPI](./fastapi_service.md) ↔ [Data Services](./postgres_data_service.md), [Aiogram](./aiogram_service.md) → [Worker](./worker_service.md) communication
+  - *Uses*: [Shared HTTP Client](./shared_http_client.md) for reliable communication
 
-- **[Observability](./observability.md)**: Practical examples of structured logging, tracing, and metrics collection.
+- **[Resilience Patterns](./resilience_patterns.md)**: Circuit breakers, retries, timeouts, and graceful degradation patterns.
+  - *Implemented in*: [Shared HTTP Client](./shared_http_client.md#circuit-breaker-patterns), all business services
+  - *Tested in*: [Comprehensive Testing](./comprehensive_testing.md#end-to-end-testing-examples) (failure scenarios)
 
-- **[Testing Strategies](./testing_strategies.md)**: Examples of writing unit and integration tests for all service types.
+### Observability and Quality
+
+- **[Observability](./observability.md)**: Structured logging, tracing, metrics collection, and request correlation across all services.
+  - *Applied in*: All service examples
+  - *Validated by*: [Comprehensive Testing](./comprehensive_testing.md#integration-testing-examples) (correlation testing)
+
+- **[Testing Strategies](./testing_strategies.md)**: Advanced testing patterns for microservices with real databases, HTTP mocking, and service interaction testing.
+  - *Extended by*: [Comprehensive Testing](./comprehensive_testing.md)
+  - *Applies to*: All service examples above
