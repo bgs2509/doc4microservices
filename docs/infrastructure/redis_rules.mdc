@@ -1,0 +1,536 @@
+---
+description: Redis standard for Python microservices; defines rules for asynchronous cache management and idempotency using redis.asyncio with FastAPI, Aiogram, and Asyncio integration.
+globs: ["src/**/*.py"]
+alwaysApply: true
+---
+
+### Title
+Redis Rules (Python, redis.asyncio, FastAPI, Aiogram and Asyncio Integration)
+
+### Version and Date
+- Version: v2.0.0
+- Updated: 2025-09-19
+- Owner: rules/architecture
+
+### Purpose
+Define a single, verifiable standard for Redis interaction in Python, ensuring connection reliability, key naming standardization, operation idempotency, comprehensive testing, and seamless integration with FastAPI, Aiogram, and Asyncio microservices in a single event loop.
+
+### Scope
+- Covers: connection management (Connection Pooling), key naming, data serialization, idempotency handling, testing requirements, Request ID integration, FastAPI, Aiogram, and Asyncio dependency injection, and service integration patterns.
+- Excludes: general microservice practices (see `ms_best_practices_rules.mdc`) and logging rules (see `logging_rules.mdc`).
+
+### Terms and Definitions
+- **Idempotency Key**: Unique key used to prevent operation duplication.
+- **Connection Pool**: Connection pool for efficient resource reuse.
+- **Request ID**: Cross-cutting request identifier for full tracing and idempotency.
+- **Test Fixtures**: Reusable test components for Redis connections and operations.
+- **FastAPI Dependency**: Redis client registered as dependency in FastAPI for handler injection.
+- **Aiogram Dependency**: Redis client registered as dependency in Aiogram Dispatcher for handler injection.
+- **Asyncio Dependency**: Redis client instance managed within asyncio event loop for worker services.
+
+### Rules
+1) **Connection Management**
+   - **MUST:** Use `redis.asyncio.Redis` and configure connection pool with `from_url` at application startup.
+   - **MUST:** Create Redis client instance once at application startup (e.g., in `lifespan`, `startup` lifecycle, or `main()` function) and store it in application context (state).
+   - **MUST:** For FastAPI services, register Redis client in application state using `app.state.redis = redis_client`.
+   - **MUST:** For Aiogram services, register Redis client as dependency using `dp.startup.register()` to avoid event loop conflicts.
+   - **MUST:** For Asyncio services, initialize Redis client in `main()` function and pass as dependency to worker functions.
+   - **SHOULD:** Avoid creating new connections on every request.
+
+2) **FastAPI Integration**
+   - **MUST:** Use Redis as dependency injection in FastAPI handlers to ensure single event loop compatibility.
+   - **MUST:** Register Redis client in FastAPI application state using `app.state.redis = redis_client` in lifespan.
+   - **MUST:** Access Redis client in handlers via dependency injection: `async def handler(redis: RedisClient = Depends(get_redis))`.
+   - **MUST NOT:** Use `asyncio.run()` or create separate event loops in Redis operations when used with FastAPI.
+   - **SHOULD:** Ensure Redis operations are fully async and compatible with FastAPI's event loop.
+
+3) **Aiogram Integration**
+   - **MUST:** Use Redis as dependency injection in Aiogram handlers to ensure single event loop compatibility.
+   - **MUST:** Register Redis client in Dispatcher startup using `dp.startup.register(lambda: {"redis": redis_client})`.
+   - **MUST:** Access Redis client in handlers via dependency injection: `async def handler(message: Message, redis: RedisClient)`.
+   - **MUST NOT:** Use `asyncio.run()` or create separate event loops in Redis operations when used with Aiogram.
+   - **SHOULD:** Ensure Redis operations are fully async and compatible with Aiogram's event loop.
+
+4) **Asyncio Integration**
+   - **MUST:** Use Redis client within the asyncio event loop without creating additional event loops.
+   - **MUST:** Initialize Redis client once in `main()` function and pass as dependency to worker functions.
+   - **MUST:** Use `redis.asyncio.Redis` with connection pooling for efficient resource management.
+   - **MUST NOT:** Use `asyncio.run()` or create separate event loops in Redis operations when used with asyncio services.
+   - **SHOULD:** Store Redis client in global context or dependency container for reuse across worker tasks.
+
+5) **Key Naming**
+   - **MUST:** Use unified key naming system in format `context:entity:id` (e.g., `idempotency:photo_upload:6b86b273-...`).
+   - **SHOULD:** Use prefixes to avoid conflicts between different contexts or services.
+
+6) **Idempotency Handling**
+   - **MUST:** Use Redis to check and store `Request ID` for idempotency assurance.
+   - **MUST:** Use `SETNX` (SET if Not eXists) command for atomic key existence check and setting.
+   - **MUST:** Set TTL (Time-To-Live) for idempotency keys so they are automatically deleted after expiration, e.g., `EX 3600` (1 hour).
+
+7) **Data Serialization**
+   - **MUST:** Serialize complex objects (e.g., Pydantic DTOs) to JSON or other standard string before storing in Redis.
+
+8) **Request ID Integration**
+   - **MUST:** Integrate with `logging_rules.mdc` for Request ID propagation and tracing.
+   - **MUST:** Use `get_current_request_id()` or `generate_request_id()` from `src.core.logging` for all Redis operations.
+   - **SHOULD:** Include Request ID in Redis key naming for better traceability.
+
+9) **Testing Requirements**
+   - **MUST:** Provide automated tests with `pytest` for all Redis operations; aim for high coverage; critical paths SHOULD reach 100%.
+   - **MUST:** Use `testcontainers` for Redis integration tests to ensure realistic testing environment.
+   - **MUST:** Provide test fixtures for Redis connections and operations that can be reused across test modules.
+   - **MUST:** Test both idempotency logic and data serialization with proper error handling.
+   - **MUST:** Test Request ID integration and tracing with Redis operations.
+   - **MUST:** Test error scenarios including connection failures, Redis unavailable, and TTL expiration.
+   - **MUST:** For FastAPI integration tests, use existing event loop from `pytest-asyncio` without creating new `asyncio.run()` calls.
+   - **MUST:** For Aiogram integration tests, use existing event loop from `pytest-asyncio` without creating new `asyncio.run()` calls.
+   - **MUST:** For Asyncio integration tests, use existing event loop from `pytest-asyncio` without creating new `asyncio.run()` calls.
+   - **SHOULD:** Use async test patterns with `pytest-asyncio` for all Redis operations.
+   - **SHOULD:** Provide data factories for creating test DTOs and Redis payloads.
+   - **SHOULD:** Mock external dependencies in unit tests while using real Redis in integration tests.
+
+### Priorities and Compatibility
+- Depends on: `ms_best_practices_rules.mdc` (system-wide standard), `logging_rules.mdc` (observability), `fastapi_rules.mdc` (FastAPI integration), `aiogram_rules.mdc` (Aiogram integration), `asyncio_rules.mdc` (Asyncio integration).
+- Does not duplicate: general microservice rules (see `ms_best_practices_rules.mdc`) and logging rules (see `logging_rules.mdc`).
+- Conflicts: none.
+
+### Examples
+
+```python
+# Example Redis client with connection pool and Request ID integration
+from redis.asyncio import Redis, from_url
+from src.core.logging import get_current_request_id, generate_request_id, logger
+import json
+from typing import Any
+
+class RedisClient:
+    def __init__(self, url: str) -> None:
+        self._url = url
+        self._client: Redis | None = None
+
+    async def connect(self) -> None:
+        """Initialize Redis connection with connection pool."""
+        self._client = from_url(self._url, encoding="utf-8", decode_responses=True)
+        logger.info("redis_connected url=redis://localhost")
+
+    async def check_idempotency(self, request_id: str | None = None) -> bool:
+        """Check and set idempotency key with Request ID integration."""
+        rid = request_id or get_current_request_id() or generate_request_id("redis")
+        key = f"idempotency:photo_upload:{rid}"
+
+        try:
+            is_new = await self._client.setnx(key, "processed")
+            if is_new:
+                await self._client.expire(key, 3600)  # TTL 1 hour
+                logger.info(f"idempotency_key_set key={key} ttl=3600s")
+            else:
+                logger.info(f"idempotency_key_exists key={key}")
+            return bool(is_new)
+        except Exception as e:
+            logger.error(f"idempotency_check_failed key={key} error={str(e)}")
+            raise
+
+    async def cache_data(self, key: str, data: Any, ttl: int = 3600) -> None:
+        """Cache serialized data with Request ID integration."""
+        rid = get_current_request_id() or generate_request_id("redis")
+        full_key = f"cache:{key}"
+
+        try:
+            serialized = json.dumps(data, default=str)
+            await self._client.setex(full_key, ttl, serialized)
+            logger.info(f"cache_set key={full_key} ttl={ttl}s size={len(serialized)}b")
+        except Exception as e:
+            logger.error(f"cache_set_failed key={full_key} error={str(e)}")
+            raise
+
+    async def get_cached_data(self, key: str) -> Any | None:
+        """Retrieve and deserialize cached data."""
+        rid = get_current_request_id() or generate_request_id("redis")
+        full_key = f"cache:{key}"
+
+        try:
+            data = await self._client.get(full_key)
+            if data:
+                logger.info(f"cache_hit key={full_key}")
+                return json.loads(data)
+            else:
+                logger.info(f"cache_miss key={full_key}")
+                return None
+        except Exception as e:
+            logger.error(f"cache_get_failed key={full_key} error={str(e)}")
+            raise
+
+    async def close(self) -> None:
+        """Close Redis connection."""
+        if self._client:
+            await self._client.close()
+            logger.info("redis_disconnected")
+```
+
+```python
+# Example Asyncio integration with Redis as dependency
+import asyncio
+from src.core.logging import generate_request_id, set_request_id, logger
+from src.adapters.redis.idempotency_client import RedisClient
+
+# Global Redis client for asyncio service
+redis_client: RedisClient | None = None
+
+async def main():
+    global redis_client
+
+    # Initialize Redis client
+    redis_client = RedisClient("redis://localhost:6379")
+    await redis_client.connect()
+    logger.info("redis_connected service=asyncio_worker")
+
+    # Start worker tasks
+    tasks = [
+        asyncio.create_task(worker_task_1(redis_client)),
+        asyncio.create_task(worker_task_2(redis_client)),
+    ]
+
+    try:
+        await asyncio.gather(*tasks)
+    finally:
+        await redis_client.close()
+        logger.info("redis_disconnected service=asyncio_worker")
+
+async def worker_task_1(redis: RedisClient) -> None:
+    """Worker task with Redis dependency injection."""
+    request_id = generate_request_id("worker_1")
+    set_request_id(request_id)
+
+    # Check idempotency
+    if not await redis.check_idempotency(request_id):
+        logger.info("duplicate_task_detected task=worker_1")
+        return
+
+    # Process task and cache results
+    result = {"task": "worker_1", "status": "completed"}
+    await redis.cache_data("worker:1:result", result, ttl=3600)
+    logger.info("worker_task_completed task=worker_1")
+
+async def worker_task_2(redis: RedisClient) -> None:
+    """Another worker task with Redis dependency injection."""
+    request_id = generate_request_id("worker_2")
+    set_request_id(request_id)
+
+    # Check idempotency
+    if not await redis.check_idempotency(request_id):
+        logger.info("duplicate_task_detected task=worker_2")
+        return
+
+    # Process task and cache results
+    result = {"task": "worker_2", "status": "completed"}
+    await redis.cache_data("worker:2:result", result, ttl=3600)
+    logger.info("worker_task_completed task=worker_2")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+```python
+# Example FastAPI integration with Redis as dependency
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, Depends
+from fastapi.responses import ORJSONResponse
+from src.adapters.redis.idempotency_client import RedisClient
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize Redis client
+    redis_client = RedisClient("redis://localhost:6379")
+    await redis_client.connect()
+    app.state.redis = redis_client
+
+    yield
+
+    # Graceful shutdown
+    await redis_client.close()
+
+# Redis dependency injection
+async def get_redis(app: FastAPI) -> RedisClient:
+    return app.state.redis
+
+app = FastAPI(lifespan=lifespan, default_response_class=ORJSONResponse)
+
+# Example router with Redis dependency
+from fastapi import APIRouter, Depends, status
+from src.schemas.classification import ClassificationRequest, ClassificationResponse
+
+router = APIRouter()
+
+@router.post(
+    "/classify",
+    response_model=ClassificationResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Classify text",
+    description="Returns label and confidence.",
+)
+async def classify(
+    payload: ClassificationRequest,
+    redis: RedisClient = Depends(get_redis),
+) -> ClassificationResponse:
+    # Check idempotency using Redis
+    if not await redis.check_idempotency():
+        return ClassificationResponse(label="duplicate", confidence=0.0)
+
+    # Process classification logic here
+    return ClassificationResponse(label="positive", confidence=0.95)
+```
+
+```python
+# Example Aiogram integration with Redis as dependency
+import asyncio
+from aiogram import Bot, Dispatcher, Router
+from aiogram.types import Message
+from src.core.logging import generate_request_id, set_request_id
+
+async def main():
+    bot = Bot(token="TOKEN")
+    dp = Dispatcher()
+    router = Router()
+
+    # Initialize Redis client
+    redis_client = RedisClient("redis://localhost:6379")
+    await redis_client.connect()
+
+    # Register Redis as dependency in Aiogram
+    dp.startup.register(lambda: {"redis": redis_client})
+
+    # Register handlers
+    router.message.register(handle_photo, content_types=["photo"])
+    dp.include_router(router)
+
+    # Start polling in single event loop
+    await dp.start_polling(bot)
+
+async def handle_photo(message: Message, redis: RedisClient):
+    """Handle photo message with Redis dependency injection."""
+    request_id = generate_request_id("tg", user_id=message.from_user.id, chat_id=message.chat.id)
+    set_request_id(request_id)
+
+    # Check idempotency using Redis
+    if not await redis.check_idempotency(request_id):
+        logger.info(f"duplicate_photo_detected request_id={request_id}")
+        return
+
+    # Process photo and cache metadata
+    photo_info = {
+        "file_id": message.photo[-1].file_id,
+        "user_id": message.from_user.id,
+        "chat_id": message.chat.id
+    }
+
+    await redis.cache_data(f"photo:{message.photo[-1].file_id}", photo_info, ttl=3600)
+    logger.info(f"photo_processed request_id={request_id}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+```python
+# Example test fixtures for Redis testing with FastAPI, Aiogram, and Asyncio compatibility
+import pytest
+import pytest_asyncio
+from fastapi.testclient import TestClient
+from redis.asyncio import Redis
+from testcontainers.redis import RedisContainer
+from aiogram import Bot, Dispatcher
+from aiogram.test import make_mocked_bot
+
+@pytest.fixture(scope="session")
+def redis_container():
+    with RedisContainer("redis:7-alpine") as container:
+        yield container
+
+@pytest.fixture
+async def redis_client(redis_container):
+    """Redis client for testing - uses existing event loop."""
+    client = Redis.from_url(redis_container.get_connection_url())
+    yield client
+    await client.close()
+
+@pytest.fixture
+async def redis_test_client(redis_client):
+    """Test Redis client with Request ID integration."""
+    from src.core.logging import generate_request_id, set_request_id
+
+    class TestRedisClient(RedisClient):
+        async def connect(self) -> None:
+            self._client = redis_client
+
+        async def check_idempotency(self, request_id: str | None = None) -> bool:
+            rid = request_id or generate_request_id("test")
+            set_request_id(rid)
+            return await super().check_idempotency(rid)
+
+    test_client = TestRedisClient("redis://localhost")
+    await test_client.connect()
+    yield test_client
+
+# FastAPI test fixtures
+@pytest.fixture
+async def test_app(redis_test_client):
+    """FastAPI test app with Redis dependency override."""
+    from src.main import app, get_redis
+
+    app.dependency_overrides[get_redis] = lambda: redis_test_client
+    yield app
+    app.dependency_overrides.clear()
+
+@pytest.fixture
+def client(test_app):
+    """Test client for FastAPI app."""
+    return TestClient(test_app)
+
+# Aiogram test fixtures
+@pytest.fixture
+async def aiogram_dp_with_redis(redis_test_client):
+    """Aiogram dispatcher with Redis dependency for testing."""
+    dp = Dispatcher()
+    dp.startup.register(lambda: {"redis": redis_test_client})
+    yield dp
+
+@pytest.fixture
+async def mocked_bot():
+    """Mocked Aiogram bot for testing."""
+    return make_mocked_bot()
+
+# Asyncio test fixtures
+@pytest.fixture
+async def asyncio_redis_client(redis_test_client):
+    """Redis client for asyncio service testing."""
+    return redis_test_client
+
+# Example FastAPI integration test
+@pytest.mark.asyncio
+async def test_fastapi_redis_integration(client, redis_test_client):
+    """Test FastAPI endpoint with Redis integration."""
+    # Arrange
+    payload = {"text": "This is a test message"}
+
+    # Act
+    response = client.post("/api/v1/classify", json=payload)
+
+    # Assert
+    assert response.status_code == 200
+    data = response.json()
+    assert "label" in data
+    assert "confidence" in data
+
+# Example Aiogram integration test
+@pytest.mark.asyncio
+async def test_aiogram_redis_integration(aiogram_dp_with_redis, mocked_bot):
+    """Test Redis integration with Aiogram handlers."""
+    from aiogram.types import Message, User, Chat, PhotoSize
+
+    # Arrange
+    user = User(id=123, is_bot=False, first_name="Test")
+    chat = Chat(id=456, type="private")
+    photo = PhotoSize(file_id="test_file_123", file_unique_id="unique_123", width=100, height=100, file_size=1024)
+
+    message = Message(
+        message_id=1,
+        from_user=user,
+        chat=chat,
+        date=1234567890,
+        photo=[photo]
+    )
+
+    # Act - Process message through handler
+    handler = aiogram_dp_with_redis._handlers[0].callback
+    await handler(message, redis=aiogram_dp_with_redis._data["redis"])
+
+    # Assert - Check Redis operations
+    cached_data = await aiogram_dp_with_redis._data["redis"].get_cached_data("photo:test_file_123")
+    assert cached_data is not None
+    assert cached_data["file_id"] == "test_file_123"
+    assert cached_data["user_id"] == 123
+
+# Example Asyncio integration test
+@pytest.mark.asyncio
+async def test_asyncio_redis_integration(asyncio_redis_client):
+    """Test Redis integration with asyncio worker service."""
+    # Arrange
+    request_id = "test_asyncio_req_123"
+
+    # Act - Test idempotency
+    result1 = await asyncio_redis_client.check_idempotency(request_id)
+    result2 = await asyncio_redis_client.check_idempotency(request_id)
+
+    # Assert
+    assert result1 is True  # First call succeeds
+    assert result2 is False  # Second call detects duplicate
+
+    # Act - Test caching
+    test_data = {"worker": "asyncio", "status": "completed"}
+    await asyncio_redis_client.cache_data("asyncio:test", test_data, ttl=60)
+    cached_data = await asyncio_redis_client.get_cached_data("asyncio:test")
+
+    # Assert
+    assert cached_data == test_data
+    assert cached_data["worker"] == "asyncio"
+
+@pytest.mark.asyncio
+async def test_redis_idempotency_integration(redis_test_client):
+    """Test Redis idempotency with Request ID integration."""
+    # Arrange
+    request_id = "test_req_123"
+
+    # Act - First call should succeed
+    result1 = await redis_test_client.check_idempotency(request_id)
+
+    # Act - Second call should detect duplicate
+    result2 = await redis_test_client.check_idempotency(request_id)
+
+    # Assert
+    assert result1 is True  # First call succeeds
+    assert result2 is False  # Second call detects duplicate
+
+@pytest.mark.asyncio
+async def test_redis_caching_integration(redis_test_client):
+    """Test Redis caching with data serialization."""
+    # Arrange
+    test_data = {"user_id": 123, "name": "Test User", "email": "test@example.com"}
+    cache_key = "user:123"
+
+    # Act - Cache data
+    await redis_test_client.cache_data(cache_key, test_data, ttl=60)
+
+    # Act - Retrieve data
+    cached_data = await redis_test_client.get_cached_data(cache_key)
+
+    # Assert
+    assert cached_data == test_data
+    assert cached_data["user_id"] == 123
+    assert cached_data["name"] == "Test User"
+```
+
+### Verification
+- How to verify:
+  - Check usage of `redis.asyncio.Redis` and `from_url` for client initialization.
+  - Ensure client is created once at application startup and stored in context.
+  - For FastAPI services, verify Redis is registered in application state using `app.state.redis`.
+  - For Aiogram services, verify Redis is registered as dependency using `dp.startup.register()`.
+  - For Asyncio services, verify Redis client is initialized in `main()` function and passed as dependency.
+  - Check usage of unified key naming system in format `context:entity:id`.
+  - Ensure idempotency uses `SETNX` with TTL setting.
+  - Check serialization of complex objects before storing in Redis.
+  - Verify Request ID integration with `get_current_request_id()` and `generate_request_id()`.
+  - Ensure no `asyncio.run()` calls in Redis operations when used with FastAPI, Aiogram, or Asyncio.
+  - Run Redis tests with `pytest tests/integration/test_redis_integration.py`.
+  - Verify test coverage for Redis operations reaches 100% for critical paths.
+  - Check that testcontainers are used for integration tests.
+  - Ensure test fixtures are properly scoped and reusable.
+  - Verify FastAPI, Aiogram, and Asyncio integration tests use existing event loop without conflicts.
+- Success criteria:
+  - All connections use pool; keys named consistently; idempotency implemented via SETNX with TTL; data serialized before storage; Request ID integration working; FastAPI, Aiogram, and Asyncio dependency injection working; no event loop conflicts; comprehensive test coverage achieved.
+
+### Changes
+- 2025-01-27 v1.4.0: Added Asyncio integration rules, dependency injection patterns, event loop compatibility requirements, and updated test fixtures for Asyncio compatibility alongside FastAPI and Aiogram.
+- 2025-01-27 v1.3.0: Added FastAPI integration rules, dependency injection patterns, event loop compatibility requirements, and updated test fixtures for both FastAPI and Aiogram compatibility.
+- 2025-01-27 v1.2.0: Added Aiogram integration rules, dependency injection patterns, event loop compatibility requirements, and updated test fixtures for Aiogram compatibility.
+- 2025-09-11 v1.1.0: Added comprehensive testing requirements, Request ID integration, service integration examples, and enhanced verification criteria.
+- 2025-09-11 v1.0.0: Initial Redis rules for Python microservices with redis.asyncio, connection pooling, key naming, and idempotency handling.

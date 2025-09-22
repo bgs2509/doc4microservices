@@ -1,0 +1,263 @@
+---
+description: Comprehensive naming conventions for microservices project. Prohibits hyphens, mandates underscores for consistency across files, folders, variables, functions, classes, databases, APIs, and infrastructure.
+globs: ["*.py", "*.yml", "*.yaml", "*.json", "*.toml", "*.md", "Dockerfile", "docker-compose.yml", "pyproject.toml", "requirements.txt"]
+alwaysApply: true
+---
+
+### Title
+Naming Conventions Standard - Underscore-Only Policy. Comprehensive naming rules for files, folders, variables, functions, classes, databases, APIs, and infrastructure components.
+
+### Version and Date
+- Version: v1.0.0
+- Updated: 2025-09-20
+- Owner: rules/architecture
+- ADR link (optional):
+
+### Purpose
+Establish a single, project-wide naming convention standard that prohibits hyphens and mandates underscores for all identifiers, ensuring consistency, readability, and compatibility across all microservices components.
+
+### Scope
+- Covers: All naming conventions for files, folders, Python code, databases, APIs, Docker components, Git branches, and configuration
+- Excludes: External library names and third-party tool conventions that cannot be controlled
+- Applies to: All services, infrastructure, documentation, and tooling
+
+### Terms and Definitions
+- **snake_case**: Lowercase words separated by underscores (e.g., `user_service`, `get_user_data`)
+- **PascalCase**: Words capitalized with no separators (e.g., `UserService`, `ApiClient`)
+- **UPPER_SNAKE_CASE**: Uppercase words separated by underscores (e.g., `DATABASE_URL`, `MAX_CONNECTIONS`)
+- **kebab-case**: PROHIBITED - lowercase words separated by hyphens
+- **camelCase**: PROHIBITED except where required by external libraries
+
+### Rules
+
+#### 1) File and Folder Naming
+   - **MUST** use snake_case for all Python files: `user_service.py`, `api_client.py`, `database_config.py`
+   - **MUST** use snake_case for all folders and directories: `user_service/`, `api_endpoints/`, `database_migrations/`
+   - **MUST** use snake_case for configuration files: `docker_compose.yml`, `app_config.json`
+   - **MUST** use snake_case for documentation files: `tech_stack.md`, `service_examples.md`
+   - **MUST NOT** use hyphens in any file or folder names
+   - **MUST NOT** use spaces in file or folder names
+   - **MAY** use numbers in names when logical: `migration_001_initial.py`, `version_2_api.py`
+
+#### 2) Python Code Naming
+   - **MUST** use snake_case for variables: `user_id`, `database_connection`, `api_response`
+   - **MUST** use snake_case for functions and methods: `get_user_by_id()`, `create_database_connection()`, `process_api_request()`
+   - **MUST** use snake_case for module names: `user_service.py`, `database_client.py`
+   - **MUST** use PascalCase for classes: `UserService`, `DatabaseClient`, `ApiResponse`
+   - **MUST** use UPPER_SNAKE_CASE for constants: `MAX_RETRY_ATTEMPTS`, `DEFAULT_TIMEOUT`, `DATABASE_URL`
+   - **MUST** use snake_case for package and subpackage names: `user_management/`, `api_clients/`
+   - **MUST NOT** use hyphens in any Python identifiers
+   - **MUST NOT** use camelCase except when required by external libraries
+
+#### 3) Database Naming
+   - **MUST** use snake_case for table names: `user_accounts`, `api_logs`, `service_metrics`
+   - **MUST** use snake_case for column names: `user_id`, `created_at`, `last_login_time`
+   - **MUST** use snake_case for index names: `idx_user_email`, `idx_created_at`
+   - **MUST** use snake_case for constraint names: `fk_user_account_id`, `ck_email_format`
+   - **MUST** use snake_case for database names: `user_service_db`, `analytics_db`
+   - **MUST NOT** use hyphens in any database identifiers
+
+#### 4) API and Endpoint Naming
+   - **MUST** use snake_case for API endpoint paths: `/api/v1/user_accounts`, `/api/v1/service_health`
+   - **MUST** use snake_case for query parameters: `user_id`, `max_results`, `created_after`
+   - **MUST** use snake_case for request/response field names in JSON: `user_id`, `created_at`, `api_key`
+   - **MUST** use snake_case for OpenAPI operation IDs: `get_user_by_id`, `create_user_account`
+   - **MUST NOT** use hyphens in URL paths or API identifiers
+
+#### 5) Docker and Infrastructure Naming
+   - **MUST** use snake_case for Docker service names: `api_service`, `database_service`, `user_service`
+   - **MUST** use snake_case for Docker container names: `user_service_container`, `postgres_db_container`
+   - **MUST** use snake_case for Docker network names: `microservices_network`, `database_network`
+   - **MUST** use snake_case for Docker volume names: `postgres_data`, `redis_cache`, `app_logs`
+   - **MUST** use snake_case for Docker Compose service definitions
+   - **MUST NOT** use hyphens in Docker component names
+
+#### 6) Configuration and Environment Variables
+   - **MUST** use UPPER_SNAKE_CASE for environment variables: `DATABASE_URL`, `REDIS_HOST`, `API_SECRET_KEY`
+   - **MUST** use snake_case for configuration file keys (YAML/JSON): `database_host`, `redis_port`, `log_level`
+   - **MUST** use snake_case for Pydantic Settings field names: `database_url`, `redis_host`, `debug_mode`
+   - **MUST NOT** use hyphens in configuration keys
+
+#### 7) Git and Version Control Naming
+   - **MUST** use snake_case for branch names: `feature/user_authentication`, `bugfix/database_connection`, `hotfix/api_timeout`
+   - **MUST** use snake_case for tag names: `v1_0_0`, `release_candidate_1`
+   - **SHOULD** use descriptive snake_case for commit messages: "Add user_service endpoint", "Fix database_connection timeout"
+   - **MUST NOT** use hyphens in branch or tag names
+
+#### 8) Testing and Quality Assurance
+   - **MUST** use snake_case for test file names: `test_user_service.py`, `test_database_client.py`
+   - **MUST** use snake_case for test function names: `test_get_user_by_id()`, `test_database_connection_timeout()`
+   - **MUST** use snake_case for test class names with "Test" prefix: `TestUserService`, `TestDatabaseClient`
+   - **MUST** use snake_case for fixture names: `user_service_client`, `database_session`
+
+#### 9) Logging and Monitoring
+   - **MUST** use snake_case for log file names: `application_logs.log`, `error_logs.log`, `access_logs.log`
+   - **MUST** use snake_case for metric names: `user_requests_total`, `database_connection_errors`
+   - **MUST** use snake_case for trace span names: `user_service_request`, `database_query_execution`
+   - **MUST** use snake_case for logger names: `user_service`, `database_client`, `api_gateway`
+
+#### 10) Documentation and Comments
+   - **MUST** use snake_case for documentation file names: `api_documentation.md`, `deployment_guide.md`
+   - **SHOULD** use snake_case when referencing code elements in documentation
+   - **SHOULD** maintain consistency in technical writing and comments
+
+### Enforcement and Validation
+
+#### Automated Checks
+- **MUST** implement linting rules to catch hyphen usage in Python code
+- **SHOULD** use pre-commit hooks to validate file naming conventions
+- **SHOULD** implement CI/CD pipeline checks for naming consistency
+- **MAY** use custom scripts to validate Docker and configuration naming
+
+#### Code Review Guidelines
+- **MUST** review all naming during code review process
+- **MUST** reject pull requests that violate naming conventions
+- **SHOULD** provide clear feedback on naming violations
+- **SHOULD** suggest correct naming alternatives
+
+### Exceptions and Special Cases
+
+#### Required External Tool Files
+These files MUST use hyphens due to external tool requirements and cannot be changed:
+
+**Docker and Container Orchestration:**
+- `docker-compose.yml` - Docker Compose requires this exact filename
+- `docker-compose.override.yml` - Standard Docker Compose override file
+- `docker-compose.prod.yml` - Production environment compose file
+- `docker-compose.test.yml` - Testing environment compose file
+- `.dockerignore` - Docker build context ignore file
+
+**Version Control and GitHub:**
+- `.gitignore` - Git ignore file (standard name)
+- `.github/workflows/*.yml` - GitHub Actions workflow files
+- `.git-hooks/*` - Git hook scripts (if using custom hooks)
+
+**CI/CD and Build Tools:**
+- `.pre-commit-config.yaml` - Pre-commit hooks configuration
+- `.github/dependabot.yml` - GitHub Dependabot configuration
+- Any CI/CD pipeline files that enforce hyphenated naming
+
+**Package Management:**
+- External package names in `requirements.txt` or `pyproject.toml` dependencies
+- Third-party library names that use hyphens (e.g., `flask-sqlalchemy`, `pytest-asyncio`)
+
+**Web Standards (when interfacing with external systems):**
+- HTTP header names (e.g., `Content-Type`, `Authorization`, `X-Request-ID`)
+- External API endpoint URLs that cannot be controlled
+- OAuth provider configuration keys that require hyphens
+
+#### Limited Exceptions for User-Controlled Code
+- **MAY** use hyphens in external URLs that cannot be controlled
+- **MAY** use hyphens in third-party library configurations where required by the tool
+- **MUST** document any exceptions and justifications
+- **SHOULD** minimize exceptions and work toward compliance
+- **MUST** use underscore alternatives whenever possible
+
+#### Migration Strategy
+- **SHOULD** gradually migrate existing hyphenated names to underscore format
+- **MUST** maintain backward compatibility during migration periods
+- **SHOULD** prioritize high-impact naming changes first
+- **MAY** use aliases during transition periods
+
+### Examples
+
+#### ✅ Correct Examples
+```python
+# Files and folders
+user_service/
+├── main.py
+├── api_endpoints/
+│   ├── user_management.py
+│   └── health_checks.py
+├── database_models/
+│   └── user_account.py
+└── test_user_service.py
+
+# Python code
+class UserService:
+    def __init__(self, database_client: DatabaseClient) -> None:
+        self.database_client = database_client
+        self.max_retry_attempts = MAX_RETRY_ATTEMPTS
+
+    async def get_user_by_id(self, user_id: int) -> UserAccount:
+        """Retrieve user account by ID."""
+        return await self.database_client.fetch_user(user_id)
+
+# Database
+CREATE TABLE user_accounts (
+    user_id SERIAL PRIMARY KEY,
+    email_address VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+# API endpoints
+GET /api/v1/user_accounts/{user_id}
+POST /api/v1/user_accounts
+PUT /api/v1/user_accounts/{user_id}
+
+# Docker services
+services:
+  api_service:
+    image: user_service:latest
+    container_name: user_service_container
+    networks:
+      - microservices_network
+
+# Environment variables
+DATABASE_URL=postgresql+asyncpg://user:pass@localhost/user_service_db
+REDIS_HOST=localhost
+API_SECRET_KEY=your_secret_key
+```
+
+#### ❌ Incorrect Examples
+```python
+# WRONG: Files and folders with hyphens
+user-service/
+├── main.py
+├── api-endpoints/
+│   ├── user-management.py
+│   └── health-checks.py
+└── test-user-service.py
+
+# WRONG: Python code with hyphens or camelCase
+class User-Service:  # Invalid syntax
+    def getUserById(self, userId: int):  # Should be snake_case
+        pass
+
+# WRONG: Database with hyphens
+CREATE TABLE user-accounts (  -- Invalid table name
+    user-id SERIAL PRIMARY KEY,  -- Invalid column name
+    email-address VARCHAR(255)   -- Invalid column name
+);
+
+# WRONG: API endpoints with hyphens
+GET /api/v1/user-accounts/{user-id}
+POST /api/v1/user-accounts
+
+# WRONG: Docker services with hyphens
+services:
+  api_service_bad_example:  # Should be api_service
+    image: user_service_bad_example:latest  # Should be user_service
+    container_name: user_service_container_bad_example  # Should be user_service_container
+```
+
+### Priorities and Compatibility
+- **Depends on**: ms_best_practices_rules.mdc (code style requirements)
+- **Integrates with**: fastapi_rules.mdc, testing-standards.mdc, logging_rules.mdc
+- **Supersedes**: Any existing naming conventions that allow hyphens
+- **Conflicts**: This rule prohibits hyphens across all contexts
+
+### Verification
+- **Automated checks**:
+  - `uv run ruff check .` - Validates Python naming conventions
+  - `find . -name "*-*" -type f ! -name "docker-compose*" ! -name ".dockerignore" ! -path "./.github/*" ! -name ".gitignore" ! -name ".pre-commit-config.yaml"` - Finds user-controlled files with hyphens (should return empty, excludes required external tool files)
+  - Custom scripts to validate Docker and configuration naming for user-controlled identifiers
+- **Manual review**:
+  - Code review checklist includes naming convention validation
+  - Documentation review for consistency
+  - Database schema review for naming compliance
+  - Verify that any hyphenated files are justified exceptions from the approved list
+
+### Changes
+- 2025-09-21 v1.1.0: Added comprehensive exceptions for required external tool files (docker-compose.yml, .github/*, etc.)
+- 2025-09-20 v1.0.0: Initial naming conventions standard with comprehensive underscore-only policy

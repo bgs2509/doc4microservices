@@ -1,0 +1,415 @@
+---
+description: MongoDB integration rules for Python microservices; defines patterns for async document operations, schema design, indexing, aggregation pipelines, and Motor driver usage following DDD/Hex architecture principles.
+globs: ["services/db_mongo_service/**/*.py", "services/*/src/**/*mongo*.py"]
+alwaysApply: true
+---
+
+### Title
+MongoDB Rules (Python, Motor, Document-Oriented Architecture)
+
+### Version and Date
+- Version: v1.0.0
+- Updated: 2025-09-20
+- Owner: rules/architecture
+- ADR link (optional):
+
+### Purpose
+Define comprehensive rules for MongoDB integration in Python microservices using Motor async driver, ensuring optimal document design, performance, and maintainability while following DDD/Hex architecture principles.
+
+### Scope
+- Covers: Motor driver usage, document schema design, indexing strategies, aggregation pipelines, error handling, performance optimization, and testing patterns.
+- Excludes: general microservice practices (see `ms_best_practices_rules.mdc`) and data access patterns (see `data-access-rules.mdc`).
+
+### Terms and Definitions
+- **Motor**: Async MongoDB driver for Python built on top of PyMongo.
+- **Document**: MongoDB's basic unit of data, equivalent to a row in relational databases.
+- **Collection**: MongoDB's equivalent to a table in relational databases.
+- **Aggregation Pipeline**: MongoDB's framework for data processing and analysis.
+- **Index**: Data structure that improves the speed of data retrieval operations.
+- **Repository Pattern**: Data access abstraction for MongoDB operations.
+
+### Rules
+
+1) **Motor Driver Usage**
+   - **MUST:** Use Motor (async MongoDB driver) exclusively for all MongoDB operations.
+   - **MUST:** Create a single AsyncIOMotorClient instance per application and reuse it.
+   - **MUST:** Use connection pooling with appropriate pool size settings.
+   - **MUST:** Implement proper connection lifecycle management (connect at startup, close at shutdown).
+   - **MUST NOT:** Use synchronous PyMongo driver in async applications.
+   - **SHOULD:** Configure connection timeout and retry settings appropriately.
+
+2) **Connection Management**
+   - **MUST:** Initialize MongoDB connection once during application startup.
+   - **MUST:** Store the database instance globally or in dependency injection container.
+   - **MUST:** Implement connection health checks for readiness probes.
+   - **MUST:** Close connections gracefully during application shutdown.
+   - **SHOULD:** Use connection URI with authentication and SSL settings.
+   - **SHOULD:** Implement connection retry logic with exponential backoff.
+
+3) **Repository Pattern Implementation**
+   - **MUST:** Implement repository classes for each collection with clear interfaces.
+   - **MUST:** Use async/await for all database operations within repositories.
+   - **MUST:** Implement proper error handling and logging in repository methods.
+   - **MUST:** Use Pydantic models for document validation and serialization.
+   - **SHOULD:** Implement base repository class with common CRUD operations.
+   - **SHOULD:** Use dependency injection for repository instances.
+
+4) **Document Schema Design**
+   - **MUST:** Use Pydantic models to define document schemas with validation.
+   - **MUST:** Include created_at and updated_at timestamps in all documents.
+   - **MUST:** Use meaningful field names that reflect business domain.
+   - **MUST:** Validate all document fields with appropriate constraints.
+   - **SHOULD:** Use embedded documents for related data that's always accessed together.
+   - **SHOULD:** Normalize data when documents are frequently accessed independently.
+   - **SHOULD:** Use appropriate data types (datetime for dates, ObjectId for references).
+
+5) **Indexing Strategy**
+   - **MUST:** Create indexes for all frequently queried fields.
+   - **MUST:** Create compound indexes for multi-field queries.
+   - **MUST:** Index fields used in sorting operations.
+   - **MUST:** Create unique indexes for fields that must be unique.
+   - **SHOULD:** Use sparse indexes for optional fields.
+   - **SHOULD:** Create text indexes for full-text search requirements.
+   - **SHOULD:** Monitor index usage and remove unused indexes.
+
+6) **Query Patterns and Performance**
+   - **MUST:** Use projection to limit returned fields when possible.
+   - **MUST:** Implement pagination for all list operations.
+   - **MUST:** Use appropriate query operators ($gt, $lt, $in, etc.) for efficient filtering.
+   - **MUST:** Avoid expensive operations like $regex on large collections without indexes.
+   - **SHOULD:** Use aggregation pipelines for complex data analysis.
+   - **SHOULD:** Implement query result caching for frequently accessed data.
+   - **SHOULD:** Use explain() to analyze query performance during development.
+
+7) **Aggregation Pipeline Usage**
+   - **MUST:** Use aggregation pipelines for complex data transformations and analysis.
+   - **MUST:** Structure pipelines with early filtering stages for performance.
+   - **MUST:** Use appropriate pipeline operators ($match, $group, $project, $sort, etc.).
+   - **MUST:** Limit pipeline result sets with $limit stage when appropriate.
+   - **SHOULD:** Use $lookup for joining data from multiple collections sparingly.
+   - **SHOULD:** Use index-supported stages early in the pipeline.
+   - **SHOULD:** Test aggregation pipeline performance with realistic data volumes.
+
+8) **Error Handling and Resilience**
+   - **MUST:** Handle MongoDB-specific exceptions (DuplicateKeyError, WriteError, etc.).
+   - **MUST:** Implement proper error mapping to HTTP status codes.
+   - **MUST:** Log all database errors with appropriate context.
+   - **MUST:** Handle connection failures gracefully with retry logic.
+   - **SHOULD:** Implement circuit breaker pattern for critical operations.
+   - **SHOULD:** Use read preferences for handling replica set failures.
+
+9) **Document Validation and Schema Evolution**
+   - **MUST:** Use Pydantic models for runtime document validation.
+   - **MUST:** Handle schema evolution gracefully with optional fields.
+   - **MUST:** Implement data migration strategies for breaking schema changes.
+   - **SHOULD:** Use MongoDB's built-in validation rules as an additional layer.
+   - **SHOULD:** Version document schemas when making significant changes.
+   - **SHOULD:** Implement backward compatibility for evolving schemas.
+
+10) **Testing Patterns**
+    - **MUST:** Use testcontainers with real MongoDB instances for integration tests.
+    - **MUST:** Test repository methods with various data scenarios.
+    - **MUST:** Test aggregation pipelines with realistic data sets.
+    - **MUST:** Test error handling scenarios (connection failures, validation errors).
+    - **SHOULD:** Use MongoDB in-memory engine for fast unit tests when available.
+    - **SHOULD:** Implement test data factories for consistent test data creation.
+
+11) **Security Considerations**
+    - **MUST:** Use authentication and authorization for all MongoDB connections.
+    - **MUST:** Validate and sanitize all input data before database operations.
+    - **MUST:** Use SSL/TLS for database connections in production.
+    - **MUST:** Implement proper access control at the database level.
+    - **SHOULD:** Use role-based access control (RBAC) for different service operations.
+    - **SHOULD:** Audit sensitive operations and data access.
+
+12) **Observability and Monitoring**
+    - **MUST:** Log all database operations with operation details and timing.
+    - **MUST:** Implement metrics for database operation performance.
+    - **MUST:** Monitor connection pool usage and health.
+    - **SHOULD:** Use MongoDB's built-in profiler for slow query analysis.
+    - **SHOULD:** Implement distributed tracing for database operations.
+    - **SHOULD:** Set up alerting for database errors and performance issues.
+
+### Examples
+
+```python
+# Example: MongoDB Connection Setup
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
+from src.core.config import settings
+
+# Global client and database instances
+mongodb_client: Optional[AsyncIOMotorClient] = None
+mongodb_database: Optional[AsyncIOMotorDatabase] = None
+
+async def connect_to_mongodb() -> None:
+    """Initialize MongoDB connection."""
+    global mongodb_client, mongodb_database
+
+    mongodb_client = AsyncIOMotorClient(
+        settings.mongodb_url,
+        maxPoolSize=settings.mongodb_max_pool_size,
+        minPoolSize=settings.mongodb_min_pool_size,
+        serverSelectionTimeoutMS=30000,
+    )
+
+    # Test connection
+    await mongodb_client.admin.command("ping")
+    mongodb_database = mongodb_client[settings.mongodb_db_name]
+
+async def get_database() -> AsyncIOMotorDatabase:
+    """Get MongoDB database instance."""
+    if mongodb_database is None:
+        raise RuntimeError("MongoDB not initialized")
+    return mongodb_database
+```
+
+```python
+# Example: Pydantic Document Schema
+from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import Optional, Dict, Any
+
+class AnalyticsEventCreate(BaseModel):
+    """Schema for creating analytics events."""
+    user_id: Optional[str] = Field(None, description="User identifier")
+    session_id: Optional[str] = Field(None, description="Session identifier")
+    event_type: str = Field(..., description="Type of event")
+    event_category: str = Field(..., description="Event category")
+    event_action: str = Field(..., description="Event action")
+    properties: Optional[Dict[str, Any]] = Field(None, description="Event properties")
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
+
+class AnalyticsEventDocument(AnalyticsEventCreate):
+    """Complete document schema with MongoDB fields."""
+    id: str = Field(..., alias="_id", description="Document ID")
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+```
+
+```python
+# Example: Repository Implementation
+from typing import List, Optional, Dict, Any
+from datetime import datetime, timedelta
+
+class AnalyticsRepository:
+    def __init__(self):
+        self.collection_name = "analytics_events"
+
+    async def get_collection(self):
+        """Get collection instance."""
+        db = await get_database()
+        return db[self.collection_name]
+
+    async def create_event(self, event_data: AnalyticsEventCreate) -> str:
+        """Create new analytics event."""
+        collection = await self.get_collection()
+
+        document = event_data.model_dump()
+        document["created_at"] = datetime.utcnow()
+
+        result = await collection.insert_one(document)
+        return str(result.inserted_id)
+
+    async def get_user_events(
+        self,
+        user_id: str,
+        limit: int = 100,
+        skip: int = 0,
+        event_type: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        """Get events for specific user with filtering."""
+        collection = await self.get_collection()
+
+        # Build filter
+        filter_query = {"user_id": user_id}
+        if event_type:
+            filter_query["event_type"] = event_type
+
+        # Execute query with projection and pagination
+        cursor = collection.find(
+            filter_query,
+            {"_id": 1, "event_type": 1, "timestamp": 1, "properties": 1}
+        ).sort("timestamp", -1).skip(skip).limit(limit)
+
+        events = []
+        async for event in cursor:
+            event["_id"] = str(event["_id"])
+            events.append(event)
+
+        return events
+
+    async def get_event_summary_by_type(self, days: int = 30) -> List[Dict[str, Any]]:
+        """Get event summary using aggregation pipeline."""
+        collection = await self.get_collection()
+
+        cutoff_date = datetime.utcnow() - timedelta(days=days)
+
+        pipeline = [
+            # Filter recent events
+            {"$match": {"timestamp": {"$gte": cutoff_date}}},
+
+            # Group by event type
+            {"$group": {
+                "_id": "$event_type",
+                "count": {"$sum": 1},
+                "unique_users": {"$addToSet": "$user_id"},
+                "latest_event": {"$max": "$timestamp"}
+            }},
+
+            # Project final shape
+            {"$project": {
+                "event_type": "$_id",
+                "count": 1,
+                "unique_users": {"$size": "$unique_users"},
+                "latest_event": 1
+            }},
+
+            # Sort by count
+            {"$sort": {"count": -1}}
+        ]
+
+        results = []
+        async for doc in collection.aggregate(pipeline):
+            results.append(doc)
+
+        return results
+
+    async def create_indexes(self) -> None:
+        """Create performance indexes."""
+        collection = await self.get_collection()
+
+        # Create indexes for common query patterns
+        await collection.create_index("user_id")
+        await collection.create_index("event_type")
+        await collection.create_index("timestamp")
+        await collection.create_index([("user_id", 1), ("timestamp", -1)])
+        await collection.create_index([("event_type", 1), ("timestamp", -1)])
+
+        # Text index for searching properties
+        await collection.create_index([("properties", "text")])
+```
+
+```python
+# Example: Error Handling
+from pymongo.errors import DuplicateKeyError, WriteError, ConnectionFailure
+import logging
+
+logger = logging.getLogger(__name__)
+
+class AnalyticsRepository:
+    async def create_event_with_deduplication(
+        self,
+        event_data: AnalyticsEventCreate,
+        idempotency_key: str
+    ) -> str:
+        """Create event with duplicate prevention."""
+        collection = await self.get_collection()
+
+        try:
+            # Add idempotency key to document
+            document = event_data.model_dump()
+            document["idempotency_key"] = idempotency_key
+            document["created_at"] = datetime.utcnow()
+
+            result = await collection.insert_one(document)
+            return str(result.inserted_id)
+
+        except DuplicateKeyError:
+            # Find existing document with same idempotency key
+            existing = await collection.find_one({"idempotency_key": idempotency_key})
+            if existing:
+                logger.info(f"Event already exists with key {idempotency_key}")
+                return str(existing["_id"])
+            raise
+
+        except WriteError as e:
+            logger.error(f"MongoDB write error: {e}")
+            raise DatabaseWriteError(f"Failed to create event: {e}")
+
+        except ConnectionFailure as e:
+            logger.error(f"MongoDB connection failed: {e}")
+            raise DatabaseConnectionError(f"Database unavailable: {e}")
+
+        except Exception as e:
+            logger.error(f"Unexpected database error: {e}")
+            raise DatabaseError(f"Database operation failed: {e}")
+```
+
+```python
+# Example: Testing with Testcontainers
+import pytest
+from testcontainers.mongodb import MongoDbContainer
+from motor.motor_asyncio import AsyncIOMotorClient
+
+@pytest.fixture(scope="session")
+async def mongodb_container():
+    """MongoDB test container."""
+    with MongoDbContainer("mongo:7.0") as container:
+        connection_url = container.get_connection_url()
+        yield connection_url
+
+@pytest.fixture
+async def mongodb_client(mongodb_container):
+    """MongoDB test client."""
+    client = AsyncIOMotorClient(mongodb_container)
+    yield client
+    client.close()
+
+@pytest.fixture
+async def analytics_repository(mongodb_client):
+    """Analytics repository with test database."""
+    # Use test database
+    test_db = mongodb_client["test_db"]
+
+    # Create repository instance
+    repo = AnalyticsRepository()
+    repo.collection_name = "test_analytics_events"
+
+    # Override get_collection to use test database
+    async def get_test_collection():
+        return test_db[repo.collection_name]
+
+    repo.get_collection = get_test_collection
+
+    # Create indexes
+    await repo.create_indexes()
+
+    yield repo
+
+    # Cleanup
+    await test_db.drop_collection(repo.collection_name)
+
+@pytest.mark.asyncio
+async def test_create_event(analytics_repository):
+    """Test event creation."""
+    event_data = AnalyticsEventCreate(
+        user_id="user123",
+        event_type="page_view",
+        event_category="navigation",
+        event_action="view_page"
+    )
+
+    event_id = await analytics_repository.create_event(event_data)
+    assert event_id is not None
+
+    # Verify event was created
+    events = await analytics_repository.get_user_events("user123")
+    assert len(events) == 1
+    assert events[0]["event_type"] == "page_view"
+```
+
+### Verification
+- How to verify:
+  - Run: `docker-compose up mongodb db_mongo_service`
+  - Test: `curl http://localhost:8002/ready` (should return healthy status)
+  - Verify: MongoDB collections created with proper indexes
+  - Check: Aggregation pipelines return expected results
+  - Validate: Error handling works for connection failures and validation errors
+- Success criteria:
+  - All MongoDB operations use Motor async driver
+  - Repository pattern implemented with proper error handling
+  - Indexes created for optimal query performance
+  - Aggregation pipelines work correctly
+  - Connection pooling and health checks functional
+
+### Changes
+- 2025-09-20 v1.0.0: Initial file defining MongoDB integration patterns with Motor driver and async operations.

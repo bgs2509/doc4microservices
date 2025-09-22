@@ -1,0 +1,472 @@
+# Task Management System Use Case
+
+A complete personal task management system demonstrating all microservices patterns from the boilerplate. This use case showcases the **Improved Hybrid Approach** with centralized data services and business logic separation.
+
+## 🎯 Use Case Overview
+
+This system provides a comprehensive task management solution with:
+
+- **REST API** for task CRUD operations
+- **Telegram Bot** for natural language task creation and management
+- **Smart Reminders** with due date notifications
+- **Analytics** for productivity insights and reporting
+- **File Attachments** via Telegram
+- **Real-time Events** between all services
+
+## 🏗️ Architecture
+
+### Service Types Demonstrated
+
+#### **FastAPI Service** (`api_service.py`)
+- Task CRUD operations with validation
+- User authentication and authorization
+- Redis caching for performance
+- RabbitMQ event publishing
+- HTTP-only data access via data services
+
+#### **Telegram Bot Service** (`bot_service.py`)
+- Natural language task creation
+- Quick status updates and task management
+- File attachment processing
+- Real-time notifications
+- User session management
+
+#### **AsyncIO Workers**
+- **Reminder Worker** (`reminder_worker.py`): Due date monitoring and notifications
+- **Analytics Worker** (`analytics_worker.py`): Productivity tracking and insights
+
+#### **Data Services** (from main boilerplate)
+- **PostgreSQL Service**: Task storage and relational queries
+- **MongoDB Service**: Analytics and activity logging
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+1. **Docker & Docker Compose** installed
+2. **Telegram Bot Token** (get from [@BotFather](https://t.me/botfather))
+3. **Python 3.12+** (for local development)
+
+### 1. Environment Setup
+
+```bash
+# Clone and navigate to use case
+cd use_cases/task_management
+
+# Copy environment template
+cp .env.example .env
+
+# Edit .env with your Telegram bot token
+nano .env
+```
+
+Required environment variables:
+```env
+BOT_TOKEN=your-telegram-bot-token-here
+BOT_USERNAME=your_bot_username
+
+# Optional: Database passwords (defaults provided)
+POSTGRES_PASSWORD=postgres123
+MONGO_PASSWORD=mongo123
+REDIS_PASSWORD=redis123
+RABBITMQ_PASSWORD=admin123
+```
+
+### 2. Build and Start Services
+
+```bash
+# Start complete stack
+docker-compose up -d
+
+# Or start with monitoring
+docker-compose --profile monitoring up -d
+
+# Check service health
+docker-compose ps
+```
+
+### 3. Verify Setup
+
+```bash
+# Test API service
+curl http://localhost:8000/health
+
+# Test data services
+curl http://localhost:8001/health  # PostgreSQL service
+curl http://localhost:8002/health  # MongoDB service
+
+# Check RabbitMQ management
+open http://localhost:15672  # admin/admin123
+```
+
+## 📱 Using the System
+
+### REST API Usage
+
+Access the interactive API documentation:
+- **Task API**: http://localhost:8000/docs
+- **PostgreSQL Data API**: http://localhost:8001/docs
+- **MongoDB Data API**: http://localhost:8002/docs
+
+#### Example API Calls
+
+```bash
+# Create a user account
+curl -X POST "http://localhost:8000/api/v1/auth/register" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "testuser",
+    "email": "test@example.com",
+    "password": "testpass123"
+  }'
+
+# Create a task
+curl -X POST "http://localhost:8000/api/v1/tasks" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Buy groceries",
+    "description": "Milk, bread, eggs",
+    "priority": "medium",
+    "due_date": "2025-01-16T18:00:00Z"
+  }'
+
+# Get tasks
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  "http://localhost:8000/api/v1/tasks"
+
+# Get productivity stats
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  "http://localhost:8000/api/v1/tasks/stats"
+```
+
+### Telegram Bot Usage
+
+Start a chat with your bot and use these commands:
+
+#### Basic Commands
+```
+/start                    - Initialize bot and authenticate
+/task Buy groceries tomorrow high priority  - Create task with natural language
+/mytasks                  - List your tasks
+/pending                  - Show pending tasks
+/completed                - Show completed tasks
+/stats                    - Your productivity statistics
+```
+
+#### Task Management
+```
+/done 123                 - Mark task 123 as complete
+/start_task 123           - Mark task 123 as in progress
+/cancel 123               - Cancel task 123
+```
+
+#### Natural Language Examples
+```
+/task Meeting at 3pm due today urgent
+/task Write report by friday
+/task Call mom tomorrow
+/task Buy groceries !!!  (urgent priority)
+/task Review document low priority
+```
+
+#### File Attachments
+- Send any photo or document to attach to tasks
+- Supported formats: Images, PDFs, Word docs, text files
+- Files are processed by workers for analysis
+
+### Smart Features
+
+#### Automatic Reminders
+- **Due Soon**: 1 hour before due time
+- **Overdue**: Daily notifications for overdue tasks
+- **Custom Reminders**: Set specific reminder times
+
+#### Analytics Dashboard
+- Completion rate tracking
+- Most productive hours analysis
+- Priority distribution insights
+- Overdue task patterns
+- Historical performance trends
+
+## 🔧 Development
+
+### Local Development Setup
+
+> **📋 DEVELOPMENT COMMANDS**: For complete development setup and commands, see [../../docs/DEVELOPMENT_COMMANDS.md](../../docs/DEVELOPMENT_COMMANDS.md).
+
+```bash
+# Follow the standard development workflow from ../../docs/DEVELOPMENT_COMMANDS.md
+# Quick version:
+uv sync --dev                    # Install dependencies
+docker-compose up -d            # Start infrastructure
+python api_service.py          # Run services locally
+```
+
+### Custom Configuration
+
+Edit `docker-compose.yml` for custom settings:
+
+```yaml
+# Adjust reminder intervals
+task_reminder_worker:
+  environment:
+    CHECK_INTERVAL_SECONDS: 300    # Check every 5 minutes
+    DUE_SOON_MINUTES: 60          # Notify 1 hour before due
+
+# Scale analytics processing
+task_analytics_worker:
+  environment:
+    BATCH_SIZE: 100
+    MAX_CONCURRENT_PROCESSING: 10
+```
+
+### Adding New Features
+
+1. **Extend DTOs**: Add new fields to `shared_dtos.py`
+2. **API Endpoints**: Add routes to `api_service.py`
+3. **Bot Commands**: Add handlers to `bot_service.py`
+4. **Background Processing**: Add workers or extend existing ones
+5. **Events**: Add new event types for cross-service communication
+
+## 📊 Monitoring & Observability
+
+### Built-in Monitoring
+
+```bash
+# Start with monitoring stack
+docker-compose --profile monitoring up -d
+
+# Access dashboards
+open http://localhost:3000   # Grafana (admin/admin123)
+open http://localhost:9090   # Prometheus
+open http://localhost:15672  # RabbitMQ Management
+```
+
+### Service Logs
+
+```bash
+# Follow API service logs
+docker-compose logs -f task_api_service
+
+# Follow bot service logs
+docker-compose logs -f task_bot_service
+
+# Follow worker logs
+docker-compose logs -f task_reminder_worker
+docker-compose logs -f task_analytics_worker
+
+# All logs with timestamps
+docker-compose logs -f --timestamps
+```
+
+### Health Checks
+
+```bash
+# Check all service health
+curl http://localhost:8000/health  # API
+curl http://localhost:8001/health  # PostgreSQL Data Service
+curl http://localhost:8002/health  # MongoDB Data Service
+
+# Database connectivity
+docker-compose exec postgres pg_isready -U postgres
+docker-compose exec mongodb mongosh --eval "db.adminCommand('ping')"
+docker-compose exec redis redis-cli -a redis123 ping
+```
+
+## 🧪 Testing
+
+### Manual Testing
+
+```bash
+# Test complete workflow
+curl -X POST http://localhost:8000/api/v1/auth/register ...
+# Use Telegram bot to create tasks
+# Check analytics in /stats endpoint
+# Verify reminders via bot notifications
+```
+
+### Load Testing
+
+```bash
+# Install artillery
+npm install -g artillery
+
+# Run load test
+artillery run load_test.yml
+```
+
+### Integration Testing
+
+```bash
+# Run test suite (if implemented)
+python -m pytest tests/
+
+# Test service communication
+python test_integration.py
+```
+
+## 🚀 Production Deployment
+
+### Environment Variables
+
+```env
+# Security
+SECRET_KEY=your-production-secret-key-here
+JWT_ALGORITHM=HS256
+
+# Database URLs (production)
+DATABASE_URL=postgresql+asyncpg://user:pass@prod-db:5432/tasks
+MONGODB_URL=mongodb://user:pass@prod-mongo:27017/analytics
+
+# External services
+REDIS_URL=redis://:password@prod-redis:6379/0
+RABBITMQ_URL=amqp://user:pass@prod-rabbitmq:5672/
+
+# Bot configuration
+BOT_TOKEN=production-bot-token
+BOT_USERNAME=prod_taskbot
+
+# Performance tuning
+MAX_TASKS_PER_PAGE=100
+BATCH_SIZE=200
+MAX_CONCURRENT_PROCESSING=20
+```
+
+### Scaling
+
+```bash
+# Scale API service
+docker-compose up -d --scale task_api_service=3
+
+# Scale workers
+docker-compose up -d --scale task_analytics_worker=2
+```
+
+### Backup
+
+```bash
+# Database backups
+docker-compose exec postgres pg_dump -U postgres task_management_db > backup.sql
+docker-compose exec mongodb mongodump --db task_analytics_db --out /backup/
+```
+
+## 🔍 Troubleshooting
+
+### Common Issues
+
+#### Bot Not Responding
+```bash
+# Check bot service logs
+docker-compose logs task_bot_service
+
+# Verify bot token
+echo $BOT_TOKEN
+
+# Test bot externally
+curl "https://api.telegram.org/bot$BOT_TOKEN/getMe"
+```
+
+#### Database Connection Issues
+```bash
+# Check database health
+docker-compose exec postgres pg_isready
+docker-compose exec mongodb mongosh --eval "db.adminCommand('ping')"
+
+# Check data service connectivity
+curl http://localhost:8001/health
+curl http://localhost:8002/health
+```
+
+#### Missing Notifications
+```bash
+# Check reminder worker
+docker-compose logs task_reminder_worker
+
+# Verify RabbitMQ queues
+open http://localhost:15672
+```
+
+#### Performance Issues
+```bash
+# Check Redis memory usage
+docker-compose exec redis redis-cli -a redis123 info memory
+
+# Monitor resource usage
+docker stats
+
+# Check queue backlogs
+docker-compose exec rabbitmq rabbitmqctl list_queues
+```
+
+### Debug Mode
+
+```bash
+# Enable debug logging
+docker-compose -f docker-compose.yml -f docker-compose.debug.yml up -d
+
+# Access container for debugging
+docker-compose exec task_api_service bash
+```
+
+## 📚 Learning Outcomes
+
+This use case demonstrates:
+
+### ✅ **Microservices Patterns**
+- Service separation by business domain
+- HTTP communication between business services
+- Event-driven architecture with RabbitMQ
+- Centralized data access via data services
+
+### ✅ **Technology Integration**
+- FastAPI for REST APIs
+- Aiogram for Telegram bot development
+- AsyncIO for background workers
+- PostgreSQL + MongoDB dual database strategy
+- Redis for caching and session management
+
+### ✅ **Production Practices**
+- Containerized deployment
+- Health checks and monitoring
+- Graceful shutdown handling
+- Error handling and retry logic
+- Structured logging with request tracing
+
+### ✅ **Real-World Features**
+- User authentication and authorization
+- File upload and processing
+- Natural language parsing
+- Real-time notifications
+- Analytics and reporting
+- Automated background tasks
+
+## 🎯 Next Steps
+
+### Extend the System
+1. **Add team collaboration** (shared tasks, assignments)
+2. **Implement subtasks** and task dependencies
+3. **Add calendar integration** (Google Calendar, Outlook)
+4. **Create mobile app** using the REST API
+5. **Add voice commands** via Telegram voice messages
+6. **Implement task templates** for recurring tasks
+
+### Advanced Features
+1. **AI-powered task prioritization**
+2. **Productivity coaching** with ML insights
+3. **Integration with external tools** (Jira, Trello, Slack)
+4. **Advanced analytics** with charts and trends
+5. **Multi-language support** for international users
+
+---
+
+## 📞 Support
+
+For questions about this use case:
+
+1. **Check logs**: `docker-compose logs [service-name]`
+2. **Review documentation**: See main project README.md
+3. **Test individual services**: Use health check endpoints
+4. **Validate configuration**: Check environment variables
+
+This use case serves as a complete reference implementation for building production-ready microservices with the boilerplate architecture! 🚀

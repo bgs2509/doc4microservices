@@ -1,0 +1,448 @@
+version: '3.8'
+
+# Task Management System Use Case
+# Complete microservices stack for personal task management with Telegram bot integration
+# This compose file demonstrates all service types from the boilerplate working together
+
+services:
+  # =============================================================================
+  # Infrastructure Services
+  # =============================================================================
+
+  postgres:
+    image: postgres:16
+    container_name: task_postgres
+    environment:
+      POSTGRES_DB: task_management_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql/init_tasks.sql:/docker-entrypoint-initdb.d/init_tasks.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - task_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d task_management_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  mongodb:
+    image: mongo:7.0.9
+    container_name: task_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo123
+      MONGO_INITDB_DATABASE: task_analytics_db
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+    ports:
+      - "27017:27017"
+    networks:
+      - task_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  redis:
+    image: redis:7-alpine
+    container_name: task_redis
+    command: redis-server --appendonly yes --requirepass redis123
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - task_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: task_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+      RABBITMQ_DEFAULT_VHOST: /
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - task_network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+
+  # =============================================================================
+  # Data Services (Improved Hybrid Approach)
+  # =============================================================================
+
+  db_postgres_service:
+    build:
+      context: ../../services/db_postgres_service
+      dockerfile: Dockerfile
+    container_name: task_db_postgres_service
+    environment:
+      # Database connection
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres123@postgres:5432/task_management_db
+
+      # Redis
+      REDIS_URL: redis://:redis123@redis:6379/0
+
+      # RabbitMQ
+      RABBITMQ_URL: amqp://admin:admin123@rabbitmq:5672/
+
+      # Service settings
+      HOST: 0.0.0.0
+      PORT: 8000
+      DEBUG: true
+
+      # Logging
+      LOG_LEVEL: INFO
+    ports:
+      - "8001:8000"
+    networks:
+      - task_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ./logs/db_postgres:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  db_mongo_service:
+    build:
+      context: ../../services/db_mongo_service
+      dockerfile: Dockerfile
+    container_name: task_db_mongo_service
+    environment:
+      # MongoDB connection
+      MONGODB_URL: mongodb://mongo:mongo123@mongodb:27017/task_analytics_db?authSource=admin
+
+      # Redis
+      REDIS_URL: redis://:redis123@redis:6379/0
+
+      # RabbitMQ
+      RABBITMQ_URL: amqp://admin:admin123@rabbitmq:5672/
+
+      # Service settings
+      HOST: 0.0.0.0
+      PORT: 8000
+      DEBUG: true
+
+      # Logging
+      LOG_LEVEL: INFO
+    ports:
+      - "8002:8000"
+    networks:
+      - task_network
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ./logs/db_mongo:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  # =============================================================================
+  # Business Services (Task Management Use Case)
+  # =============================================================================
+
+  task_api_service:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: task_api_service
+    environment:
+      # External services
+      REDIS_URL: redis://:redis123@redis:6379/0
+      RABBITMQ_URL: amqp://admin:admin123@rabbitmq:5672/
+
+      # Data services (HTTP only)
+      DB_POSTGRES_SERVICE_URL: http://db_postgres_service:8000
+      DB_MONGO_SERVICE_URL: http://db_mongo_service:8000
+
+      # Security
+      SECRET_KEY: task-management-secret-key-change-in-production
+      JWT_ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+
+      # API settings
+      HOST: 0.0.0.0
+      PORT: 8000
+      DEBUG: true
+      ALLOWED_HOSTS: '["*"]'
+      MAX_TASKS_PER_PAGE: 50
+
+      # Logging
+      LOG_LEVEL: INFO
+    ports:
+      - "8000:8000"
+    networks:
+      - task_network
+    depends_on:
+      db_postgres_service:
+        condition: service_healthy
+      db_mongo_service:
+        condition: service_healthy
+    volumes:
+      - ./logs/api:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  task_bot_service:
+    build:
+      context: .
+      dockerfile: Dockerfile.bot
+    container_name: task_bot_service
+    environment:
+      # Bot settings
+      BOT_TOKEN: ${BOT_TOKEN:-your-telegram-bot-token-here}
+      BOT_USERNAME: taskmanager_bot
+
+      # External services
+      REDIS_URL: redis://:redis123@redis:6379/0
+      RABBITMQ_URL: amqp://admin:admin123@rabbitmq:5672/
+      TASK_API_URL: http://task_api_service:8000
+
+      # File handling
+      MAX_FILE_SIZE: 10485760  # 10MB
+      ALLOWED_FILE_TYPES: '["image/jpeg", "image/png", "image/gif", "application/pdf", "text/plain"]'
+
+      # Logging
+      LOG_LEVEL: INFO
+    networks:
+      - task_network
+    depends_on:
+      task_api_service:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ./logs/bot:/app/logs
+    restart: unless-stopped
+    # Note: Bot doesn't expose HTTP port as it uses Telegram webhook/polling
+
+  task_reminder_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.reminder_worker
+    container_name: task_reminder_worker
+    environment:
+      # External services
+      REDIS_URL: redis://:redis123@redis:6379/0
+      RABBITMQ_URL: amqp://admin:admin123@rabbitmq:5672/
+      TASK_API_URL: http://task_api_service:8000
+      BOT_API_URL: http://task_bot_service:8000
+
+      # Reminder settings
+      CHECK_INTERVAL_SECONDS: 300  # 5 minutes
+      DUE_SOON_MINUTES: 60  # 1 hour
+      OVERDUE_CHECK_MINUTES: 1440  # 24 hours
+      REMINDER_RETRY_ATTEMPTS: 3
+      REMINDER_RETRY_DELAY: 60
+
+      # Notification settings
+      BATCH_SIZE: 50
+      MAX_CONCURRENT_NOTIFICATIONS: 10
+
+      # Logging
+      LOG_LEVEL: INFO
+    networks:
+      - task_network
+    depends_on:
+      task_api_service:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ./logs/reminder_worker:/app/logs
+    restart: unless-stopped
+
+  task_analytics_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.analytics_worker
+    container_name: task_analytics_worker
+    environment:
+      # External services
+      REDIS_URL: redis://:redis123@redis:6379/0
+      RABBITMQ_URL: amqp://admin:admin123@rabbitmq:5672/
+      TASK_API_URL: http://task_api_service:8000
+      DB_MONGO_SERVICE_URL: http://db_mongo_service:8000
+
+      # Analytics settings
+      BATCH_SIZE: 100
+      ANALYTICS_INTERVAL_SECONDS: 3600  # 1 hour
+      CLEANUP_INTERVAL_SECONDS: 86400  # 24 hours
+      RETENTION_DAYS: 365
+      MIN_TASKS_FOR_ANALYSIS: 5
+
+      # Performance settings
+      MAX_CONCURRENT_PROCESSING: 10
+      REDIS_CACHE_TTL: 3600
+
+      # Logging
+      LOG_LEVEL: INFO
+    networks:
+      - task_network
+    depends_on:
+      task_api_service:
+        condition: service_healthy
+      db_mongo_service:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ./logs/analytics_worker:/app/logs
+    restart: unless-stopped
+
+  # =============================================================================
+  # Observability Services (Optional - for monitoring)
+  # =============================================================================
+
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    container_name: task_prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - task_network
+    profiles:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:11.2.0
+    container_name: task_grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin123
+      GF_USERS_ALLOW_SIGN_UP: false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/etc/grafana/dashboards
+    ports:
+      - "3000:3000"
+    networks:
+      - task_network
+    depends_on:
+      - prometheus
+    profiles:
+      - monitoring
+
+# =============================================================================
+# Networks and Volumes
+# =============================================================================
+
+networks:
+  task_network:
+    driver: bridge
+    name: task_management_network
+
+volumes:
+  postgres_data:
+    name: task_postgres_data
+  mongodb_data:
+    name: task_mongodb_data
+  redis_data:
+    name: task_redis_data
+  rabbitmq_data:
+    name: task_rabbitmq_data
+  prometheus_data:
+    name: task_prometheus_data
+  grafana_data:
+    name: task_grafana_data
+
+# =============================================================================
+# Usage Examples:
+# =============================================================================
+#
+# Start the complete stack:
+#   docker-compose up -d
+#
+# Start with monitoring:
+#   docker-compose --profile monitoring up -d
+#
+# Start only infrastructure:
+#   docker-compose up -d postgres mongodb redis rabbitmq
+#
+# Start only data services:
+#   docker-compose up -d postgres mongodb redis rabbitmq db_postgres_service db_mongo_service
+#
+# Scale API service:
+#   docker-compose up -d --scale task_api_service=3
+#
+# View logs:
+#   docker-compose logs -f task_api_service
+#   docker-compose logs -f task_bot_service
+#
+# Access services:
+#   - Task API: http://localhost:8000/docs
+#   - PostgreSQL Data Service: http://localhost:8001/docs
+#   - MongoDB Data Service: http://localhost:8002/docs
+#   - RabbitMQ Management: http://localhost:15672 (admin/admin123)
+#   - Grafana (with monitoring): http://localhost:3000 (admin/admin123)
+#   - Prometheus (with monitoring): http://localhost:9090
+#
+# Testing:
+#   curl http://localhost:8000/health
+#   curl http://localhost:8001/health
+#   curl http://localhost:8002/health
+#

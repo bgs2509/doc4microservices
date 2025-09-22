@@ -1,0 +1,323 @@
+---
+description: FastAPI rules for DDD/Hex-aligned, clean architecture services; focuses on API design, routing, DI, schemas, HTTP error mapping, data access at the application layer, testing patterns, and agent-friendly extensibility; does not duplicate logging or general microservice guidance (see logging_rules.mdc and ms_best_practices_rules.mdc).
+globs: "*.py"
+alwaysApply: true
+---
+
+### Title
+FastAPI Rules (DDD/Hex, clean architecture, no duplication)
+
+### Version and Date
+- Version: v2.0.0
+- Updated: 2025-09-19
+- Owner: rules/architecture
+- ADR link (optional): ADR-XXX
+
+### Purpose
+Define FastAPI-specific, testable rules for building clean, DDD/Hex‑aligned HTTP APIs: thin routers, strict layering, DTO schemas, error mapping to RFC 7807, dependency injection, versioning, and agent‑friendly extensibility.
+
+### Scope
+- Covers: API design and consistency; routing; DI; request/response schemas; HTTP error mapping; application‑layer data access boundaries; testing patterns; versioning and extensibility; Redis and RabbitMQ integration in single event loop.
+- Excludes: logging/trace/Context 7 specifics (see `logging_rules.mdc`), and general microservice guidance (see `ms_best_practices_rules.mdc`).
+
+### Terms and Definitions
+- DTO: Pydantic `BaseModel` used for HTTP request/response payloads.
+- Problem Details: RFC 7807 error structure (`type`, `title`, `detail`, `instance`, `code`).
+- Router: FastAPI `APIRouter` module that handles transport concerns only.
+- Application Service: Business/application logic orchestrated by routers via DI.
+- Redis Dependency: Redis client registered as dependency in FastAPI for handler injection.
+- RabbitMQ Dependency: RabbitMQ client registered as dependency in FastAPI for handler injection.
+
+### Rules (Normative)
+1) Architecture and layering
+   - MUST follow logging patterns as defined in `logging_rules.mdc`.
+   - MUST keep routers thin: only orchestrate services and validate transport; domain invariants and infrastructure access are forbidden in routers.
+   - MUST enforce strict layering: `api/` → `services/` (application) → `domain` → `adapters`/`infrastructure`.
+   - SHOULD prefer composition over inheritance; avoid global mutable state (only configuration/stateless clients allowed).
+2) API design and consistency
+   - MUST version public routes under `/api/v1`; breaking changes require a new major path.
+   - MUST follow HTTP method semantics (GET no side effects; PUT full replace; PATCH partial update; POST create/commands).
+   - SHOULD use curated status codes; for creations use 201 with `Location`.
+   - SHOULD provide pagination with `limit` and `cursor|offset` and return `next_cursor`.
+   - SHOULD require `Idempotency-Key` for retryable unsafe POSTs.
+   - MUST default to media type `application/json` unless explicitly required otherwise.
+3) Schemas and validation
+   - MUST define request/response DTOs as Pydantic models under `schemas/` only; routers MUST accept and return models (no raw `dict`/`list`).
+   - MUST provide `Field(..., description="...")` and constraints; use strict types, TZ‑aware `datetime`.
+   - SHOULD validate enums/regex and enforce size/length limits at schema level.
+   - MUST set `response_model` on endpoints; use `exclude_unset=True` / `exclude_none=True` when appropriate.
+4) Dependency injection and settings
+   - MUST provide external integrations via `Depends(...)`; dependencies are pure factories/adapters; IO must be fast and pool‑backed/cached.
+   - MUST centralize settings via `pydantic.BaseSettings` and a single `get_settings()`.
+   - SHOULD make dependencies override‑friendly in tests.
+5) Security and input hygiene
+   - MUST enforce safe defaults: payload size/nesting/content‑type limits; reject unsupported `Content-Type`.
+   - MUST handle AuthN/Z as dependencies; perform role/scope checks at the router boundary.
+   - MUST NOT leak secrets/PII in responses or logs (logging specifics per `logging_rules.mdc`).
+   - SHOULD enforce safe CORS defaults: deny-all by default; explicitly allow origins/methods/headers as needed; expose minimal headers only.
+6) Error handling (HTTP focus)
+   - MUST map domain/application errors to HTTP codes and RFC 7807 Problem Details; forbid ad‑hoc `HTTPException` use in endpoints.
+   - MUST normalize Pydantic validation errors into Problem Details with field paths.
+7) Observability and performance
+   - MUST follow `logging_rules.mdc` for request id/trace correlation and logging format; do not duplicate logging primitives.
+   - SHOULD use `ORJSONResponse` by default; avoid large bodies and n+1 expansions; use `StreamingResponse` for large outputs with backpressure.
+8) Data access and transactions
+   - MUST use async engines/sessions; one transactional boundary per request; single commit on success, rollback on error.
+   - MUST forbid ORM access from routers; prevent n+1; provide safe defaults for pagination/sorting.
+   - SHOULD ensure migrations are applied before exposing routes on startup.
+9) Cache, idempotency, and HTTP caching
+   - SHOULD derive Redis keys from stable inputs and version; set explicit TTLs; allow safe cache bypass.
+   - SHOULD support ETag/Last‑Modified and 304 where applicable.
+10) OpenAPI and documentation
+   - MUST set metadata (title, version, contact, license) and per‑route `summary`, `description`, and response examples.
+   - SHOULD maintain an error catalog with shared components and consistent examples for common failures.
+   - SHOULD group routers and tags by bounded context; align names with ubiquitous domain language for navigability.
+11) Testability
+   - MUST provide `create_app()`/`create_test_app()`; enable dependency overrides.
+   - MUST follow testing requirements from `testing-standards.mdc` for FastAPI services.
+12) Agent‑mode extensibility (Cursor IDE)
+   - SHOULD place new routers in `api/v1/<context>_router.py`; related schemas/services in predictable locations.
+   - SHOULD include routers via a registry in `main.py`; keep ≤ 3 files per feature change.
+   - SHOULD provide docstrings on public endpoints/services; consistent names/exports for reliable search.
+13) Versioning and compatibility
+   - SHOULD evolve backward‑compatibly: new fields are optional; breaking changes require new versioned routes.
+   - SHOULD publish deprecation notes (headers/docs) and migration examples.
+14) Operations
+   - MUST expose system endpoints `/health` and `/ready` via a dedicated router `src/api/system_router.py` without the `/api/v1` prefix; register in `src/main.py`.
+   - SHOULD implement graceful shutdown and close clients/sessions in lifespan.
+   - SHOULD handle overloads (timeouts, 429, circuit breakers) at the adapter level.
+   - MUST keep `/health` and `/ready` as a single source of truth in `src/api/system_router.py`; MUST NOT duplicate these endpoints in other routers/files.
+15) Quality control
+   - MUST pass lint/format/typing/security/tests/coverage in CI.
+   - SHOULD review contracts, status codes, error mapping, pagination, auth, tests, and docs in PRs.
+16) Constraints and prohibitions
+   - MUST NOT use implicit/magical behaviors in endpoints; dependencies/parameters are explicit and predictable.
+   - MUST provide deterministic defaults on all `Optional` parameters with documented bounds.
+17) External service integration
+   - MUST follow Redis integration patterns as defined in `redis_rules.mdc` for caching and idempotency.
+   - MUST follow RabbitMQ integration patterns as defined in `rabbitmq_rules.mdc` for messaging.
+   - MUST follow data access patterns as defined in `data-access-rules.mdc` for database operations.
+   - MUST use HTTP clients (httpx) to access data services instead of direct database connections.
+   - MUST use dependency injection for external services (Redis, RabbitMQ, HTTP clients) via FastAPI's `Depends()`.
+   - MUST register external clients in application state during lifespan and access via dependency injection.
+   - MUST ensure all external service operations are compatible with FastAPI's ASGI event loop.
+   - PROHIBITED: Direct database connections in business services (api_service, bot_service, worker_service).
+
+### Priorities and Compatibility
+- Depends on: `ms_best_practices_rules.mdc` (system-wide standard), `logging_rules.mdc` (observability), `testing-standards.mdc` (testing requirements), `redis_rules.mdc` (Redis integration), `rabbitmq_rules.mdc` (RabbitMQ integration), `data-access-rules.mdc` (database operations).
+- Does not duplicate: logging configuration/policies (see `logging_rules.mdc`), testing requirements (see `testing-standards.mdc`), Redis patterns (see `redis_rules.mdc`), RabbitMQ patterns (see `rabbitmq_rules.mdc`), data access patterns (see `data-access-rules.mdc`), or general microservice guidance (see `ms_best_practices_rules.mdc`).
+- Conflicts: if guidance here conflicts with higher‑level rules, the higher‑level rule is the source of truth; update this file accordingly.
+
+### Examples
+
+- App factory and lifespan with Redis and RabbitMQ integration (new example snippet):
+```python
+from __future__ import annotations
+
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, Depends
+from fastapi.responses import ORJSONResponse
+from redis.asyncio import Redis
+from src.adapters.redis.idempotency_client import RedisClient
+from src.adapters.rabbitmq.photo_event_publisher import RabbitMQClient
+
+def create_app() -> FastAPI:
+    app = FastAPI(default_response_class=ORJSONResponse)
+    register_routes(app)
+    return app
+
+def register_routes(app: FastAPI) -> None:
+    from src.api.v1.ai_classification_router import router as ai_router
+
+    app.include_router(ai_router, prefix="/api/v1", tags=["classification"])
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):  # noqa: D401
+    # Initialize Redis client
+    redis_client = RedisClient("redis://localhost:6379")
+    await redis_client.connect()
+    app.state.redis = redis_client
+
+    # Initialize RabbitMQ client
+    rabbitmq_client = RabbitMQClient("amqp://guest:guest@localhost:5672/")
+    await rabbitmq_client.connect()
+    app.state.rabbitmq = rabbitmq_client
+
+    yield
+
+    # Graceful shutdown
+    await redis_client.close()
+    await rabbitmq_client.close()
+
+# Redis dependency injection
+async def get_redis(app: FastAPI) -> RedisClient:
+    return app.state.redis
+
+# RabbitMQ dependency injection
+async def get_rabbitmq(app: FastAPI) -> RabbitMQClient:
+    return app.state.rabbitmq
+
+app = create_app()
+```
+
+- Router with Redis and RabbitMQ dependency injection (new example snippet):
+```python
+from __future__ import annotations
+
+from fastapi import APIRouter, Depends, status
+from src.schemas.classification import ClassificationRequest, ClassificationResponse
+from src.services.ai_classification_service import AIClassificationService, get_service
+from src.adapters.redis.idempotency_client import RedisClient
+from src.adapters.rabbitmq.photo_event_publisher import RabbitMQClient
+
+router = APIRouter()
+
+async def get_redis() -> RedisClient:
+    # This will be injected by FastAPI
+    pass
+
+async def get_rabbitmq() -> RabbitMQClient:
+    # This will be injected by FastAPI
+    pass
+
+@router.post(
+    "/classify",
+    response_model=ClassificationResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Classify text",
+    description="Returns label and confidence.",
+)
+async def classify(
+    payload: ClassificationRequest,
+    service: AIClassificationService = Depends(get_service),
+    redis: RedisClient = Depends(get_redis),
+    rabbitmq: RabbitMQClient = Depends(get_rabbitmq),
+) -> ClassificationResponse:
+    # Check idempotency using Redis
+    if not await redis.check_idempotency():
+        return ClassificationResponse(label="duplicate", confidence=0.0)
+
+    # Process classification
+    result = await service.classify(payload)
+
+    # Publish event to RabbitMQ
+    await rabbitmq.publish_classification_result(result)
+
+    return result
+```
+
+
+- Schemas: strict fields with descriptions (new example snippet):
+```python
+from __future__ import annotations
+
+from pydantic import BaseModel, Field
+
+
+class ClassificationRequest(BaseModel):
+    text: str = Field(..., description="Text to analyze, UTF‑8, up to 10,000 chars")
+
+
+class ClassificationResponse(BaseModel):
+    label: str = Field(..., description="Class label (e.g., 'positive' | 'negative')")
+    confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence [0..1]")
+```
+
+- Existing repository code excerpt — system router (operational endpoints):
+```13:22:src/api/system_router.py
+@router.get("/health", summary="Liveness probe", status_code=status.HTTP_200_OK)
+async def health() -> dict[str, str]:
+    """Return basic liveness information for the service."""
+    return {"status": "ok"}
+
+@router.get("/ready", summary="Readiness probe", status_code=status.HTTP_200_OK)
+async def ready() -> dict[str, str]:
+    """Indicate that the service is ready to accept traffic."""
+    return {"status": "ready"}
+```
+
+- Existing repository code excerpt — router registration (no `/api/v1` for system):
+```98:100:src/main.py
+app.include_router(ai_classification_router, prefix="/api/v1")
+app.include_router(system_router, tags=["system"])  # no /api/v1 prefix
+```
+
+- Existing repository code excerpt — v1 route with `response_model` and DI:
+```52:58:src/api/v1/ai_classification_router.py
+@router.post(
+    "/get_ai_classification_of_msg",
+    response_model=ClassificationResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Classify message",
+    description="Classify input text and return selected tools.",
+)
+```
+```67:72:src/api/v1/ai_classification_router.py
+async def get_ai_classification_of_msg(
+    payload: MsgPayload,
+    request: Request,
+    service: Annotated[AIClassificationService, Depends(get_service)],
+) -> ClassificationResponse:
+```
+
+- Pagination: cursor‑based (new example snippet):
+```python
+from __future__ import annotations
+
+from pydantic import BaseModel, Field
+
+
+class PageRequest(BaseModel):
+    limit: int = Field(50, ge=1, le=200, description="Page size [1..200]")
+    cursor: str | None = Field(None, description="Opaque continuation cursor")
+
+
+class PageResponse(BaseModel):
+    items: list[dict] = Field(default_factory=list, description="Returned items")
+    next_cursor: str | None = Field(None, description="Cursor for the next page")
+```
+
+- Streaming: `StreamingResponse` (new example snippet):
+```python
+from __future__ import annotations
+
+from typing import AsyncIterator
+from fastapi import APIRouter
+from starlette.responses import StreamingResponse
+
+router = APIRouter()
+
+
+async def stream_lines() -> AsyncIterator[bytes]:
+    for i in range(3):
+        yield f"line:{i}\n".encode()
+
+
+@router.get("/stream")
+async def stream() -> StreamingResponse:
+    return StreamingResponse(stream_lines(), media_type="text/plain")
+```
+
+### Verification
+- How to verify:
+  - Check routers: endpoints use `response_model`; signatures accept/return Pydantic models only.
+  - Confirm `/health` and `/ready` exist in `src/api/system_router.py` and are registered in `src/main.py` without `/api/v1` prefix (see citations above).
+  - Validate OpenAPI metadata and per‑route `summary`/`description`/examples are present.
+  - Ensure no ORM/data‑layer access from routers; dependencies are override‑friendly.
+  - Verify Redis is registered in FastAPI application state and accessed via dependency injection.
+  - Verify RabbitMQ is registered in FastAPI application state and accessed via dependency injection.
+  - Ensure no `asyncio.run()` calls in Redis or RabbitMQ operations when used with FastAPI.
+  - Run quality gates:
+    - `uv run ruff check .`
+    - `uv run ruff format .`
+    - `uv run mypy .`
+    - `uv run bandit -r .`
+    - `uv run pytest --cov=app --cov-report=html --cov-report=xml`
+- Success criteria:
+  - All checks pass; routers are thin and versioned; RFC 7807 mapping is centralized; system endpoints present and correctly registered; schemas enforced; Redis and RabbitMQ integration working in single event loop; no duplication with logging rules.
+
+### Changes
+- 2025-01-27 v1.3.0: Added RabbitMQ integration rules for FastAPI, dependency injection patterns, event loop compatibility requirements, and updated test fixtures for FastAPI compatibility with both Redis and RabbitMQ.
+- 2025-01-27 v1.2.0: Added Redis integration rules for FastAPI, dependency injection patterns, event loop compatibility requirements, and updated test fixtures for FastAPI compatibility.
+- 2025-09-05 v1.1.0: Added CORS safe defaults, bounded‑context grouping for routers/tags, and single‑source rule for system endpoints.
+- 2025-09-05 v1.0.0: Restructured to unified Cursor authoring standard; added Title/Version/Purpose/Scope/Terms; converted bullets to numbered RFC‑2119 rules; added Priorities/Compatibility; added proper repository code citations; added Verification and Changes sections.

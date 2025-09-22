@@ -1,0 +1,467 @@
+---
+description: Comprehensive observability standard for DDD/Hex microservices
+globs: ["src/**/*.py", "infrastructure/**/*"]
+alwaysApply: true
+---
+
+### Title
+Observability Rules (DDD/Hex microservices)
+
+### Version and Date
+- Version: v1.0.0
+- Updated: 2025-09-19
+- Owner: rules/architecture
+
+# Observability Rules
+
+### Purpose
+Establish a comprehensive observability strategy for DDD/Hex‑aligned microservices using the four pillars: Logs, Metrics, Traces, and Errors. Ensures production-grade monitoring, alerting, and debugging capabilities.
+
+### Scope
+- Covers: metrics collection, distributed tracing, log aggregation, error tracking, alerting, and dashboards
+- Builds on: `logging_rules.mdc` (leverages existing Request ID system)
+- Integrates with: Docker Compose architecture and existing service patterns
+- Excludes: Application-specific business metrics (defined per service)
+
+### Target Audience
+Engineers (backend, platform), Tech Leads, DevOps/SRE, monitoring specialists.
+
+### Use Cases
+Production monitoring, debugging complex microservice interactions, performance optimization, SLA monitoring, incident response, capacity planning.
+
+### Terms and Definitions
+- **Golden Signals**: Latency, Traffic, Errors, Saturation (Google SRE)
+- **Request ID**: Correlation identifier from logging_rules.mdc
+- **Trace ID**: OpenTelemetry W3C trace identifier
+- **SLI/SLO**: Service Level Indicator/Objective
+- **Error Budget**: Allowed failure rate based on SLO
+
+## Four Pillars of Observability
+
+### 1. Logs (Foundation Already Established ✅)
+**Status**: Excellent foundation via `logging_rules.mdc`
+- Request ID correlation across services
+- Structured logging with key=value pairs
+- OpenTelemetry trace integration ready
+- Secret sanitization and security
+
+**Enhancement**: Add ELK stack for centralized log aggregation and analysis
+
+### 2. Metrics (Implementation Required)
+**Technology Stack**: Prometheus + Grafana
+**Purpose**: Quantitative measurements of system behavior over time
+
+**Key Metric Categories**:
+- **Application Metrics**: Request latency, throughput, error rates
+- **Business Metrics**: User registrations, messages processed, AI model usage
+- **Infrastructure Metrics**: CPU, memory, disk, network utilization
+- **Dependency Metrics**: Database connections, Redis hit/miss, RabbitMQ queue depth
+
+### 3. Traces (Implementation Required)
+**Technology Stack**: Jaeger + OpenTelemetry
+**Purpose**: Track request flow across multiple services
+
+**Integration Points**:
+- Build on existing Request ID system from logging_rules.mdc
+- Correlate traces with structured logs
+- Track cross-service communication via RabbitMQ
+- Monitor database query performance
+
+### 4. Errors (Implementation Required)
+**Technology Stack**: Sentry + Custom middleware
+**Purpose**: Aggregate, track, and alert on application errors
+
+**Features**:
+- Automatic error grouping and deduplication
+- Performance monitoring and slow query detection
+- Release tracking and regression identification
+- User context correlation with Request ID
+
+## Core Principles
+
+### Unified Correlation
+All observability data MUST be correlated via Request ID from `logging_rules.mdc`:
+- Logs include `[request_id]` prefix
+- Metrics tagged with `request_id` when applicable
+- Traces linked to `request_id` via OpenTelemetry baggage
+- Errors associated with `request_id` for context
+
+### Non-Intrusive Integration
+Observability MUST NOT impact application performance significantly:
+- Async instrumentation where possible
+- Sampling for high-volume operations
+- Lazy evaluation for expensive metrics
+- Circuit breaker patterns for external monitoring services
+
+### Service-Type Awareness
+Different observability patterns for each service type:
+- **FastAPI**: HTTP middleware, dependency injection for metrics
+- **Aiogram**: Bot middleware, message processing metrics
+- **AsyncIO**: Worker-specific metrics, queue processing times
+
+## Service-Specific Implementation
+
+### FastAPI Services
+**Metrics Integration**:
+```python
+from prometheus_client import Counter, Histogram, generate_latest
+from src.core.logging import get_current_request_id
+
+# Application metrics
+request_count = Counter('http_requests_total', 'Total HTTP requests', ['method', 'endpoint', 'status'])
+request_duration = Histogram('http_request_duration_seconds', 'HTTP request duration')
+
+@app.middleware("http")
+async def metrics_middleware(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    duration = time.time() - start_time
+
+    request_count.labels(method=request.method, endpoint=request.url.path, status=response.status_code).inc()
+    request_duration.observe(duration)
+
+    return response
+```
+
+**Tracing Integration**:
+```python
+from opentelemetry import trace
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+
+# Auto-instrument FastAPI
+FastAPIInstrumentor.instrument_app(app)
+
+# Custom spans for business logic
+@app.post("/users")
+async def create_user(user_data: UserCreate):
+    tracer = trace.get_tracer(__name__)
+    with tracer.start_as_current_span("user.create") as span:
+        span.set_attribute("user.email", user_data.email)
+        span.set_attribute("request_id", get_current_request_id())
+        # Business logic here
+```
+
+### Aiogram Services
+**Metrics Integration**:
+```python
+from prometheus_client import Counter, Histogram
+from src.core.logging import get_current_request_id
+
+# Bot-specific metrics
+message_count = Counter('bot_messages_total', 'Total bot messages', ['message_type', 'user_id'])
+processing_duration = Histogram('bot_processing_duration_seconds', 'Message processing duration')
+
+class MetricsMiddleware(BaseMiddleware):
+    async def __call__(self, handler, event, data):
+        start_time = time.time()
+
+        # Extract message metadata
+        message_type = "text" if event.text else "media"
+        user_id = str(event.from_user.id) if event.from_user else "unknown"
+
+        try:
+            result = await handler(event, data)
+            message_count.labels(message_type=message_type, user_id=user_id).inc()
+            return result
+        finally:
+            duration = time.time() - start_time
+            processing_duration.observe(duration)
+```
+
+### AsyncIO Worker Services
+**Metrics Integration**:
+```python
+from prometheus_client import Counter, Histogram, Gauge
+
+# Worker-specific metrics
+job_count = Counter('worker_jobs_total', 'Total worker jobs', ['job_type', 'status'])
+job_duration = Histogram('worker_job_duration_seconds', 'Job processing duration')
+queue_size = Gauge('worker_queue_size', 'Current queue size')
+
+async def process_job(job_data: dict):
+    start_time = time.time()
+    job_type = job_data.get('type', 'unknown')
+
+    try:
+        # Process job logic
+        await actual_job_processing(job_data)
+        job_count.labels(job_type=job_type, status='success').inc()
+    except Exception as e:
+        job_count.labels(job_type=job_type, status='error').inc()
+        raise
+    finally:
+        duration = time.time() - start_time
+        job_duration.observe(duration)
+```
+
+## Docker Compose Integration
+
+### Observability Stack Services
+```yaml
+# Metrics & Dashboards
+prometheus:
+  image: prom/prometheus:v2.53.0
+  ports: ["9090:9090"]
+  volumes:
+    - "./infrastructure/observability/prometheus:/etc/prometheus"
+  command:
+    - '--config.file=/etc/prometheus/prometheus.yml'
+    - '--storage.tsdb.path=/prometheus'
+    - '--web.console.libraries=/etc/prometheus/console_libraries'
+    - '--web.console.templates=/etc/prometheus/consoles'
+
+grafana:
+  image: grafana/grafana:11.2.0
+  ports: ["3000:3000"]
+  volumes:
+    - "./infrastructure/observability/grafana:/var/lib/grafana"
+  environment:
+    - GF_SECURITY_ADMIN_PASSWORD=admin123
+
+# Distributed Tracing
+jaeger:
+  image: jaegertracing/all-in-one:1.50
+  ports:
+    - "16686:16686"  # Jaeger UI
+    - "14268:14268"  # HTTP collector
+  environment:
+    - COLLECTOR_OTLP_ENABLED=true
+
+# Log Aggregation (ELK Stack)
+elasticsearch:
+  image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+  environment:
+    - discovery.type=single-node
+    - xpack.security.enabled=false
+    - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+  ports: ["9200:9200"]
+  volumes: ["elasticsearch_data:/usr/share/elasticsearch/data"]
+
+logstash:
+  image: docker.elastic.co/logstash/logstash:8.15.0
+  volumes:
+    - "./infrastructure/observability/elk/logstash:/usr/share/logstash/pipeline"
+    - "./logs:/usr/share/logstash/logs"
+  ports: ["5044:5044"]
+  depends_on: [elasticsearch]
+
+kibana:
+  image: docker.elastic.co/kibana/kibana:8.15.0
+  ports: ["5601:5601"]
+  environment:
+    - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  depends_on: [elasticsearch]
+
+filebeat:
+  image: docker.elastic.co/beats/filebeat:8.15.0
+  volumes:
+    - "./infrastructure/observability/elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml"
+    - "./logs:/var/log/services"
+    - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+    - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  depends_on: [logstash]
+
+# Error Tracking
+sentry:
+  image: sentry/sentry:24.10.0
+  ports: ["9000:9000"]
+  environment:
+    - SENTRY_SECRET_KEY=your-secret-key
+    - SENTRY_POSTGRES_HOST=postgres
+    - SENTRY_REDIS_HOST=redis
+  depends_on: [postgres, redis]
+```
+
+## Alert Configuration
+
+### Prometheus AlertManager Rules
+```yaml
+# infrastructure/observability/prometheus/alerts/rules.yml
+groups:
+  - name: microservices
+    rules:
+      # High Error Rate
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate detected"
+          description: "Service {{ $labels.service }} has error rate > 10%"
+
+      # High Latency
+      - alert: HighLatency
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High latency detected"
+          description: "95th percentile latency > 1s for {{ $labels.service }}"
+
+      # Service Down
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service is down"
+          description: "Service {{ $labels.instance }} is down"
+```
+
+## Verification and Testing
+
+### Observability Health Checks
+```python
+# src/core/observability.py
+import asyncio
+from typing import Dict, Any
+from prometheus_client import CollectorRegistry, generate_latest
+import httpx
+
+async def check_observability_health() -> Dict[str, Any]:
+    """Verify all observability components are functioning."""
+    health = {}
+
+    # Check Prometheus metrics endpoint
+    try:
+        registry = CollectorRegistry()
+        metrics = generate_latest(registry)
+        health['metrics'] = 'healthy'
+    except Exception as e:
+        health['metrics'] = f'unhealthy: {str(e)}'
+
+    # Check Jaeger tracing
+    try:
+        from opentelemetry import trace
+        tracer = trace.get_tracer(__name__)
+        with tracer.start_as_current_span("health_check"):
+            health['tracing'] = 'healthy'
+    except Exception as e:
+        health['tracing'] = f'unhealthy: {str(e)}'
+
+    # Check ELK connectivity
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get("http://elasticsearch:9200/_cluster/health")
+            if response.status_code == 200:
+                health['logging'] = 'healthy'
+            else:
+                health['logging'] = 'unhealthy: elasticsearch not responding'
+    except Exception as e:
+        health['logging'] = f'unhealthy: {str(e)}'
+
+    return health
+
+# Add to FastAPI health endpoint
+@app.get("/health/observability")
+async def observability_health():
+    return await check_observability_health()
+```
+
+## Development Commands
+
+### Observability Operations
+```bash
+# Start observability stack
+docker-compose up -d prometheus grafana jaeger elasticsearch logstash kibana
+
+# Check observability services health
+docker-compose ps prometheus grafana jaeger elasticsearch
+
+# View metrics
+curl http://localhost:9090/metrics  # Prometheus metrics
+curl http://localhost:8000/metrics  # Application metrics
+
+# Access dashboards
+open http://localhost:3000  # Grafana (admin/admin123)
+open http://localhost:16686 # Jaeger UI
+open http://localhost:5601  # Kibana
+
+# Reset Grafana admin password
+docker-compose exec grafana grafana-cli admin reset-admin-password newpassword
+
+# Check ELK logs
+docker-compose logs -f logstash
+docker-compose logs -f elasticsearch
+```
+
+## Implementation Phases
+
+### Phase 1: Metrics Foundation (Week 1)
+1. Deploy Prometheus + Grafana stack
+2. Implement basic application metrics for each service type
+3. Create initial dashboards for Golden Signals
+4. Set up infrastructure monitoring (Redis, PostgreSQL, RabbitMQ exporters)
+
+### Phase 2: Distributed Tracing (Week 2)
+1. Deploy Jaeger for trace collection
+2. Implement OpenTelemetry instrumentation
+3. Correlate traces with existing Request ID system
+4. Create trace analysis dashboards
+
+### Phase 3: Log Aggregation (Week 3)
+1. Deploy ELK stack for log aggregation
+2. Configure Filebeat to ship logs from all services
+3. Create Logstash pipelines for log parsing
+4. Build Kibana dashboards for log analysis
+
+### Phase 4: Error Tracking & Alerting (Week 4)
+1. Deploy Sentry for error aggregation
+2. Configure AlertManager for critical alerts
+3. Set up notification channels (Slack, email)
+4. Create incident response runbooks
+
+### Phase 5: Advanced Observability (Week 5)
+1. Implement SLI/SLO monitoring
+2. Create custom business metrics dashboards
+3. Set up capacity planning alerts
+4. Document troubleshooting procedures
+
+## Security Considerations
+
+### Data Protection
+- **Sensitive Data**: Never expose secrets in metrics labels or trace attributes
+- **PII Handling**: Mask personal data in logs and traces (leverage sanitization from logging_rules.mdc)
+- **Access Control**: Secure Grafana, Kibana, and Jaeger with authentication
+- **Network Security**: Use internal Docker networks for observability communication
+
+### Compliance
+- **Data Retention**: Configure appropriate retention policies for logs, metrics, and traces
+- **Audit Logging**: Track access to observability dashboards and data
+- **Encryption**: Use TLS for observability data in transit
+
+## References and Dependencies
+
+### Required Cursor Rules
+- **`logging_rules.mdc`** - Foundation logging system with Request ID correlation
+- **`ms_best_practices_rules.mdc`** - Core microservice architecture patterns
+- **Service-specific rules**: `fastapi_rules.mdc`, `aiogram_rules.mdc`, `asyncio_rules.mdc`
+
+### Technology Documentation
+- **Prometheus**: https://prometheus.io/docs/
+- **Grafana**: https://grafana.com/docs/
+- **OpenTelemetry**: https://opentelemetry.io/docs/
+- **Jaeger**: https://www.jaegertracing.io/docs/
+- **ELK Stack**: https://www.elastic.co/guide/
+
+### Implementation Priority
+1. **CRITICAL**: Metrics and alerting for production readiness
+2. **HIGH**: Distributed tracing for debugging complex interactions
+3. **MEDIUM**: Log aggregation for centralized analysis
+4. **LOW**: Advanced dashboards and custom metrics
+
+---
+
+## Summary
+
+This observability strategy provides comprehensive monitoring for your microservices architecture while building on your excellent logging foundation. The four-pillar approach ensures complete visibility into system behavior, enabling proactive monitoring, efficient debugging, and reliable operations.
+
+**Key Success Factors**:
+✅ Builds on existing `logging_rules.mdc` foundation
+✅ Maintains Request ID correlation across all observability data
+✅ Follows established Docker Compose and service architecture patterns
+✅ Provides production-grade monitoring and alerting capabilities
+✅ Enables efficient debugging and incident response

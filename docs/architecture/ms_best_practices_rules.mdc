@@ -1,0 +1,284 @@
+---
+description: Comprehensive best practices for Python microservices (FastAPI, Aiogram, LangChain, SQLAlchemy, Docker, RabbitMQ, Redis, Kafka), with typing, testing, security, and deployment guidance for VPS/serverless.
+globs: ["*.py", "Dockerfile", "docker-compose.yml", "pyproject.toml", "requirements.txt"]
+alwaysApply: true
+---
+
+### Title
+Microservices Best Practices (Python Services). Comprehensive rules for building, testing, and deploying Python microservices with FastAPI, Aiogram, PostgreSQL, Docker, Git, RabbitMQ, Redis, Kafka, UV, VPS, and serverless/cloud-native environments
+
+### Version and Date
+- Version: v2.0.0
+- Updated: 2025-09-19
+- Owner: rules/architecture
+- ADR link (optional):
+
+### Purpose
+Define a single, system-wide standard for Python microservices covering design, coding, testing, security, observability, deployment, and operations to ensure consistency, reliability, and maintainability across services.
+
+### Scope
+- Covers: service structure, coding standards, typing, testing, CI quality gates, observability, dependencies, deployment hints, and operational endpoints.
+- Excludes: FastAPI specifics (see `fastapi_rules.mdc`) and logging specifics (see `logging_rules.mdc`).
+
+### Terms and Definitions
+- Service: A deployable, independently versioned unit exposing APIs, workers, or both.
+- DTO: Data Transfer Object implemented as Pydantic `BaseModel`.
+- RORO: Receive an Object, Return an Object (object-in/object-out design).
+
+### Rules
+1) Structure and architecture
+   - MUST organize code per `src/` with clear layers: `api/`, `services/`, `schemas/`, `db/`, `core/`, `utils/`, `tasks/`.
+   - SHOULD follow DDD/Hex boundaries; routers must be thin and MUST NOT access infrastructure or violate domain invariants (see `fastapi_rules.mdc`).
+   - MAY add context-specific subpackages if they do not break layering.
+   - SHOULD design services as stateless; externalize state to databases, caches, and brokers.
+   - SHOULD follow SOLID; prefer composition and clear abstractions to reduce duplication.
+   - SHOULD avoid duplication (DRY) where it improves clarity without harming locality of changes.
+   - SHOULD model explicit domain boundaries and aggregates; enforce invariants in domain entities/services; repositories MUST NOT “fix” domain invariants post‑factum.
+   - SHOULD implement an anti‑corruption layer (ACL) at application boundaries to map external payloads to domain DTOs and back.
+   - MAY use a transactional outbox pattern in adapters for reliable inter‑process integrations; ensure idempotent consumers and backoff retries.
+2) Typing and schemas
+   - MUST use full typing annotations across all code.
+   - MUST define request/response DTOs as Pydantic `BaseModel` in `schemas/` only; routers MUST accept/return models, not raw `dict`/`list`.
+   - SHOULD provide field `Field(..., description="...")` with constraints, formats, and units.
+   - MAY organize schemas by splitting into `base` (shared fields), `request` (inputs), and `response` (outputs) modules per domain area for clarity.
+   - SHOULD place schemas under `schemas/` (and subpackages), one logical type per file with a descriptive filename.
+3) Dependencies and configuration
+   - MUST manage dependencies via `pyproject.toml` and lock file (`uv.lock`).
+   - MUST centralize settings using `pydantic.BaseSettings` under `src/core/config.py`.
+   - MUST prefer widely adopted async libraries (e.g., `asyncpg`, `aio-pika`, `redis.asyncio`, `aiokafka`) across workers and background tasks.
+   - SHOULD use `async/await` end-to-end and avoid blocking sync I/O in the event loop; prefer async drivers/clients for DB, brokers, cache, and HTTP.
+4) Logging and observability
+   - MUST follow `logging_rules.mdc` for request id, trace correlation, format, handlers, and sanitization.
+   - SHOULD enable OpenTelemetry for traces/metrics/logs with environment-driven configuration.
+5) HTTP API design
+   - MUST version APIs with `/api/v1` prefix and consistent status codes; use `response_model` (see `fastapi_rules.mdc`).
+   - SHOULD provide `/health` and `/ready` endpoints without the versioned prefix via a system router.
+6) Testing and quality gates
+   - MUST follow testing requirements as defined in `testing-standards.mdc`.
+   - MUST run lint (`ruff`), type checks (`mypy`/`pyright`), and security scan (`bandit`) in CI; builds MUST fail on violations.
+7) Performance and resilience
+   - SHOULD apply caching and backpressure where applicable; avoid n+1 patterns; use streaming for large responses.
+   - SHOULD implement retries/circuit breakers for external calls; MUST avoid unbounded retries.
+   - SHOULD optimize for serverless targets by minimizing cold starts and using slim images/binaries when applicable.
+8) Security and privacy
+   - MUST avoid logging secrets; MUST sanitize sensitive fields per `logging_rules.mdc`.
+   - SHOULD enforce safe CORS defaults, content limits, and input validation.
+   - SHOULD front APIs with an API gateway for rate limiting, request transformation, and centralized security.
+   - MUST enforce authentication/authorization (e.g., OAuth2 where applicable), security headers (CORS, CSP), and payload content validation.
+   - SHOULD apply request throttling and basic DDoS protection at the edge.
+9) Operations and deployment
+   - MUST expose `/health` and `/ready` and log startup/shutdown lifecycle.
+   - SHOULD provide Dockerfile and service-specific compose definitions; environment variables drive configuration.
+   - MAY adopt a service mesh and L7 load balancing in cluster environments to improve traffic policy and observability.
+   - MAY use managed data stores when they reduce operational burden and meet SLAs (e.g., cloud-native NoSQL/relational options).
+10) Documentation
+   - SHOULD provide concise README with run/test/build instructions; MAY include API examples and troubleshooting notes.
+11) Code style and naming conventions
+   - MUST follow naming conventions as defined in `naming_conventions.mdc`.
+   - SHOULD group imports in the order: stdlib → third-party → in-project.
+   - SHOULD provide docstrings for public modules, classes, and functions; follow `pydocstyle`.
+   - MAY include explicit anchor comments in scaffolding files (e.g., `# @cursor-include-router-anchor`) to support automated generators while keeping changes localized.
+12) Event loop management and service separation
+   - MUST follow the canonical architecture guidelines defined in the main project documentation.
+   - For complete service separation requirements, see [Architecture Guidelines](../../../CLAUDE.md#architecture-guidelines).
+   - For detailed technology specifications, see [Technology Stack](../../../docs/tech_stack.md).
+13) Python runtime and technology requirements
+   - MUST follow the unified technology stack as specified in the canonical documentation.
+   - For complete version requirements and technology specifications, see [Technology Stack](../../../docs/tech_stack.md).
+
+### Priorities and Compatibility
+- Depends on: `testing-standards.mdc` (testing requirements), `naming_conventions.mdc` (naming standards).
+- Does not duplicate: Domain-specific rules (logging, FastAPI, Redis, RabbitMQ, testing specifics, etc.) - this is the base system-wide standard.
+- Conflicts: This is the base standard - other rules must align with this file.
+
+### Examples
+```python
+# Example: Strict Pydantic schemas with descriptions
+from __future__ import annotations
+from pydantic import BaseModel, Field
+
+class ClassificationRequest(BaseModel):
+    text: str = Field(..., description="Text to analyze, UTF-8, up to 10,000 chars")
+
+class ClassificationResponse(BaseModel):
+    label: str = Field(..., description="Class label (e.g., 'positive' | 'negative')")
+    confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence [0..1]")
+```
+
+```13:21:src/api/system_router.py
+@router.get("/health", summary="Liveness probe", status_code=status.HTTP_200_OK)
+async def health() -> dict[str, str]:
+    """Return basic liveness information for the service."""
+    return {"status": "ok"}
+
+@router.get("/ready", summary="Readiness probe", status_code=status.HTTP_200_OK)
+async def ready() -> dict[str, str]:
+    """Indicate that the service is ready to accept traffic."""
+    return {"status": "ready"}
+```
+
+#### Example: Project structure (root orchestration) — non‑normative
+```text
+project_root/                                    # Git Repository #1: "microservices-orchestration"
+├── .git/                                       # Git repo for project orchestration
+├── .gitignore                                  # Ignore service folders
+├── docker-compose.yml                          # Main orchestration (full stack)
+├── .env                                        # Shared environment variables
+├── README.md                                   # Project documentation
+└── services/                                   # Service definitions (may be untracked in orchestration repo)
+    ├── service_1/                              # Git Repository #2: "service_1"
+    │   ├── .git/                               # Git repo for telegram bot
+    │   ├── .gitignore                          # Service-specific gitignore
+    │   ├── .cursor/                            # Cursor IDE settings
+    │   ├── .python-version                     # Python version (3.12+)
+    │   ├── Dockerfile                          # Service container
+    │   ├── docker-compose.yml                  # Service-specific compose (only for service_1)
+    │   ├── pyproject.toml                      # Service dependencies
+    │   ├── uv.lock                             # Locked dependencies
+    │   ├── README.md                           # Service documentation
+    │   ├── src/                                # Service source code
+    │   ├── tests/                              # Service tests
+    │   ├── logs/                               # Service logs
+    │   ├── migrations/                         # Database migrations
+    │   ├── scripts/                            # Service scripts (optional)
+    │   ├── data/                               # Data storage (optional)
+    │   └── docs/                               # Service documentation (optional)
+    ├── service_2/                              # Git Repository #3: "service_2"
+    │   ├── .git/                               # Git repo for user service
+    │   ├── .gitignore                          # Service-specific gitignore
+    │   ├── .cursor/                            # Cursor IDE settings
+    │   ├── .python-version                     # Python version (3.12+)
+    │   ├── Dockerfile                          # Service container
+    │   ├── docker-compose.yml                  # Service-specific compose (only for service_2)
+    │   ├── pyproject.toml                      # Service dependencies
+    │   ├── uv.lock                             # Locked dependencies
+    │   ├── README.md                           # Service documentation
+    │   ├── src/                                # Service source code
+    │   ├── tests/                              # Service tests
+    │   ├── logs/                               # Service logs
+    │   ├── migrations/                         # Database migrations
+    │   ├── scripts/                            # Service scripts (optional)
+    │   ├── data/                               # Data storage (optional)
+    │   └── docs/                               # Service documentation (optional)
+    └── service_3/                              # Git Repository #4: "service_3"
+        ├── .git/                               # Git repo for notification service
+        ├── .gitignore                          # Service-specific gitignore
+        ├── .cursor/                            # Cursor IDE settings
+        ├── .python-version                     # Python version (3.12+)
+        ├── Dockerfile                          # Service container
+        ├── docker-compose.yml                  # Service-specific compose (only for service_3)
+        ├── pyproject.toml                      # Service dependencies
+        ├── uv.lock                             # Locked dependencies
+        ├── README.md                           # Service documentation
+        ├── src/                                # Service source code
+        ├── tests/                              # Service tests
+        ├── logs/                               # Service logs
+        ├── migrations/                         # Database migrations
+        ├── scripts/                            # Service scripts (optional)
+        ├── data/                               # Data storage (optional)
+        └── docs/                               # Service documentation (optional)
+```
+
+#### Example: Project structure (per service) — non‑normative
+```python
+project_root/
+  src/
+    __init__.py
+    main.py
+    api/           # FastAPI routers
+    models/        # SQLAlchemy models
+    schemas/       # Pydantic models (requests/responses); only BaseModel-based classes live here
+      user/
+        base.py     # shared fields for domain entity User
+        request.py  # input DTOs (e.g., UserCreate, UserUpdate)
+        response.py # output DTOs (e.g., UserRead)
+      auth/
+        tokens.py   # AuthTokens, RefreshToken, etc.
+      __init__.py
+    services/      # Business logic
+    db/            # DB sessions, engines, factories
+    tasks/         # Background workers
+    utils/         # Utility functions
+    core/
+      config.py    # Settings (BaseSettings)
+  migrations/      # Database migrations
+  logs/
+    logs.log
+  tests/           # Unit & integration tests
+  scripts/         # Service scripts (optional)
+  data/            # Data storage (optional)
+  docs/            # Service documentation (optional)
+  README.md
+  Dockerfile
+  docker-compose.yml
+  pyproject.toml
+  uv.lock
+  .cursor/          # Cursor IDE settings
+  .python-version
+  .gitignore
+```
+
+- Development workflow (non-normative checklist):
+  - Planning & Architecture: define OpenAPI, DB schemas/migrations, indexes; boundaries/integrations (see `fastapi_rules.mdc`).
+  - Code Structure: scaffold per project layout; define classes, services, and functions.
+  - Code Quality: full typing, docstrings; peer/self review; update `pyproject.toml` and `uv.lock`.
+  - Testing: write tests with pytest; fix until all pass.
+  - Linting & Formatting: run Ruff check/format; verify typing with mypy.
+  - Additional Checks: security scan with Bandit; import sorting with Ruff; coverage reports; basic performance checks.
+  - Integration & Validation: validate OpenAPI; test multiple environments; build/test Docker images.
+  - Documentation & Deployment: update docs in `docs/`; update `README.md`; ensure `/health` and `/ready` exist (see `fastapi_rules.mdc`).
+  - Final Validation: end-to-end tests; load testing; security & compliance review.
+
+- Typed Service Class (example):
+```python
+from __future__ import annotations
+from typing import Any
+from pydantic import BaseModel
+
+class User(BaseModel):
+    id: int
+    name: str
+
+class UserService:
+    def __init__(self, db: Any) -> None:
+        self.db = db
+
+    async def get_user(self, user_id: int) -> User:
+        """Retrieve a user by ID."""
+        ...
+```
+
+### Verification
+- How to verify:
+  - Run:
+    - `uv run ruff check .`
+    - `uv run ruff format .`
+    - `uv run mypy .`
+    - `uv run bandit -r .`
+    - `uv run pytest --cov=app --cov-report=html --cov-report=xml`
+    - `find . -name "*-*" -type f` (should return empty - validates no hyphens in file names)
+  - Optionally: `docker-compose up --build` to validate container build/run locally.
+  - Inspect routers: endpoints use `response_model` and return Pydantic models; no raw `dict`/`list` in signatures.
+  - Check system router: `/health` and `/ready` exist without `/api/v1` prefix and are registered in the app.
+  - Ensure logging uses the canonical implementation per `logging_rules.mdc`.
+- Success criteria:
+  - CI passes all lint/type/security/tests; operational endpoints present; logging compliant and free of secrets.
+
+### Examples
+```python
+# Example: Cache key helper based on stable inputs
+from __future__ import annotations
+import hashlib
+
+def cache_key(namespace: str, *parts: str) -> str:
+    raw = ":".join([namespace, *parts])
+    return hashlib.sha256(raw.encode()).hexdigest()
+```
+
+### Changes
+- 2025-09-05 v1.5.0: Added DDD/ACL/outbox guidance, TimeProvider for deterministic time in tests, generator anchors note, and cache key example.
+- 2025-09-05 v1.4.0: Added non-normative project structure examples (root orchestration and per-service) — minor, backward-compatible.
+- 2025-09-05 v1.3.0: Added non-normative development workflow checklist, verification commands, and typed service example — minor, backward-compatible.
+- 2025-09-05 v1.2.0: Added SHOULD for schema organization, async usage guidance, testcontainers, and code style (docstrings, import grouping) — minor, backward-compatible.
+- 2025-09-05 v1.1.0: Added SOLID, stateless, DRY; ops MAY for service mesh and managed data stores (minor, backward-compatible).
+- 2025-09-05 v1.0.0: Initial file rewritten to unified Cursor rules structure; added priorities/compatibility, verification, and examples with repository citation.
