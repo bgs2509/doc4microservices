@@ -1,210 +1,142 @@
-## Аутентификация и авторизация
+# Пример: Аутентификация в Бизнес-сервисе
 
-Этот раздел демонстрирует реализацию JWT-аутентификации в FastAPI для защиты эндпоинтов. Мы создадим сервис для работы с токенами и `dependency` для проверки токена и получения текущего пользователя.
+Этот раздел демонстрирует, как реализовать JWT-аутентификацию в **Бизнес-сервисе**, который не имеет прямого доступа к базе данных. Проверка учетных данных и получение информации о пользователе происходят через HTTP-вызовы к **Сервису Данных**.
 
-### 1. Настройки
+---
 
-Убедитесь, что в вашем файле конфигурации (`src/core/config.py`) определены секретный ключ, алгоритм и время жизни токена.
+## 1. HTTP-клиент для доступа к данным
 
+Нам понадобится метод в `UserDataClient` для получения пользователя по имени пользователя.
+
+`src/clients/user_data_client.py` (дополнение)
 ```python
-# src/core/config.py
-class Settings(BaseSettings):
-    # ...
-    SECRET_KEY: str = Field(
-        default="your-secret-key-change-in-production",
-        description="Secret key for JWT tokens"
-    )
-    JWT_ALGORITHM: str = Field(default="HS256", description="JWT algorithm")
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = Field(default=30, description="Token expiry")
+class UserDataClient:
+    # ... (существующие методы get_user_by_id, create_user)
+
+    async def get_user_by_username(self, username: str, request_id: str) -> Optional[Dict[str, Any]]:
+        async with httpx.AsyncClient() as client:
+            try:
+                response = await client.get(
+                    f"{self.base_url}/api/v1/users/by-username/{username}",
+                    headers={"X-Request-ID": request_id}
+                )
+                if response.status_code == 404:
+                    return None
+                response.raise_for_status()
+                return response.json()
+            except httpx.HTTPError as e:
+                print(f"HTTP error getting user by username {username}: {e}")
+                return None
 ```
 
-### 2. Сервис для работы с JWT
+---
 
-Этот сервис будет отвечать за создание и верификацию токенов, а также за проверку паролей.
+## 2. Сервис аутентификации (`src/services/auth_service.py`)
 
-`src/services/auth_service.py`
+Этот сервис по-прежнему отвечает за работу с паролями и JWT-токенами. Его код практически не меняется, но теперь он будет работать в паре с `UserDataClient`.
+
 ```python
-from __future__ import annotations
-
-from datetime import datetime, timedelta, timezone
-from typing import Optional
-
-from jose import JWTError, jwt
 from passlib.context import CryptContext
-
-from ..core.config import settings
-from ..models.user import User
-from ..schemas.auth import TokenData
-
+from jose import jwt
+# ... и другие импорты
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-
 class AuthService:
-    """Сервис для аутентификации и авторизации."""
-
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        """Проверить, что обычный пароль соответствует хешу."""
         return pwd_context.verify(plain_password, hashed_password)
 
-    def get_password_hash(self, password: str) -> str:
-        """Получить хеш пароля."""
-        return pwd_context.hash(password)
+    def create_access_token(self, data: dict) -> str:
+        # ... (логика создания токена)
+        pass
 
-    def create_access_token(self, data: dict, expires_delta: Optional[timedelta] = None) -> str:
-        """Создать JWT токен доступа."""
-        to_encode = data.copy()
-        if expires_delta:
-            expire = datetime.now(timezone.utc) + expires_delta
-        else:
-            expire = datetime.now(timezone.utc) + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-        
-        to_encode.update({"exp": expire})
-        encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
-        return encoded_jwt
-
-    def verify_token(self, token: str) -> Optional[TokenData]:
-        """Проверить токен и извлечь из него данные."""
-        try:
-            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
-            username: Optional[str] = payload.get("sub")
-            if username is None:
-                return None
-            token_data = TokenData(username=username)
-        except JWTError:
-            return None
-        return token_data
+    def verify_token(self, token: str) -> Optional[str]:
+        # ... (логика верификации токена, возвращает username)
+        pass
 ```
 
-### 3. Зависимость (Dependency) для получения пользователя
+---
 
-Эта `dependency` будет использоваться в защищенных эндпоинтах. Она извлекает токен из заголовка, проверяет его и возвращает модель пользователя из базы данных.
+## 3. Зависимость (Dependency) для получения пользователя
 
-`src/api/dependencies.py`
+Это ключевое изменение. `get_current_user` теперь использует `UserDataClient` для получения данных о пользователе.
+
+`src/core/dependencies.py`
 ```python
-from __future__ import annotations
-
-from typing import Optional
-
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..core.database import get_db_session
-from ..models.user import User
-from ..repositories.user_repository import UserRepository
+from ..clients.user_data_client import UserDataClient
 from ..services.auth_service import AuthService
+from ..schemas.user import UserResponse # Используем схему для ответа
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
 
+def get_user_data_client() -> UserDataClient:
+    return UserDataClient()
 
 async def get_current_user(
     token: str = Depends(oauth2_scheme),
-    db: AsyncSession = Depends(get_db_session),
-) -> User:
-    """Зависимость для получения текущего аутентифицированного пользователя."""
+    user_client: UserDataClient = Depends(get_user_data_client)
+) -> UserResponse:
     auth_service = AuthService()
-    user_repository = UserRepository(db)
-
-    token_data = auth_service.verify_token(token)
-    if token_data is None or token_data.username is None:
+    
+    username = auth_service.verify_token(token)
+    if not username:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
-            headers={"WWW-Authenticate": "Bearer"},
         )
+    
+    # Получаем пользователя из Сервиса Данных по HTTP
+    # request_id нужно пробрасывать из middleware
+    user_data = await user_client.get_user_by_username(username, request_id="some-request-id")
+    
+    if not user_data:
+        raise HTTPException(status_code=404, detail="User not found")
 
-    user = await user_repository.get_by_username(token_data.username)
-    if user is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User not found",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-
-    if not user.is_active:
-        raise HTTPException(status_code=400, detail="Inactive user")
-
-    return user
+    # Возвращаем Pydantic модель, а не объект SQLAlchemy
+    return UserResponse(**user_data)
 ```
 
-### 4. Защищенный эндпоинт
+---
 
-Теперь мы можем использовать `get_current_user` для защиты эндпоинтов. FastAPI автоматически обработает получение токена и вызовет нашу `dependency`.
+## 4. Эндпоинт для получения токена (`src/api/v1/auth.py`)
 
-`src/api/v1/users.py`
+Этот эндпоинт также меняется, чтобы использовать `UserDataClient`.
+
 ```python
-# ... (imports)
-from ..dependencies import get_current_user
-from ...models.user import User
-from ...schemas.user import UserResponse
-
-router = APIRouter(prefix="/users")
-
-# ... (другие эндпоинты: create_user, get_user)
-
-@router.get("/me", response_model=UserResponse, summary="Get current user")
-async def read_users_me(current_user: User = Depends(get_current_user)) -> User:
-    """Получить информацию о текущем пользователе."""
-    return current_user
-
-@router.put("/me", response_model=UserResponse, summary="Update current user")
-async def update_current_user(
-    user_data: UserUpdate,
-    current_user: User = Depends(get_current_user),
-    user_service: UserService = Depends(get_user_service),
-) -> UserResponse:
-    """Обновить информацию о текущем пользователе."""
-    updated_user = await user_service.update_user(current_user.id, user_data)
-    if not updated_user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found"
-        )
-    return updated_user
-```
-
-### 5. Эндпоинт для получения токена
-
-Наконец, нужен эндпоинт, куда пользователи будут отправлять свои `username` и `password` для получения токена.
-
-`src/api/v1/auth.py`
-```python
-from __future__ import annotations
-
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from ...core.database import get_db_session
-from ...repositories.user_repository import UserRepository
 from ...services.auth_service import AuthService
-from ...schemas.auth import Token
+from ...clients.user_data_client import UserDataClient
+from ...core.dependencies import get_user_data_client
 
-router = APIRouter(prefix="/auth")
+router = APIRouter()
 
-
-@router.post("/token", response_model=Token)
+@router.post("/token")
 async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
-    db: AsyncSession = Depends(get_db_session),
+    user_client: UserDataClient = Depends(get_user_data_client)
 ):
-    """Получение JWT токена по имени пользователя и паролю."""
     auth_service = AuthService()
-    user_repository = UserRepository(db)
-
-    user = await user_repository.get_by_username(form_data.username)
-    if not user or not auth_service.verify_password(form_data.password, user.hashed_password):
+    
+    # Получаем пользователя из Сервиса Данных
+    user_data = await user_client.get_user_by_username(form_data.username, request_id="some-request-id")
+    
+    if not user_data or not auth_service.verify_password(form_data.password, user_data["hashed_password"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
         )
 
     access_token = auth_service.create_access_token(
-        data={"sub": user.username}
+        data={"sub": user_data["username"]}
     )
 
     return {"access_token": access_token, "token_type": "bearer"}
 ```
+
+Таким образом, бизнес-сервис по-прежнему управляет логикой аутентификации (проверка паролей, создание токенов), но больше не имеет прямого доступа к хранилищу пользователей, полностью полагаясь на API Сервиса Данных.

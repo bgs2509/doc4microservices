@@ -42,7 +42,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Reference Materials
 
-7. **[docs/reference/service-examples.md](docs/reference/service-examples.md)** - **WORKING EXAMPLES**
+7. **[docs/examples/index.md](docs/examples/index.md)** - **WORKING EXAMPLES**
    - 💻 Complete, runnable service implementations
    - 🎯 Real-world patterns and best practices
    - 🧪 Testing examples and patterns
@@ -73,7 +73,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | 📋 **Run commands** | [docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md) |
 | 🎯 **Create new use case** | [docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md) |
 | 🔧 **Check versions/config** | [docs/reference/tech_stack.md](docs/reference/tech_stack.md) |
-| 💻 **See working examples** | [docs/reference/service-examples.md](docs/reference/service-examples.md) |
+| 💻 **See working examples** | [docs/examples/index.md](docs/examples/index.md) |
 | 🐛 **Solve problems** | [docs/reference/troubleshooting.md](docs/reference/troubleshooting.md) |
 | 🤖 **IDE rules & patterns** | [docs/INDEX.md#ide-rules--patterns](docs/INDEX.md#ide-rules--patterns) |
 
@@ -214,7 +214,7 @@ See [docs/INDEX.md](docs/INDEX.md) for complete overview of all 15 rule files co
 ## Important Notes
 
 - **Implementation Status**: Infrastructure and service framework are complete. Business logic implementation should follow `docs/` rule patterns
-- **Complete Examples**: See [docs/reference/service-examples.md](docs/reference/service-examples.md) for comprehensive, working implementations of all service types
+- **Complete Examples**: See [docs/examples/index.md](docs/examples/index.md) for comprehensive, working implementations of all service types
 - **Environment Setup**: Copy `.env.example` to `.env` and configure for your environment
 - **Service Separation**: Each service type runs in separate containers to avoid event loop conflicts
 - **Testing Standards**: Use real database instances (via testcontainers), achieve 100% coverage for critical paths
