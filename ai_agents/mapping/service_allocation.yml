@@ -1,0 +1,374 @@
+# Service Allocation Templates
+# Maps business functionality to specific microservices in the fixed architecture
+
+metadata:
+  name: "Service Allocation Framework"
+  version: "1.0.0"
+  description: "Maps business functions to PostgreSQL/MongoDB data services and FastAPI/Aiogram/AsyncIO business services"
+
+# Service Allocation Framework
+allocation_framework:
+  # Data Service Allocation (Fixed: db_postgres_service, db_mongo_service)
+  data_services:
+    db_postgres_service:
+      port: 8001
+      primary_responsibilities:
+        - "User management and authentication"
+        - "Transactional data with ACID requirements"
+        - "Relational data with complex joins"
+        - "Financial transactions and audit trails"
+        - "Configuration and settings management"
+        - "Permission and role management"
+        - "Inventory and stock management"
+        - "Order and booking management"
+
+      api_patterns:
+        crud_operations:
+          - "GET /users/{user_id}"
+          - "POST /users"
+          - "PUT /users/{user_id}"
+          - "DELETE /users/{user_id}"
+        transactional_operations:
+          - "POST /transactions"
+          - "GET /transactions/{transaction_id}"
+          - "POST /orders/{order_id}/complete"
+        relationship_queries:
+          - "GET /users/{user_id}/orders"
+          - "GET /orders/{order_id}/items"
+
+      data_patterns:
+        entities: ["users", "orders", "products", "transactions", "permissions"]
+        relationships: ["one_to_many", "many_to_many", "foreign_keys"]
+        constraints: ["unique_constraints", "check_constraints", "not_null"]
+
+    db_mongo_service:
+      port: 8002
+      primary_responsibilities:
+        - "Content and document storage"
+        - "Analytics and aggregation data"
+        - "Flexible schema requirements"
+        - "High-volume data ingestion"
+        - "Real-time analytics and metrics"
+        - "File metadata and content management"
+        - "Event logs and audit trails"
+        - "Search indexes and caching"
+
+      api_patterns:
+        document_operations:
+          - "GET /documents/{collection}/{id}"
+          - "POST /documents/{collection}"
+          - "PUT /documents/{collection}/{id}"
+          - "DELETE /documents/{collection}/{id}"
+        aggregation_operations:
+          - "POST /analytics/{collection}/aggregate"
+          - "GET /metrics/{collection}/summary"
+          - "POST /search/{collection}"
+        bulk_operations:
+          - "POST /documents/{collection}/bulk_insert"
+          - "POST /documents/{collection}/bulk_update"
+
+      data_patterns:
+        collections: ["content", "analytics", "logs", "metadata"]
+        operations: ["aggregation_pipelines", "text_search", "geospatial"]
+        indexing: ["compound_indexes", "text_indexes", "sparse_indexes"]
+
+  # Business Service Allocation
+  business_services:
+    api_service:
+      type: "FastAPI"
+      port: 8000
+      primary_responsibilities:
+        - "REST API endpoints for external clients"
+        - "Authentication and authorization middleware"
+        - "Business logic orchestration"
+        - "External integrations and webhooks"
+        - "Real-time data access and manipulation"
+        - "Input validation and error handling"
+        - "Rate limiting and security"
+
+      typical_endpoints:
+        authentication:
+          - "POST /auth/login"
+          - "POST /auth/logout"
+          - "POST /auth/refresh"
+          - "GET /auth/profile"
+        business_operations:
+          - "GET /{entity}"
+          - "POST /{entity}"
+          - "PUT /{entity}/{id}"
+          - "DELETE /{entity}/{id}"
+        integrations:
+          - "POST /webhooks/{service}"
+          - "GET /health"
+          - "GET /metrics"
+
+      data_access_pattern: "HTTP_ONLY to db_postgres_service and db_mongo_service"
+
+    bot_service:
+      type: "Aiogram"
+      port: 8003
+      primary_responsibilities:
+        - "Telegram bot interface and handlers"
+        - "User interaction and conversation flows"
+        - "Notification delivery via Telegram"
+        - "Quick actions and commands"
+        - "Status updates and monitoring alerts"
+        - "User support and help functions"
+
+      typical_handlers:
+        commands:
+          - "/start - Welcome and registration"
+          - "/help - Available commands"
+          - "/status - System status"
+          - "/profile - User profile"
+        interactions:
+          - "text_handler - Process user messages"
+          - "callback_handler - Handle button clicks"
+          - "inline_handler - Inline queries"
+        notifications:
+          - "order_notification"
+          - "system_alert"
+          - "reminder_notification"
+
+      data_access_pattern: "HTTP_ONLY to db_postgres_service and db_mongo_service via internal APIs"
+
+    worker_service:
+      type: "AsyncIO"
+      port: 8004
+      primary_responsibilities:
+        - "Background task processing"
+        - "Scheduled jobs and cron tasks"
+        - "Heavy computational operations"
+        - "Batch data processing"
+        - "External API integrations"
+        - "Email and notification sending"
+        - "Data migration and cleanup"
+
+      typical_workers:
+        scheduled_tasks:
+          - "daily_report_generation"
+          - "data_cleanup_task"
+          - "backup_operations"
+          - "metric_calculations"
+        event_driven_tasks:
+          - "email_sending_worker"
+          - "notification_worker"
+          - "payment_processing_worker"
+          - "data_sync_worker"
+        batch_operations:
+          - "bulk_data_import"
+          - "report_generation"
+          - "analytics_computation"
+
+      data_access_pattern: "HTTP_ONLY to db_postgres_service and db_mongo_service"
+
+# Allocation Decision Trees
+decision_trees:
+  data_service_selection:
+    postgresql_indicators:
+      - structured_data: true
+      - transactions_required: true
+      - relational_joins: true
+      - data_consistency_critical: true
+      - user_management: true
+      - financial_data: true
+      - inventory_tracking: true
+
+    mongodb_indicators:
+      - flexible_schema: true
+      - document_storage: true
+      - analytics_heavy: true
+      - content_management: true
+      - high_volume_writes: true
+      - aggregation_pipelines: true
+      - search_functionality: true
+
+  business_service_selection:
+    api_service_indicators:
+      - external_api_required: true
+      - real_time_interactions: true
+      - web_interface: true
+      - mobile_app_backend: true
+      - third_party_integrations: true
+      - authentication_required: true
+
+    bot_service_indicators:
+      - telegram_interface: true
+      - conversational_ui: true
+      - notification_delivery: true
+      - quick_commands: true
+      - user_support: true
+      - monitoring_alerts: true
+
+    worker_service_indicators:
+      - background_processing: true
+      - scheduled_tasks: true
+      - heavy_computations: true
+      - batch_operations: true
+      - email_sending: true
+      - data_migrations: true
+
+# Allocation Templates by Business Domain
+domain_allocations:
+  ecommerce:
+    postgresql_allocation:
+      entities: ["users", "products", "orders", "order_items", "payments", "inventory"]
+      operations: ["user_crud", "product_management", "order_processing", "payment_tracking"]
+    mongodb_allocation:
+      collections: ["product_reviews", "user_behavior", "search_analytics", "recommendations"]
+      operations: ["review_management", "analytics_aggregation", "recommendation_engine"]
+    api_service_tasks:
+      - "Product catalog API"
+      - "User authentication"
+      - "Order management"
+      - "Payment processing"
+      - "Shopping cart operations"
+    bot_service_tasks:
+      - "Order status notifications"
+      - "Product search commands"
+      - "Customer support chat"
+      - "Promotional notifications"
+    worker_service_tasks:
+      - "Payment processing workflows"
+      - "Inventory synchronization"
+      - "Email order confirmations"
+      - "Analytics computation"
+
+  content_management:
+    postgresql_allocation:
+      entities: ["users", "permissions", "content_metadata", "publishing_workflows"]
+      operations: ["user_management", "permission_control", "workflow_management"]
+    mongodb_allocation:
+      collections: ["content_documents", "media_files", "content_analytics", "comments"]
+      operations: ["content_storage", "media_management", "analytics_tracking"]
+    api_service_tasks:
+      - "Content CRUD API"
+      - "Media upload handling"
+      - "User authentication"
+      - "Publishing workflows"
+    bot_service_tasks:
+      - "Content publication notifications"
+      - "Quick content updates"
+      - "Moderation alerts"
+    worker_service_tasks:
+      - "Media processing"
+      - "Content indexing"
+      - "Backup operations"
+      - "Analytics computation"
+
+  project_management:
+    postgresql_allocation:
+      entities: ["users", "projects", "tasks", "time_entries", "permissions"]
+      operations: ["project_crud", "task_management", "time_tracking", "user_permissions"]
+    mongodb_allocation:
+      collections: ["activity_logs", "file_attachments", "project_analytics", "comments"]
+      operations: ["activity_tracking", "file_management", "analytics_reporting"]
+    api_service_tasks:
+      - "Project management API"
+      - "Task CRUD operations"
+      - "Time tracking"
+      - "User collaboration features"
+    bot_service_tasks:
+      - "Task deadline reminders"
+      - "Project status updates"
+      - "Quick task creation"
+      - "Team notifications"
+    worker_service_tasks:
+      - "Report generation"
+      - "Notification processing"
+      - "Data backup"
+      - "Analytics calculation"
+
+# Service Communication Patterns
+communication_patterns:
+  api_to_data_services:
+    pattern: "HTTP requests to data service APIs"
+    example: "api_service -> POST http://db_postgres_service:8001/users"
+    authentication: "Service-to-service API keys"
+    error_handling: "HTTP status codes and error responses"
+
+  bot_to_data_services:
+    pattern: "HTTP requests via internal network"
+    example: "bot_service -> GET http://db_postgres_service:8001/users/{user_id}"
+    authentication: "Service-to-service API keys"
+    async_pattern: "Use httpx.AsyncClient for non-blocking calls"
+
+  worker_to_data_services:
+    pattern: "HTTP requests for data operations"
+    example: "worker_service -> POST http://db_mongo_service:8002/analytics/events"
+    batch_operations: "Bulk API endpoints for efficiency"
+    retry_logic: "Exponential backoff for failed requests"
+
+  inter_service_messaging:
+    pattern: "RabbitMQ for event-driven communication"
+    example: "api_service publishes 'order_created' -> worker_service processes"
+    queue_naming: "service_name.event_type (e.g., orders.created)"
+    message_format: "JSON with schema validation"
+
+# Output Templates
+allocation_output:
+  format:
+    data_services:
+      postgresql:
+        entities: ["list_of_tables"]
+        api_endpoints: ["list_of_endpoints"]
+        operations: ["list_of_operations"]
+      mongodb:
+        collections: ["list_of_collections"]
+        api_endpoints: ["list_of_endpoints"]
+        operations: ["list_of_operations"]
+    business_services:
+      api_service:
+        endpoints: ["list_of_rest_endpoints"]
+        responsibilities: ["list_of_responsibilities"]
+      bot_service:
+        handlers: ["list_of_telegram_handlers"]
+        responsibilities: ["list_of_responsibilities"]
+      worker_service:
+        tasks: ["list_of_background_tasks"]
+        responsibilities: ["list_of_responsibilities"]
+    communication:
+      data_access_flows: ["service -> data_service mappings"]
+      event_flows: ["event publishing and consumption"]
+
+# Example Complete Allocation
+example_allocation:
+  business_idea: "Online learning platform with courses, progress tracking, and certificates"
+  allocation:
+    data_services:
+      postgresql:
+        entities: ["users", "courses", "enrollments", "progress", "certificates"]
+        api_endpoints:
+          - "POST /users"
+          - "GET /courses"
+          - "POST /enrollments"
+          - "PUT /progress/{user_id}/{course_id}"
+        operations: ["user_management", "course_enrollment", "progress_tracking"]
+      mongodb:
+        collections: ["course_content", "user_interactions", "learning_analytics", "certificates_metadata"]
+        api_endpoints:
+          - "GET /content/{course_id}/lessons"
+          - "POST /analytics/user_interactions"
+          - "GET /analytics/learning_patterns"
+        operations: ["content_delivery", "interaction_tracking", "analytics_aggregation"]
+    business_services:
+      api_service:
+        endpoints:
+          - "GET /api/courses"
+          - "POST /api/enrollments"
+          - "GET /api/progress/{user_id}"
+          - "POST /api/auth/login"
+        responsibilities: ["course_catalog", "enrollment_management", "progress_api", "authentication"]
+      bot_service:
+        handlers:
+          - "/start - Course recommendations"
+          - "/progress - Show learning progress"
+          - "/certificates - List earned certificates"
+        responsibilities: ["learning_reminders", "progress_notifications", "certificate_delivery"]
+      worker_service:
+        tasks:
+          - "certificate_generation"
+          - "progress_analytics_computation"
+          - "reminder_email_sending"
+          - "course_content_processing"
+        responsibilities: ["background_analytics", "notification_delivery", "content_processing"]

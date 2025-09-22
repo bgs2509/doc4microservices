@@ -1,0 +1,605 @@
+# Dockerfile Templates for AI-Generated Microservices
+# Standardized Dockerfile templates for different service types
+
+metadata:
+  name: "Dockerfile Template Generator"
+  version: "1.0.0"
+  description: "Generates optimized Dockerfiles for Python microservices"
+
+# Base Dockerfile Template
+base_dockerfile_template: |
+  # {{service_title}} Dockerfile
+  # Generated for {{business_domain}} service
+
+  # Use Python 3.12+ official image
+  FROM python:3.12-slim
+
+  # Set working directory
+  WORKDIR /app
+
+  # Set environment variables
+  ENV PYTHONPATH=/app
+  ENV PYTHONDONTWRITEBYTECODE=1
+  ENV PYTHONUNBUFFERED=1
+
+  # Install system dependencies
+  RUN apt-get update && apt-get install -y \
+      curl \
+      && rm -rf /var/lib/apt/lists/*
+
+  # Create non-root user for security
+  RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+  # Copy requirements first for better caching
+  COPY requirements.txt .
+
+  # Install Python dependencies
+  RUN pip install --no-cache-dir -r requirements.txt
+
+  # Copy application code
+  COPY src/ .
+
+  # Change ownership to non-root user
+  RUN chown -R appuser:appuser /app
+
+  # Switch to non-root user
+  USER appuser
+
+  # Expose port
+  EXPOSE {{service_port}}
+
+  # Health check
+  HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:{{service_port}}/health || exit 1
+
+  # Start the application
+  CMD ["python", "main.py"]
+
+# Service-Specific Templates
+service_templates:
+  # FastAPI Service Dockerfile
+  fastapi_service:
+    template: |
+      # {{service_title}} - FastAPI Service
+      # Generated for {{business_domain}} API service
+
+      FROM python:3.12-slim
+
+      # Set environment variables
+      ENV PYTHONPATH=/app \
+          PYTHONDONTWRITEBYTECODE=1 \
+          PYTHONUNBUFFERED=1 \
+          PORT={{service_port}}
+
+      WORKDIR /app
+
+      # Install system dependencies for FastAPI
+      RUN apt-get update && apt-get install -y \
+          curl \
+          build-essential \
+          && rm -rf /var/lib/apt/lists/*
+
+      # Create non-root user
+      RUN groupadd -r fastapi && useradd -r -g fastapi fastapi
+
+      # Copy and install Python dependencies
+      COPY requirements.txt .
+      RUN pip install --no-cache-dir -r requirements.txt
+
+      # Copy application code
+      COPY src/ .
+
+      # Create necessary directories and set permissions
+      RUN mkdir -p /app/logs && \
+          chown -R fastapi:fastapi /app
+
+      # Switch to non-root user
+      USER fastapi
+
+      # Expose the service port
+      EXPOSE {{service_port}}
+
+      # Health check for FastAPI
+      HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+        CMD curl -f http://localhost:{{service_port}}/health || exit 1
+
+      # Start FastAPI with uvicorn
+      CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "{{service_port}}"]
+
+  # Aiogram Bot Service Dockerfile
+  aiogram_service:
+    template: |
+      # {{service_title}} - Telegram Bot Service
+      # Generated for {{business_domain}} bot
+
+      FROM python:3.12-slim
+
+      # Set environment variables
+      ENV PYTHONPATH=/app \
+          PYTHONDONTWRITEBYTECODE=1 \
+          PYTHONUNBUFFERED=1
+
+      WORKDIR /app
+
+      # Install system dependencies
+      RUN apt-get update && apt-get install -y \
+          curl \
+          && rm -rf /var/lib/apt/lists/*
+
+      # Create non-root user
+      RUN groupadd -r botuser && useradd -r -g botuser botuser
+
+      # Copy and install Python dependencies
+      COPY requirements.txt .
+      RUN pip install --no-cache-dir -r requirements.txt
+
+      # Copy application code
+      COPY src/ .
+
+      # Set permissions
+      RUN chown -R botuser:botuser /app
+
+      # Switch to non-root user
+      USER botuser
+
+      # No port exposure needed for bot service
+      # Health check via process monitoring
+      HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+        CMD pgrep -f "python main.py" || exit 1
+
+      # Start the bot
+      CMD ["python", "main.py"]
+
+  # AsyncIO Worker Service Dockerfile
+  worker_service:
+    template: |
+      # {{service_title}} - Background Worker Service
+      # Generated for {{business_domain}} workers
+
+      FROM python:3.12-slim
+
+      # Set environment variables
+      ENV PYTHONPATH=/app \
+          PYTHONDONTWRITEBYTECODE=1 \
+          PYTHONUNBUFFERED=1
+
+      WORKDIR /app
+
+      # Install system dependencies
+      RUN apt-get update && apt-get install -y \
+          curl \
+          && rm -rf /var/lib/apt/lists/*
+
+      # Create non-root user
+      RUN groupadd -r worker && useradd -r -g worker worker
+
+      # Copy and install Python dependencies
+      COPY requirements.txt .
+      RUN pip install --no-cache-dir -r requirements.txt
+
+      # Copy application code
+      COPY src/ .
+
+      # Create worker directories and set permissions
+      RUN mkdir -p /app/logs /app/tmp && \
+          chown -R worker:worker /app
+
+      # Switch to non-root user
+      USER worker
+
+      # Health check via process monitoring
+      HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+        CMD pgrep -f "python main.py" || exit 1
+
+      # Start the worker service
+      CMD ["python", "main.py"]
+
+  # PostgreSQL Data Service Dockerfile
+  postgres_data_service:
+    template: |
+      # PostgreSQL Data Service
+      # HTTP API for PostgreSQL database access
+
+      FROM python:3.12-slim
+
+      # Set environment variables
+      ENV PYTHONPATH=/app \
+          PYTHONDONTWRITEBYTECODE=1 \
+          PYTHONUNBUFFERED=1 \
+          PORT=8001
+
+      WORKDIR /app
+
+      # Install system dependencies for PostgreSQL
+      RUN apt-get update && apt-get install -y \
+          curl \
+          libpq-dev \
+          build-essential \
+          && rm -rf /var/lib/apt/lists/*
+
+      # Create non-root user
+      RUN groupadd -r dbuser && useradd -r -g dbuser dbuser
+
+      # Copy and install Python dependencies
+      COPY requirements.txt .
+      RUN pip install --no-cache-dir -r requirements.txt
+
+      # Copy application code
+      COPY src/ .
+
+      # Set permissions
+      RUN chown -R dbuser:dbuser /app
+
+      # Switch to non-root user
+      USER dbuser
+
+      # Expose PostgreSQL service port
+      EXPOSE 8001
+
+      # Health check
+      HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+        CMD curl -f http://localhost:8001/health || exit 1
+
+      # Start the PostgreSQL data service
+      CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
+
+  # MongoDB Data Service Dockerfile
+  mongo_data_service:
+    template: |
+      # MongoDB Data Service
+      # HTTP API for MongoDB database access
+
+      FROM python:3.12-slim
+
+      # Set environment variables
+      ENV PYTHONPATH=/app \
+          PYTHONDONTWRITEBYTECODE=1 \
+          PYTHONUNBUFFERED=1 \
+          PORT=8002
+
+      WORKDIR /app
+
+      # Install system dependencies
+      RUN apt-get update && apt-get install -y \
+          curl \
+          && rm -rf /var/lib/apt/lists/*
+
+      # Create non-root user
+      RUN groupadd -r mongouser && useradd -r -g mongouser mongouser
+
+      # Copy and install Python dependencies
+      COPY requirements.txt .
+      RUN pip install --no-cache-dir -r requirements.txt
+
+      # Copy application code
+      COPY src/ .
+
+      # Set permissions
+      RUN chown -R mongouser:mongouser /app
+
+      # Switch to non-root user
+      USER mongouser
+
+      # Expose MongoDB service port
+      EXPOSE 8002
+
+      # Health check
+      HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+        CMD curl -f http://localhost:8002/health || exit 1
+
+      # Start the MongoDB data service
+      CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8002"]
+
+# Requirements.txt Templates
+requirements_templates:
+  # Base requirements for all services
+  base_requirements: |
+    # Core dependencies
+    fastapi==0.104.1
+    uvicorn[standard]==0.24.0
+    pydantic==2.5.0
+    pydantic-settings==2.1.0
+
+    # HTTP client
+    httpx==0.25.2
+
+    # Logging
+    structlog==23.2.0
+
+    # Environment variables
+    python-dotenv==1.0.0
+
+  # FastAPI service requirements
+  fastapi_requirements: |
+    # FastAPI dependencies
+    fastapi==0.104.1
+    uvicorn[standard]==0.24.0
+    pydantic==2.5.0
+    pydantic-settings==2.1.0
+
+    # HTTP client for data service communication
+    httpx==0.25.2
+
+    # Authentication and security
+    python-jose[cryptography]==3.3.0
+    passlib[bcrypt]==1.7.4
+    python-multipart==0.0.6
+
+    # Logging and monitoring
+    structlog==23.2.0
+    prometheus-client==0.19.0
+
+    # Utilities
+    python-dotenv==1.0.0
+
+  # Aiogram bot requirements
+  aiogram_requirements: |
+    # Aiogram bot framework
+    aiogram==3.2.0
+
+    # HTTP client for data service communication
+    httpx==0.25.2
+
+    # Async utilities
+    aiofiles==23.2.1
+
+    # Logging
+    structlog==23.2.0
+
+    # Environment variables
+    python-dotenv==1.0.0
+
+  # Worker service requirements
+  worker_requirements: |
+    # Async utilities
+    asyncio==3.4.3
+    aiofiles==23.2.1
+
+    # HTTP client
+    httpx==0.25.2
+
+    # Message queue
+    aio-pika==9.3.1
+
+    # Scheduling
+    aiocron==1.8
+
+    # Logging
+    structlog==23.2.0
+
+    # Environment variables
+    python-dotenv==1.0.0
+
+  # PostgreSQL data service requirements
+  postgres_requirements: |
+    # FastAPI for HTTP API
+    fastapi==0.104.1
+    uvicorn[standard]==0.24.0
+    pydantic==2.5.0
+
+    # PostgreSQL database
+    asyncpg==0.29.0
+    sqlalchemy[asyncio]==2.0.23
+    alembic==1.13.0
+
+    # Logging
+    structlog==23.2.0
+
+    # Environment variables
+    python-dotenv==1.0.0
+
+  # MongoDB data service requirements
+  mongo_requirements: |
+    # FastAPI for HTTP API
+    fastapi==0.104.1
+    uvicorn[standard]==0.24.0
+    pydantic==2.5.0
+
+    # MongoDB database
+    motor==3.3.2
+    pymongo==4.6.0
+
+    # Logging
+    structlog==23.2.0
+
+    # Environment variables
+    python-dotenv==1.0.0
+
+# .dockerignore Template
+dockerignore_template: |
+  # {{service_title}} .dockerignore
+  # Exclude unnecessary files from Docker build context
+
+  # Python
+  __pycache__/
+  *.py[cod]
+  *$py.class
+  *.so
+  .Python
+  build/
+  develop-eggs/
+  dist/
+  downloads/
+  eggs/
+  .eggs/
+  lib/
+  lib64/
+  parts/
+  sdist/
+  var/
+  wheels/
+  *.egg-info/
+  .installed.cfg
+  *.egg
+
+  # Virtual environments
+  .env
+  .venv
+  env/
+  venv/
+  ENV/
+  env.bak/
+  venv.bak/
+
+  # IDE
+  .vscode/
+  .idea/
+  *.swp
+  *.swo
+  *~
+
+  # Testing
+  .pytest_cache/
+  .coverage
+  htmlcov/
+  .tox/
+
+  # Git
+  .git/
+  .gitignore
+
+  # Documentation
+  docs/
+  *.md
+  LICENSE
+
+  # Docker
+  Dockerfile*
+  docker-compose*
+  .dockerignore
+
+  # Logs
+  *.log
+  logs/
+
+  # Temporary files
+  tmp/
+  temp/
+  .tmp/
+
+# Multi-stage Dockerfile Templates (for production optimization)
+multistage_templates:
+  # Production-optimized FastAPI service
+  fastapi_production:
+    template: |
+      # Multi-stage build for {{service_title}}
+      # Optimized for production deployment
+
+      # Build stage
+      FROM python:3.12-slim as builder
+
+      WORKDIR /app
+
+      # Install build dependencies
+      RUN apt-get update && apt-get install -y \
+          build-essential \
+          && rm -rf /var/lib/apt/lists/*
+
+      # Copy requirements and install dependencies
+      COPY requirements.txt .
+      RUN pip install --user --no-cache-dir -r requirements.txt
+
+      # Production stage
+      FROM python:3.12-slim
+
+      # Set environment variables
+      ENV PYTHONPATH=/app \
+          PYTHONDONTWRITEBYTECODE=1 \
+          PYTHONUNBUFFERED=1 \
+          PORT={{service_port}}
+
+      WORKDIR /app
+
+      # Install runtime dependencies only
+      RUN apt-get update && apt-get install -y \
+          curl \
+          && rm -rf /var/lib/apt/lists/*
+
+      # Create non-root user
+      RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+      # Copy Python packages from builder stage
+      COPY --from=builder /root/.local /home/appuser/.local
+
+      # Copy application code
+      COPY src/ .
+
+      # Set permissions
+      RUN chown -R appuser:appuser /app
+
+      # Switch to non-root user
+      USER appuser
+
+      # Add user packages to PATH
+      ENV PATH=/home/appuser/.local/bin:$PATH
+
+      # Expose port
+      EXPOSE {{service_port}}
+
+      # Health check
+      HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+        CMD curl -f http://localhost:{{service_port}}/health || exit 1
+
+      # Start the application
+      CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "{{service_port}}"]
+
+# Dockerfile Generation Rules
+generation_rules:
+  # Service type mapping
+  service_type_mapping:
+    api_service: "fastapi_service"
+    bot_service: "aiogram_service"
+    worker_service: "worker_service"
+    db_postgres_service: "postgres_data_service"
+    db_mongo_service: "mongo_data_service"
+
+  # Requirements mapping
+  requirements_mapping:
+    api_service: "fastapi_requirements"
+    bot_service: "aiogram_requirements"
+    worker_service: "worker_requirements"
+    db_postgres_service: "postgres_requirements"
+    db_mongo_service: "mongo_requirements"
+
+  # Variable substitution
+  variable_substitution:
+    service_title: "Human-readable service name"
+    business_domain: "Business domain (e.g., e-commerce, content-management)"
+    service_port: "Port number for the service"
+
+  # Optimization options
+  optimization:
+    development:
+      use_template: "base templates"
+      optimization_level: "development-friendly"
+
+    production:
+      use_template: "multistage templates"
+      optimization_level: "production-optimized"
+
+# Example Generated Dockerfiles
+example_generation:
+  e_commerce_api_service:
+    service_type: "api_service"
+    variables:
+      service_title: "E-commerce API Service"
+      business_domain: "e-commerce"
+      service_port: 8000
+    generated_dockerfile: "Uses fastapi_service template with e-commerce variables"
+    generated_requirements: "Uses fastapi_requirements with additional e-commerce packages"
+
+  content_management_bot:
+    service_type: "bot_service"
+    variables:
+      service_title: "Content Management Bot"
+      business_domain: "content-management"
+    generated_dockerfile: "Uses aiogram_service template"
+    generated_requirements: "Uses aiogram_requirements"
+
+  analytics_worker:
+    service_type: "worker_service"
+    variables:
+      service_title: "Analytics Worker Service"
+      business_domain: "analytics"
+    generated_dockerfile: "Uses worker_service template"
+    generated_requirements: "Uses worker_requirements with analytics packages"
