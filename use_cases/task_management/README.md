@@ -2,7 +2,7 @@
 
 > **📋 DOCUMENTATION TYPE**: Working Demonstration - Complete functional application
 > **👥 TARGET USERS**: Business stakeholders, developers, QA teams
-> **🔗 RELATED**: [Learning Patterns](../../docs/examples/) | [AI Generation](../../ai_agents/) | **[Complete Comparison Guide](../../CLAUDE.md#documentation-types-guide)**
+> **🔗 RELATED**: [Learning Patterns](../../examples/) | [AI Generation](../../ai_agents/) | **[Complete Comparison Guide](../../CLAUDE.md#documentation-types-guide)**
 
 A complete personal task management system demonstrating all microservices patterns from the boilerplate. This use case showcases the **Improved Hybrid Approach** with centralized data services and business logic separation.
 

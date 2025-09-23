@@ -42,7 +42,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Reference Materials
 
-7. **[docs/examples/index.md](docs/examples/index.md)** - **WORKING EXAMPLES**
+7. **[examples/index.md](examples/index.md)** - **WORKING EXAMPLES**
    - 💻 Complete, runnable service implementations
    - 🎯 Real-world patterns and best practices
    - 🧪 Testing examples and patterns
@@ -73,7 +73,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | 📋 **Run commands** | [docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md) |
 | 🎯 **Create new use case** | [docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md) |
 | 🔧 **Check versions/config** | [docs/reference/tech_stack.md](docs/reference/tech_stack.md) |
-| 💻 **See working examples** | [docs/examples/index.md](docs/examples/index.md) |
+| 💻 **See working examples** | [examples/index.md](examples/index.md) |
 | 🐛 **Solve problems** | [docs/reference/troubleshooting.md](docs/reference/troubleshooting.md) |
 | 🤖 **IDE rules & patterns** | [docs/INDEX.md#ide-rules--patterns](docs/INDEX.md#ide-rules--patterns) |
 
@@ -84,13 +84,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Quick Reference
 | Need | Documentation Type | Location | Target Users |
 |------|-------------------|----------|--------------|
-| 🎓 **Learn to code properly** | Educational Examples | [docs/examples/](docs/examples/) | Human developers, teams |
+| 🎓 **Learn to code properly** | Educational Examples | [examples/](examples/) | Human developers, teams |
 | 🤖 **AI-generated applications** | Automation Framework | [ai_agents/](ai_agents/) | AI systems, AI developers |
 | 💻 **See working solutions** | Live Demonstrations | [use_cases/](use_cases/) | Business stakeholders, QA teams |
 
 ### 📊 **DOCUMENTATION TYPE COMPARISON**
 
-#### **1. `docs/examples/` - EDUCATIONAL DOCUMENTATION**
+#### **1. `examples/` - EDUCATIONAL DOCUMENTATION**
 
 **🎯 Primary Purpose:**
 - Teaching developers HOW to implement services correctly
@@ -171,7 +171,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### 🔄 **HOW THEY WORK TOGETHER**
 
 #### **For Human Developers:**
-1. **Learn** from `docs/examples/` (HOW to code properly)
+1. **Learn** from `examples/` (HOW to code properly)
 2. **Reference** `use_cases/` (WHAT working solutions look like)
 3. **Ignore** `ai_agents/` (Not needed for manual development)
 
@@ -179,17 +179,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 1. **Validate** using `ai_agents/business_validation/` (CAN it be built?)
 2. **Generate** using `ai_agents/generators/` (TEMPLATE-based creation)
 3. **Reference** `use_cases/` (WHAT the end result should be)
-4. **Learn patterns** from `docs/examples/` (HOW to implement correctly)
+4. **Learn patterns** from `examples/` (HOW to implement correctly)
 
 #### **For Business Users:**
 1. **See working examples** in `use_cases/` (PROOF of capability)
 2. **Request new features** via `ai_agents/` (AUTOMATED generation)
-3. **Understand technical approach** via `docs/examples/` (EDUCATION)
+3. **Understand technical approach** via `examples/` (EDUCATION)
 
 ### ✅ **RECOMMENDATION: ALL THREE ARE ESSENTIAL**
 
 Each serves a distinct and valuable purpose:
-- **`docs/examples/`**: Human education and standards
+- **`examples/`**: Human education and standards
 - **`ai_agents/`**: AI automation and generation
 - **`use_cases/`**: Working demonstrations and proof-of-concept
 
@@ -332,7 +332,7 @@ See [docs/INDEX.md](docs/INDEX.md) for complete overview of all 15 rule files co
 ## Important Notes
 
 - **Implementation Status**: Infrastructure and service framework are complete. Business logic implementation should follow `docs/` rule patterns
-- **Complete Examples**: See [docs/examples/index.md](docs/examples/index.md) for comprehensive, working implementations of all service types
+- **Complete Examples**: See [examples/index.md](examples/index.md) for comprehensive, working implementations of all service types
 - **Environment Setup**: Copy `.env.example` to `.env` and configure for your environment
 - **Service Separation**: Each service type runs in separate containers to avoid event loop conflicts
 - **Testing Standards**: Use real database instances (via testcontainers), achieve 100% coverage for critical paths

@@ -2,7 +2,7 @@
 
 > **📋 DOCUMENTATION TYPE**: AI Automation Framework - Enabling AI to generate applications
 > **👥 TARGET USERS**: AI systems, AI developers, business analysts
-> **🔗 RELATED**: [Implementation Patterns](../docs/examples/) | [Working Examples](../use_cases/) | **[Complete Comparison Guide](../CLAUDE.md#documentation-types-guide)**
+> **🔗 RELATED**: [Implementation Patterns](../examples/) | [Working Examples](../use_cases/) | **[Complete Comparison Guide](../CLAUDE.md#documentation-types-guide)**
 
 ## Overview
 

@@ -2,7 +2,7 @@
 
 > **📋 DOCUMENTATION TYPE**: Working Demonstrations - Complete functional applications
 > **👥 TARGET USERS**: Business stakeholders, developers, QA teams, product managers
-> **🔗 RELATED**: [Learning Patterns](../docs/examples/) | [AI Generation](../ai_agents/) | **[Complete Comparison Guide](../CLAUDE.md#documentation-types-guide)**
+> **🔗 RELATED**: [Learning Patterns](../examples/) | [AI Generation](../ai_agents/) | **[Complete Comparison Guide](../CLAUDE.md#documentation-types-guide)**
 
 This folder contains complete, working applications that demonstrate the **Improved Hybrid Approach** architecture in real-world scenarios. Each use case is a fully functional, production-ready implementation that you can deploy, use, and learn from.
 
@@ -159,7 +159,7 @@ Use cases demonstrate testing at all levels:
 1. **Choose Domain**: Select a clear business domain (e-commerce, content management, etc.)
 2. **Define Services**: Map business functions to service types (API, Bot, Worker)
 3. **Follow Template**: Use the structure template above
-4. **Implement Patterns**: Follow patterns from [docs/examples/](../docs/examples/)
+4. **Implement Patterns**: Follow patterns from [examples/](../examples/)
 5. **Add Documentation**: Include comprehensive README and API docs
 6. **Test Thoroughly**: Include unit, integration, and E2E tests
 
@@ -171,7 +171,7 @@ Use cases demonstrate testing at all levels:
 ## 🔗 **Related Documentation**
 
 ### **For Implementation Guidance**
-- **[Implementation Patterns](../docs/examples/)**: Learn how to implement services correctly
+- **[Implementation Patterns](../examples/)**: Learn how to implement services correctly
 - **[Architecture Guide](../docs/guides/ARCHITECTURE_GUIDE.md)**: Understand architectural constraints
 - **[Development Commands](../docs/guides/DEVELOPMENT_COMMANDS.md)**: Commands for development and deployment
 
