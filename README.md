@@ -29,7 +29,7 @@ This is not just documentation, but a **living framework** that:
 ### **Result:**
 Instead of months of architecture development - get production-ready applications in minutes/hours using standardized, updatable framework with AI automation.
 
-## 🚀 How It Works
+## 🚀 Quick Start
 
 ```bash
 # 1. Create your project
@@ -37,27 +37,22 @@ mkdir my_awesome_app && cd my_awesome_app && git init
 
 # 2. Add framework as submodule
 git submodule add <framework-repo-url> .framework
+git submodule init && git submodule update
 
-# 3. AI reads architectural rules from .framework/docs/
-# 4. Generate application in src/ following framework rules
-# 5. Deploy ready application
+# 3. Generate with AI (AI reads .framework/docs/ automatically)
+# Ask AI: "Create [your app] using .framework/ patterns"
+
+# 4. Deploy ready application
+docker-compose up -d
 ```
 
-### **Benefits:**
+### **Key Benefits:**
 - **Separation** - Framework separate, your code separate
-- **Updates** - `git submodule update` gets new features
+- **Updates** - `git submodule update --remote` gets new features
 - **Standardization** - All projects use same rules
 - **AI compatibility** - AI automatically finds patterns in `.framework/`
 
 This transforms microservices application creation into a standardized, repeatable process.
-
-### Framework-as-Submodule Workflow
-
-1. **📁 Create your project repository** - `mkdir my_awesome_app && cd my_awesome_app && git init`
-2. **🔗 Add framework as submodule** - `git submodule add <framework-repo-url> .framework`
-3. **🤖 AI reads framework rules** - AI agents automatically find patterns in `.framework/docs/`
-4. **🚀 Generate your application** - AI creates services in `src/` following framework guidelines
-5. **⚡ Deploy and iterate** - Framework provides infrastructure and development tools
 
 ## 🏗️ Project Structure with Framework Submodule
 
@@ -107,25 +102,9 @@ my_awesome_app/                    # Your project repository
         └── conftest.py          # Test configuration
 ```
 
-## 🚀 How to Use This Framework
+## 💻 AI Generation Examples
 
-### Step 1: Add Framework to Your Project
-```bash
-# Create your project repository
-mkdir my_awesome_app
-cd my_awesome_app
-git init
-
-# Add this framework as a submodule
-git submodule add https://github.com/your-org/microservices-framework.git .framework
-git submodule init
-git submodule update
-```
-
-### Step 2: Generate Your Application with AI
-AI agents automatically find framework rules in `.framework/` directory:
-
-**Example AI Prompt:**
+**Example AI Prompts:**
 ```
 Create a task management application using the .framework/ patterns:
 - FastAPI service for REST API
@@ -134,12 +113,12 @@ Create a task management application using the .framework/ patterns:
 - Follow the Improved Hybrid Approach from .framework/docs/
 ```
 
-### Step 3: Deploy and Run
-```bash
-# AI generates your code in src/
-cp .framework/templates/.env.example .env
-# Edit .env with your configuration
-docker-compose up -d
+```
+Build an e-commerce platform with .framework/ architecture:
+- Product catalog and search (FastAPI)
+- Order processing workers (AsyncIO)
+- Customer notifications (Aiogram bot)
+- Use PostgreSQL and MongoDB data services
 ```
 
 ## 🤖 AI Agent Framework
@@ -274,21 +253,9 @@ This repository contains comprehensive documentation designed for both AI agents
 ✅ **IoT Data Platform** - Device management, real-time data ingestion, analytics dashboards
 ✅ **Financial Application** - Account management, transactions, reporting, compliance
 
-## 🔗 Getting Started
+## 🔧 Framework Management
 
-### For Project Creators
-1. **Create new repository** - `mkdir my_project && cd my_project && git init`
-2. **Add framework submodule** - `git submodule add <this-repo-url> .framework`
-3. **Initialize submodule** - `git submodule init && git submodule update`
-4. **Use AI to generate code** - AI will automatically read `.framework/` rules
-
-### For AI Agents
-1. **Automatically scan `.framework/`** for patterns, rules, and examples
-2. **Generate user code in `src/`** - never modify `.framework/` content
-3. **Follow `.framework/docs/` guidelines** for architecture compliance
-4. **Use `.framework/ai_agents/`** for validation and generation tools
-
-### Framework Submodule Management
+### Submodule Operations
 ```bash
 # Update framework to latest version
 git submodule update --remote .framework
@@ -300,6 +267,12 @@ git clone --recursive <your-project-repo>
 # If you forgot --recursive
 git submodule init && git submodule update
 ```
+
+### For AI Agents
+1. **Automatically scan `.framework/`** for patterns, rules, and examples
+2. **Generate user code in `src/`** - never modify `.framework/` content
+3. **Follow `.framework/docs/` guidelines** for architecture compliance
+4. **Use `.framework/ai_agents/`** for validation and generation tools
 
 ### Quick Links (within .framework/)
 - **🏗️ Architecture Guide**: `.framework/docs/guides/ARCHITECTURE_GUIDE.md`
