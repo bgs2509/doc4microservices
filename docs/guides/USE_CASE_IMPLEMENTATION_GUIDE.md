@@ -79,51 +79,7 @@ docker-compose up -d
 
 AI agents generate projects following this standardized structure:
 
-```
-your_project_name/                 # New repository created by user
-├── README.md                      # Project-specific documentation
-├── docker-compose.yml             # Complete infrastructure + services
-├── .env.example                   # Environment configuration template
-├── pyproject.toml                 # Python dependencies and project config
-├── Makefile                       # Development automation commands
-├── .gitignore                     # Version control exclusions
-└── src/                          # All source code
-    ├── services/                 # Microservices
-    │   ├── api_service/          # FastAPI REST API service
-    │   │   ├── Dockerfile        # Service-specific container
-    │   │   ├── main.py           # Service implementation
-    │   │   ├── requirements.txt  # Service dependencies
-    │   │   └── config.py         # Service configuration
-    │   ├── bot_service/          # Aiogram Telegram bot service
-    │   │   ├── Dockerfile
-    │   │   ├── main.py
-    │   │   ├── requirements.txt
-    │   │   └── config.py
-    │   ├── worker_service/       # AsyncIO background workers
-    │   │   ├── Dockerfile
-    │   │   ├── main.py
-    │   │   ├── requirements.txt
-    │   │   └── config.py
-    │   ├── db_postgres_service/  # PostgreSQL data access service
-    │   │   ├── Dockerfile
-    │   │   ├── main.py
-    │   │   └── requirements.txt
-    │   └── db_mongo_service/     # MongoDB data access service
-    │       ├── Dockerfile
-    │       ├── main.py
-    │       └── requirements.txt
-    ├── shared/                   # Shared components
-    │   ├── dtos.py              # Data transfer objects
-    │   ├── events.py            # Event schemas
-    │   └── utils.py             # Common utilities
-    ├── config/                   # Configuration management
-    │   ├── settings.py          # Centralized settings
-    │   └── logging.py           # Logging configuration
-    └── tests/                   # Test suites
-        ├── unit/                # Unit tests per service
-        ├── integration/         # Integration tests
-        └── conftest.py          # Test configuration
-```
+> **📋 AUTHORITATIVE PROJECT STRUCTURE**: See [../reference/PROJECT_STRUCTURE.md](../reference/PROJECT_STRUCTURE.md) for the complete, detailed project structure guide with explanations and setup instructions.
 
 ### Key Structure Principles
 

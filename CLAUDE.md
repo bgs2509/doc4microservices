@@ -280,50 +280,10 @@ This project implements the **Improved Hybrid Approach** - a microservices archi
 #### RECOMMENDED: Single Root Compose Setup
 Use one main `docker-compose.yml` in the project root, not individual compose files per service.
 
-**Project Structure with Framework Submodule:**
-```
-my_awesome_app/                      # Your project repository
-├── .framework/                      # Git submodule (this repository)
-│   ├── docs/                       # Architecture rules and patterns
-│   ├── ai_agents/                  # AI generators and validators
-│   ├── examples/                   # Reference implementations
-│   ├── use_cases/                  # Working applications
-│   └── CLAUDE.md                   # AI instructions
-├── README.md                        # Your project documentation
-├── docker-compose.yml               # Your project infrastructure
-├── .env.example                     # Your project configuration template (created by AI or manually)
-└── src/                            # Your application code
-    ├── services/                   # Microservices
-    │   ├── api_service/            # FastAPI REST API service
-    │   │   ├── Dockerfile          # Service-specific container
-    │   │   ├── main.py             # Service implementation
-    │   │   └── requirements.txt    # Service dependencies
-    │   ├── bot_service/            # Aiogram Telegram bot service
-    │   │   ├── Dockerfile
-    │   │   ├── main.py
-    │   │   └── requirements.txt
-    │   ├── worker_service/         # AsyncIO background workers
-    │   │   ├── Dockerfile
-    │   │   ├── main.py
-    │   │   └── requirements.txt
-    │   ├── db_postgres_service/    # PostgreSQL data access service
-    │   │   ├── Dockerfile
-    │   │   └── main.py
-    │   └── db_mongo_service/       # MongoDB data access service
-    │       ├── Dockerfile
-    │       └── main.py
-    ├── shared/                     # Shared components
-    │   ├── dtos.py                # Data transfer objects
-    │   ├── events.py              # Event schemas
-    │   └── utils.py               # Common utilities
-    ├── config/                     # Configuration management
-    │   ├── settings.py            # Centralized settings
-    │   └── logging.py             # Logging configuration
-    └── tests/                     # Test suites
-        ├── unit/                  # Unit tests per service
-        ├── integration/           # Integration tests
-        └── conftest.py            # Test configuration
-```
+**Project Organization:**
+When used as submodule, projects follow a clean separation pattern: framework provides patterns, user code stays in `src/`.
+
+> **📋 COMPLETE PROJECT STRUCTURE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) for detailed directory organization, service types, and development workflow.
 
 **Benefits:**
 - **Data Service Isolation**: Centralized database expertise and optimization
@@ -381,16 +341,11 @@ See [docs/INDEX.md](docs/INDEX.md) for complete overview of all 15 rule files co
 ## Framework Management
 
 ### Framework Submodule Operations
+> **📋 COMPLETE SUBMODULE GUIDE**: See [README.md#framework-management](README.md#framework-management) and [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) for detailed submodule operations and project setup.
+
 ```bash
-# Update framework to latest version
+# Quick reference - Update framework
 git submodule update --remote .framework
-git add .framework && git commit -m "Update framework"
-
-# Clone project with framework
-git clone --recursive <your-project-repo>
-
-# If you forgot --recursive
-git submodule init && git submodule update
 ```
 
 ### AI Development Guidelines

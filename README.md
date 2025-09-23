@@ -54,53 +54,11 @@ docker-compose up -d
 
 This transforms microservices application creation into a standardized, repeatable process.
 
-## 🏗️ Project Structure with Framework Submodule
+## 🏗️ Project Structure
 
-When you add this framework as a submodule, your project structure becomes:
+When you add this framework as a submodule, your project follows a clean separation pattern where the framework provides proven architecture patterns while your application code stays completely separate.
 
-```
-my_awesome_app/                    # Your project repository
-├── .framework/                    # Git submodule (this repository)
-│   ├── docs/                     # Architecture rules and patterns
-│   ├── ai_agents/                # AI generators and validators
-│   ├── examples/                 # Reference implementations
-│   ├── use_cases/                # Working applications
-│   └── CLAUDE.md                 # AI instructions
-├── README.md                      # Your project documentation
-├── docker-compose.yml             # Your project infrastructure
-├── .env.example                   # Your project configuration template (created by AI or manually)
-└── src/                          # Your application code
-    ├── services/                 # Microservices
-    │   ├── api_service/          # FastAPI REST API service
-    │   │   ├── Dockerfile        # Service-specific container
-    │   │   ├── main.py           # Service implementation
-    │   │   └── requirements.txt  # Service dependencies
-    │   ├── bot_service/          # Aiogram Telegram bot service
-    │   │   ├── Dockerfile
-    │   │   ├── main.py
-    │   │   └── requirements.txt
-    │   ├── worker_service/       # AsyncIO background workers
-    │   │   ├── Dockerfile
-    │   │   ├── main.py
-    │   │   └── requirements.txt
-    │   ├── db_postgres_service/  # PostgreSQL data access service
-    │   │   ├── Dockerfile
-    │   │   └── main.py
-    │   └── db_mongo_service/     # MongoDB data access service
-    │       ├── Dockerfile
-    │       └── main.py
-    ├── shared/                   # Shared components
-    │   ├── dtos.py              # Data transfer objects
-    │   ├── events.py            # Event schemas
-    │   └── utils.py             # Common utilities
-    ├── config/                   # Configuration management
-    │   ├── settings.py          # Centralized settings
-    │   └── logging.py           # Logging configuration
-    └── tests/                   # Test suites
-        ├── unit/                # Unit tests per service
-        ├── integration/         # Integration tests
-        └── conftest.py          # Test configuration
-```
+> **📋 DETAILED PROJECT STRUCTURE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) for comprehensive directory organization, service types, and setup guidance.
 
 ## 💻 AI Generation Examples
 
@@ -275,6 +233,8 @@ git clone --recursive <your-project-repo>
 # If you forgot --recursive
 git submodule init && git submodule update
 ```
+
+> **📋 COMPLETE SETUP GUIDE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) for detailed project organization and development workflow.
 
 ### For AI Agents
 1. **Automatically scan `.framework/`** for patterns, rules, and examples
