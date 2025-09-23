@@ -457,59 +457,30 @@ For common issues and solutions including:
 
 See [Troubleshooting Guide](LINKS_REFERENCE.md#developer-guides) for diagnostic steps and solutions.
 
-### Project Structure (Current Implementation)
+### Project Structure
 
 **Status**: ✅ Implemented - Infrastructure and service framework complete
 
-```
-try_microservices/                    # Root project directory
-├── docker-compose.yml               # ✅ Main orchestration with full stack
-├── docker-compose.override.yml      # ✅ Development overrides (auto-loaded)
-├── docker-compose.prod.yml          # ✅ Production configuration
-├── .env.example                     # ✅ Environment configuration template
-├── services/                        # ✅ All microservices (framework ready)
-│   ├── api_service/                 # ✅ FastAPI service (placeholder ready)
-│   │   ├── Dockerfile               # ✅ Production-ready container
-│   │   ├── pyproject.toml           # ✅ Dependencies configured
-│   │   └── src/main.py              # ✅ Basic FastAPI app + health check
-│   ├── bot_service/                 # ✅ Aiogram service (placeholder ready)
-│   │   ├── Dockerfile               # ✅ Production-ready container
-│   │   └── src/main.py              # ✅ Basic asyncio framework
-│   └── worker_service/              # ✅ AsyncIO workers (placeholder ready)
-│       ├── Dockerfile               # ✅ Production-ready container
-│       └── src/main.py              # ✅ Basic worker framework
-├── infrastructure/                  # ✅ Infrastructure configurations
-│   ├── nginx/nginx.conf             # ✅ API routing configuration
-│   ├── postgres/init.sql            # ✅ Database initialization
-│   └── observability/              # ✅ Complete observability stack
-│       ├── prometheus/              # ✅ Metrics collection
-│       ├── grafana/                 # ✅ Dashboards and visualization
-│       ├── elk/                     # ✅ Log aggregation (ELK stack)
-│       └── jaeger/                  # ✅ Distributed tracing
-├── docs/                            # ✅ Complete rule set (15 files) in architecture/, services/, infrastructure/, observability/, quality/ (or .framework/docs/ when used as submodule)
-├── docs/tech_stack.md               # ✅ Technology specifications
-├── CLAUDE.md                        # ✅ Development guidance
-└── logs/                            # ✅ Application logs directory
-```
+> **📋 COMPLETE PROJECT STRUCTURE**: For detailed project structure, directory organization, service types, and setup instructions, see [Project Structure](LINKS_REFERENCE.md#developer-guides).
 
-**Next Steps**: Implement business logic in services according to docs rule patterns (architecture/, services/, infrastructure/, observability/, quality/).
+**Key Principles:**
+- All application code in `src/` directory
+- Service-specific Dockerfiles in each service folder
+- Root-level Docker Compose configuration
+- Shared components and utilities organization
+
+**Next Steps**: Implement business logic in services according to rule patterns (architecture/, services/, infrastructure/, observability/, quality/).
 
 ### Docker Compose Organization
 
-#### RECOMMENDED: Single Root Compose File
-- **Primary file**: `docker-compose.yml` in project root
-- **Development overrides**: `docker-compose.override.yml` (auto-loaded)
-- **Production config**: `docker-compose.prod.yml` (explicit)
+> **📋 COMPLETE DOCKER COMPOSE GUIDE**: For detailed Docker Compose organization, benefits, and setup instructions, see [Project Structure](LINKS_REFERENCE.md#developer-guides).
 
-#### Benefits of Root-Level Compose:
-- **Shared Infrastructure**: All services share Redis, RabbitMQ, PostgreSQL, and observability stack
-- **Inter-service Communication**: Proper Docker networks between services and monitoring
-- **Dependency Management**: Correct startup order (infrastructure → observability → services)
-- **Environment Consistency**: Unified environment variables and secrets
-- **Simplified Development**: Single `docker-compose up` starts entire stack including monitoring
+**Key Points:**
+- Single root `docker-compose.yml` file (recommended)
+- Shared infrastructure across all services
+- Proper dependency management and networking
 
-#### Deployment Commands:
-See [Main Entry Point](LINKS_REFERENCE.md#core-documentation) for complete command reference including development, production, and observability operations.
+**Deployment Commands**: See [Development Commands](LINKS_REFERENCE.md#developer-guides) for complete command reference.
 
 ### Compliance Verification
 

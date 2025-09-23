@@ -106,6 +106,9 @@ docker-compose exec rabbitmq rabbitmqctl list_queues
 ## 🗄️ Data Service Operations
 
 ### Service URLs and Health Checks
+
+> **📋 COMPLETE SERVICE ARCHITECTURE**: For detailed service ports, communication patterns, and architecture, see the [Architecture Guide](LINKS_REFERENCE.md#core-documentation).
+
 ```bash
 # External Access (from host machine)
 curl http://localhost:8001/health    # PostgreSQL Data Service

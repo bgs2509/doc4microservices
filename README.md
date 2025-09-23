@@ -102,13 +102,6 @@ This project includes a comprehensive AI framework for generating applications:
 
 The framework implements the **Improved Hybrid Approach** - a microservices pattern combining centralized data access with distributed business logic.
 
-### Key Characteristics
-- **Centralized Data Services**: Two dedicated services handle ALL database operations
-- **Business Logic Separation**: Business services contain ONLY business logic
-- **HTTP-Only Data Access**: No direct database connections in business services
-- **Event-Driven Communication**: RabbitMQ for inter-service messaging
-- **Service Type Isolation**: Each service type runs in separate processes
-
 > **📖 COMPLETE ARCHITECTURE DETAILS**: See [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation) for detailed principles, constraints, diagrams, and implementation guidelines.
 
 ## 📚 Documentation and AI Knowledge Base
