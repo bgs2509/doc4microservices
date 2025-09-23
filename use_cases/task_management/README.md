@@ -21,25 +21,25 @@ This system provides a comprehensive task management solution with:
 
 ### Service Types Demonstrated
 
-#### **FastAPI Service** (`api_service.py`)
+#### FastAPI Service (`api_service.py`)
 - Task CRUD operations with validation
 - User authentication and authorization
 - Redis caching for performance
 - RabbitMQ event publishing
 - HTTP-only data access via data services
 
-#### **Telegram Bot Service** (`bot_service.py`)
+#### Telegram Bot Service (`bot_service.py`)
 - Natural language task creation
 - Quick status updates and task management
 - File attachment processing
 - Real-time notifications
 - User session management
 
-#### **AsyncIO Workers**
+#### AsyncIO Workers
 - **Reminder Worker** (`reminder_worker.py`): Due date monitoring and notifications
 - **Analytics Worker** (`analytics_worker.py`): Productivity tracking and insights
 
-#### **Data Services** (from main boilerplate)
+#### Data Services (from main boilerplate)
 - **db_postgres_service**: Task storage and relational queries
 - **db_mongo_service**: Analytics and activity logging
 
@@ -197,14 +197,13 @@ Start a chat with your bot and use these commands:
 
 ### Local Development Setup
 
-> **📋 DEVELOPMENT COMMANDS**: For complete development setup and commands, see [../../docs/guides/DEVELOPMENT_COMMANDS.md](../../docs/guides/DEVELOPMENT_COMMANDS.md).
+> **📋 Complete development guide**: [Development Commands](../../docs/guides/DEVELOPMENT_COMMANDS.md)
 
 ```bash
-# Follow the standard development workflow from ../../docs/guides/DEVELOPMENT_COMMANDS.md
-# Quick version:
-uv sync --dev                    # Install dependencies
-docker-compose up -d            # Start infrastructure
-python api_service.py          # Run services locally
+# Quick setup
+uv sync --dev
+docker-compose up -d
+python api_service.py
 ```
 
 ### Custom Configuration
@@ -233,183 +232,90 @@ task_analytics_worker:
 4. **Background Processing**: Add workers or extend existing ones
 5. **Events**: Add new event types for cross-service communication
 
-## 📊 Task-Specific Monitoring
+## 📊 Monitoring
 
 ### Task Service Logs
-
 ```bash
-# Follow task-specific service logs
+# Task-specific service logs
 docker-compose logs -f task_api_service
 docker-compose logs -f task_bot_service
 docker-compose logs -f task_reminder_worker
 docker-compose logs -f task_analytics_worker
 ```
 
-### Task-Specific Health Checks
-
+### Task API Health Checks
 ```bash
-# Check task management endpoints
-curl http://localhost:8000/api/v1/tasks/stats  # Task analytics
-curl http://localhost:8000/api/v1/tasks       # Task list
+curl http://localhost:8000/api/v1/tasks/stats
+curl http://localhost:8000/api/v1/tasks
 ```
 
-> **📋 GENERAL MONITORING**: For complete monitoring setup, observability stack, and generic health checks, see [../README.md](../README.md#monitoring--observability)
+> **📋 Complete monitoring guide**: [Use Cases Monitoring](../README.md#monitoring--observability)
 
-## 🧪 Task Management Testing
+## 🧪 Testing
 
-### Task-Specific Manual Testing
-
+### Quick Task Workflow Test
 ```bash
-# Test complete task workflow
-curl -X POST http://localhost:8000/api/v1/auth/register ...  # Register user
-curl -X POST http://localhost:8000/api/v1/tasks ...         # Create task
-# Use Telegram bot to create tasks with natural language
-# Check analytics at /api/v1/tasks/stats endpoint
-# Verify reminders via bot notifications
-```
-
-### Task Bot Testing
-
-```bash
-# Test Telegram bot commands
-/start                    # Initialize bot
-/task Buy groceries      # Create task via bot
-/mytasks                 # List tasks
-/done 123               # Complete task
-```
-
-> **📋 GENERAL TESTING**: For complete testing strategies, load testing, and integration testing patterns, see [../README.md](../README.md#testing-examples)
-
-## 🚀 Production Deployment
-
-### Environment Variables
-
-```env
-# Security
-SECRET_KEY=your-production-secret-key-here
-JWT_ALGORITHM=HS256
-
-# Database URLs (production)
-DATABASE_URL=postgresql+asyncpg://user:pass@prod-db:5432/tasks
-MONGODB_URL=mongodb://user:pass@prod-mongo:27017/analytics
-
-# External services
-REDIS_URL=redis://:password@prod-redis:6379/0
-RABBITMQ_URL=amqp://user:pass@prod-rabbitmq:5672/
-
-# Bot configuration
-BOT_TOKEN=production-bot-token
-BOT_USERNAME=prod_taskbot
-
-# Performance tuning
-MAX_TASKS_PER_PAGE=100
-BATCH_SIZE=200
-MAX_CONCURRENT_PROCESSING=20
-```
-
-### Scaling
-
-```bash
-# Scale API service
-docker-compose up -d --scale task_api_service=3
-
-# Scale workers
-docker-compose up -d --scale task_analytics_worker=2
-```
-
-### Backup
-
-```bash
-# Database backups
-docker-compose exec postgres pg_dump -U postgres task_management_db > backup.sql
-docker-compose exec mongodb mongodump --db task_analytics_db --out /backup/
-```
-
-## 🔍 Task Management Troubleshooting
-
-### Task-Specific Issues
-
-#### Telegram Bot Not Responding
-```bash
-# Check bot service logs
-docker-compose logs task_bot_service
-
-# Verify bot token configuration
-echo $BOT_TOKEN
-
-# Test bot externally
-curl "https://api.telegram.org/bot$BOT_TOKEN/getMe"
-```
-
-#### Task Reminders Not Working
-```bash
-# Check reminder worker logs
-docker-compose logs task_reminder_worker
-
-# Verify task due dates are set correctly
-curl http://localhost:8000/api/v1/tasks | grep due_date
-```
-
-#### Task Analytics Issues
-```bash
-# Check analytics worker logs
-docker-compose logs task_analytics_worker
-
-# Verify analytics data
+# API testing
+curl -X POST http://localhost:8000/api/v1/auth/register ...
+curl -X POST http://localhost:8000/api/v1/tasks ...
 curl http://localhost:8000/api/v1/tasks/stats
 ```
 
-> **📋 GENERAL TROUBLESHOOTING**: For database connectivity, infrastructure issues, and general debugging, see [../README.md](../README.md) and [../../docs/reference/troubleshooting.md](../../docs/reference/troubleshooting.md)
+### Bot Commands Test
+```
+/start /task Buy groceries /mytasks /done 123
+```
 
-## 📚 Task Management Learning Focus
+> **📋 Complete testing guide**: [Use Cases Testing](../README.md#testing-examples)
 
-This use case specifically demonstrates:
+## 🚀 Production Deployment
 
-### ✅ **Task Domain Patterns**
-- Personal productivity workflows
-- Natural language task creation via Telegram
-- Smart reminder systems with due date tracking
-- Real-time analytics for productivity insights
+### Key Configuration
+```env
+SECRET_KEY=production-secret-key
+BOT_TOKEN=production-bot-token
+DATABASE_URL=postgresql+asyncpg://user:pass@prod-db:5432/tasks
+MONGODB_URL=mongodb://user:pass@prod-mongo:27017/analytics
+```
 
-### ✅ **Bot Integration Patterns**
-- Telegram bot with natural language processing
-- File attachment handling via bot
-- User session management in chat interfaces
-- Command-based task management
+### Scaling
+```bash
+docker-compose up -d --scale task_api_service=3
+docker-compose up -d --scale task_analytics_worker=2
+```
 
-### ✅ **Background Processing Patterns**
-- Due date monitoring and notification workers
-- Analytics aggregation and reporting workers
-- Event-driven task lifecycle management
+> **📋 Complete deployment guide**: [Use Cases Deployment](../README.md#quick-start-any-use-case)
 
-> **📋 GENERAL LEARNING**: For complete architectural patterns, technology integration, and production practices, see [../README.md](../README.md#architecture-patterns-demonstrated)
+## 🔍 Troubleshooting
+
+### Common Issues
+
+**Bot not responding**: Check `docker-compose logs task_bot_service` and verify `$BOT_TOKEN`
+
+**Reminders not working**: Check `docker-compose logs task_reminder_worker`
+
+**Analytics issues**: Check `docker-compose logs task_analytics_worker`
+
+> **📋 Complete troubleshooting guide**: [Use Cases Troubleshooting](../README.md) | [General Troubleshooting](../../docs/reference/troubleshooting.md)
+
+## 📚 Learning Focus
+
+**Task Domain**: Personal productivity, natural language processing, smart reminders
+**Bot Integration**: Telegram commands, file attachments, user sessions
+**Background Processing**: Due date monitoring, analytics aggregation, event-driven workflows
+
+> **📋 Complete architecture patterns**: [Use Cases Architecture](../README.md#architecture-patterns-demonstrated)
 
 ## 🎯 Next Steps
 
-### Extend the System
-1. **Add team collaboration** (shared tasks, assignments)
-2. **Implement subtasks** and task dependencies
-3. **Add calendar integration** (Google Calendar, Outlook)
-4. **Create mobile app** using the REST API
-5. **Add voice commands** via Telegram voice messages
-6. **Implement task templates** for recurring tasks
-
-### Advanced Features
-1. **AI-powered task prioritization**
-2. **Productivity coaching** with ML insights
-3. **Integration with external tools** (Jira, Trello, Slack)
-4. **Advanced analytics** with charts and trends
-5. **Multi-language support** for international users
-
----
+**Extensions**: Team collaboration, subtasks, calendar integration, mobile app, voice commands, task templates
+**Advanced**: AI prioritization, ML insights, external integrations (Jira, Trello, Slack), advanced analytics, multi-language
 
 ## 📞 Support
 
-For questions about this use case:
+1. Check logs: `docker-compose logs [service-name]`
+2. Review: [Main documentation](../../README.md)
+3. Test: Health check endpoints
+4. Validate: Environment variables
 
-1. **Check logs**: `docker-compose logs [service-name]`
-2. **Review documentation**: See main project README.md
-3. **Test individual services**: Use health check endpoints
-4. **Validate configuration**: Check environment variables
-
-This use case serves as a complete reference implementation for building production-ready microservices with the boilerplate architecture! 🚀
+> **🚀 Complete reference implementation for production-ready microservices!**

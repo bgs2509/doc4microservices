@@ -58,138 +58,11 @@ services/api_service/
 
 ---
 
-## 2. Base HTTP Client (`src/clients/base_client.py`)
+## 2. HTTP Client Integration
 
-> **💡 Note**: This example shows inline HTTP client implementation for demonstration. In production, use the [Shared HTTP Client Module](./shared_http_client.md) to eliminate code duplication and get enterprise-grade features like circuit breakers and advanced retry logic.
+> **🔗 IMPORTANT**: This service uses the [Shared HTTP Client Module](./shared_http_client.md) to eliminate code duplication and provide enterprise-grade features like circuit breakers, advanced retry logic, and comprehensive error handling.
 
-Base client with proper error handling, retries, and RFC 7807 compliance.
-
-```python
-import asyncio
-import httpx
-import logging
-from typing import Optional, Dict, Any, List
-from contextvars import ContextVar
-from ..core.config import settings
-from ..schemas.errors import ProblemDetail
-
-logger = logging.getLogger(__name__)
-
-# Context variable for request ID (set by middleware)
-request_id_ctx: ContextVar[str] = ContextVar("request_id", default="")
-
-class BaseHTTPClient:
-    """Base HTTP client with standardized error handling and retries."""
-
-    def __init__(self, base_url: str, timeout: float = 30.0, retries: int = 3):
-        self.base_url = base_url.rstrip("/")
-        self.timeout = timeout
-        self.retries = retries
-
-    async def _make_request(
-        self,
-        method: str,
-        endpoint: str,
-        **kwargs
-    ) -> Optional[Dict[str, Any]]:
-        """Make HTTP request with proper error handling and retries."""
-        url = f"{self.base_url}{endpoint}"
-        request_id = request_id_ctx.get() or "unknown"
-
-        # Add standard headers
-        headers = kwargs.get("headers", {})
-        headers.update({
-            "X-Request-ID": request_id,
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        })
-        kwargs["headers"] = headers
-
-        async with httpx.AsyncClient(timeout=self.timeout) as client:
-            for attempt in range(self.retries + 1):
-                try:
-                    logger.info(f"Making {method} request to {url}", extra={
-                        "request_id": request_id,
-                        "attempt": attempt + 1,
-                        "url": url
-                    })
-
-                    response = await client.request(method, url, **kwargs)
-
-                    if response.status_code == 404:
-                        return None
-
-                    # Handle error responses with RFC 7807 format
-                    if response.status_code >= 400:
-                        try:
-                            error_data = response.json()
-                            if "type" in error_data:  # RFC 7807 format
-                                logger.error(f"API error: {error_data}", extra={
-                                    "request_id": request_id,
-                                    "status_code": response.status_code
-                                })
-                                raise httpx.HTTPStatusError(
-                                    f"API Error: {error_data.get('title', 'Unknown error')}",
-                                    request=response.request,
-                                    response=response
-                                )
-                        except ValueError:
-                            pass  # Not JSON, fall through to generic error
-
-                    response.raise_for_status()
-                    return response.json()
-
-                except httpx.TimeoutException as e:
-                    if attempt == self.retries:
-                        logger.error(f"Request timeout after {self.retries + 1} attempts", extra={
-                            "request_id": request_id,
-                            "url": url,
-                            "error": str(e)
-                        })
-                        return None
-                    await asyncio.sleep(2 ** attempt)  # Exponential backoff
-
-                except httpx.HTTPStatusError as e:
-                    if e.response.status_code < 500 or attempt == self.retries:
-                        logger.error(f"HTTP error: {e}", extra={
-                            "request_id": request_id,
-                            "status_code": e.response.status_code,
-                            "url": url
-                        })
-                        return None
-                    await asyncio.sleep(2 ** attempt)
-
-                except Exception as e:
-                    logger.error(f"Unexpected error: {e}", extra={
-                        "request_id": request_id,
-                        "url": url,
-                        "error": str(e)
-                    })
-                    return None
-
-        return None
-
-    async def get(self, endpoint: str, params: Optional[Dict] = None) -> Optional[Dict[str, Any]]:
-        """Make GET request."""
-        return await self._make_request("GET", endpoint, params=params)
-
-    async def post(self, endpoint: str, data: Optional[Dict] = None) -> Optional[Dict[str, Any]]:
-        """Make POST request."""
-        return await self._make_request("POST", endpoint, json=data)
-
-    async def put(self, endpoint: str, data: Optional[Dict] = None) -> Optional[Dict[str, Any]]:
-        """Make PUT request."""
-        return await self._make_request("PUT", endpoint, json=data)
-
-    async def patch(self, endpoint: str, data: Optional[Dict] = None) -> Optional[Dict[str, Any]]:
-        """Make PATCH request."""
-        return await self._make_request("PATCH", endpoint, json=data)
-
-    async def delete(self, endpoint: str) -> bool:
-        """Make DELETE request."""
-        result = await self._make_request("DELETE", endpoint)
-        return result is not None
-```
+See the complete implementation in [shared_http_client.md](./shared_http_client.md#shared-http-client-implementation).
 
 ## 3. User Data Client (`src/clients/user_data_client.py`)
 
@@ -197,7 +70,7 @@ Specialized client for PostgreSQL Data Service communication.
 
 ```python
 from typing import Optional, Dict, Any, List
-from .base_client import BaseHTTPClient
+from shared.http.base_client import BaseHTTPClient
 from ..schemas.user import UserCreate, UserUpdate, UserResponse
 from ..core.config import settings
 
@@ -226,9 +99,17 @@ class UserDataClient(BaseHTTPClient):
         result = await self.get(f"/api/v1/users/by-email/{email}")
         return UserResponse(**result) if result else None
 
-    async def create_user(self, user_data: UserCreate) -> Optional[UserResponse]:
-        """Create new user via data service."""
-        result = await self.post("/api/v1/users/", user_data.model_dump())
+    async def create_user(self, user_data: UserCreate, hashed_password: str) -> Optional[UserResponse]:
+        """Create new user via data service with hashed password."""
+        # Transform API schema to Data Service schema
+        data_service_payload = {
+            "email": user_data.email,
+            "username": user_data.username,
+            "hashed_password": hashed_password,  # Use hashed_password field for data service
+            "full_name": user_data.full_name,
+            "bio": user_data.bio
+        }
+        result = await self.post("/api/v1/users/", data_service_payload)
         return UserResponse(**result) if result else None
 
     async def update_user(self, user_id: int, user_data: UserUpdate) -> Optional[UserResponse]:
@@ -604,12 +485,8 @@ class UserService:
         # Hash password securely
         hashed_password = self.auth_service.hash_password(user_data.password)
 
-        # Create user data with hashed password
-        create_data = user_data.model_copy()
-        create_data.password = hashed_password
-
-        # Create user via data service
-        created_user = await self.user_client.create_user(create_data)
+        # Create user via data service with properly transformed data
+        created_user = await self.user_client.create_user(user_data, hashed_password)
         if not created_user:
             raise RuntimeError("Failed to create user")
 

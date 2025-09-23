@@ -275,7 +275,7 @@ class UserStatus(str, Enum):
     SUSPENDED = "suspended"
 
 class UserCreate(BaseModel):
-    """Schema for creating a user."""
+    """Schema for creating a user in data service (receives hashed password from business service)."""
 
     email: EmailStr = Field(
         ...,
@@ -290,11 +290,11 @@ class UserCreate(BaseModel):
         description="Username (3-50 chars, alphanumeric, underscore, hyphen)",
         example="john_doe"
     )
-    password: str = Field(
+    hashed_password: str = Field(
         ...,
-        min_length=8,
+        min_length=60,  # bcrypt hash length
         max_length=255,
-        description="User password (already hashed)",
+        description="User password (already hashed by business service)",
         example="$2b$12$..."
     )
     full_name: Optional[str] = Field(
@@ -624,7 +624,7 @@ class UserRepository(BaseRepository[User]):
         return await self.create(
             email=user_data.email,
             username=user_data.username,
-            hashed_password=user_data.password,  # Already hashed
+            hashed_password=user_data.hashed_password,  # Already hashed by business service
             full_name=user_data.full_name,
             bio=user_data.bio,
             status=UserStatus.ACTIVE,
@@ -680,11 +680,8 @@ async def create_user(
     user_data: UserCreate,
     repo: UserRepository = Depends(get_user_repository)
 ):
-    # In real application password should be hashed in business service
-    # and passed here already as hash.
-    # For example simplification, assume password is already hashed.
-    hashed_password = user_data.password + "_hashed" # Simplified "hashing"
-    db_user = await repo.create_user(user_data, hashed_password)
+    # Password is already hashed by business service before reaching data service
+    db_user = await repo.create_user(user_data)
     return db_user
 
 @router.get("/{user_id}", response_model=UserResponse)

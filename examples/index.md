@@ -17,7 +17,7 @@ This section contains comprehensive, production-ready code examples demonstratin
 
 Examples demonstrate the **Improved Hybrid Approach** with centralized data services and HTTP-only business logic communication.
 
-> **📖 ARCHITECTURAL FOUNDATION**: All examples follow the principles defined in the [Architecture Guide](../docs/LINKS_REFERENCE.md#основная-документация) and implement patterns from the [IDE Rules & Patterns](../docs/LINKS_REFERENCE.md#правила-ide-и-паттерны).
+> **📖 ARCHITECTURAL FOUNDATION**: All examples follow the principles defined in the [Architecture Guide](../docs/LINKS_REFERENCE.md#core-documentation) and implement patterns from the [IDE Rules & Patterns](../docs/LINKS_REFERENCE.md#ide-rules-and-patterns).
 
 ---
 
@@ -72,7 +72,7 @@ Examples demonstrate the **Improved Hybrid Approach** with centralized data serv
   - *Uses*: [Shared HTTP Client](./shared_http_client.md) for reliable communication
 
 - **[Resilience Patterns](./resilience_patterns.md)**: Circuit breakers, retries, timeouts, and graceful degradation patterns.
-  - *Implemented in*: [Shared HTTP Client](./shared_http_client.md#circuit-breaker-patterns), all business services
+  - *Implemented in*: [Shared HTTP Client](./shared_http_client.md), all business services
   - *Tested in*: [Comprehensive Testing](./comprehensive_testing.md#end-to-end-testing-examples) (failure scenarios)
 
 ### Observability and Quality

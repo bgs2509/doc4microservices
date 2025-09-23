@@ -95,8 +95,8 @@ services:
 
   db_postgres_service:
     build:
-      context: ../../services/db_postgres_service
-      dockerfile: Dockerfile
+      context: ../../
+      dockerfile: services/db_postgres_service/Dockerfile
     container_name: task_db_postgres_service
     environment:
       # Database connection
@@ -138,8 +138,8 @@ services:
 
   db_mongo_service:
     build:
-      context: ../../services/db_mongo_service
-      dockerfile: Dockerfile
+      context: ../../
+      dockerfile: services/db_mongo_service/Dockerfile
     container_name: task_db_mongo_service
     environment:
       # MongoDB connection

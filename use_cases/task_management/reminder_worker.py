@@ -44,8 +44,8 @@ class Settings(BaseSettings):
     # External services
     REDIS_URL: str = "redis://redis:6379/0"
     RABBITMQ_URL: str = "amqp://admin:admin123@rabbitmq:5672/"
-    TASK_API_URL: str = "http://api_service:8000"
-    BOT_API_URL: str = "http://bot_service:8000"
+    TASK_API_URL: str = "http://task_api_service:8000"
+    BOT_API_URL: str = "http://task_bot_service:8000"
 
     # Reminder settings
     CHECK_INTERVAL_SECONDS: int = 300  # 5 minutes
