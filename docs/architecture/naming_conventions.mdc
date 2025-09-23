@@ -234,11 +234,11 @@ CREATE TABLE user-accounts (  -- Invalid table name
 GET /api/v1/user-accounts/{user-id}
 POST /api/v1/user-accounts
 
-# WRONG: Docker services with hyphens
+# WRONG: Docker services with hyphens (kebab-case)
 services:
-  api_service_bad_example:  # Should be api_service
-    image: user_service_bad_example:latest  # Should be user_service
-    container_name: user_service_container_bad_example  # Should be user_service_container
+  api-service: # PROHIBITED: Must be api_service
+    image: user-service:latest # PROHIBITED: Must be user_service
+    container_name: user-service-container # PROHIBITED: Must be user_service_container
 ```
 
 ### Priorities and Compatibility
