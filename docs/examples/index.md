@@ -83,3 +83,42 @@ All examples follow the principles defined in [`../guides/ARCHITECTURE_GUIDE.md`
 - **[Testing Strategies](./testing_strategies.md)**: Advanced testing patterns for microservices with real databases, HTTP mocking, and service interaction testing.
   - *Extended by*: [Comprehensive Testing](./comprehensive_testing.md)
   - *Applies to*: All service examples above
+
+## Higher-Level Integration Examples
+
+### Complete Use Case Implementation
+
+- **[Use Case Integration Example](./use_case_integration.md)**: Complete guide for structuring and integrating use cases into the microservices architecture, demonstrating service coordination, data flow, and event-driven patterns.
+  - *Demonstrates*: Integration of all service types working together
+  - *References*: Task Management use case (`use_cases/task_management/`)
+  - *Patterns*: Service isolation, HTTP-only data access, event-driven communication
+
+### AI-Powered Development
+
+- **[AI Agents Usage Example](./ai_agents_usage.md)**: Complete guide for using AI agents to automatically generate microservices from business requirements, including template-based code generation and quality validation.
+  - *Utilizes*: Service templates in `ai_agents/generators/service_templates/`
+  - *Generates*: Production-ready service implementations
+  - *Validates*: Architectural compliance and code quality
+
+## Infrastructure and Operations
+
+### Complete Infrastructure Stack
+
+- **[Infrastructure Setup Example](./infrastructure_setup.md)**: Complete guide for setting up the full observability and infrastructure stack including PostgreSQL, MongoDB, Redis, RabbitMQ, Prometheus, Grafana, Jaeger, and ELK stack.
+  - *Includes*: Docker Compose configurations, networking, security
+  - *Supports*: All service examples and use cases
+  - *Features*: Health checks, monitoring, logging aggregation
+
+### Production Deployment
+
+- **[Deployment Patterns Example](./deployment_patterns.md)**: Production-ready deployment strategies including blue-green deployment, rolling updates, canary releases, database migrations, and zero-downtime deployment.
+  - *Covers*: Service versioning, database schema evolution, rollback procedures
+  - *Implements*: Graceful shutdown, health check strategies
+  - *Supports*: Production-grade reliability and availability
+
+### Performance and Monitoring
+
+- **[Performance Monitoring Example](./performance_monitoring.md)**: Comprehensive performance testing, monitoring setup, alerting, and optimization techniques including load testing, stress testing, and real-time monitoring.
+  - *Features*: Custom metrics collection, Prometheus integration, alerting rules
+  - *Includes*: Load testing frameworks, chaos engineering, capacity planning
+  - *Validates*: SLA compliance and system performance
