@@ -77,6 +77,124 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | 🐛 **Solve problems** | [docs/reference/troubleshooting.md](docs/reference/troubleshooting.md) |
 | 🤖 **IDE rules & patterns** | [docs/INDEX.md#ide-rules--patterns](docs/INDEX.md#ide-rules--patterns) |
 
+## 📚 Documentation Types Guide
+
+> **🎯 UNDERSTANDING THE THREE-TIER APPROACH**: This project uses three complementary documentation approaches serving different audiences and purposes.
+
+### Quick Reference
+| Need | Documentation Type | Location | Target Users |
+|------|-------------------|----------|--------------|
+| 🎓 **Learn to code properly** | Educational Examples | [docs/examples/](docs/examples/) | Human developers, teams |
+| 🤖 **AI-generated applications** | Automation Framework | [ai_agents/](ai_agents/) | AI systems, AI developers |
+| 💻 **See working solutions** | Live Demonstrations | [use_cases/](use_cases/) | Business stakeholders, QA teams |
+
+### 📊 **DOCUMENTATION TYPE COMPARISON**
+
+#### **1. `docs/examples/` - EDUCATIONAL DOCUMENTATION**
+
+**🎯 Primary Purpose:**
+- Teaching developers HOW to implement services correctly
+- Demonstrating best practices and architectural patterns
+- Providing production-ready code examples with explanations
+
+**👥 Target Users:**
+- Human developers learning the architecture
+- Senior developers implementing new services
+- Teams establishing coding standards
+- Code reviewers verifying compliance
+
+**🛠️ Way of Working:**
+- Study-oriented: Read → Understand → Apply
+- Pattern-based: Shows ideal implementations
+- Educational: Explains WHY things are done certain ways
+- Reference: Developers copy and adapt patterns
+
+**📋 Key Characteristics:**
+- Format: Markdown documentation with code snippets
+- Scope: Individual service patterns and practices
+- Detail Level: Deep technical explanations
+- Code Style: Commented, explained, educational
+- Updates: When architectural patterns evolve
+
+#### **2. `ai_agents/` - AI AUTOMATION FRAMEWORK**
+
+**🎯 Primary Purpose:**
+- Enabling AI to automatically generate complete applications
+- Providing systematic rules and templates for code generation
+- Validating business requirements against architecture constraints
+
+**👥 Target Users:**
+- AI systems (Claude, GPT, etc.) for autonomous coding
+- AI developers building agentic coding systems
+- Business analysts validating feasibility
+- DevOps engineers for automated deployment
+
+**🛠️ Way of Working:**
+- Generation-oriented: Requirements → Validation → Generate → Deploy
+- Template-based: Variable substitution in code templates
+- Systematic: Follows strict validation and generation workflow
+- Autonomous: Minimal human intervention required
+
+**📋 Key Characteristics:**
+- Format: YAML configs + Python templates with {{variables}}
+- Scope: Complete application generation (all services)
+- Detail Level: Systematic rules and constraints
+- Code Style: Template variables, generation-focused
+- Updates: When adding new business domains or patterns
+
+#### **3. `use_cases/` - WORKING DEMONSTRATIONS**
+
+**🎯 Primary Purpose:**
+- Demonstrating complete, functional applications
+- Proving the architecture works in real scenarios
+- Providing reference implementations for specific domains
+
+**👥 Target Users:**
+- Business stakeholders seeing working solutions
+- Developers needing complete examples
+- QA teams for testing and validation
+- Product managers understanding capabilities
+
+**🛠️ Way of Working:**
+- Demonstration-oriented: Deploy → Use → Learn → Adapt
+- Domain-specific: Real business logic implementations
+- Functional: Actually runs and provides value
+- Inspirational: Shows what's possible with the architecture
+
+**📋 Key Characteristics:**
+- Format: Complete Python applications with Docker configs
+- Scope: Full business applications (Task Management, E-commerce, etc.)
+- Detail Level: Production-ready implementations
+- Code Style: Business logic, real-world complexity
+- Updates: When adding new use case domains
+
+### 🔄 **HOW THEY WORK TOGETHER**
+
+#### **For Human Developers:**
+1. **Learn** from `docs/examples/` (HOW to code properly)
+2. **Reference** `use_cases/` (WHAT working solutions look like)
+3. **Ignore** `ai_agents/` (Not needed for manual development)
+
+#### **For AI Systems:**
+1. **Validate** using `ai_agents/business_validation/` (CAN it be built?)
+2. **Generate** using `ai_agents/generators/` (TEMPLATE-based creation)
+3. **Reference** `use_cases/` (WHAT the end result should be)
+4. **Learn patterns** from `docs/examples/` (HOW to implement correctly)
+
+#### **For Business Users:**
+1. **See working examples** in `use_cases/` (PROOF of capability)
+2. **Request new features** via `ai_agents/` (AUTOMATED generation)
+3. **Understand technical approach** via `docs/examples/` (EDUCATION)
+
+### ✅ **RECOMMENDATION: ALL THREE ARE ESSENTIAL**
+
+Each serves a distinct and valuable purpose:
+- **`docs/examples/`**: Human education and standards
+- **`ai_agents/`**: AI automation and generation
+- **`use_cases/`**: Working demonstrations and proof-of-concept
+
+The overlap is intentional and beneficial - they reinforce each other while serving different primary purposes.
+
 ## Project Overview
 
 This is a microservices architecture project using Python 3.12+ with the **Improved Hybrid Approach** for data access. The project includes:

@@ -1,5 +1,9 @@
 # Task Management System Use Case
 
+> **📋 DOCUMENTATION TYPE**: Working Demonstration - Complete functional application
+> **👥 TARGET USERS**: Business stakeholders, developers, QA teams
+> **🔗 RELATED**: [Learning Patterns](../../docs/examples/) | [AI Generation](../../ai_agents/) | **[Complete Comparison Guide](../../CLAUDE.md#documentation-types-guide)**
+
 A complete personal task management system demonstrating all microservices patterns from the boilerplate. This use case showcases the **Improved Hybrid Approach** with centralized data services and business logic separation.
 
 ## 🎯 Use Case Overview
@@ -229,82 +233,52 @@ task_analytics_worker:
 4. **Background Processing**: Add workers or extend existing ones
 5. **Events**: Add new event types for cross-service communication
 
-## 📊 Monitoring & Observability
+## 📊 Task-Specific Monitoring
 
-### Built-in Monitoring
-
-```bash
-# Start with monitoring stack
-docker-compose --profile monitoring up -d
-
-# Access dashboards
-open http://localhost:3000   # Grafana (admin/admin123)
-open http://localhost:9090   # Prometheus
-open http://localhost:15672  # RabbitMQ Management
-```
-
-### Service Logs
+### Task Service Logs
 
 ```bash
-# Follow API service logs
+# Follow task-specific service logs
 docker-compose logs -f task_api_service
-
-# Follow bot service logs
 docker-compose logs -f task_bot_service
-
-# Follow worker logs
 docker-compose logs -f task_reminder_worker
 docker-compose logs -f task_analytics_worker
-
-# All logs with timestamps
-docker-compose logs -f --timestamps
 ```
 
-### Health Checks
+### Task-Specific Health Checks
 
 ```bash
-# Check all service health
-curl http://localhost:8000/health  # API
-curl http://localhost:8001/health  # PostgreSQL Data Service
-curl http://localhost:8002/health  # MongoDB Data Service
-
-# Database connectivity
-docker-compose exec postgres pg_isready -U postgres
-docker-compose exec mongodb mongosh --eval "db.adminCommand('ping')"
-docker-compose exec redis redis-cli -a redis123 ping
+# Check task management endpoints
+curl http://localhost:8000/api/v1/tasks/stats  # Task analytics
+curl http://localhost:8000/api/v1/tasks       # Task list
 ```
 
-## 🧪 Testing
+> **📋 GENERAL MONITORING**: For complete monitoring setup, observability stack, and generic health checks, see [../README.md](../README.md#monitoring--observability)
 
-### Manual Testing
+## 🧪 Task Management Testing
+
+### Task-Specific Manual Testing
 
 ```bash
-# Test complete workflow
-curl -X POST http://localhost:8000/api/v1/auth/register ...
-# Use Telegram bot to create tasks
-# Check analytics in /stats endpoint
+# Test complete task workflow
+curl -X POST http://localhost:8000/api/v1/auth/register ...  # Register user
+curl -X POST http://localhost:8000/api/v1/tasks ...         # Create task
+# Use Telegram bot to create tasks with natural language
+# Check analytics at /api/v1/tasks/stats endpoint
 # Verify reminders via bot notifications
 ```
 
-### Load Testing
+### Task Bot Testing
 
 ```bash
-# Install artillery
-npm install -g artillery
-
-# Run load test
-artillery run load_test.yml
+# Test Telegram bot commands
+/start                    # Initialize bot
+/task Buy groceries      # Create task via bot
+/mytasks                 # List tasks
+/done 123               # Complete task
 ```
 
-### Integration Testing
-
-```bash
-# Run test suite (if implemented)
-python -m pytest tests/
-
-# Test service communication
-python test_integration.py
-```
+> **📋 GENERAL TESTING**: For complete testing strategies, load testing, and integration testing patterns, see [../README.md](../README.md#testing-examples)
 
 ## 🚀 Production Deployment
 
@@ -351,95 +325,64 @@ docker-compose exec postgres pg_dump -U postgres task_management_db > backup.sql
 docker-compose exec mongodb mongodump --db task_analytics_db --out /backup/
 ```
 
-## 🔍 Troubleshooting
+## 🔍 Task Management Troubleshooting
 
-### Common Issues
+### Task-Specific Issues
 
-#### Bot Not Responding
+#### Telegram Bot Not Responding
 ```bash
 # Check bot service logs
 docker-compose logs task_bot_service
 
-# Verify bot token
+# Verify bot token configuration
 echo $BOT_TOKEN
 
 # Test bot externally
 curl "https://api.telegram.org/bot$BOT_TOKEN/getMe"
 ```
 
-#### Database Connection Issues
+#### Task Reminders Not Working
 ```bash
-# Check database health
-docker-compose exec postgres pg_isready
-docker-compose exec mongodb mongosh --eval "db.adminCommand('ping')"
-
-# Check data service connectivity
-curl http://localhost:8001/health
-curl http://localhost:8002/health
-```
-
-#### Missing Notifications
-```bash
-# Check reminder worker
+# Check reminder worker logs
 docker-compose logs task_reminder_worker
 
-# Verify RabbitMQ queues
-open http://localhost:15672
+# Verify task due dates are set correctly
+curl http://localhost:8000/api/v1/tasks | grep due_date
 ```
 
-#### Performance Issues
+#### Task Analytics Issues
 ```bash
-# Check Redis memory usage
-docker-compose exec redis redis-cli -a redis123 info memory
+# Check analytics worker logs
+docker-compose logs task_analytics_worker
 
-# Monitor resource usage
-docker stats
-
-# Check queue backlogs
-docker-compose exec rabbitmq rabbitmqctl list_queues
+# Verify analytics data
+curl http://localhost:8000/api/v1/tasks/stats
 ```
 
-### Debug Mode
+> **📋 GENERAL TROUBLESHOOTING**: For database connectivity, infrastructure issues, and general debugging, see [../README.md](../README.md) and [../../docs/reference/troubleshooting.md](../../docs/reference/troubleshooting.md)
 
-```bash
-# Enable debug logging
-docker-compose -f docker-compose.yml -f docker-compose.debug.yml up -d
+## 📚 Task Management Learning Focus
 
-# Access container for debugging
-docker-compose exec task_api_service bash
-```
+This use case specifically demonstrates:
 
-## 📚 Learning Outcomes
+### ✅ **Task Domain Patterns**
+- Personal productivity workflows
+- Natural language task creation via Telegram
+- Smart reminder systems with due date tracking
+- Real-time analytics for productivity insights
 
-This use case demonstrates:
+### ✅ **Bot Integration Patterns**
+- Telegram bot with natural language processing
+- File attachment handling via bot
+- User session management in chat interfaces
+- Command-based task management
 
-### ✅ **Microservices Patterns**
-- Service separation by business domain
-- HTTP communication between business services
-- Event-driven architecture with RabbitMQ
-- Centralized data access via data services
+### ✅ **Background Processing Patterns**
+- Due date monitoring and notification workers
+- Analytics aggregation and reporting workers
+- Event-driven task lifecycle management
 
-### ✅ **Technology Integration**
-- FastAPI for REST APIs
-- Aiogram for Telegram bot development
-- AsyncIO for background workers
-- PostgreSQL + MongoDB dual database strategy
-- Redis for caching and session management
-
-### ✅ **Production Practices**
-- Containerized deployment
-- Health checks and monitoring
-- Graceful shutdown handling
-- Error handling and retry logic
-- Structured logging with request tracing
-
-### ✅ **Real-World Features**
-- User authentication and authorization
-- File upload and processing
-- Natural language parsing
-- Real-time notifications
-- Analytics and reporting
-- Automated background tasks
+> **📋 GENERAL LEARNING**: For complete architectural patterns, technology integration, and production practices, see [../README.md](../README.md#architecture-patterns-demonstrated)
 
 ## 🎯 Next Steps
 

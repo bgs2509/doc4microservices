@@ -1,5 +1,9 @@
 # Service Implementation Examples and Patterns
 
+> **📋 DOCUMENTATION TYPE**: Educational Examples - Teaching developers HOW to implement correctly
+> **👥 TARGET USERS**: Human developers, teams, code reviewers
+> **🔗 RELATED**: [AI Agents Framework](../../ai_agents/) | [Working Examples](../../use_cases/) | **[Complete Comparison Guide](../../CLAUDE.md#documentation-types-guide)**
+
 This section contains comprehensive, production-ready code examples demonstrating the implementation of various service types and architectural patterns following the **"Improved Hybrid Approach"** architecture. All examples implement patterns from `docs/` rules and include:
 
 - **RFC 7807 Error Handling**: Standardized problem details responses

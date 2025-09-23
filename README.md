@@ -98,6 +98,18 @@ graph TB
 | **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** | Problem solving | Fix issues, debug problems |
 | **[docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md)** | Create use cases | Build production features |
 
+### Documentation Structure
+
+This project uses three complementary documentation approaches:
+
+| Documentation Type | Purpose | Target Users | Location |
+|-------------------|---------|--------------|----------|
+| **📚 Educational Examples** | Learn implementation patterns | Human developers, teams | [docs/examples/](docs/examples/) |
+| **🤖 AI Automation Framework** | Automated application generation | AI systems, AI developers | [ai_agents/](ai_agents/) |
+| **💻 Working Demonstrations** | See complete working solutions | Business stakeholders, QA teams | [use_cases/](use_cases/) |
+
+**📋 [See complete comparison guide →](CLAUDE.md#documentation-types-guide)**
+
 ## 📋 Technology Stack
 
 This project uses a carefully selected technology stack optimized for microservices architecture with the Improved Hybrid Approach.

@@ -1,5 +1,9 @@
 # AI Agent Framework for Microservices Generation
 
+> **📋 DOCUMENTATION TYPE**: AI Automation Framework - Enabling AI to generate applications
+> **👥 TARGET USERS**: AI systems, AI developers, business analysts
+> **🔗 RELATED**: [Implementation Patterns](../docs/examples/) | [Working Examples](../use_cases/) | **[Complete Comparison Guide](../CLAUDE.md#documentation-types-guide)**
+
 ## Overview
 
 This framework enables AI agents to automatically generate complete, production-ready microservices projects from business requirements using a **fixed architecture** approach. Instead of choosing technologies, the AI validates business feasibility and maps requirements to our predefined **Improved Hybrid Approach** architecture.
