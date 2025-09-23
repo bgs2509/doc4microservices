@@ -2,7 +2,7 @@
 
 > **🔧 CANONICAL TECHNOLOGY REFERENCE**: This document is the single source of truth for all technology versions, configurations, and specifications used in the project. All other documentation references this file.
 
-> **📖 Related Documentation**: For development guidance, see [development guidance](LINKS_REFERENCE.md#core-documentation). For service-specific patterns, see [../INDEX.md](../INDEX.md) (architecture/, services/, infrastructure/, observability/, quality/). [complete working examples](LINKS_REFERENCE.md#examples-and-templates). For troubleshooting, see [troubleshooting.md](troubleshooting.md).
+> **📖 Related Documentation**: For development guidance, see [Development Commands](LINKS_REFERENCE.md#developer-guides). For service-specific patterns, see [Documentation Index](../INDEX.md) (architecture/, services/, infrastructure/, observability/, quality/). [complete working examples](LINKS_REFERENCE.md#examples-and-templates). For troubleshooting, see [Troubleshooting Guide](LINKS_REFERENCE.md#developer-guides).
 
 ## Table of Contents
 - [Architecture](#architecture)
@@ -22,13 +22,13 @@
 ### Architectural Patterns
 - **Technology**: DDD/Hexagonal architecture, Test Driven Design
 - **Comment**: DDD/Hex works well with FastAPI, SQLAlchemy repositories and queues (RabbitMQ), isolating domain from infrastructure. Suitable for asynchronous code (port/adapter separation), Python 3.12+ compatible. Compatible with other libraries (Pydantic v2, Uvicorn, Alembic), simplifies testing (pytest-asyncio, testcontainers) and scaling in Docker Compose.
-- **Detailed implementation**: See `../architecture/ms_best_practices_rules.mdc` for complete DDD/Hex architecture guide.
+- **Detailed implementation**: See [Microservices Best Practices](LINKS_REFERENCE.md#ide-rules-and-patterns) for complete DDD/Hex architecture guide.
 
 ---
 
 ## Technology Implementation Summary
 
-> **📖 ARCHITECTURAL PRINCIPLES**: For complete architectural guidelines and patterns, see the [Architecture Guide](../LINKS_REFERENCE.md#основная-документация).
+> **📖 ARCHITECTURAL PRINCIPLES**: For complete architectural guidelines and patterns, see the [Architecture Guide](LINKS_REFERENCE.md#core-documentation).
 
 This section provides technology-specific implementation details for the **Improved Hybrid Approach**:
 
@@ -53,21 +53,21 @@ This section provides technology-specific implementation details for the **Impro
 - **Event Loop**: Managed by FastAPI/Uvicorn
 - **Integration**: Redis and RabbitMQ via dependency injection
 - **Process**: Separate container/process
-- **Guide**: See `../services/fastapi_rules.mdc`
+- **Guide**: See [FastAPI Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)
 
 #### Telegram Bot Services
 - **Technology**: Aiogram
 - **Event Loop**: Managed by Aiogram via `asyncio.run(dp.start_polling(bot))`
 - **Integration**: Redis and RabbitMQ via dependency injection in Dispatcher
 - **Process**: Separate container/process
-- **Guide**: See `../services/aiogram_rules.mdc`
+- **Guide**: See [Aiogram Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)
 
 #### Background Worker Services
 - **Technology**: AsyncIO + aio-pika + redis.asyncio
 - **Event Loop**: `asyncio.run(main())` in separate process
 - **Integration**: Direct use of async libraries
 - **Process**: Separate container/process
-- **Guide**: See `../services/asyncio_rules.mdc`
+- **Guide**: See [AsyncIO Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)
 
 ### Inter-service Communication
 - **Synchronous**: HTTP API between services (FastAPI ↔ FastAPI)
@@ -190,7 +190,7 @@ This section provides technology-specific implementation details for the **Impro
   - FastAPI: via `app.state.rabbitmq` and dependency injection
   - Aiogram: via `dp.startup.register()` and dependency injection
   - AsyncIO: via global client in `main()` function
-- **Detailed implementation**: See `../infrastructure/rabbitmq_rules.mdc`
+- **Detailed implementation**: See [RabbitMQ Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)
 
 ### RabbitMQ Driver
 - **Technology**: aio-pika (ONLY async version)
@@ -219,7 +219,7 @@ This section provides technology-specific implementation details for the **Impro
   - FastAPI: via `app.state.redis` and dependency injection
   - Aiogram: via `dp.startup.register()` and dependency injection
   - AsyncIO: via global client in `main()` function
-- **Detailed implementation**: See `../infrastructure/redis_rules.mdc`
+- **Detailed implementation**: See [Redis Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)
 
 ### Redis Driver
 - **Technology**: redis.asyncio
@@ -291,20 +291,20 @@ This section provides technology-specific implementation details for the **Impro
 - **Image**: prom/prometheus:v2.53.0, grafana/grafana:11.2.0
 - **Libraries**: prometheus_client>=0.20.0
 - **Comment**: Complete metrics collection using Golden Signals methodology. Prometheus scrapes metrics from all services, Grafana provides visualization and alerting. Integrates with existing Request ID system from `logging_rules.mdc`.
-- **Detailed implementation**: See `../observability/metrics_rules.mdc` for service-specific patterns.
+- **Detailed implementation**: See [Metrics Rules](LINKS_REFERENCE.md#ide-rules-and-patterns) for service-specific patterns.
 
 ### Distributed Tracing
 - **Technology**: Jaeger + OpenTelemetry
 - **Image**: jaegertracing/all-in-one:1.50
 - **Libraries**: opentelemetry-api>=1.21.0, opentelemetry-sdk>=1.21.0, opentelemetry-instrumentation-fastapi>=0.42b0
 - **Comment**: End-to-end request tracing across microservices. Builds on existing OpenTelemetry setup in `logging_rules.mdc`. Automatic correlation with Request ID system for complete observability.
-- **Detailed implementation**: See `../observability/tracing_rules.mdc` for comprehensive setup.
+- **Detailed implementation**: See [Tracing Rules](LINKS_REFERENCE.md#ide-rules-and-patterns) for comprehensive setup.
 
 ### Log Aggregation and Analysis
 - **Technology**: ELK Stack (Elasticsearch + Logstash + Kibana + Filebeat)
 - **Image**: docker.elastic.co/elasticsearch/elasticsearch:8.15.0, docker.elastic.co/logstash/logstash:8.15.0, docker.elastic.co/kibana/kibana:8.15.0, docker.elastic.co/beats/filebeat:8.15.0
 - **Comment**: Centralized log aggregation and analysis. Enhances existing structured logging from `logging_rules.mdc` with powerful search, visualization, and alerting capabilities. Replaces Loki+Promtail approach for better complex log analysis.
-- **Detailed implementation**: See `../observability/elk_rules.mdc` for complete ELK setup.
+- **Detailed implementation**: See [ELK Rules](LINKS_REFERENCE.md#ide-rules-and-patterns) for complete ELK setup.
 
 ### Error Tracking and Performance Monitoring
 - **Technology**: Sentry
@@ -323,7 +323,7 @@ This section provides technology-specific implementation details for the **Impro
 - **Four Pillars**: Logs (ELK), Metrics (Prometheus), Traces (Jaeger), Errors (Sentry)
 - **Integration**: Unified Request ID correlation across all observability data
 - **Deployment**: Docker Compose integration with existing infrastructure
-- **Detailed architecture**: See `../observability/observability_rules.mdc` for complete strategy
+- **Detailed architecture**: See [Observability Rules](LINKS_REFERENCE.md#ide-rules-and-patterns) for complete strategy
 
 ---
 
@@ -396,18 +396,18 @@ This section provides technology-specific implementation details for the **Impro
 This technology stack must be implemented according to detailed guides in docs root categories (architecture/, services/, infrastructure/, observability/, quality/). These rules contain specific patterns, requirements and code examples.
 
 #### Core Architecture Rules
-- **`../architecture/ms_best_practices_rules.mdc`** - Main guide for microservice architecture, DDD/Hex patterns, project structure and quality requirements
-- **`../quality/testing-standards.mdc`** - Testing standards with mandatory 100% coverage for critical paths
+- **[Microservices Best Practices](LINKS_REFERENCE.md#ide-rules-and-patterns)** - Main guide for microservice architecture, DDD/Hex patterns, project structure and quality requirements
+- **[Testing Standards](LINKS_REFERENCE.md#ide-rules-and-patterns)** - Testing standards with mandatory 100% coverage for critical paths
 
 #### Service Type Rules
-- **`../services/fastapi_rules.mdc`** - Detailed rules for HTTP API services on FastAPI
-- **`../services/aiogram_rules.mdc`** - Standards for Telegram Bot services on Aiogram
-- **`../services/asyncio_rules.mdc`** - Rules for Background Worker services on AsyncIO
+- **[FastAPI Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)** - Detailed rules for HTTP API services on FastAPI
+- **[Aiogram Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)** - Standards for Telegram Bot services on Aiogram
+- **[AsyncIO Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)** - Rules for Background Worker services on AsyncIO
 
 #### Infrastructure Rules
-- **`../observability/logging_rules.mdc`** - Unified logging standard with Request ID tracing
-- **`../infrastructure/redis_rules.mdc`** - Redis patterns for caching and idempotency
-- **`../infrastructure/rabbitmq_rules.mdc`** - RabbitMQ standards for inter-service communication
+- **[Logging Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)** - Unified logging standard with Request ID tracing
+- **[Redis Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)** - Redis patterns for caching and idempotency
+- **[RabbitMQ Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)** - RabbitMQ standards for inter-service communication
 
 ### Critical Implementation Principles
 
@@ -433,7 +433,7 @@ This technology stack must be implemented according to detailed guides in docs r
 
 ### Development Commands Reference
 
-> **📋 COMMANDS**: For all development commands, see the [canonical command reference in DEVELOPMENT_COMMANDS.md](../guides/DEVELOPMENT_COMMANDS.md). This includes Docker, testing, linting, and deployment commands.
+> **📋 COMMANDS**: For all development commands, see the [Development Commands](../guides/DEVELOPMENT_COMMANDS.md). This includes Docker, testing, linting, and deployment commands.
 
 ### Working Examples Reference
 
@@ -444,7 +444,7 @@ For comprehensive, working implementations of all service types with real-world 
 - **Inter-Service Communication**: HTTP API calls and event-driven patterns
 - **Testing Examples**: Unit, integration, and end-to-end testing patterns
 
-See [../examples/index.md](../examples/index.md) *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)* for detailed implementations.
+See [Examples Index](LINKS_REFERENCE.md#examples-and-templates) for detailed implementations.
 
 ### Troubleshooting Reference
 
@@ -455,7 +455,7 @@ For common issues and solutions including:
 - Database and migration problems
 - Observability stack configuration
 
-See [troubleshooting.md](troubleshooting.md) for diagnostic steps and solutions.
+See [Troubleshooting Guide](LINKS_REFERENCE.md#developer-guides) for diagnostic steps and solutions.
 
 ### Project Structure (Current Implementation)
 
@@ -509,7 +509,7 @@ try_microservices/                    # Root project directory
 - **Simplified Development**: Single `docker-compose up` starts entire stack including monitoring
 
 #### Deployment Commands:
-See [CLAUDE.md](../../CLAUDE.md#development-commands) for complete command reference including development, production, and observability operations.
+See [Main Entry Point](LINKS_REFERENCE.md#core-documentation) for complete command reference including development, production, and observability operations.
 
 ### Compliance Verification
 

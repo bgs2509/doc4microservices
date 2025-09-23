@@ -421,11 +421,11 @@ docker-compose logs -f task_bot_service
 
 ## 📚 Related Documentation
 
-- **Architecture Details**: [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md)
-[Technology Specifications](LINKS_REFERENCE.md#core-documentation)
-- **Working Examples**: [../examples/index.md](../examples/index.md) *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)*
-- **Troubleshooting Guide**: [../reference/troubleshooting.md](../reference/troubleshooting.md)
-[Main Development Guide](LINKS_REFERENCE.md#core-documentation)
+- **Architecture Details**: [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
+- **Technology Specifications**: [Technical Specifications](LINKS_REFERENCE.md#core-documentation)
+- **Working Examples**: [Examples Index](LINKS_REFERENCE.md#examples-and-templates)
+- **Troubleshooting Guide**: [Troubleshooting Guide](LINKS_REFERENCE.md#developer-guides)
+- **Main Development Guide**: [Main Entry Point](LINKS_REFERENCE.md#core-documentation)
 
 ---
 
@@ -456,7 +456,7 @@ docker-compose exec redis redis-cli -a redis123 BGSAVE
 
 ---
 
-#> **📖 Documentation Hierarchy**: For complete project guidance, see [../../CLAUDE.md](../../CLAUDE.md). For architectural details, see [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md). For technology specifications, see [../reference/tech_stack.md](../reference/tech_stack.md).
+> **📖 Documentation Hierarchy**: For complete project guidance, see [Main Entry Point](LINKS_REFERENCE.md#core-documentation). For architectural details, see [Architecture Guide](LINKS_REFERENCE.md#core-documentation). For technology specifications, see [Technical Specifications](LINKS_REFERENCE.md#core-documentation).
 
 ---
 

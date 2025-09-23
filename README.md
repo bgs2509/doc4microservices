@@ -58,7 +58,7 @@ This transforms microservices application creation into a standardized, repeatab
 
 When you add this framework as a submodule, your project follows a clean separation pattern where the framework provides proven architecture patterns while your application code stays completely separate.
 
-> **📋 DETAILED PROJECT STRUCTURE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) *(or [.framework/docs/reference/PROJECT_STRUCTURE.md](.framework/docs/reference/PROJECT_STRUCTURE.md) when used as submodule)* for comprehensive directory organization, service types, and setup guidance.
+> **📋 DETAILED PROJECT STRUCTURE**: See [Project Structure Guide](docs/LINKS_REFERENCE.md#developer-guides) for comprehensive directory organization, service types, and setup guidance.
 
 ## 💻 AI Generation Examples
 
@@ -118,45 +118,24 @@ This repository contains comprehensive documentation designed for both AI agents
 ### For AI Agents
 | Component | Purpose | Location |
 |-----------|---------|----------|
-| **🏗️ Main Entry Point** | Complete development guide and navigation | [CLAUDE.md](CLAUDE.md) |
-| **🤖 AI Framework** | Automated application generation | [ai_agents/](ai_agents/) *(or [.framework/ai_agents/](.framework/ai_agents/) when used as submodule)* |
-| **📋 Implementation Rules** | Service-specific patterns and constraints | [docs/](docs/) *(or [.framework/docs/](.framework/docs/) when used as submodule)* |
-| **💻 Working Examples** | Complete reference implementations | [examples/](examples/) *(or [.framework/examples/](.framework/examples/) when used as submodule)* |
+| **🏗️ Main Entry Point** | Complete development guide and navigation | [Main Entry Point](docs/LINKS_REFERENCE.md#core-documentation) |
+| **🤖 AI Framework** | Automated application generation | [AI Agents](docs/LINKS_REFERENCE.md#examples-and-templates) |
+| **📋 Implementation Rules** | Service-specific patterns and constraints | [Developer Guides](docs/LINKS_REFERENCE.md#developer-guides) |
+| **💻 Working Examples** | Complete reference implementations | [Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates) |
 
 ### For Human Developers
 | Document | Purpose | When to Use |
 |----------|---------|-------------|
-| **[Main Entry Point](CLAUDE.md)** | Complete developer guide | Start here - setup, architecture, commands |
+| **[Main Entry Point](docs/LINKS_REFERENCE.md#core-documentation)** | Complete developer guide | Start here - setup, architecture, commands |
 | **[Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation)** | Technology specifications | Check versions, configurations |
-| **[Working Examples](examples/index.md)** | Working code examples | Understand implementation patterns |
+| **[Working Examples](docs/LINKS_REFERENCE.md#examples-and-templates)** | Working code examples | Understand implementation patterns |
 | **[Troubleshooting Guide](docs/LINKS_REFERENCE.md#developer-guides)** | Problem solving | Debug issues, find solutions |
 
 ## 📋 Technology Stack
 
-**Carefully selected technologies optimized for the Improved Hybrid Approach:**
+This project uses a carefully selected, modern technology stack optimized for the Improved Hybrid Approach, including Python 3.12+, FastAPI, Aiogram, PostgreSQL, MongoDB, Docker, and a comprehensive observability suite.
 
-### Core Technologies
-- **Python 3.12+** - Unified runtime with advanced type system
-- **FastAPI + Aiogram + AsyncIO** - Service type separation and specialization
-- **PostgreSQL + MongoDB** - Dual database strategy for different data needs
-- **Redis + RabbitMQ** - High-performance caching and messaging
-- **Docker Compose** - Simple but powerful service orchestration
-
-### Observability Stack
-- **Prometheus** - Metrics collection, alerting rules, and performance monitoring
-- **Grafana** - Rich visualization dashboards, alerting, and data exploration
-- **Jaeger** - Distributed tracing, request flow analysis, and performance bottleneck identification
-- **ELK Stack** (Elasticsearch, Logstash, Kibana) - Centralized logging, log analysis, and search
-- **Node Exporter** - System metrics collection (CPU, memory, disk, network)
-- **cAdvisor** - Container metrics and resource usage monitoring
-- **AlertManager** - Alert routing, grouping, and notification management
-- **Health Checks** - Service health endpoints and readiness probes
-
-### Development Tools
-- **UV** - Fast Python package management
-- **Ruff** - Lightning-fast Python linting
-- **MyPy** - Static type checking
-- **Testcontainers** - Real database testing
+> **🔧 For a complete list of technologies, versions, and configurations, see the [Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation).**
 
 ## ✨ Benefits for Development Teams
 
@@ -196,7 +175,7 @@ git clone --recursive <your-project-repo>
 git submodule init && git submodule update
 ```
 
-> **📋 COMPLETE SETUP GUIDE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) *(or [.framework/docs/reference/PROJECT_STRUCTURE.md](.framework/docs/reference/PROJECT_STRUCTURE.md) when used as submodule)* for detailed project organization and development workflow.
+> **📋 COMPLETE SETUP GUIDE**: See [Project Structure Guide](docs/LINKS_REFERENCE.md#developer-guides) for detailed project organization and development workflow.
 
 ### For AI Agents
 1. **Automatically scan `.framework/`** for patterns, rules, and examples
@@ -205,13 +184,13 @@ git submodule init && git submodule update
 4. **Use `.framework/ai_agents/`** for validation and generation tools
 
 ### Quick Links (within .framework/)
-- **🏗️ Architecture Guide**: `.framework/docs/guides/ARCHITECTURE_GUIDE.md`
-- **📋 Development Commands**: `.framework/docs/guides/DEVELOPMENT_COMMANDS.md`
-- **🎯 Use Case Implementation**: `.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md`
-- **🔧 Technology Stack**: `.framework/docs/reference/tech_stack.md`
-- **💻 Working Examples**: `.framework/examples/index.md`
-- **🐛 Troubleshooting**: `.framework/docs/reference/troubleshooting.md`
-- **🚀 Live Demonstrations**: `.framework/use_cases/`
+- **🏗️ Architecture Guide**: [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation)
+- **📋 Development Commands**: [Development Commands](docs/LINKS_REFERENCE.md#developer-guides)
+- **🎯 Use Case Implementation**: [Use Case Implementation](docs/LINKS_REFERENCE.md#developer-guides)
+- **🔧 Technology Stack**: [Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation)
+- **💻 Working Examples**: [Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates)
+- **🐛 Troubleshooting**: [Troubleshooting](docs/LINKS_REFERENCE.md#developer-guides)
+- **🚀 Live Demonstrations**: [Working Demonstrations](docs/LINKS_REFERENCE.md#examples-and-templates)
 
 ## 📄 License
 

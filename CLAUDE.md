@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 ### Primary Documentation (Essential Reading)
 
-1. **[CLAUDE.md](CLAUDE.md)** (this file) - **MAIN ENTRY POINT**
+1. **[CLAUDE.md](docs/LINKS_REFERENCE.md#core-documentation)** (this file) - **MAIN ENTRY POINT**
    - 🏗️ Project overview and navigation guide
    - 🚀 Development workflow and setup instructions
    - 📋 Links to specialized documentation
@@ -24,7 +24,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
    - 📦 Library compatibility and requirements
    - ⚙️ Infrastructure configuration details
 
-3. **[README.md](README.md)** - **PROJECT INTRODUCTION**
+3. **[README.md](docs/LINKS_REFERENCE.md#core-documentation)** - **PROJECT INTRODUCTION**
    - 📖 High-level project description
    - ⚡ Quick start instructions
    - 🔗 Links to detailed documentation
@@ -60,7 +60,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 ### Specialized Documentation
 
-10. **[IDE Rules & Patterns](docs/LINKS_REFERENCE.md#ide-rules--patterns)** - **IDE RULES & PATTERNS** (architecture, services, infrastructure, observability, quality)
+10. **[IDE Rules & Patterns](docs/LINKS_REFERENCE.md#ide-rules-and-patterns)** - **IDE RULES & PATTERNS** (architecture, services, infrastructure, observability, quality)
    - 🤖 Automated code generation rules
    - 📏 Service-specific implementation patterns
    - 🔧 Technology-specific guidelines
@@ -74,14 +74,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 | Need | Go To |
 |------|-------|
-| 🏁 **Get started quickly** | [README.md](README.md) → [CLAUDE.md - Development Commands](#development-commands) |
+| 🏁 **Get started quickly** | [README.md](docs/LINKS_REFERENCE.md#core-documentation) → [CLAUDE.md - Development Commands](#development-commands) |
 | 🏗️ **Understand architecture** | [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation) |
 | 📋 **Run commands** | [Development Commands](docs/LINKS_REFERENCE.md#developer-guides) |
 | 🎯 **Create new use case** | [Use Case Implementation](docs/LINKS_REFERENCE.md#developer-guides) |
 | 🔧 **Check versions/config** | [Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation) |
 | 💻 **See working examples** | [Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates) |
 | 🐛 **Solve problems** | [Troubleshooting](docs/LINKS_REFERENCE.md#developer-guides) |
-| 🤖 **IDE rules & patterns** | [IDE Rules & Patterns](docs/LINKS_REFERENCE.md#ide-rules--patterns) |
+| 🤖 **IDE rules & patterns** | [IDE Rules & Patterns](docs/LINKS_REFERENCE.md#ide-rules-and-patterns) |
 
 ## 📚 Documentation Types Guide
 
@@ -203,21 +203,9 @@ The overlap is intentional and beneficial - they reinforce each other while serv
 
 ## Framework Overview
 
-This is a **Framework-as-Submodule** for microservices architecture using Python 3.12+ with the **Improved Hybrid Approach** for data access. When added as a Git submodule (`.framework/`), it provides:
+This is a **Framework-as-Submodule** for microservices architecture using Python 3.12+ with the **Improved Hybrid Approach** for data access. It provides a centralized, updatable framework with proven patterns, AI agents, and comprehensive documentation to accelerate development.
 
-- **Centralized Framework**: Proven patterns, AI agents, and complete documentation
-- **Separation of Concerns**: Framework code separate from your application code
-- **Automatic Updates**: `git submodule update --remote` gets latest improvements
-- **AI Compatibility**: AI systems automatically scan the framework for patterns and rules
-
-The framework includes:
-
-- **Infrastructure**: Complete observability stack with Prometheus, Grafana, Jaeger, ELK, and dual database infrastructure (PostgreSQL + MongoDB)
-- **Data Services**: Centralized data access services (db_postgres_service, db_mongo_service) implementing the Database Service pattern
-- **Business Services**: Business logic services (api_service, bot_service, worker_service) that access data via HTTP APIs only
-- **Architecture**: DDD/Hexagonal patterns with clear separation between data access and business logic
-
-**Current Status**: Complete Improved Hybrid Approach implementation with PostgreSQL and MongoDB data services. Business services access data via HTTP only - no direct database connections.
+> **🏗️ For a complete overview of the architecture, see the [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation).**
 
 **CRITICAL ARCHITECTURE CONSTRAINTS**:
 1. Different service types (FastAPI, Aiogram, AsyncIO workers) MUST run in separate processes/containers to avoid event loop conflicts
@@ -227,99 +215,14 @@ The framework includes:
 
 ## Development Commands
 
-> **📋 CANONICAL COMMAND REFERENCE**: For all development commands, see [development commands](docs/LINKS_REFERENCE.md#developer-guides). This includes Docker operations, testing, deployment, troubleshooting, and more.
-
-### Quick Reference for Framework Usage
-```bash
-# 1. Add framework as submodule to your project
-mkdir my_awesome_app && cd my_awesome_app && git init
-git submodule add <framework-repo-url> .framework
-git submodule init && git submodule update
-
-# 2. Generate application with AI (AI reads framework patterns)
-# Ask AI: "Create [your app] using framework patterns"
-
-# 3. Quick start your generated application
-cp .env.example .env
-docker-compose up -d
-uv sync --dev
-curl http://localhost:8000/health
-```
-
-**Essential operations:**
-- **Framework Update**: `git submodule update --remote .framework`
-- **Docker**: [Development Commands](docs/LINKS_REFERENCE.md#developer-guides) (Docker operations)
-- **Testing**: [Development Commands](docs/LINKS_REFERENCE.md#developer-guides) (Testing commands)
-- **Troubleshooting**: [Development Commands](docs/LINKS_REFERENCE.md#developer-guides) (Troubleshooting commands)
+> **📋 CANONICAL COMMAND REFERENCE**: For all development commands, see [Development Commands](docs/LINKS_REFERENCE.md#developer-guides). This includes Docker operations, testing, deployment, troubleshooting, and more.
 
 ## Architecture Guidelines
 
 > **🏗️ ARCHITECTURAL FOUNDATION**: For complete architectural guidelines, constraints, and patterns, see [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation). This section provides a high-level overview.
 
-### Improved Hybrid Approach Overview
+This project implements the **Improved Hybrid Approach**, a microservices architecture that combines centralized data access with distributed business logic. Key principles include HTTP-only data access, strict service type separation, and event-driven communication.
 
-This project implements the **Improved Hybrid Approach** - a microservices architecture pattern that combines centralized data access with distributed business logic.
-
-**Key Principles:**
-- **Centralized Data Services**: All database operations handled by dedicated data services
-- **HTTP-Only Data Access**: Business services communicate with data services via HTTP APIs only
-- **Service Type Separation**: Each service type (FastAPI, Aiogram, AsyncIO) runs in separate processes
-- **Event-Driven Communication**: RabbitMQ for inter-service messaging
-- **DDD/Hexagonal Architecture**: Clear separation of business logic from infrastructure
-
-**Critical Constraints:**
-- ❌ **PROHIBITED**: Direct database connections in business services
-- ❌ **PROHIBITED**: Running multiple event loop managers in same process
-- ⚠️ **MANDATORY**: Python 3.12+ for all services
-- ⚠️ **MANDATORY**: Underscore-only naming convention (no hyphens)
-
-> **📋 COMPLETE ARCHITECTURE DETAILS**: See [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation) for detailed constraints, patterns, and implementation guidelines.
-
-### Docker Compose Organization
-
-#### RECOMMENDED: Single Root Compose Setup
-Use one main `docker-compose.yml` in the project root, not individual compose files per service.
-
-**Project Organization:**
-When used as submodule, projects follow a clean separation pattern: framework provides patterns, user code stays in `src/`.
-
-> **📋 COMPLETE PROJECT STRUCTURE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) *(or [.framework/docs/reference/PROJECT_STRUCTURE.md](.framework/docs/reference/PROJECT_STRUCTURE.md) when used as submodule)* for detailed directory organization, service types, and development workflow.
-
-**Benefits:**
-- **Data Service Isolation**: Centralized database expertise and optimization
-- **Business Logic Focus**: Services contain only business logic, no database concerns
-- **Shared Infrastructure**: Redis, RabbitMQ, observability stack shared across all services
-- **Proper Service Networking**: HTTP communication between business and data services
-- **Unified Environment**: Single command deployment with proper dependency management
-
-### Service Types and Implementation Status
-**Complete technology specifications and versions**: [docs/reference/tech_stack.md](docs/reference/tech_stack.md) *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md) when used as submodule)*
-
-**Service Architecture:**
-- **Data Services**: PostgreSQL and MongoDB data access services (Ports: 8001, 8002)
-- **Business Services**: FastAPI, Aiogram, AsyncIO workers (HTTP-only data access)
-- **Infrastructure**: Complete observability and messaging stack
-
-**Current Status**: Infrastructure and service framework complete, ready for business logic implementation.
-
-**Service Implementation Guides:**
-- Data access patterns: `docs/architecture/data-access-rules.mdc` *(or `.framework/docs/architecture/data-access-rules.mdc` when used as submodule)*
-- MongoDB operations: `docs/infrastructure/mongodb_rules.mdc` *(or `.framework/docs/infrastructure/mongodb_rules.mdc` when used as submodule)*
-- FastAPI patterns: `docs/services/fastapi_rules.mdc` *(or `.framework/docs/services/fastapi_rules.mdc` when used as submodule)*
-- Aiogram patterns: `docs/services/aiogram_rules.mdc` *(or `.framework/docs/services/aiogram_rules.mdc` when used as submodule)*
-- AsyncIO patterns: `docs/services/asyncio_rules.mdc` *(or `.framework/docs/services/asyncio_rules.mdc` when used as submodule)*
-
-### Service Structure
-For detailed service structure and architecture patterns, see [docs/reference/tech_stack.md](docs/reference/tech_stack.md) *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md) when used as submodule)* and `docs/architecture/ms_best_practices_rules.mdc` *(or `.framework/docs/architecture/ms_best_practices_rules.mdc` when used as submodule)*.
-
-### Service-Specific Patterns
-
-**Implementation patterns available in:**
-- **FastAPI Services**: [docs/services/fastapi_rules.mdc](docs/services/fastapi_rules.mdc) *(or [.framework/docs/services/fastapi_rules.mdc](.framework/docs/services/fastapi_rules.mdc) when used as submodule)*
-- **Aiogram Services**: [docs/services/aiogram_rules.mdc](docs/services/aiogram_rules.mdc) *(or [.framework/docs/services/aiogram_rules.mdc](.framework/docs/services/aiogram_rules.mdc) when used as submodule)*
-- **AsyncIO Workers**: [docs/services/asyncio_rules.mdc](docs/services/asyncio_rules.mdc) *(or [.framework/docs/services/asyncio_rules.mdc](.framework/docs/services/asyncio_rules.mdc) when used as submodule)*
-- **Database Access**: [docs/architecture/data-access-rules.mdc](docs/architecture/data-access-rules.mdc) *(or [.framework/docs/architecture/data-access-rules.mdc](.framework/docs/architecture/data-access-rules.mdc) when used as submodule)*
-- **Testing Standards**: [docs/quality/testing-standards.mdc](docs/quality/testing-standards.mdc) *(or [.framework/docs/quality/testing-standards.mdc](.framework/docs/quality/testing-standards.mdc) when used as submodule)*
 
 ## Cursor Rules Integration
 

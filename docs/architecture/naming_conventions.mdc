@@ -249,7 +249,7 @@ services:
 
 ### Verification
 - **Automated checks**:
-  - Run the full verification suite as defined in the **[Development Commands](LINKS_REFERENCE.md#developer-guides)** guide, which includes checks for Python and file naming conventions.
+  - Run the full verification suite as defined in the **[Development Commands](../guides/DEVELOPMENT_COMMANDS.md#code-quality-commands)** guide, which includes checks for Python and file naming conventions.
   - Use custom scripts to validate Docker and configuration naming for user-controlled identifiers where automated checks are not sufficient.
 - **Manual review**:
   - Code review checklists MUST include naming convention validation.

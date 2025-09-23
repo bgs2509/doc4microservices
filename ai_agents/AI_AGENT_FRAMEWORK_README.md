@@ -2,13 +2,13 @@
 
 > **📋 DOCUMENTATION TYPE**: AI Automation Framework - Enabling AI to generate applications
 > **👥 TARGET USERS**: AI systems, AI developers, business analysts
-> **🔗 RELATED**: [Implementation Patterns](../examples/) *(or [.framework/examples/](.framework/examples/) when used as submodule)* | [Working Examples](../use_cases/) *(or [.framework/use_cases/](.framework/use_cases/) when used as submodule)* | **[Complete Comparison Guide](../CLAUDE.md#documentation-types-guide)**
+> **🔗 RELATED**: [Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates) | [Working Demonstrations](docs/LINKS_REFERENCE.md#examples-and-templates) | **[Main Entry Point](docs/LINKS_REFERENCE.md#core-documentation)**
 
-## Overview
+## 🎯 Overview
 
 This framework enables AI agents to automatically generate complete, production-ready microservices projects from business requirements using a **fixed architecture** approach. Instead of choosing technologies, the AI validates business feasibility and maps requirements to our predefined **Improved Hybrid Approach** architecture.
 
-## Architecture
+## 🏗️ Architecture
 
 ### Fixed Technology Stack
 - **Data Layer**: PostgreSQL + MongoDB services (HTTP-only access)
@@ -45,7 +45,7 @@ ai_agents/
     └── deployment_automation.yml     # Deployment scripts
 ```
 
-## AI Agent Workflow
+## 🤖 AI Agent Workflow
 
 ### Phase 1: Business Validation
 1. **Feasibility Check**: Validate if business idea can be implemented with our fixed architecture
@@ -72,7 +72,7 @@ ai_agents/
 2. **Deployment Scripts**: Generate automated deployment scripts
 3. **Monitoring Setup**: Configure observability and health checks
 
-## Key Features
+## ✨ Key Features
 
 ### 🚀 **Complete Automation**
 - From business idea to running microservices
@@ -99,7 +99,7 @@ ai_agents/
 - Automated deployment scripts
 - Health monitoring and rollback
 
-## Usage Examples
+## 💻 Usage Examples
 
 ### Example 1: E-commerce Platform
 
@@ -125,7 +125,7 @@ ai_agents/
 
 **Output**: Complete project management microservices
 
-## Validation Framework
+## ⚙️ Validation Framework
 
 ### Business Feasibility Validation
 ```yaml
@@ -149,7 +149,7 @@ validation_rules:
     pattern: "underscore_only"
 ```
 
-## Templates and Generation
+## 📝 Templates and Generation
 
 ### Service Templates
 - **FastAPI Service**: Complete REST API with data service integration
@@ -172,7 +172,7 @@ api_endpoints = "{{api_endpoints}}"         # -> Generated endpoint code
 - Proper error handling and validation
 - Security best practices
 
-## Deployment Automation
+## 🚀 Deployment Automation
 
 ### Generated Deployment Assets
 - **docker-compose.yml**: Complete service orchestration
@@ -187,7 +187,7 @@ api_endpoints = "{{api_endpoints}}"         # -> Generated endpoint code
 3. **Service Deployment**: Data services → Business services → Observability
 4. **Post-deployment Validation**: Health checks and integration tests
 
-## Quality Assurance
+## ✅ Quality Assurance
 
 ### Automated Validation
 - **Syntax Validation**: AST parsing for Python correctness
@@ -202,7 +202,7 @@ api_endpoints = "{{api_endpoints}}"         # -> Generated endpoint code
 - **Event Integration**: RabbitMQ event publishing and consumption
 - **Container Testing**: Docker container health and networking
 
-## Benefits for AI Agents
+## 💡 Benefits for AI Agents
 
 ### 🎯 **Clear Decision Framework**
 - Simple yes/no feasibility decisions
@@ -224,7 +224,7 @@ api_endpoints = "{{api_endpoints}}"         # -> Generated endpoint code
 - Monitoring and observability
 - Security and performance optimized
 
-## Getting Started
+## 🏁 Getting Started
 
 ### For AI Agent Developers
 1. **Study the Validation Framework**: Understand how to validate business ideas
@@ -238,7 +238,7 @@ api_endpoints = "{{api_endpoints}}"         # -> Generated endpoint code
 3. **Define User Interfaces**: Specify if you need web API, Telegram bot, etc.
 4. **Review Generated Output**: Validate that generated services meet needs
 
-## Framework Philosophy
+## 🏛️ Framework Philosophy
 
 This framework embodies the principle of **"Convention over Configuration"** for AI-generated microservices:
 
