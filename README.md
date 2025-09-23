@@ -146,6 +146,10 @@ This project includes a comprehensive AI framework for generating applications:
 
 ```mermaid
 graph TB
+    subgraph "Infrastructure (Docker Compose)"
+        RABBIT[RabbitMQ]
+    end
+
     subgraph "Business Services (src/services/)"
         API[FastAPI Service :8000]
         BOT[Aiogram Bot]
@@ -161,7 +165,6 @@ graph TB
         POSTGRES[(PostgreSQL)]
         MONGODB[(MongoDB)]
         REDIS[(Redis)]
-        RABBIT[RabbitMQ]
     end
 
     API -->|HTTP only| PG
