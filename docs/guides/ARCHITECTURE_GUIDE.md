@@ -95,14 +95,14 @@ These constraints are **NON-NEGOTIABLE** and must be followed in all implementat
 - **MANDATORY**: Async Libraries - Use only async-compatible libraries (asyncpg, aio-pika, redis.asyncio)
 - **MANDATORY**: Database Strategy - Dual database approach (PostgreSQL + MongoDB)
 
-> **📋 COMPLETE TECHNOLOGY SPECIFICATIONS**: For detailed versions, configurations, and compatibility information, see [../reference/tech_stack.md](../reference/tech_stack.md).
+> **📋 COMPLETE TECHNOLOGY SPECIFICATIONS**: For detailed versions, configurations, and compatibility information, see the [Technical Specifications](LINKS_REFERENCE.md#core-documentation).
 
 #### 4. **Naming Conventions** (Enforced Project-Wide)
 - **MANDATORY**: Underscore-Only Policy - Use snake_case for ALL identifiers
 - **❌ PROHIBITED**: Hyphens in any user-controlled names (files, variables, functions, databases, APIs)
 - **MANDATORY**: Consistent naming across all layers (code, database, API, Docker, etc.)
 
-> **📏 COMPLETE NAMING RULES**: See [../architecture/naming_conventions.mdc](../architecture/naming_conventions.mdc) for comprehensive naming standards.
+> **📏 COMPLETE NAMING RULES**: See the [Naming Conventions](LINKS_REFERENCE.md#ide-rules--patterns) for comprehensive naming standards.
 
 ---
 
@@ -119,21 +119,21 @@ These constraints are **NON-NEGOTIABLE** and must be followed in all implementat
 - **Event Loop**: Managed by FastAPI/Uvicorn
 - **Integration**: Redis and RabbitMQ via dependency injection
 - **Process**: Separate container/process
-- **Guide**: See [../services/fastapi_rules.mdc](../services/fastapi_rules.mdc)
+- **Guide**: See [FastAPI Rules](LINKS_REFERENCE.md#ide-rules--patterns)
 
 #### Telegram Bot Services
 - **Technology**: Aiogram
 - **Event Loop**: Managed by Aiogram via `asyncio.run(dp.start_polling(bot))`
 - **Integration**: Redis and RabbitMQ via dependency injection in Dispatcher
 - **Process**: Separate container/process
-- **Guide**: See [../services/aiogram_rules.mdc](../services/aiogram_rules.mdc)
+- **Guide**: See [Aiogram Rules](LINKS_REFERENCE.md#ide-rules--patterns)
 
 #### Background Worker Services
 - **Technology**: AsyncIO + aio-pika + redis.asyncio
 - **Event Loop**: `asyncio.run(main())` in separate process
 - **Integration**: Direct use of async libraries
 - **Process**: Separate container/process
-- **Guide**: See [../services/asyncio_rules.mdc](../services/asyncio_rules.mdc)
+- **Guide**: See [AsyncIO Rules](LINKS_REFERENCE.md#ide-rules--patterns)
 
 ### Inter-Service Communication Patterns
 - **Synchronous**: HTTP API between services (FastAPI ↔ FastAPI)
@@ -189,7 +189,7 @@ async def get_user_profile(user_id: str) -> UserProfile:
     return UserProfile.from_orm(user)
 ```
 
-> **📋 DETAILED DATA ACCESS RULES**: See [../architecture/data-access-rules.mdc](../architecture/data-access-rules.mdc) for comprehensive data access patterns.
+> **📋 DETAILED DATA ACCESS RULES**: See the [Data Access Rules](LINKS_REFERENCE.md#ide-rules--patterns) for comprehensive data access patterns.
 
 ---
 
@@ -237,7 +237,7 @@ async def handle_user_created_event(event_data: dict) -> None:
     await notification_service.send_welcome_email(event_data["email"])
 ```
 
-> **📋 DETAILED COMMUNICATION RULES**: See [../infrastructure/rabbitmq_rules.mdc](../infrastructure/rabbitmq_rules.mdc) for comprehensive messaging patterns.
+> **📋 DETAILED COMMUNICATION RULES**: See the [RabbitMQ Rules](LINKS_REFERENCE.md#ide-rules--patterns) for comprehensive messaging patterns.
 
 ---
 
@@ -405,23 +405,23 @@ async def handle_user_created_event(event_data: dict) -> None:
 ## 🔗 Related Documentation
 
 ### Implementation Resources
-- **Development Commands**: [DEVELOPMENT_COMMANDS.md](DEVELOPMENT_COMMANDS.md)
-- **Technology Specifications**: [../reference/tech_stack.md](../reference/tech_stack.md)
-- **Working Examples**: [../examples/index.md](../examples/index.md) *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)*
-- **Troubleshooting**: [../reference/troubleshooting.md](../reference/troubleshooting.md)
+- **Development Commands**: [Development Commands](LINKS_REFERENCE.md#developer-guides)
+- **Technology Specifications**: [Technical Specifications](LINKS_REFERENCE.md#core-documentation)
+- **Working Examples**: [Examples Index](LINKS_REFERENCE.md#examples-and-templates)
+- **Troubleshooting**: [Troubleshooting](LINKS_REFERENCE.md#developer-guides)
 
 ### Implementation Rules
-- **Service Patterns**: [../INDEX.md](../INDEX.md) (15 rule files in architecture/, services/, infrastructure/, observability/, quality/)
-- **FastAPI Rules**: [../services/fastapi_rules.mdc](../services/fastapi_rules.mdc)
-- **Aiogram Rules**: [../services/aiogram_rules.mdc](../services/aiogram_rules.mdc)
-- **AsyncIO Rules**: [../services/asyncio_rules.mdc](../services/asyncio_rules.mdc)
-- **Data Access Rules**: [../architecture/data-access-rules.mdc](../architecture/data-access-rules.mdc)
-- **Testing Standards**: [../quality/testing-standards.mdc](../quality/testing-standards.mdc)
+- **IDE Rules & Patterns**: [IDE Rules & Patterns](LINKS_REFERENCE.md#ide-rules--patterns) (15 rule files for architecture, services, etc.)
+- **FastAPI Rules**: [FastAPI Rules](LINKS_REFERENCE.md#ide-rules--patterns)
+- **Aiogram Rules**: [Aiogram Rules](LINKS_REFERENCE.md#ide-rules--patterns)
+- **AsyncIO Rules**: [AsyncIO Rules](LINKS_REFERENCE.md#ide-rules--patterns)
+- **Data Access Rules**: [Data Access Rules](LINKS_REFERENCE.md#ide-rules--patterns)
+- **Testing Standards**: [Testing Standards](LINKS_REFERENCE.md#ide-rules--patterns)
 
 ### Project Organization
-- **Main Guide**: [../../CLAUDE.md](../../CLAUDE.md)
-- **Use Case Implementation**: [USE_CASE_IMPLEMENTATION_GUIDE.md](USE_CASE_IMPLEMENTATION_GUIDE.md)
-- **Example Use Case**: [../../use_cases/task_management/README.md](../../use_cases/task_management/README.md) *(or [.framework/use_cases/task_management/README.md](.framework/use_cases/task_management/README.md) when used as submodule)*
+- **Main Guide**: [Main Entry Point](LINKS_REFERENCE.md#core-documentation)
+- **Use Case Implementation**: [Use Case Implementation](LINKS_REFERENCE.md#developer-guides)
+- **Example Use Case**: [Working Demonstrations](LINKS_REFERENCE.md#examples-and-templates)
 
 ---
 

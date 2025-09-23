@@ -103,7 +103,9 @@ my_awesome_app/                      # Your project repository
 - **Purpose**: Business logic only, HTTP-only data access
 
 ### Service File Structure
-Each service contains:
+The structure below is a simplified overview for quick setup. For the complete, mandatory source code organization inside a service (including the `src/` layout, DDD/Hexagonal layers, and testing directories), see the **[Microservices Best Practices](LINKS_REFERENCE.md#ide-rules--patterns)** rules.
+
+Each service contains at a minimum:
 - **`Dockerfile`**: Service-specific container configuration
 - **`main.py`**: Service implementation
 - **`requirements.txt`**: Service dependencies
@@ -181,7 +183,7 @@ When organizing your project:
 - **Service Isolation**: Each service type in separate containers
 
 ### Documentation References
-- **Architecture Details**: `docs/guides/ARCHITECTURE_GUIDE.md` *(or `.framework/docs/guides/ARCHITECTURE_GUIDE.md` when used as submodule)*
-- **Development Commands**: `docs/guides/DEVELOPMENT_COMMANDS.md` *(or `.framework/docs/guides/DEVELOPMENT_COMMANDS.md` when used as submodule)*
-- **Technology Stack**: `docs/reference/tech_stack.md` *(or `.framework/docs/reference/tech_stack.md` when used as submodule)*
-- **Working Examples**: `examples/index.md` *(or `.framework/examples/index.md` when used as submodule)*
+- **Architecture Details**: [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
+- **Development Commands**: [Development Commands](LINKS_REFERENCE.md#developer-guides)
+- **Technology Stack**: [Technical Specifications](LINKS_REFERENCE.md#core-documentation)
+- **Working Examples**: [Examples Index](LINKS_REFERENCE.md#examples-and-templates)

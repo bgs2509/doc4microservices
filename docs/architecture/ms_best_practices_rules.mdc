@@ -18,7 +18,7 @@ Define a single, system-wide standard for Python microservices covering design, 
 
 ### Scope
 - Covers: service structure, coding standards, typing, testing, CI quality gates, observability, dependencies, deployment hints, and operational endpoints.
-- Excludes: FastAPI specifics (see `../services/fastapi_rules.mdc`) and logging specifics (see `../observability/logging_rules.mdc`).
+- Excludes: FastAPI specifics (see [FastAPI Rules](LINKS_REFERENCE.md#ide-rules--patterns)) and logging specifics (see [Logging Rules](LINKS_REFERENCE.md#ide-rules--patterns)).
 
 ### Terms and Definitions
 - Service: A deployable, independently versioned unit exposing APIs, workers, or both.
@@ -28,7 +28,7 @@ Define a single, system-wide standard for Python microservices covering design, 
 ### Rules
 1) Structure and architecture
    - MUST organize code per `src/` with clear layers: `api/`, `services/`, `schemas/`, `db/`, `core/`, `utils/`, `tasks/`.
-   - SHOULD follow DDD/Hex boundaries; routers must be thin and MUST NOT access infrastructure or violate domain invariants (see `fastapi_rules.mdc`).
+   - SHOULD follow DDD/Hex boundaries; routers must be thin and MUST NOT access infrastructure or violate domain invariants (see [FastAPI Rules](LINKS_REFERENCE.md#ide-rules--patterns)).
    - MAY add context-specific subpackages if they do not break layering.
    - SHOULD design services as stateless; externalize state to databases, caches, and brokers.
    - SHOULD follow SOLID; prefer composition and clear abstractions to reduce duplication.
@@ -48,20 +48,20 @@ Define a single, system-wide standard for Python microservices covering design, 
    - MUST prefer widely adopted async libraries (e.g., `asyncpg`, `aio-pika`, `redis.asyncio`, `aiokafka`) across workers and background tasks.
    - SHOULD use `async/await` end-to-end and avoid blocking sync I/O in the event loop; prefer async drivers/clients for DB, brokers, cache, and HTTP.
 4) Logging and observability
-   - MUST follow `logging_rules.mdc` for request id, trace correlation, format, handlers, and sanitization.
+   - MUST follow [Logging Rules](LINKS_REFERENCE.md#ide-rules--patterns) for request id, trace correlation, format, handlers, and sanitization.
    - SHOULD enable OpenTelemetry for traces/metrics/logs with environment-driven configuration.
 5) HTTP API design
-   - MUST version APIs with `/api/v1` prefix and consistent status codes; use `response_model` (see `fastapi_rules.mdc`).
+   - MUST version APIs with `/api/v1` prefix and consistent status codes; use `response_model` (see [FastAPI Rules](LINKS_REFERENCE.md#ide-rules--patterns)).
    - SHOULD provide `/health` and `/ready` endpoints without the versioned prefix via a system router.
 6) Testing and quality gates
-   - MUST follow testing requirements as defined in `../quality/testing-standards.mdc`.
+   - MUST follow testing requirements as defined in [Testing Standards](LINKS_REFERENCE.md#ide-rules--patterns).
    - MUST run lint (`ruff`), type checks (`mypy`/`pyright`), and security scan (`bandit`) in CI; builds MUST fail on violations.
 7) Performance and resilience
    - SHOULD apply caching and backpressure where applicable; avoid n+1 patterns; use streaming for large responses.
    - SHOULD implement retries/circuit breakers for external calls; MUST avoid unbounded retries.
    - SHOULD optimize for serverless targets by minimizing cold starts and using slim images/binaries when applicable.
 8) Security and privacy
-   - MUST avoid logging secrets; MUST sanitize sensitive fields per `logging_rules.mdc`.
+   - MUST avoid logging secrets; MUST sanitize sensitive fields per [Logging Rules](LINKS_REFERENCE.md#ide-rules--patterns).
    - SHOULD enforce safe CORS defaults, content limits, and input validation.
    - SHOULD front APIs with an API gateway for rate limiting, request transformation, and centralized security.
    - MUST enforce authentication/authorization (e.g., OAuth2 where applicable), security headers (CORS, CSP), and payload content validation.
@@ -74,17 +74,17 @@ Define a single, system-wide standard for Python microservices covering design, 
 10) Documentation
    - SHOULD provide concise README with run/test/build instructions; MAY include API examples and troubleshooting notes.
 11) Code style and naming conventions
-   - MUST follow naming conventions as defined in `naming_conventions.mdc`.
+   - MUST follow naming conventions as defined in [Naming Conventions](LINKS_REFERENCE.md#ide-rules--patterns).
    - SHOULD group imports in the order: stdlib → third-party → in-project.
    - SHOULD provide docstrings for public modules, classes, and functions; follow `pydocstyle`.
    - MAY include explicit anchor comments in scaffolding files (e.g., `# @cursor-include-router-anchor`) to support automated generators while keeping changes localized.
 12) Event loop management and service separation
    - MUST follow the canonical architecture guidelines defined in the main project documentation.
-   - For complete service separation requirements, see [Architecture Guidelines](../../CLAUDE.md#architecture-guidelines).
-   - For detailed technology specifications, see [Technology Stack](../reference/tech_stack.md).
+   - For complete service separation requirements, see the [Architecture Guide](LINKS_REFERENCE.md#core-documentation).
+   - For detailed technology specifications, see the [Technical Specifications](LINKS_REFERENCE.md#core-documentation).
 13) Python runtime and technology requirements
    - MUST follow the unified technology stack as specified in the canonical documentation.
-   - For complete version requirements and technology specifications, see [Technology Stack](../reference/tech_stack.md).
+   - For complete version requirements and technology specifications, see the [Technical Specifications](LINKS_REFERENCE.md#core-documentation).
 
 ### Priorities and Compatibility
 - Depends on: `testing-standards.mdc` (testing requirements), `naming_conventions.mdc` (naming standards).
@@ -219,14 +219,14 @@ project_root/
 ```
 
 - Development workflow (non-normative checklist):
-  - Planning & Architecture: define OpenAPI, DB schemas/migrations, indexes; boundaries/integrations (see `fastapi_rules.mdc`).
+  - Planning & Architecture: define OpenAPI, DB schemas/migrations, indexes; boundaries/integrations (see [FastAPI Rules](LINKS_REFERENCE.md#ide-rules--patterns)).
   - Code Structure: scaffold per project layout; define classes, services, and functions.
   - Code Quality: full typing, docstrings; peer/self review; update `pyproject.toml` and `uv.lock`.
   - Testing: write tests with pytest; fix until all pass.
   - Linting & Formatting: run Ruff check/format; verify typing with mypy.
   - Additional Checks: security scan with Bandit; import sorting with Ruff; coverage reports; basic performance checks.
   - Integration & Validation: validate OpenAPI; test multiple environments; build/test Docker images.
-  - Documentation & Deployment: update docs in `docs/`; update `README.md`; ensure `/health` and `/ready` exist (see `fastapi_rules.mdc`).
+  - Documentation & Deployment: update docs in `docs/`; update `README.md`; ensure `/health` and `/ready` exist (see [FastAPI Rules](LINKS_REFERENCE.md#ide-rules--patterns)).
   - Final Validation: end-to-end tests; load testing; security & compliance review.
 
 - Typed Service Class (example):
@@ -249,20 +249,16 @@ class UserService:
 ```
 
 ### Verification
-- How to verify:
-  - Run:
-    - `uv run ruff check .`
-    - `uv run ruff format .`
-    - `uv run mypy .`
-    - `uv run bandit -r .`
-    - `uv run pytest --cov=app --cov-report=html --cov-report=xml`
-    - `find . -name "*-*" -type f` (should return empty - validates no hyphens in file names)
-  - Optionally: `docker-compose up --build` to validate container build/run locally.
-  - Inspect routers: endpoints use `response_model` and return Pydantic models; no raw `dict`/`list` in signatures.
-  - Check system router: `/health` and `/ready` exist without `/api/v1` prefix and are registered in the app.
-  - Ensure logging uses the canonical implementation per `logging_rules.mdc`.
-- Success criteria:
-  - CI passes all lint/type/security/tests; operational endpoints present; logging compliant and free of secrets.
+- **How to verify**:
+  - Run the full verification suite as defined in the **[Development Commands](LINKS_REFERENCE.md#developer-guides)** guide.
+  - Optionally, run `docker-compose up --build` to validate container build and execution locally.
+  - Manually inspect routers to ensure endpoints use `response_model` and return Pydantic models, not raw `dict`/`list`.
+  - Manually check that the system router (`/health`, `/ready`) is correctly registered.
+  - Ensure logging follows the canonical implementation defined in the [Logging Rules](LINKS_REFERENCE.md#ide-rules--patterns).
+- **Success criteria**:
+  - The CI pipeline passes all automated checks (lint, type, security, tests, naming).
+  - Operational endpoints (`/health`, `/ready`) are present and functional.
+  - Logging is compliant and free of secrets.
 
 ### Examples
 ```python
