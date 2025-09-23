@@ -2,14 +2,54 @@
 
 > **🏗️ Framework-as-Submodule** - Centralised microservices architecture framework designed to be used as a Git submodule in your projects. Provides proven patterns, AI agents, and complete documentation for rapid development.
 
-## 🎯 What This Is
+## 🎯 What This Solves and Who It's For
 
-A **centralised microservices framework** designed to be included as a Git submodule in your projects, providing:
+### **The Problem**
+Creating microservices architecture is a complex task requiring:
+- Deep understanding of architectural patterns
+- Proper infrastructure setup (databases, monitoring, queues)
+- Following numerous rules and standards
+- Months of development time "from scratch"
 
-- **📚 Architecture Documentation** - Complete patterns, rules, and best practices
-- **🤖 AI Agent Framework** - Automated code generation and validation tools
-- **💻 Working Examples** - Production-ready service implementations
-- **🏗️ Project Templates** - Standardised structure for microservices applications
+### **The Solution: Framework-as-Submodule**
+This is not just documentation, but a **living framework** that:
+
+1. **Connects as Git submodule** to your project - framework separate, your code separate
+2. **Provides ready architecture** - proven "Improved Hybrid Approach" with PostgreSQL, MongoDB, RabbitMQ, full monitoring
+3. **Updates centrally** - `git submodule update` and all projects get improvements
+4. **AI reads rules automatically** from `.framework/docs/` - generates applications from business requirements
+5. **Ready patterns** - for FastAPI, Aiogram, AsyncIO workers
+
+### **Target Users:**
+- **Python developers** - want to quickly create microservices applications
+- **Development teams** - need standardized architectural solutions
+- **AI systems** - for automatic application generation
+- **Business analysts** - validate idea feasibility within the architecture
+
+### **Result:**
+Instead of months of architecture development - get production-ready applications in minutes/hours using standardized, updatable framework with AI automation.
+
+## 🚀 How It Works
+
+```bash
+# 1. Create your project
+mkdir my_awesome_app && cd my_awesome_app && git init
+
+# 2. Add framework as submodule
+git submodule add <framework-repo-url> .framework
+
+# 3. AI reads architectural rules from .framework/docs/
+# 4. Generate application in src/ following framework rules
+# 5. Deploy ready application
+```
+
+### **Benefits:**
+- **Separation** - Framework separate, your code separate
+- **Updates** - `git submodule update` gets new features
+- **Standardization** - All projects use same rules
+- **AI compatibility** - AI automatically finds patterns in `.framework/`
+
+This transforms microservices application creation into a standardized, repeatable process.
 
 ### Framework-as-Submodule Workflow
 
