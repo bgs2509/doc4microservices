@@ -208,30 +208,44 @@ domain_mappings:
 
 # Generated File Structure
 file_structure:
-  service_structure:
+  project_root:
     root_files:
-      - "main.py - Main service file from template"
-      - "config.py - Configuration management"
-      - "requirements.txt - Python dependencies"
-      - "Dockerfile - Container configuration"
+      - "README.md - Project documentation"
+      - "docker-compose.yml - Complete infrastructure and services"
+      - ".env.example - Environment configuration template"
+      - "pyproject.toml - Python dependencies and project config"
+      - "Makefile - Development automation commands"
+      - ".gitignore - Version control exclusions"
 
-    src_directory:
-      - "models.py - Pydantic models"
-      - "dependencies.py - FastAPI dependencies"
-      - "database.py - Database connection (data services)"
-      - "utils.py - Utility functions"
+  src_directory:
+    services_structure:
+      - "src/services/{{service_name}}/Dockerfile - Service container"
+      - "src/services/{{service_name}}/main.py - Service implementation"
+      - "src/services/{{service_name}}/requirements.txt - Service dependencies"
+      - "src/services/{{service_name}}/config.py - Service configuration"
 
-    tests_directory:
-      - "test_main.py - Main service tests"
-      - "test_models.py - Model validation tests"
-      - "conftest.py - Test configuration"
+    shared_structure:
+      - "src/shared/dtos.py - Data transfer objects"
+      - "src/shared/events.py - Event schemas"
+      - "src/shared/utils.py - Common utilities"
+
+    config_structure:
+      - "src/config/settings.py - Centralized settings"
+      - "src/config/logging.py - Logging configuration"
+
+    tests_structure:
+      - "src/tests/unit/ - Unit tests per service"
+      - "src/tests/integration/ - Integration tests"
+      - "src/tests/conftest.py - Test configuration"
 
   configuration_files:
     docker_compose:
-      description: "Generate service entry for docker-compose.yml"
+      description: "Generate complete docker-compose.yml for project root"
       template: |
         {{service_name}}:
-          build: ./services/{{service_name}}
+          build:
+            context: "."
+            dockerfile: "./src/services/{{service_name}}/Dockerfile"
           ports:
             - "{{service_port}}:{{service_port}}"
           environment:
@@ -320,29 +334,47 @@ quality_rules:
 # Example Generation Output
 example_generation:
   business_idea: "Online bookstore with user reviews and recommendations"
+  generated_project_structure:
+    root_files:
+      - "bookstore_project/README.md"
+      - "bookstore_project/docker-compose.yml"
+      - "bookstore_project/.env.example"
+      - "bookstore_project/pyproject.toml"
+
   generated_services:
     api_service:
-      file: "services/bookstore_api_service/main.py"
+      file: "src/services/api_service/main.py"
+      dockerfile: "src/services/api_service/Dockerfile"
       endpoints: ["GET /books", "POST /orders", "GET /recommendations"]
       models: ["Book", "Order", "User", "Review"]
 
     bot_service:
-      file: "services/bookstore_bot_service/main.py"
+      file: "src/services/bot_service/main.py"
+      dockerfile: "src/services/bot_service/Dockerfile"
       commands: ["/search_books", "/order_status", "/recommendations"]
       handlers: ["text_search", "order_callback", "recommendation_callback"]
 
     worker_service:
-      file: "services/bookstore_worker_service/main.py"
+      file: "src/services/worker_service/main.py"
+      dockerfile: "src/services/worker_service/Dockerfile"
       workers: ["process_orders", "generate_recommendations", "send_notifications"]
       events: ["order.created", "review.added", "user.registered"]
 
     data_services:
       postgres_service:
-        file: "services/db_postgres_service/main.py"
+        file: "src/services/db_postgres_service/main.py"
+        dockerfile: "src/services/db_postgres_service/Dockerfile"
         entities: ["users", "books", "orders", "order_items"]
         endpoints: ["CRUD for all entities", "transaction support"]
 
       mongo_service:
-        file: "services/db_mongo_service/main.py"
+        file: "src/services/db_mongo_service/main.py"
+        dockerfile: "src/services/db_mongo_service/Dockerfile"
         collections: ["reviews", "user_preferences", "recommendation_data"]
         endpoints: ["document operations", "aggregation pipelines"]
+
+  generated_shared_components:
+    shared_dtos: "src/shared/dtos.py"
+    shared_events: "src/shared/events.py"
+    shared_utils: "src/shared/utils.py"
+    centralized_config: "src/config/settings.py"

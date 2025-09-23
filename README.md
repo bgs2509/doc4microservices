@@ -1,45 +1,125 @@
-# Documentation for Microservices
+# Microservices Framework
 
-> **📚 Comprehensive Documentation Project** - Architecture patterns, guidelines, and best practices for Python 3.12+ microservices using the Improved Hybrid Approach.
+> **🏗️ Framework-as-Submodule** - Centralised microservices architecture framework designed to be used as a Git submodule in your projects. Provides proven patterns, AI agents, and complete documentation for rapid development.
 
-## 📖 What This Is
+## 🎯 What This Is
 
-A **comprehensive documentation project** designed as an **AI knowledge base** for rapid microservices development through human-AI collaboration.
+A **centralised microservices framework** designed to be included as a Git submodule in your projects, providing:
 
-**This is NOT a runnable application** - it's a curated AI-readable knowledge base that enables AI agents to quickly understand and implement production-ready microservices architecture.
+- **📚 Architecture Documentation** - Complete patterns, rules, and best practices
+- **🤖 AI Agent Framework** - Automated code generation and validation tools
+- **💻 Working Examples** - Production-ready service implementations
+- **🏗️ Project Templates** - Standardised structure for microservices applications
 
-### The AI-Assisted Development Workflow
+### Framework-as-Submodule Workflow
 
-1. **Human provides business idea** - Describes the application requirements and features
-2. **AI reads this documentation project** - Understands architecture patterns, constraints, and implementation guidelines
-3. **AI rapidly builds workable application** - Creates production-ready microservices following proven patterns
+1. **📁 Create your project repository** - `mkdir my_awesome_app && cd my_awesome_app && git init`
+2. **🔗 Add framework as submodule** - `git submodule add <framework-repo-url> .framework`
+3. **🤖 AI reads framework rules** - AI agents automatically find patterns in `.framework/docs/`
+4. **🚀 Generate your application** - AI creates services in `src/` following framework guidelines
+5. **⚡ Deploy and iterate** - Framework provides infrastructure and development tools
 
-### What's Included
+## 🏗️ Project Structure with Framework Submodule
 
-- **🏗 AI-Readable Architecture Patterns** - Improved Hybrid Approach with clear constraints and rules
-- **📡 Complete Integration Guidelines** - Event-driven communication patterns with RabbitMQ
-- **📊 Production-Ready Observability** - Full monitoring stack configuration and implementation
-- **🧪 Comprehensive Testing Patterns** - Real database testing with testcontainers for AI implementation
-- **💻 Working Reference Implementations** - Complete, runnable service examples for AI learning
-- **🤖 AI-Optimized Documentation Structure** - Hierarchical, rule-based documentation designed for AI comprehension
-- **📋 Implementation Checklists** - Step-by-step guides that AI agents can follow systematically
+When you add this framework as a submodule, your project structure becomes:
 
-### Target Audience
+```
+my_awesome_app/                    # Your project repository
+├── .framework/                    # Git submodule (this repository)
+│   ├── docs/                     # Architecture rules and patterns
+│   ├── ai_agents/                # AI generators and validators
+│   ├── examples/                 # Reference implementations
+│   ├── use_cases/                # Working applications
+│   └── CLAUDE.md                 # AI instructions
+├── README.md                      # Your project documentation
+├── docker-compose.yml             # Your project infrastructure
+├── .env.example                   # Your project configuration
+└── src/                          # Your application code
+    ├── services/                 # Microservices
+    │   ├── api_service/          # FastAPI REST API service
+    │   │   ├── Dockerfile        # Service-specific container
+    │   │   ├── main.py           # Service implementation
+    │   │   └── requirements.txt  # Service dependencies
+    │   ├── bot_service/          # Aiogram Telegram bot service
+    │   │   ├── Dockerfile
+    │   │   ├── main.py
+    │   │   └── requirements.txt
+    │   ├── worker_service/       # AsyncIO background workers
+    │   │   ├── Dockerfile
+    │   │   ├── main.py
+    │   │   └── requirements.txt
+    │   ├── db_postgres_service/  # PostgreSQL data access service
+    │   │   ├── Dockerfile
+    │   │   └── main.py
+    │   └── db_mongo_service/     # MongoDB data access service
+    │       ├── Dockerfile
+    │       └── main.py
+    ├── shared/                   # Shared components
+    │   ├── dtos.py              # Data transfer objects
+    │   ├── events.py            # Event schemas
+    │   └── utils.py             # Common utilities
+    ├── config/                   # Configuration management
+    │   ├── settings.py          # Centralized settings
+    │   └── logging.py           # Logging configuration
+    └── tests/                   # Test suites
+        ├── unit/                # Unit tests per service
+        ├── integration/         # Integration tests
+        └── conftest.py          # Test configuration
+```
 
-**Primary Target:**
-- **🤖 AI Agents for AI Coding** - Claude Code, GitHub Copilot, and other AI development assistants
-- **🧠 AI-Assisted Development Workflows** - Human-AI collaboration for rapid application development
+## 🚀 How to Use This Framework
 
-**Secondary Target:**
-- **👥 Development Teams** using AI coding assistants
-- **🏗️ Software Architects** designing AI-friendly documentation
-- **🚀 Entrepreneurs & Product Managers** who want to rapidly prototype with AI
+### Step 1: Add Framework to Your Project
+```bash
+# Create your project repository
+mkdir my_awesome_app
+cd my_awesome_app
+git init
 
-### What's NOT Included
+# Add this framework as a submodule
+git submodule add https://github.com/your-org/microservices-framework.git .framework
+git submodule init
+git submodule update
+```
 
-- Business logic or domain-specific functionality
-- Ready-to-deploy applications
-- Framework-specific tutorials (covered in official docs)
+### Step 2: Generate Your Application with AI
+AI agents automatically find framework rules in `.framework/` directory:
+
+**Example AI Prompt:**
+```
+Create a task management application using the .framework/ patterns:
+- FastAPI service for REST API
+- Telegram bot service for notifications
+- AsyncIO workers for background tasks
+- Follow the Improved Hybrid Approach from .framework/docs/
+```
+
+### Step 3: Deploy and Run
+```bash
+# AI generates your code in src/
+cp .framework/templates/.env.example .env
+# Edit .env with your configuration
+docker-compose up -d
+```
+
+## 🤖 AI Agent Framework
+
+This project includes a comprehensive AI framework for generating applications:
+
+### Business Validation
+- **Feasibility Checker** - Validates business ideas against architectural constraints
+- **Domain Classifier** - Identifies business patterns and optimal service allocation
+- **Constraint Validator** - Ensures compliance with Improved Hybrid Approach
+
+### Code Generation
+- **Service Templates** - Production-ready templates for FastAPI, Aiogram, AsyncIO workers
+- **Variable Substitution** - Business-specific customization of proven patterns
+- **Quality Validation** - Automated code quality and architecture compliance checks
+
+### Deployment Automation
+- **Docker Compose Generator** - Complete infrastructure and service orchestration
+- **Environment Configuration** - Secure configuration templates and examples
+- **Health Monitoring** - Production-ready observability and health checks
 
 ## 🏗 Architecture Overview
 
@@ -47,18 +127,18 @@ A **comprehensive documentation project** designed as an **AI knowledge base** f
 
 ```mermaid
 graph TB
-    subgraph "Business Services"
+    subgraph "Business Services (src/services/)"
         API[FastAPI Service :8000]
         BOT[Aiogram Bot]
         WORKER[AsyncIO Workers]
     end
 
-    subgraph "Data Services"
+    subgraph "Data Services (src/services/)"
         PG[PostgreSQL Service :8001]
         MONGO[MongoDB Service :8002]
     end
 
-    subgraph "Infrastructure"
+    subgraph "Infrastructure (Docker Compose)"
         POSTGRES[(PostgreSQL)]
         MONGODB[(MongoDB)]
         REDIS[(Redis)]
@@ -80,66 +160,112 @@ graph TB
     WORKER -.->|Events| RABBIT
 ```
 
-### Key Principles
+### Key Architectural Principles
 
-- **Data Access**: HTTP-only communication to centralized data services
-- **Service Separation**: Each service type runs in separate containers
-- **Event-Driven**: RabbitMQ for asynchronous inter-service communication
-- **Observability**: Complete monitoring and tracing stack
-- **Type Safety**: Full type annotations with mypy validation
+- **🔗 HTTP-Only Data Access** - Business services communicate with data services via HTTP APIs only
+- **🏗️ Service Type Separation** - FastAPI, Aiogram, and AsyncIO services run in separate containers
+- **📡 Event-Driven Communication** - RabbitMQ for asynchronous inter-service messaging
+- **📊 Complete Observability** - Prometheus, Grafana, Jaeger, and ELK stack integration
+- **🧪 Production-Ready Testing** - Real database testing with testcontainers
+- **🔒 Security First** - OAuth2/JWT authentication, HTTPS, rate limiting
 
-## 📚 Documentation
+## 📚 Documentation and AI Knowledge Base
 
+This repository contains comprehensive documentation designed for both AI agents and human developers:
+
+### For AI Agents
+| Component | Purpose | Location |
+|-----------|---------|----------|
+| **🤖 AI Framework** | Automated application generation | [ai_agents/](ai_agents/) |
+| **📋 Implementation Rules** | Service-specific patterns and constraints | [docs/](docs/) |
+| **💻 Working Examples** | Complete reference implementations | [examples/](examples/) |
+
+### For Human Developers
 | Document | Purpose | When to Use |
 |----------|---------|-------------|
-| **[CLAUDE.md](CLAUDE.md)** | Main development guide | Start here - architecture, commands, setup |
+| **[CLAUDE.md](CLAUDE.md)** | Complete development guide | Start here - setup, architecture, commands |
 | **[docs/reference/tech_stack.md](docs/reference/tech_stack.md)** | Technology specifications | Check versions, configurations |
-| **[examples/index.md](examples/index.md)** | Working code examples | Implement new services |
-| **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** | Problem solving | Fix issues, debug problems |
-| **[docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md)** | Create use cases | Build production features |
-
-### Documentation Structure
-
-This project uses three complementary documentation approaches:
-
-| Documentation Type | Purpose | Target Users | Location |
-|-------------------|---------|--------------|----------|
-| **📚 Educational Examples** | Learn implementation patterns | Human developers, teams | [examples/](examples/) |
-| **🤖 AI Automation Framework** | Automated application generation | AI systems, AI developers | [ai_agents/](ai_agents/) |
-| **💻 Working Demonstrations** | See complete working solutions | Business stakeholders, QA teams | [use_cases/](use_cases/) |
-
-**📋 [See complete comparison guide →](CLAUDE.md#documentation-types-guide)**
+| **[examples/index.md](examples/index.md)** | Working code examples | Understand implementation patterns |
+| **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** | Problem solving | Debug issues, find solutions |
 
 ## 📋 Technology Stack
 
-This project uses a carefully selected technology stack optimized for microservices architecture with the Improved Hybrid Approach.
+**Carefully selected technologies optimized for the Improved Hybrid Approach:**
 
-**Key Technologies:**
-- **Python 3.12+** - Unified runtime across all services
-- **FastAPI + Aiogram + AsyncIO** - Service type separation
-- **PostgreSQL + MongoDB** - Dual database strategy
-- **Redis + RabbitMQ** - Caching and messaging
-- **Docker Compose** - Service orchestration
-- **Complete Observability Stack** - Prometheus, Grafana, Jaeger, ELK
+### Core Technologies
+- **Python 3.12+** - Unified runtime with advanced type system
+- **FastAPI + Aiogram + AsyncIO** - Service type separation and specialization
+- **PostgreSQL + MongoDB** - Dual database strategy for different data needs
+- **Redis + RabbitMQ** - High-performance caching and messaging
+- **Docker Compose** - Simple but powerful service orchestration
 
-### Benefits for Teams
+### Observability Stack
+- **Prometheus** - Metrics collection and alerting
+- **Grafana** - Visualization and dashboards
+- **Jaeger** - Distributed tracing
+- **ELK Stack** - Centralized logging and search
 
-- **Reduced Architecture Decisions** - Pre-validated patterns and technology choices
-- **Faster Development** - Working examples and implementation templates
-- **Production Readiness** - Complete observability, testing, and deployment patterns
-- **Team Alignment** - Consistent patterns and coding standards
-- **Risk Mitigation** - Battle-tested architectural constraints and best practices
+### Development Tools
+- **UV** - Fast Python package management
+- **Ruff** - Lightning-fast Python linting
+- **MyPy** - Static type checking
+- **Testcontainers** - Real database testing
 
-> **📋 COMPLETE TECHNOLOGY SPECIFICATIONS**: For detailed versions, configurations, compatibility matrix, and implementation guidelines, see [docs/reference/tech_stack.md](docs/reference/tech_stack.md).
+## ✨ Benefits for Development Teams
 
-## 🔗 Links
+### For AI-Assisted Development
+- **🎯 Zero Architecture Decisions** - Pre-validated patterns and technology choices
+- **⚡ Rapid Prototyping** - From business idea to running application in minutes
+- **🔄 Consistent Quality** - AI generates production-ready code following best practices
+- **📈 Scalable Patterns** - Applications can grow from prototype to production
 
-- **📚 Complete Documentation**: [CLAUDE.md](CLAUDE.md)
-- **🏗️ Architecture Guide**: [docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md)
-- **📋 Development Commands**: [docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md)
-- **🔧 Technology Specifications**: [docs/reference/tech_stack.md](docs/reference/tech_stack.md)
-- **💻 Working Examples**: [examples/index.md](examples/index.md)
-- **🐛 Troubleshooting**: [docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)
+### For Traditional Development
+- **📚 Comprehensive Patterns** - Working examples and implementation guidelines
+- **🛡️ Risk Mitigation** - Battle-tested architectural constraints and best practices
+- **🔧 Developer Experience** - Complete tooling and automation setup
+- **👥 Team Alignment** - Consistent coding standards and patterns
+
+## 🎯 Example Applications AI Can Generate
+
+✅ **E-commerce Platform** - Product catalog, orders, payments, user management, analytics
+✅ **Project Management Tool** - Tasks, projects, time tracking, team collaboration, reporting
+✅ **Content Management System** - Articles, media, user permissions, publishing workflows
+✅ **Social Platform** - User profiles, posts, messaging, engagement analytics
+✅ **IoT Data Platform** - Device management, real-time data ingestion, analytics dashboards
+✅ **Financial Application** - Account management, transactions, reporting, compliance
+
+## 🔗 Getting Started
+
+### For Project Creators
+1. **Create new repository** - `mkdir my_project && cd my_project && git init`
+2. **Add framework submodule** - `git submodule add <this-repo-url> .framework`
+3. **Initialize submodule** - `git submodule init && git submodule update`
+4. **Use AI to generate code** - AI will automatically read `.framework/` rules
+
+### For AI Agents
+1. **Automatically scan `.framework/`** for patterns, rules, and examples
+2. **Generate user code in `src/`** - never modify `.framework/` content
+3. **Follow `.framework/docs/` guidelines** for architecture compliance
+4. **Use `.framework/ai_agents/`** for validation and generation tools
+
+### Framework Submodule Management
+```bash
+# Update framework to latest version
+git submodule update --remote .framework
+git add .framework && git commit -m "Update framework"
+
+# Clone project with framework
+git clone --recursive <your-project-repo>
+
+# If you forgot --recursive
+git submodule init && git submodule update
+```
+
+### Quick Links (within .framework/)
+- **🏗️ Architecture Guide**: `.framework/docs/guides/ARCHITECTURE_GUIDE.md`
+- **📋 Development Commands**: `.framework/docs/guides/DEVELOPMENT_COMMANDS.md`
+- **🔧 Technology Stack**: `.framework/docs/reference/tech_stack.md`
+- **💻 Examples**: `.framework/examples/`
 
 ## 📄 License
 
@@ -147,4 +273,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**📚 Ready to explore microservices documentation?** Start with [CLAUDE.md](CLAUDE.md) for complete guidance!
+**🚀 Ready to use this framework?** Add it as a submodule to your project: `git submodule add <repo-url> .framework`

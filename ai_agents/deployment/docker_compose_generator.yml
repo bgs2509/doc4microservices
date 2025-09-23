@@ -108,7 +108,9 @@ infrastructure_services:
 data_services:
   # PostgreSQL Data Service
   db_postgres_service:
-    build: "./services/db_postgres_service"
+    build:
+      context: "."
+      dockerfile: "./src/services/db_postgres_service/Dockerfile"
     container_name: "{{project_name}}_db_postgres_service"
     environment:
       DATABASE_URL: "postgresql://{{postgres_user}}:{{postgres_password}}@postgres:5432/{{project_name}}_db"
@@ -133,7 +135,9 @@ data_services:
 
   # MongoDB Data Service
   db_mongo_service:
-    build: "./services/db_mongo_service"
+    build:
+      context: "."
+      dockerfile: "./src/services/db_mongo_service/Dockerfile"
     container_name: "{{project_name}}_db_mongo_service"
     environment:
       MONGODB_URL: "mongodb://{{mongo_user}}:{{mongo_password}}@mongodb:27017/{{project_name}}_mongo?authSource=admin"
@@ -160,7 +164,9 @@ data_services:
 business_service_templates:
   # FastAPI Service Template
   api_service:
-    build: "./services/{{api_service_name}}"
+    build:
+      context: "."
+      dockerfile: "./src/services/{{api_service_name}}/Dockerfile"
     container_name: "{{project_name}}_{{api_service_name}}"
     environment:
       SERVICE_PORT: "8000"
@@ -191,7 +197,9 @@ business_service_templates:
 
   # Aiogram Bot Service Template
   bot_service:
-    build: "./services/{{bot_service_name}}"
+    build:
+      context: "."
+      dockerfile: "./src/services/{{bot_service_name}}/Dockerfile"
     container_name: "{{project_name}}_{{bot_service_name}}"
     environment:
       LOG_LEVEL: "{{log_level}}"
@@ -213,7 +221,9 @@ business_service_templates:
 
   # AsyncIO Worker Service Template
   worker_service:
-    build: "./services/{{worker_service_name}}"
+    build:
+      context: "."
+      dockerfile: "./src/services/{{worker_service_name}}/Dockerfile"
     container_name: "{{project_name}}_{{worker_service_name}}"
     environment:
       LOG_LEVEL: "{{log_level}}"
