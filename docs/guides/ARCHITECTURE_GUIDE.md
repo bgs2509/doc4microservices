@@ -38,8 +38,8 @@ graph TB
     end
 
     subgraph "Data Services"
-        PG[PostgreSQL Service :8001]
-        MONGO[MongoDB Service :8002]
+        PG[db_postgres_service :8001]
+        MONGO[db_mongo_service :8002]
     end
 
     subgraph "Infrastructure"

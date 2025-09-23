@@ -40,8 +40,8 @@ This system provides a comprehensive task management solution with:
 - **Analytics Worker** (`analytics_worker.py`): Productivity tracking and insights
 
 #### **Data Services** (from main boilerplate)
-- **PostgreSQL Service**: Task storage and relational queries
-- **MongoDB Service**: Analytics and activity logging
+- **db_postgres_service**: Task storage and relational queries
+- **db_mongo_service**: Analytics and activity logging
 
 ## 🚀 Quick Start
 
