@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
    - 🚀 Development workflow and setup instructions
    - 📋 Links to specialized documentation
 
-2. **[docs/reference/tech_stack.md](docs/reference/tech_stack.md)** - **TECHNOLOGY AUTHORITY**
+2. **[docs/reference/tech_stack.md](docs/reference/tech_stack.md)** *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md) when used as submodule)* - **TECHNOLOGY AUTHORITY**
    - 🔧 Complete technology specifications and versions
    - 📦 Library compatibility and requirements
    - ⚙️ Infrastructure configuration details
@@ -31,41 +31,41 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 ### Implementation Guides
 
-4. **[docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md)** - **ARCHITECTURE AUTHORITY**
+4. **[docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md)** *(or [.framework/docs/guides/ARCHITECTURE_GUIDE.md](.framework/docs/guides/ARCHITECTURE_GUIDE.md) when used as submodule)* - **ARCHITECTURE AUTHORITY**
    - 🏗️ Improved Hybrid Approach architecture
    - ⚠️ Mandatory constraints and principles
    - 🔧 Service types and communication patterns
 
-5. **[docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md)** - **COMMANDS AUTHORITY**
+5. **[docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md)** *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md](.framework/docs/guides/DEVELOPMENT_COMMANDS.md) when used as submodule)* - **COMMANDS AUTHORITY**
    - 📋 Complete development commands reference
    - 🐳 Docker operations and service management
    - 🔍 Troubleshooting and diagnostic commands
 
-6. **[docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md)** - **USE CASE CREATION**
+6. **[docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md)** *(or [.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md) when used as submodule)* - **USE CASE CREATION**
    - 📋 Step-by-step use case development
    - ✅ Compliance checklists and templates
    - 🏗️ Production-ready implementation patterns
 
 ### Reference Materials
 
-7. **[examples/index.md](examples/index.md)** - **WORKING EXAMPLES**
+7. **[examples/index.md](examples/index.md)** *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)* - **WORKING EXAMPLES**
    - 💻 Complete, runnable service implementations
    - 🎯 Real-world patterns and best practices
    - 🧪 Testing examples and patterns
 
-8. **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** - **PROBLEM SOLVING**
+8. **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** *(or [.framework/docs/reference/troubleshooting.md](.framework/docs/reference/troubleshooting.md) when used as submodule)* - **PROBLEM SOLVING**
    - 🐛 Common issues and solutions
    - 🔍 Diagnostic procedures
    - 🚨 Emergency troubleshooting steps
 
 ### Specialized Documentation
 
-10. **[docs/](docs/)** - **IDE RULES & PATTERNS** (architecture, services, infrastructure, observability, quality)
+10. **[docs/](docs/)** *(or [.framework/docs/](.framework/docs/) when used as submodule)* - **IDE RULES & PATTERNS** (architecture, services, infrastructure, observability, quality)
    - 🤖 Automated code generation rules
    - 📏 Service-specific implementation patterns
    - 🔧 Technology-specific guidelines
 
-11. **[use_cases/](use_cases/)** - **CONCRETE EXAMPLES**
+11. **[use_cases/](use_cases/)** *(or [.framework/use_cases/](.framework/use_cases/) when used as submodule)* - **CONCRETE EXAMPLES**
     - 🎯 Real working use case implementations
     - 📚 Domain-specific documentation
     - 🚀 Deployment and usage examples
@@ -75,13 +75,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 | Need | Go To |
 |------|-------|
 | 🏁 **Get started quickly** | [README.md](README.md) → [CLAUDE.md - Development Commands](#development-commands) |
-| 🏗️ **Understand architecture** | [docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md) |
-| 📋 **Run commands** | [docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md) |
-| 🎯 **Create new use case** | [docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md) |
-| 🔧 **Check versions/config** | [docs/reference/tech_stack.md](docs/reference/tech_stack.md) |
-| 💻 **See working examples** | [examples/index.md](examples/index.md) |
-| 🐛 **Solve problems** | [docs/reference/troubleshooting.md](docs/reference/troubleshooting.md) |
-| 🤖 **IDE rules & patterns** | [docs/INDEX.md#ide-rules--patterns](docs/INDEX.md#ide-rules--patterns) |
+| 🏗️ **Understand architecture** | [docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md) *(or [.framework/docs/guides/ARCHITECTURE_GUIDE.md](.framework/docs/guides/ARCHITECTURE_GUIDE.md))* |
+| 📋 **Run commands** | [docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md) *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md](.framework/docs/guides/DEVELOPMENT_COMMANDS.md))* |
+| 🎯 **Create new use case** | [docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md) *(or [.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md))* |
+| 🔧 **Check versions/config** | [docs/reference/tech_stack.md](docs/reference/tech_stack.md) *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md))* |
+| 💻 **See working examples** | [examples/index.md](examples/index.md) *(or [.framework/examples/index.md](.framework/examples/index.md))* |
+| 🐛 **Solve problems** | [docs/reference/troubleshooting.md](docs/reference/troubleshooting.md) *(or [.framework/docs/reference/troubleshooting.md](.framework/docs/reference/troubleshooting.md))* |
+| 🤖 **IDE rules & patterns** | [docs/INDEX.md#ide-rules--patterns](docs/INDEX.md#ide-rules--patterns) *(or [.framework/docs/INDEX.md#ide-rules--patterns](.framework/docs/INDEX.md#ide-rules--patterns))* |
 
 ## 📚 Documentation Types Guide
 
@@ -90,13 +90,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 ### Quick Reference
 | Need | Documentation Type | Location | Target Users |
 |------|-------------------|----------|--------------|
-| 🎓 **Learn to code properly** | Educational Examples | [examples/](examples/) | Human developers, teams |
-| 🤖 **AI-generated applications** | Automation Framework | [ai_agents/](ai_agents/) | AI systems, AI developers |
-| 💻 **See working solutions** | Live Demonstrations | [use_cases/](use_cases/) | Business stakeholders, QA teams |
+| 🎓 **Learn to code properly** | Educational Examples | [examples/](examples/) *(or [.framework/examples/](.framework/examples/))* | Human developers, teams |
+| 🤖 **AI-generated applications** | Automation Framework | [ai_agents/](ai_agents/) *(or [.framework/ai_agents/](.framework/ai_agents/))* | AI systems, AI developers |
+| 💻 **See working solutions** | Live Demonstrations | [use_cases/](use_cases/) *(or [.framework/use_cases/](.framework/use_cases/))* | Business stakeholders, QA teams |
 
 ### 📊 **DOCUMENTATION TYPE COMPARISON**
 
-#### **1. `examples/` - EDUCATIONAL DOCUMENTATION**
+#### **1. `examples/` *(or `.framework/examples/` when used as submodule)* - EDUCATIONAL DOCUMENTATION**
 
 **🎯 Primary Purpose:**
 - Teaching developers HOW to implement services correctly
@@ -122,7 +122,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 - Code Style: Commented, explained, educational
 - Updates: When architectural patterns evolve
 
-#### **2. `ai_agents/` - AI AUTOMATION FRAMEWORK**
+#### **2. `ai_agents/` *(or `.framework/ai_agents/` when used as submodule)* - AI AUTOMATION FRAMEWORK**
 
 **🎯 Primary Purpose:**
 - Enabling AI to automatically generate complete applications
@@ -148,7 +148,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 - Code Style: Template variables, generation-focused
 - Updates: When adding new business domains or patterns
 
-#### **3. `use_cases/` - WORKING DEMONSTRATIONS**
+#### **3. `use_cases/` *(or `.framework/use_cases/` when used as submodule)* - WORKING DEMONSTRATIONS**
 
 **🎯 Primary Purpose:**
 - Demonstrating complete, functional applications
@@ -177,27 +177,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 ### 🔄 **HOW THEY WORK TOGETHER**
 
 #### **For Human Developers:**
-1. **Learn** from `examples/` (HOW to code properly)
-2. **Reference** `use_cases/` (WHAT working solutions look like)
-3. **Ignore** `ai_agents/` (Not needed for manual development)
+1. **Learn** from `examples/` *(or `.framework/examples/` when used as submodule)* (HOW to code properly)
+2. **Reference** `use_cases/` *(or `.framework/use_cases/` when used as submodule)* (WHAT working solutions look like)
+3. **Ignore** `ai_agents/` *(or `.framework/ai_agents/` when used as submodule)* (Not needed for manual development)
 
 #### **For AI Systems:**
-1. **Validate** using `ai_agents/business_validation/` (CAN it be built?)
-2. **Generate** using `ai_agents/generators/` (TEMPLATE-based creation)
-3. **Reference** `use_cases/` (WHAT the end result should be)
-4. **Learn patterns** from `examples/` (HOW to implement correctly)
+1. **Validate** using `ai_agents/business_validation/` *(or `.framework/ai_agents/business_validation/` when used as submodule)* (CAN it be built?)
+2. **Generate** using `ai_agents/generators/` *(or `.framework/ai_agents/generators/` when used as submodule)* (TEMPLATE-based creation)
+3. **Reference** `use_cases/` *(or `.framework/use_cases/` when used as submodule)* (WHAT the end result should be)
+4. **Learn patterns** from `examples/` *(or `.framework/examples/` when used as submodule)* (HOW to implement correctly)
 
 #### **For Business Users:**
-1. **See working examples** in `use_cases/` (PROOF of capability)
-2. **Request new features** via `ai_agents/` (AUTOMATED generation)
-3. **Understand technical approach** via `examples/` (EDUCATION)
+1. **See working examples** in `use_cases/` *(or `.framework/use_cases/` when used as submodule)* (PROOF of capability)
+2. **Request new features** via `ai_agents/` *(or `.framework/ai_agents/` when used as submodule)* (AUTOMATED generation)
+3. **Understand technical approach** via `examples/` *(or `.framework/examples/` when used as submodule)* (EDUCATION)
 
 ### ✅ **RECOMMENDATION: ALL THREE ARE ESSENTIAL**
 
 Each serves a distinct and valuable purpose:
-- **`examples/`**: Human education and standards
-- **`ai_agents/`**: AI automation and generation
-- **`use_cases/`**: Working demonstrations and proof-of-concept
+- **`examples/`** *(or `.framework/examples/` when used as submodule)*: Human education and standards
+- **`ai_agents/`** *(or `.framework/ai_agents/` when used as submodule)*: AI automation and generation
+- **`use_cases/`** *(or `.framework/use_cases/` when used as submodule)*: Working demonstrations and proof-of-concept
 
 The overlap is intentional and beneficial - they reinforce each other while serving different primary purposes.
 
@@ -223,11 +223,11 @@ The framework includes:
 1. Different service types (FastAPI, Aiogram, AsyncIO workers) MUST run in separate processes/containers to avoid event loop conflicts
 2. Business services MUST access data ONLY via HTTP APIs to data services - direct database connections are PROHIBITED
 3. Use RabbitMQ for inter-service communication and event publishing
-4. **NAMING CONVENTION**: See [docs/architecture/naming_conventions.mdc](docs/architecture/naming_conventions.mdc) for mandatory naming standards
+4. **NAMING CONVENTION**: See [docs/architecture/naming_conventions.mdc](docs/architecture/naming_conventions.mdc) *(or [.framework/docs/architecture/naming_conventions.mdc](.framework/docs/architecture/naming_conventions.mdc) when used as submodule)* for mandatory naming standards
 
 ## Development Commands
 
-> **📋 CANONICAL COMMAND REFERENCE**: For all development commands, see [docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md). This includes Docker operations, testing, deployment, troubleshooting, and more.
+> **📋 CANONICAL COMMAND REFERENCE**: For all development commands, see [docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md) *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md](.framework/docs/guides/DEVELOPMENT_COMMANDS.md) when used as submodule)*. This includes Docker operations, testing, deployment, troubleshooting, and more.
 
 ### Quick Reference for Framework Usage
 ```bash
@@ -248,13 +248,13 @@ curl http://localhost:8000/health
 
 **Essential operations:**
 - **Framework Update**: `git submodule update --remote .framework`
-- **Docker**: [docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations](docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations)
-- **Testing**: [docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands](docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands)
-- **Troubleshooting**: [docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands](docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands)
+- **Docker**: [docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations](docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations) *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations](.framework/docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations) when used as submodule)*
+- **Testing**: [docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands](docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands) *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands](.framework/docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands) when used as submodule)*
+- **Troubleshooting**: [docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands](docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands) *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands](.framework/docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands) when used as submodule)*
 
 ## Architecture Guidelines
 
-> **🏗️ ARCHITECTURAL FOUNDATION**: For complete architectural guidelines, constraints, and patterns, see [docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md). This section provides a high-level overview.
+> **🏗️ ARCHITECTURAL FOUNDATION**: For complete architectural guidelines, constraints, and patterns, see [docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md) *(or [.framework/docs/guides/ARCHITECTURE_GUIDE.md](.framework/docs/guides/ARCHITECTURE_GUIDE.md) when used as submodule)*. This section provides a high-level overview.
 
 ### Improved Hybrid Approach Overview
 
@@ -273,7 +273,7 @@ This project implements the **Improved Hybrid Approach** - a microservices archi
 - ⚠️ **MANDATORY**: Python 3.12+ for all services
 - ⚠️ **MANDATORY**: Underscore-only naming convention (no hyphens)
 
-> **📋 COMPLETE ARCHITECTURE DETAILS**: See [docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md) for detailed constraints, patterns, and implementation guidelines.
+> **📋 COMPLETE ARCHITECTURE DETAILS**: See [docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md) *(or [.framework/docs/guides/ARCHITECTURE_GUIDE.md](.framework/docs/guides/ARCHITECTURE_GUIDE.md) when used as submodule)* for detailed constraints, patterns, and implementation guidelines.
 
 ### Docker Compose Organization
 
@@ -283,7 +283,7 @@ Use one main `docker-compose.yml` in the project root, not individual compose fi
 **Project Organization:**
 When used as submodule, projects follow a clean separation pattern: framework provides patterns, user code stays in `src/`.
 
-> **📋 COMPLETE PROJECT STRUCTURE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) for detailed directory organization, service types, and development workflow.
+> **📋 COMPLETE PROJECT STRUCTURE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) *(or [.framework/docs/reference/PROJECT_STRUCTURE.md](.framework/docs/reference/PROJECT_STRUCTURE.md) when used as submodule)* for detailed directory organization, service types, and development workflow.
 
 **Benefits:**
 - **Data Service Isolation**: Centralized database expertise and optimization
@@ -293,7 +293,7 @@ When used as submodule, projects follow a clean separation pattern: framework pr
 - **Unified Environment**: Single command deployment with proper dependency management
 
 ### Service Types and Implementation Status
-**Complete technology specifications and versions**: [docs/reference/tech_stack.md](docs/reference/tech_stack.md)
+**Complete technology specifications and versions**: [docs/reference/tech_stack.md](docs/reference/tech_stack.md) *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md) when used as submodule)*
 
 **Service Architecture:**
 - **Data Services**: PostgreSQL and MongoDB data access services (Ports: 8001, 8002)
@@ -303,45 +303,45 @@ When used as submodule, projects follow a clean separation pattern: framework pr
 **Current Status**: Infrastructure and service framework complete, ready for business logic implementation.
 
 **Service Implementation Guides:**
-- Data access patterns: `docs/architecture/data-access-rules.mdc`
-- MongoDB operations: `docs/infrastructure/mongodb_rules.mdc`
-- FastAPI patterns: `docs/services/fastapi_rules.mdc`
-- Aiogram patterns: `docs/services/aiogram_rules.mdc`
-- AsyncIO patterns: `docs/services/asyncio_rules.mdc`
+- Data access patterns: `docs/architecture/data-access-rules.mdc` *(or `.framework/docs/architecture/data-access-rules.mdc` when used as submodule)*
+- MongoDB operations: `docs/infrastructure/mongodb_rules.mdc` *(or `.framework/docs/infrastructure/mongodb_rules.mdc` when used as submodule)*
+- FastAPI patterns: `docs/services/fastapi_rules.mdc` *(or `.framework/docs/services/fastapi_rules.mdc` when used as submodule)*
+- Aiogram patterns: `docs/services/aiogram_rules.mdc` *(or `.framework/docs/services/aiogram_rules.mdc` when used as submodule)*
+- AsyncIO patterns: `docs/services/asyncio_rules.mdc` *(or `.framework/docs/services/asyncio_rules.mdc` when used as submodule)*
 
 ### Service Structure
-For detailed service structure and architecture patterns, see [docs/reference/tech_stack.md](docs/reference/tech_stack.md) and `docs/architecture/ms_best_practices_rules.mdc`.
+For detailed service structure and architecture patterns, see [docs/reference/tech_stack.md](docs/reference/tech_stack.md) *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md) when used as submodule)* and `docs/architecture/ms_best_practices_rules.mdc` *(or `.framework/docs/architecture/ms_best_practices_rules.mdc` when used as submodule)*.
 
 ### Service-Specific Patterns
 
 **Implementation patterns available in:**
-- **FastAPI Services**: [docs/services/fastapi_rules.mdc](docs/services/fastapi_rules.mdc)
-- **Aiogram Services**: [docs/services/aiogram_rules.mdc](docs/services/aiogram_rules.mdc)
-- **AsyncIO Workers**: [docs/services/asyncio_rules.mdc](docs/services/asyncio_rules.mdc)
-- **Database Access**: [docs/architecture/data-access-rules.mdc](docs/architecture/data-access-rules.mdc)
-- **Testing Standards**: [docs/quality/testing-standards.mdc](docs/quality/testing-standards.mdc)
+- **FastAPI Services**: [docs/services/fastapi_rules.mdc](docs/services/fastapi_rules.mdc) *(or [.framework/docs/services/fastapi_rules.mdc](.framework/docs/services/fastapi_rules.mdc) when used as submodule)*
+- **Aiogram Services**: [docs/services/aiogram_rules.mdc](docs/services/aiogram_rules.mdc) *(or [.framework/docs/services/aiogram_rules.mdc](.framework/docs/services/aiogram_rules.mdc) when used as submodule)*
+- **AsyncIO Workers**: [docs/services/asyncio_rules.mdc](docs/services/asyncio_rules.mdc) *(or [.framework/docs/services/asyncio_rules.mdc](.framework/docs/services/asyncio_rules.mdc) when used as submodule)*
+- **Database Access**: [docs/architecture/data-access-rules.mdc](docs/architecture/data-access-rules.mdc) *(or [.framework/docs/architecture/data-access-rules.mdc](.framework/docs/architecture/data-access-rules.mdc) when used as submodule)*
+- **Testing Standards**: [docs/quality/testing-standards.mdc](docs/quality/testing-standards.mdc) *(or [.framework/docs/quality/testing-standards.mdc](.framework/docs/quality/testing-standards.mdc) when used as submodule)*
 
 ## Cursor Rules Integration
 
-**Comprehensive implementation rules available in [docs/](docs/) organized by category**
+**Comprehensive implementation rules available in [docs/](docs/) *(or [.framework/docs/](.framework/docs/) when used as submodule)* organized by category**
 
-See [docs/INDEX.md](docs/INDEX.md) for complete overview of all 15 rule files covering architecture, service patterns, infrastructure, and observability.
+See [docs/INDEX.md](docs/INDEX.md) *(or [.framework/docs/INDEX.md](.framework/docs/INDEX.md) when used as submodule)* for complete overview of all 15 rule files covering architecture, service patterns, infrastructure, and observability.
 
 ## Important Notes
 
-- **Implementation Status**: Infrastructure and service framework are complete. Business logic implementation should follow `docs/` rule patterns
-- **Complete Examples**: See [examples/index.md](examples/index.md) for comprehensive, working implementations of all service types
+- **Implementation Status**: Infrastructure and service framework are complete. Business logic implementation should follow `docs/` *(or `.framework/docs/` when used as submodule)* rule patterns
+- **Complete Examples**: See [examples/index.md](examples/index.md) *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)* for comprehensive, working implementations of all service types
 - **Environment Setup**: Create `.env.example` template (if not auto-generated by AI), then copy to `.env` and configure for your environment
 - **Service Separation**: Each service type runs in separate containers to avoid event loop conflicts
 - **Testing Standards**: Use real database instances (via testcontainers), achieve 100% coverage for critical paths
 - **Type Annotations**: All functions must have full type hints (enforced by mypy>=1.8.0)
 - **Security Focus**: Implement OAuth2/JWT, HTTPS, rate limiting, and proper error handling
-- **Troubleshooting**: For common issues and solutions, see [docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)
+- **Troubleshooting**: For common issues and solutions, see [docs/reference/troubleshooting.md](docs/reference/troubleshooting.md) *(or [.framework/docs/reference/troubleshooting.md](.framework/docs/reference/troubleshooting.md) when used as submodule)*
 
 ## Framework Management
 
 ### Framework Submodule Operations
-> **📋 COMPLETE SUBMODULE GUIDE**: See [README.md#framework-management](README.md#framework-management) and [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) for detailed submodule operations and project setup.
+> **📋 COMPLETE SUBMODULE GUIDE**: See [README.md#framework-management](README.md#framework-management) and [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) *(or [.framework/docs/reference/PROJECT_STRUCTURE.md](.framework/docs/reference/PROJECT_STRUCTURE.md) when used as submodule)* for detailed submodule operations and project setup.
 
 ```bash
 # Quick reference - Update framework
@@ -351,7 +351,7 @@ git submodule update --remote .framework
 ### AI Development Guidelines
 1. **Automatically scan framework** for patterns, rules, and examples
 2. **Generate user code in `src/`** - never modify framework content when used as submodule
-3. **Follow `docs/` guidelines** for architecture compliance
-4. **Use `ai_agents/`** for validation and generation tools
-5. **Reference `examples/`** for implementation patterns
-6. **Validate against `use_cases/`** for working examples
+3. **Follow `docs/` *(or `.framework/docs/` when used as submodule)* guidelines** for architecture compliance
+4. **Use `ai_agents/` *(or `.framework/ai_agents/` when used as submodule)*** for validation and generation tools
+5. **Reference `examples/` *(or `.framework/examples/` when used as submodule)*** for implementation patterns
+6. **Validate against `use_cases/` *(or `.framework/use_cases/` when used as submodule)*** for working examples

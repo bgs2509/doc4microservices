@@ -407,7 +407,7 @@ async def handle_user_created_event(event_data: dict) -> None:
 ### Implementation Resources
 - **Development Commands**: [DEVELOPMENT_COMMANDS.md](DEVELOPMENT_COMMANDS.md)
 - **Technology Specifications**: [../reference/tech_stack.md](../reference/tech_stack.md)
-- **Working Examples**: [../examples/index.md](../examples/index.md)
+- **Working Examples**: [../examples/index.md](../examples/index.md) *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)*
 - **Troubleshooting**: [../reference/troubleshooting.md](../reference/troubleshooting.md)
 
 ### Implementation Rules
@@ -421,7 +421,7 @@ async def handle_user_created_event(event_data: dict) -> None:
 ### Project Organization
 - **Main Guide**: [../../CLAUDE.md](../../CLAUDE.md)
 - **Use Case Implementation**: [USE_CASE_IMPLEMENTATION_GUIDE.md](USE_CASE_IMPLEMENTATION_GUIDE.md)
-- **Example Use Case**: [../../use_cases/task_management/README.md](../../use_cases/task_management/README.md)
+- **Example Use Case**: [../../use_cases/task_management/README.md](../../use_cases/task_management/README.md) *(or [.framework/use_cases/task_management/README.md](.framework/use_cases/task_management/README.md) when used as submodule)*
 
 ---
 

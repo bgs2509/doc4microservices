@@ -447,7 +447,7 @@ For comprehensive, working implementations of all service types with real-world 
 - **Inter-Service Communication**: HTTP API calls and event-driven patterns
 - **Testing Examples**: Unit, integration, and end-to-end testing patterns
 
-See [../examples/index.md](../examples/index.md) for detailed implementations.
+See [../examples/index.md](../examples/index.md) *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)* for detailed implementations.
 
 ### Troubleshooting Reference
 
@@ -489,7 +489,7 @@ try_microservices/                    # Root project directory
 │       ├── grafana/                 # ✅ Dashboards and visualization
 │       ├── elk/                     # ✅ Log aggregation (ELK stack)
 │       └── jaeger/                  # ✅ Distributed tracing
-├── docs/                            # ✅ Complete rule set (15 files) in architecture/, services/, infrastructure/, observability/, quality/
+├── docs/                            # ✅ Complete rule set (15 files) in architecture/, services/, infrastructure/, observability/, quality/ (or .framework/docs/ when used as submodule)
 ├── docs/tech_stack.md               # ✅ Technology specifications
 ├── CLAUDE.md                        # ✅ Development guidance
 └── logs/                            # ✅ Application logs directory

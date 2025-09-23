@@ -144,7 +144,7 @@ git submodule init && git submodule update
 ### Development Workflow
 1. **Add framework as submodule** to your project
 2. **Generate application code** in `src/` using AI or manual development
-3. **Follow framework patterns** from `.framework/docs/` and `.framework/examples/`
+3. **Follow framework patterns** from `docs/` *(or `.framework/docs/` when used as submodule)* and `examples/` *(or `.framework/examples/` when used as submodule)*
 4. **Never modify** `.framework/` content
 5. **Update framework** periodically with `git submodule update --remote`
 
@@ -181,7 +181,7 @@ When organizing your project:
 - **Service Isolation**: Each service type in separate containers
 
 ### Documentation References
-- **Architecture Details**: `.framework/docs/guides/ARCHITECTURE_GUIDE.md`
-- **Development Commands**: `.framework/docs/guides/DEVELOPMENT_COMMANDS.md`
-- **Technology Stack**: `.framework/docs/reference/tech_stack.md`
-- **Working Examples**: `.framework/examples/index.md`
+- **Architecture Details**: `docs/guides/ARCHITECTURE_GUIDE.md` *(or `.framework/docs/guides/ARCHITECTURE_GUIDE.md` when used as submodule)*
+- **Development Commands**: `docs/guides/DEVELOPMENT_COMMANDS.md` *(or `.framework/docs/guides/DEVELOPMENT_COMMANDS.md` when used as submodule)*
+- **Technology Stack**: `docs/reference/tech_stack.md` *(or `.framework/docs/reference/tech_stack.md` when used as submodule)*
+- **Working Examples**: `examples/index.md` *(or `.framework/examples/index.md` when used as submodule)*

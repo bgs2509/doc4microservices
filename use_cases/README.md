@@ -2,7 +2,7 @@
 
 > **📋 DOCUMENTATION TYPE**: Working Demonstrations - Complete functional applications
 > **👥 TARGET USERS**: Business stakeholders, developers, QA teams, product managers
-> **🔗 RELATED**: [Learning Patterns](../examples/) | [AI Generation](../ai_agents/) | **[Complete Comparison Guide](../CLAUDE.md#documentation-types-guide)**
+> **🔗 RELATED**: [Learning Patterns](../examples/) *(or [.framework/examples/](.framework/examples/) when used as submodule)* | [AI Generation](../ai_agents/) *(or [.framework/ai_agents/](.framework/ai_agents/) when used as submodule)* | **[Complete Comparison Guide](../CLAUDE.md#documentation-types-guide)**
 
 This folder contains complete, working applications that demonstrate the **Improved Hybrid Approach** architecture in real-world scenarios. Each use case is a fully functional, production-ready implementation that you can deploy, use, and learn from.
 
@@ -159,24 +159,24 @@ Use cases demonstrate testing at all levels:
 1. **Choose Domain**: Select a clear business domain (e-commerce, content management, etc.)
 2. **Define Services**: Map business functions to service types (API, Bot, Worker)
 3. **Follow Template**: Use the structure template above
-4. **Implement Patterns**: Follow patterns from [examples/](../examples/)
+4. **Implement Patterns**: Follow patterns from [examples/](../examples/) *(or [.framework/examples/](.framework/examples/) when used as submodule)*
 5. **Add Documentation**: Include comprehensive README and API docs
 6. **Test Thoroughly**: Include unit, integration, and E2E tests
 
 ### **Naming Conventions**
 - **Folder Names**: `snake_case` (e.g., `task_management`, `e_commerce_platform`)
 - **Service Names**: `{domain}_{type}_service` (e.g., `task_api_service`, `ecommerce_bot_service`)
-- **Follow**: [Naming conventions guide](../docs/architecture/naming_conventions.mdc)
+- **Follow**: [Naming conventions guide](../docs/architecture/naming_conventions.mdc) *(or [.framework/docs/architecture/naming_conventions.mdc](.framework/docs/architecture/naming_conventions.mdc) when used as submodule)*
 
 ## 🔗 **Related Documentation**
 
 ### **For Implementation Guidance**
-- **[Implementation Patterns](../examples/)**: Learn how to implement services correctly
-- **[Architecture Guide](../docs/guides/ARCHITECTURE_GUIDE.md)**: Understand architectural constraints
-- **[Development Commands](../docs/guides/DEVELOPMENT_COMMANDS.md)**: Commands for development and deployment
+- **[Implementation Patterns](../examples/)** *(or [.framework/examples/](.framework/examples/) when used as submodule)*: Learn how to implement services correctly
+- **[Architecture Guide](../docs/guides/ARCHITECTURE_GUIDE.md)** *(or [.framework/docs/guides/ARCHITECTURE_GUIDE.md](.framework/docs/guides/ARCHITECTURE_GUIDE.md) when used as submodule)*: Understand architectural constraints
+- **[Development Commands](../docs/guides/DEVELOPMENT_COMMANDS.md)** *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md](.framework/docs/guides/DEVELOPMENT_COMMANDS.md) when used as submodule)*: Commands for development and deployment
 
 ### **For AI Generation**
-- **[AI Agents Framework](../ai_agents/)**: Generate new use cases automatically
+- **[AI Agents Framework](../ai_agents/)** *(or [.framework/ai_agents/](.framework/ai_agents/) when used as submodule)*: Generate new use cases automatically
 - **[Feasibility Checker](../ai_agents/business_validation/feasibility_checker.yml)**: Validate new use case ideas
 
 ### **For Project Understanding**

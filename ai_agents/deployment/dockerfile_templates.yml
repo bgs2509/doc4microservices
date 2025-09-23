@@ -459,7 +459,7 @@ dockerignore_template: |
   .gitignore
 
   # Documentation
-  docs/
+  docs/ # (or .framework/docs/ when used as submodule)
   *.md
   LICENSE
 

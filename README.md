@@ -58,7 +58,7 @@ This transforms microservices application creation into a standardized, repeatab
 
 When you add this framework as a submodule, your project follows a clean separation pattern where the framework provides proven architecture patterns while your application code stays completely separate.
 
-> **📋 DETAILED PROJECT STRUCTURE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) for comprehensive directory organization, service types, and setup guidance.
+> **📋 DETAILED PROJECT STRUCTURE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) *(or [.framework/docs/reference/PROJECT_STRUCTURE.md](.framework/docs/reference/PROJECT_STRUCTURE.md) when used as submodule)* for comprehensive directory organization, service types, and setup guidance.
 
 ## 💻 AI Generation Examples
 
@@ -157,17 +157,17 @@ This repository contains comprehensive documentation designed for both AI agents
 | Component | Purpose | Location |
 |-----------|---------|----------|
 | **🏗️ Main Entry Point** | Complete development guide and navigation | [CLAUDE.md](CLAUDE.md) |
-| **🤖 AI Framework** | Automated application generation | [ai_agents/](ai_agents/) |
-| **📋 Implementation Rules** | Service-specific patterns and constraints | [docs/](docs/) |
-| **💻 Working Examples** | Complete reference implementations | [examples/](examples/) |
+| **🤖 AI Framework** | Automated application generation | [ai_agents/](ai_agents/) *(or [.framework/ai_agents/](.framework/ai_agents/) when used as submodule)* |
+| **📋 Implementation Rules** | Service-specific patterns and constraints | [docs/](docs/) *(or [.framework/docs/](.framework/docs/) when used as submodule)* |
+| **💻 Working Examples** | Complete reference implementations | [examples/](examples/) *(or [.framework/examples/](.framework/examples/) when used as submodule)* |
 
 ### For Human Developers
 | Document | Purpose | When to Use |
 |----------|---------|-------------|
 | **[CLAUDE.md](CLAUDE.md)** | Complete development guide | Start here - setup, architecture, commands |
-| **[docs/reference/tech_stack.md](docs/reference/tech_stack.md)** | Technology specifications | Check versions, configurations |
-| **[examples/index.md](examples/index.md)** | Working code examples | Understand implementation patterns |
-| **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** | Problem solving | Debug issues, find solutions |
+| **[docs/reference/tech_stack.md](docs/reference/tech_stack.md)** *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md) when used as submodule)* | Technology specifications | Check versions, configurations |
+| **[examples/index.md](examples/index.md)** *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)* | Working code examples | Understand implementation patterns |
+| **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** *(or [.framework/docs/reference/troubleshooting.md](.framework/docs/reference/troubleshooting.md) when used as submodule)* | Problem solving | Debug issues, find solutions |
 
 ## 📋 Technology Stack
 
@@ -234,7 +234,7 @@ git clone --recursive <your-project-repo>
 git submodule init && git submodule update
 ```
 
-> **📋 COMPLETE SETUP GUIDE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) for detailed project organization and development workflow.
+> **📋 COMPLETE SETUP GUIDE**: See [docs/reference/PROJECT_STRUCTURE.md](docs/reference/PROJECT_STRUCTURE.md) *(or [.framework/docs/reference/PROJECT_STRUCTURE.md](.framework/docs/reference/PROJECT_STRUCTURE.md) when used as submodule)* for detailed project organization and development workflow.
 
 ### For AI Agents
 1. **Automatically scan `.framework/`** for patterns, rules, and examples

@@ -11,7 +11,7 @@ This is the comprehensive documentation index for the microservices project. All
 | 📋 **Run commands** | [guides/DEVELOPMENT_COMMANDS.md](guides/DEVELOPMENT_COMMANDS.md) |
 | 🎯 **Create new use case** | [guides/USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md) |
 | 🔧 **Check tech specs** | [reference/tech_stack.md](reference/tech_stack.md) |
-| 💻 **See working examples** | [examples/index.md](examples/index.md) |
+| 💻 **See working examples** | [examples/index.md](examples/index.md) *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)* |
 | 🐛 **Solve problems** | [reference/troubleshooting.md](reference/troubleshooting.md) |
 | 🤖 **IDE rules & patterns** | [#ide-rules--patterns](#ide-rules--patterns) |
 
@@ -28,7 +28,7 @@ Essential documentation for development and architecture understanding.
 Technical specifications, examples, and troubleshooting resources.
 
 - **[reference/tech_stack.md](reference/tech_stack.md)** - Technology specifications and versions
-- **[examples/index.md](examples/index.md)** - Working code examples for all service types
+- **[examples/index.md](examples/index.md)** *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)* - Working code examples for all service types
 - **[reference/troubleshooting.md](reference/troubleshooting.md)** - Common issues and solutions
 
 ## 🤖 IDE Rules & Patterns
@@ -81,7 +81,7 @@ Code quality and testing standards:
 ### For Service Development
 1. Follow [guides/USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md)
 2. Check relevant service rules in the `services` directory.
-3. Use examples from [examples/index.md](examples/index.md)
+3. Use examples from [examples/index.md](examples/index.md) *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)*
 4. Verify setup with [reference/tech_stack.md](reference/tech_stack.md)
 
 ### For Infrastructure Setup
@@ -115,7 +115,7 @@ To maintain documentation quality, all internal links should be validated:
 
 ```bash
 # Check for broken internal links (example command)
-find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \; | \
+find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \; | \ # (or find .framework/docs/ when used as submodule)
   xargs grep -n "\[.*\](" | \
   grep -v "http" | \
   awk -F: '{print $1":"$2}' | \

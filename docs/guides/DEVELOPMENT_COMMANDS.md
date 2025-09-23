@@ -403,7 +403,7 @@ docker-compose exec postgres psql -U postgres -c "SELECT * FROM pg_stat_activity
 ### Task Management Use Case
 ```bash
 # Navigate to use case
-cd use_cases/task_management
+cd use_cases/task_management # (or cd .framework/use_cases/task_management when used as submodule)
 
 # Start task management system
 docker-compose up -d
@@ -423,7 +423,7 @@ docker-compose logs -f task_bot_service
 
 - **Architecture Details**: [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md)
 - **Technology Specifications**: [../reference/tech_stack.md](../reference/tech_stack.md)
-- **Working Examples**: [../examples/index.md](../examples/index.md)
+- **Working Examples**: [../examples/index.md](../examples/index.md) *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)*
 - **Troubleshooting Guide**: [../reference/troubleshooting.md](../reference/troubleshooting.md)
 - **Main Development Guide**: [../../CLAUDE.md](../../CLAUDE.md)
 

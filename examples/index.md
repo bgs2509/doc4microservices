@@ -2,9 +2,9 @@
 
 > **📋 DOCUMENTATION TYPE**: Educational Examples - Teaching developers HOW to implement correctly
 > **👥 TARGET USERS**: Human developers, teams, code reviewers
-> **🔗 RELATED**: [AI Agents Framework](../../ai_agents/) | [Working Examples](../../use_cases/) | **[Complete Comparison Guide](../../CLAUDE.md#documentation-types-guide)**
+> **🔗 RELATED**: [AI Agents Framework](../../ai_agents/) *(or [.framework/ai_agents/](.framework/ai_agents/) when used as submodule)* | [Working Examples](../../use_cases/) *(or [.framework/use_cases/](.framework/use_cases/) when used as submodule)* | **[Complete Comparison Guide](../../CLAUDE.md#documentation-types-guide)**
 
-This section contains comprehensive, production-ready code examples demonstrating the implementation of various service types and architectural patterns following the **"Improved Hybrid Approach"** architecture. All examples implement patterns from `docs/` rules and include:
+This section contains comprehensive, production-ready code examples demonstrating the implementation of various service types and architectural patterns following the **"Improved Hybrid Approach"** architecture. All examples implement patterns from `docs/` *(or `.framework/docs/` when used as submodule)* rules and include:
 
 - **RFC 7807 Error Handling**: Standardized problem details responses
 - **Request Tracking**: Correlation ID and request ID middleware
@@ -94,13 +94,13 @@ All examples follow the principles defined in [`../guides/ARCHITECTURE_GUIDE.md`
 
 - **[Use Case Integration Example](./use_case_integration.md)**: Complete guide for structuring and integrating use cases into the microservices architecture, demonstrating service coordination, data flow, and event-driven patterns.
   - *Demonstrates*: Integration of all service types working together
-  - *References*: Task Management use case (`use_cases/task_management/`)
+  - *References*: Task Management use case (`use_cases/task_management/` *or `.framework/use_cases/task_management/` when used as submodule*)
   - *Patterns*: Service isolation, HTTP-only data access, event-driven communication
 
 ### AI-Powered Development
 
 - **[AI Agents Usage Example](./ai_agents_usage.md)**: Complete guide for using AI agents to automatically generate microservices from business requirements, including template-based code generation and quality validation.
-  - *Utilizes*: Service templates in `ai_agents/generators/service_templates/`
+  - *Utilizes*: Service templates in `ai_agents/generators/service_templates/` *(or `.framework/ai_agents/generators/service_templates/` when used as submodule)*
   - *Generates*: Production-ready service implementations
   - *Validates*: Architectural compliance and code quality
 

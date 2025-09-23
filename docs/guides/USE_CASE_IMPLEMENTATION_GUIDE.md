@@ -94,31 +94,31 @@ AI agents generate projects following this standardized structure:
 ## AI Generation Process
 
 ### Phase 1: Business Validation
-AI uses the `ai_agents/business_validation/` framework to:
+AI uses the `ai_agents/business_validation/` *(or `.framework/ai_agents/business_validation/` when used as submodule)* framework to:
 1. **Feasibility Check**: Validate if business idea fits the architecture
 2. **Domain Classification**: Identify business patterns and optimal allocation
 3. **Constraint Validation**: Ensure architectural compliance
 
 ### Phase 2: Service Mapping
-AI uses the `ai_agents/mapping/` framework to:
+AI uses the `ai_agents/mapping/` *(or `.framework/ai_agents/mapping/` when used as submodule)* framework to:
 1. **Service Allocation**: Map business functions to specific services
 2. **Data Flow Design**: Define PostgreSQL vs MongoDB usage
 3. **Integration Patterns**: Specify service communication
 
 ### Phase 3: Code Generation
-AI uses the `ai_agents/generators/` framework to:
+AI uses the `ai_agents/generators/` *(or `.framework/ai_agents/generators/` when used as submodule)* framework to:
 1. **Template Selection**: Choose appropriate service templates
 2. **Variable Substitution**: Fill templates with business-specific data
 3. **Code Assembly**: Generate complete implementations
 
 ### Phase 4: Quality Validation
-AI uses the `ai_agents/validation/` framework to:
+AI uses the `ai_agents/validation/` *(or `.framework/ai_agents/validation/` when used as submodule)* framework to:
 1. **Architecture Compliance**: Verify HTTP-only data access, service separation
 2. **Code Quality**: Check type hints, error handling, naming conventions
 3. **Integration Testing**: Ensure service communication works
 
 ### Phase 5: Deployment Generation
-AI uses the `ai_agents/deployment/` framework to:
+AI uses the `ai_agents/deployment/` *(or `.framework/ai_agents/deployment/` when used as submodule)* framework to:
 1. **Docker Compose**: Generate complete infrastructure configuration
 2. **Environment Setup**: Create secure configuration templates
 3. **Deployment Scripts**: Generate automation and health checks
@@ -427,7 +427,7 @@ class BusinessService:
 
 The **AI-first project generation workflow** enables rapid creation of production-ready microservices applications. Key success factors:
 
-1. **AI Framework Utilization**: Use the complete `ai_agents/` framework for validation, mapping, generation, and deployment
+1. **AI Framework Utilization**: Use the complete `ai_agents/` *(or `.framework/ai_agents/` when used as submodule)* framework for validation, mapping, generation, and deployment
 2. **Structure Compliance**: Follow the standardized `src/` folder organization with root-level configuration
 3. **Architecture Adherence**: HTTP-only data access, service separation, event-driven communication
 4. **Quality Focus**: Comprehensive testing, security, monitoring, and documentation
