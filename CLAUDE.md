@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
    - 🚀 Development workflow and setup instructions
    - 📋 Links to specialized documentation
 
-2. **[docs/reference/tech_stack.md](docs/reference/tech_stack.md)** *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md) when used as submodule)* - **TECHNOLOGY AUTHORITY**
+2. **[Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation)** - **TECHNOLOGY AUTHORITY**
    - 🔧 Complete technology specifications and versions
    - 📦 Library compatibility and requirements
    - ⚙️ Infrastructure configuration details
@@ -31,41 +31,41 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 ### Implementation Guides
 
-4. **[docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md)** *(or [.framework/docs/guides/ARCHITECTURE_GUIDE.md](.framework/docs/guides/ARCHITECTURE_GUIDE.md) when used as submodule)* - **ARCHITECTURE AUTHORITY**
+4. **[Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation)** - **ARCHITECTURE AUTHORITY**
    - 🏗️ Improved Hybrid Approach architecture
    - ⚠️ Mandatory constraints and principles
    - 🔧 Service types and communication patterns
 
-5. **[docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md)** *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md](.framework/docs/guides/DEVELOPMENT_COMMANDS.md) when used as submodule)* - **COMMANDS AUTHORITY**
+5. **[Development Commands](docs/LINKS_REFERENCE.md#developer-guides)** - **COMMANDS AUTHORITY**
    - 📋 Complete development commands reference
    - 🐳 Docker operations and service management
    - 🔍 Troubleshooting and diagnostic commands
 
-6. **[docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md)** *(or [.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md) when used as submodule)* - **USE CASE CREATION**
+6. **[Use Case Implementation](docs/LINKS_REFERENCE.md#developer-guides)** - **USE CASE CREATION**
    - 📋 Step-by-step use case development
    - ✅ Compliance checklists and templates
    - 🏗️ Production-ready implementation patterns
 
 ### Reference Materials
 
-7. **[examples/index.md](examples/index.md)** *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)* - **WORKING EXAMPLES**
+7. **[Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates)** - **WORKING EXAMPLES**
    - 💻 Complete, runnable service implementations
    - 🎯 Real-world patterns and best practices
    - 🧪 Testing examples and patterns
 
-8. **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** *(or [.framework/docs/reference/troubleshooting.md](.framework/docs/reference/troubleshooting.md) when used as submodule)* - **PROBLEM SOLVING**
+8. **[Troubleshooting](docs/LINKS_REFERENCE.md#developer-guides)** - **PROBLEM SOLVING**
    - 🐛 Common issues and solutions
    - 🔍 Diagnostic procedures
    - 🚨 Emergency troubleshooting steps
 
 ### Specialized Documentation
 
-10. **[docs/](docs/)** *(or [.framework/docs/](.framework/docs/) when used as submodule)* - **IDE RULES & PATTERNS** (architecture, services, infrastructure, observability, quality)
+10. **[IDE Rules & Patterns](docs/LINKS_REFERENCE.md#ide-rules--patterns)** - **IDE RULES & PATTERNS** (architecture, services, infrastructure, observability, quality)
    - 🤖 Automated code generation rules
    - 📏 Service-specific implementation patterns
    - 🔧 Technology-specific guidelines
 
-11. **[use_cases/](use_cases/)** *(or [.framework/use_cases/](.framework/use_cases/) when used as submodule)* - **CONCRETE EXAMPLES**
+11. **[Working Demonstrations](docs/LINKS_REFERENCE.md#examples-and-templates)** - **CONCRETE EXAMPLES**
     - 🎯 Real working use case implementations
     - 📚 Domain-specific documentation
     - 🚀 Deployment and usage examples
@@ -75,13 +75,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 | Need | Go To |
 |------|-------|
 | 🏁 **Get started quickly** | [README.md](README.md) → [CLAUDE.md - Development Commands](#development-commands) |
-| 🏗️ **Understand architecture** | [docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md) *(or [.framework/docs/guides/ARCHITECTURE_GUIDE.md](.framework/docs/guides/ARCHITECTURE_GUIDE.md))* |
-| 📋 **Run commands** | [docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md) *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md](.framework/docs/guides/DEVELOPMENT_COMMANDS.md))* |
-| 🎯 **Create new use case** | [docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md) *(or [.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md](.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md))* |
-| 🔧 **Check versions/config** | [docs/reference/tech_stack.md](docs/reference/tech_stack.md) *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md))* |
-| 💻 **See working examples** | [examples/index.md](examples/index.md) *(or [.framework/examples/index.md](.framework/examples/index.md))* |
-| 🐛 **Solve problems** | [docs/reference/troubleshooting.md](docs/reference/troubleshooting.md) *(or [.framework/docs/reference/troubleshooting.md](.framework/docs/reference/troubleshooting.md))* |
-| 🤖 **IDE rules & patterns** | [docs/INDEX.md#ide-rules--patterns](docs/INDEX.md#ide-rules--patterns) *(or [.framework/docs/INDEX.md#ide-rules--patterns](.framework/docs/INDEX.md#ide-rules--patterns))* |
+| 🏗️ **Understand architecture** | [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation) |
+| 📋 **Run commands** | [Development Commands](docs/LINKS_REFERENCE.md#developer-guides) |
+| 🎯 **Create new use case** | [Use Case Implementation](docs/LINKS_REFERENCE.md#developer-guides) |
+| 🔧 **Check versions/config** | [Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation) |
+| 💻 **See working examples** | [Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates) |
+| 🐛 **Solve problems** | [Troubleshooting](docs/LINKS_REFERENCE.md#developer-guides) |
+| 🤖 **IDE rules & patterns** | [IDE Rules & Patterns](docs/LINKS_REFERENCE.md#ide-rules--patterns) |
 
 ## 📚 Documentation Types Guide
 
@@ -90,9 +90,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 ### Quick Reference
 | Need | Documentation Type | Location | Target Users |
 |------|-------------------|----------|--------------|
-| 🎓 **Learn to code properly** | Educational Examples | [examples/](examples/) *(or [.framework/examples/](.framework/examples/))* | Human developers, teams |
-| 🤖 **AI-generated applications** | Automation Framework | [ai_agents/](ai_agents/) *(or [.framework/ai_agents/](.framework/ai_agents/))* | AI systems, AI developers |
-| 💻 **See working solutions** | Live Demonstrations | [use_cases/](use_cases/) *(or [.framework/use_cases/](.framework/use_cases/))* | Business stakeholders, QA teams |
+| 🎓 **Learn to code properly** | Educational Examples | [Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates) | Human developers, teams |
+| 🤖 **AI-generated applications** | Automation Framework | [AI Agents](docs/LINKS_REFERENCE.md#examples-and-templates) | AI systems, AI developers |
+| 💻 **See working solutions** | Live Demonstrations | [Working Demonstrations](docs/LINKS_REFERENCE.md#examples-and-templates) | Business stakeholders, QA teams |
 
 ### 📊 **DOCUMENTATION TYPE COMPARISON**
 
@@ -223,11 +223,11 @@ The framework includes:
 1. Different service types (FastAPI, Aiogram, AsyncIO workers) MUST run in separate processes/containers to avoid event loop conflicts
 2. Business services MUST access data ONLY via HTTP APIs to data services - direct database connections are PROHIBITED
 3. Use RabbitMQ for inter-service communication and event publishing
-4. **NAMING CONVENTION**: See [docs/architecture/naming_conventions.mdc](docs/architecture/naming_conventions.mdc) *(or [.framework/docs/architecture/naming_conventions.mdc](.framework/docs/architecture/naming_conventions.mdc) when used as submodule)* for mandatory naming standards
+4. **NAMING CONVENTION**: See [naming conventions](docs/LINKS_REFERENCE.md#ide-rules--patterns) for mandatory naming standards
 
 ## Development Commands
 
-> **📋 CANONICAL COMMAND REFERENCE**: For all development commands, see [docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md) *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md](.framework/docs/guides/DEVELOPMENT_COMMANDS.md) when used as submodule)*. This includes Docker operations, testing, deployment, troubleshooting, and more.
+> **📋 CANONICAL COMMAND REFERENCE**: For all development commands, see [development commands](docs/LINKS_REFERENCE.md#developer-guides). This includes Docker operations, testing, deployment, troubleshooting, and more.
 
 ### Quick Reference for Framework Usage
 ```bash
@@ -248,13 +248,13 @@ curl http://localhost:8000/health
 
 **Essential operations:**
 - **Framework Update**: `git submodule update --remote .framework`
-- **Docker**: [docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations](docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations) *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations](.framework/docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations) when used as submodule)*
-- **Testing**: [docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands](docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands) *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands](.framework/docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands) when used as submodule)*
-- **Troubleshooting**: [docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands](docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands) *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands](.framework/docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands) when used as submodule)*
+- **Docker**: [Development Commands](docs/LINKS_REFERENCE.md#developer-guides) (Docker operations)
+- **Testing**: [Development Commands](docs/LINKS_REFERENCE.md#developer-guides) (Testing commands)
+- **Troubleshooting**: [Development Commands](docs/LINKS_REFERENCE.md#developer-guides) (Troubleshooting commands)
 
 ## Architecture Guidelines
 
-> **🏗️ ARCHITECTURAL FOUNDATION**: For complete architectural guidelines, constraints, and patterns, see [docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md) *(or [.framework/docs/guides/ARCHITECTURE_GUIDE.md](.framework/docs/guides/ARCHITECTURE_GUIDE.md) when used as submodule)*. This section provides a high-level overview.
+> **🏗️ ARCHITECTURAL FOUNDATION**: For complete architectural guidelines, constraints, and patterns, see [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation). This section provides a high-level overview.
 
 ### Improved Hybrid Approach Overview
 
@@ -273,7 +273,7 @@ This project implements the **Improved Hybrid Approach** - a microservices archi
 - ⚠️ **MANDATORY**: Python 3.12+ for all services
 - ⚠️ **MANDATORY**: Underscore-only naming convention (no hyphens)
 
-> **📋 COMPLETE ARCHITECTURE DETAILS**: See [docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md) *(or [.framework/docs/guides/ARCHITECTURE_GUIDE.md](.framework/docs/guides/ARCHITECTURE_GUIDE.md) when used as submodule)* for detailed constraints, patterns, and implementation guidelines.
+> **📋 COMPLETE ARCHITECTURE DETAILS**: See [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation) for detailed constraints, patterns, and implementation guidelines.
 
 ### Docker Compose Organization
 

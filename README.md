@@ -100,54 +100,16 @@ This project includes a comprehensive AI framework for generating applications:
 
 ## 🏗 Architecture Overview
 
-### Improved Hybrid Approach
+The framework implements the **Improved Hybrid Approach** - a microservices pattern combining centralized data access with distributed business logic.
 
-```mermaid
-graph TB
-    subgraph "Infrastructure (Docker Compose)"
-        RABBIT[RabbitMQ]
-    end
+### Key Characteristics
+- **Centralized Data Services**: Two dedicated services handle ALL database operations
+- **Business Logic Separation**: Business services contain ONLY business logic
+- **HTTP-Only Data Access**: No direct database connections in business services
+- **Event-Driven Communication**: RabbitMQ for inter-service messaging
+- **Service Type Isolation**: Each service type runs in separate processes
 
-    subgraph "Business Services (src/services/)"
-        API[FastAPI Service :8000]
-        BOT[Aiogram Bot]
-        WORKER[AsyncIO Workers]
-    end
-
-    subgraph "Data Services (src/services/)"
-        PG[PostgreSQL Service :8001]
-        MONGO[MongoDB Service :8002]
-    end
-
-    subgraph "Infrastructure (Docker Compose)"
-        POSTGRES[(PostgreSQL)]
-        MONGODB[(MongoDB)]
-        REDIS[(Redis)]
-    end
-
-    API -->|HTTP only| PG
-    API -->|HTTP only| MONGO
-    BOT -->|HTTP only| PG
-    BOT -->|HTTP only| MONGO
-    WORKER -->|HTTP only| PG
-    WORKER -->|HTTP only| MONGO
-
-    PG --> POSTGRES
-    MONGO --> MONGODB
-
-    API -.->|Events| RABBIT
-    BOT -.->|Events| RABBIT
-    WORKER -.->|Events| RABBIT
-```
-
-### Key Architectural Principles
-
-- **🔗 HTTP-Only Data Access** - Business services communicate with data services via HTTP APIs only
-- **🏗️ Service Type Separation** - FastAPI, Aiogram, and AsyncIO services run in separate containers
-- **📡 Event-Driven Communication** - RabbitMQ for asynchronous inter-service messaging
-- **📊 Complete Observability** - Prometheus, Grafana, Jaeger, and ELK stack integration
-- **🧪 Production-Ready Testing** - Real database testing with testcontainers
-- **🔒 Security First** - OAuth2/JWT authentication, HTTPS, rate limiting
+> **📖 COMPLETE ARCHITECTURE DETAILS**: See [Architecture Guide](docs/LINKS_REFERENCE.md#основная-документация) for detailed principles, constraints, diagrams, and implementation guidelines.
 
 ## 📚 Documentation and AI Knowledge Base
 

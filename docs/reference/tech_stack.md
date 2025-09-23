@@ -26,15 +26,12 @@
 
 ---
 
-## Architecture Overview
+## Technology Implementation Summary
 
-> **📖 ARCHITECTURE**: For complete architectural guidelines, see [ARCHITECTURE_GUIDE.md](../guides/ARCHITECTURE_GUIDE.md). This section provides technology-specific implementation details.
+> **📖 ARCHITECTURAL PRINCIPLES**: For complete architectural guidelines and patterns, see the [Architecture Guide](../LINKS_REFERENCE.md#основная-документация).
 
-### Improved Hybrid Approach - Technology Implementation
+This section provides technology-specific implementation details for the **Improved Hybrid Approach**:
 
-The project implements the **Improved Hybrid Approach** with centralized data services. For architectural principles and rules, see the [canonical architecture documentation](../guides/ARCHITECTURE_GUIDE.md).
-
-#### Technology Stack Summary
 - **Data Services**: FastAPI + SQLAlchemy 2.x (PostgreSQL) / Motor (MongoDB)
 - **Business Services**: FastAPI + httpx for HTTP-only data access
 - **Communication**: RabbitMQ for events, HTTP for data access

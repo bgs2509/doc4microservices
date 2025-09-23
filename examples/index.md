@@ -13,14 +13,11 @@ This section contains comprehensive, production-ready code examples demonstratin
 - **Pagination & Filtering**: Complete data access patterns
 - **Observability**: Structured logging and tracing integration
 
-## Architecture Overview
+## Implementation Examples
 
-Examples demonstrate the two-tier service architecture:
+Examples demonstrate the **Improved Hybrid Approach** with centralized data services and HTTP-only business logic communication.
 
-1. **Data Services**: Centralized database access with HTTP APIs (`db_postgres_service`, `db_mongo_service`)
-2. **Business Services**: HTTP-only data access with business logic (`api_service`, `bot_service`, `worker_service`)
-
-All examples follow the principles defined in [`../guides/ARCHITECTURE_GUIDE.md`](../guides/ARCHITECTURE_GUIDE.md) and implement patterns from [`../INDEX.md`](../INDEX.md).
+> **📖 ARCHITECTURAL FOUNDATION**: All examples follow the principles defined in the [Architecture Guide](../docs/LINKS_REFERENCE.md#основная-документация) and implement patterns from the [IDE Rules & Patterns](../docs/LINKS_REFERENCE.md#правила-ide-и-паттерны).
 
 ---
 
