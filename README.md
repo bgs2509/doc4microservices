@@ -68,7 +68,7 @@ my_awesome_app/                    # Your project repository
 │   └── CLAUDE.md                 # AI instructions
 ├── README.md                      # Your project documentation
 ├── docker-compose.yml             # Your project infrastructure
-├── .env.example                   # Your project configuration
+├── .env.example                   # Your project configuration template (created by AI or manually)
 └── src/                          # Your application code
     ├── services/                 # Microservices
     │   ├── api_service/          # FastAPI REST API service
@@ -198,6 +198,7 @@ This repository contains comprehensive documentation designed for both AI agents
 ### For AI Agents
 | Component | Purpose | Location |
 |-----------|---------|----------|
+| **🏗️ Main Entry Point** | Complete development guide and navigation | [CLAUDE.md](CLAUDE.md) |
 | **🤖 AI Framework** | Automated application generation | [ai_agents/](ai_agents/) |
 | **📋 Implementation Rules** | Service-specific patterns and constraints | [docs/](docs/) |
 | **💻 Working Examples** | Complete reference implementations | [examples/](examples/) |
@@ -284,8 +285,11 @@ git submodule init && git submodule update
 ### Quick Links (within .framework/)
 - **🏗️ Architecture Guide**: `.framework/docs/guides/ARCHITECTURE_GUIDE.md`
 - **📋 Development Commands**: `.framework/docs/guides/DEVELOPMENT_COMMANDS.md`
+- **🎯 Use Case Implementation**: `.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md`
 - **🔧 Technology Stack**: `.framework/docs/reference/tech_stack.md`
-- **💻 Examples**: `.framework/examples/`
+- **💻 Working Examples**: `.framework/examples/index.md`
+- **🐛 Troubleshooting**: `.framework/docs/reference/troubleshooting.md`
+- **🚀 Live Demonstrations**: `.framework/use_cases/`
 
 ## 📄 License
 
