@@ -32,12 +32,6 @@ HTTP APIs (FastAPI), AsyncIO.run(), Telegram bots (Aiogram), LLM pipelines (Lang
 - Trace ID: W3C Trace Context trace identifier extracted from current span
 - Problem Details: RFC 7807 error structure used by HTTP layer (referenced; not duplicated)
 
-## MCP Server Context 7 Compliance
-Requires Context 7 terminology, structure, and artifacts for consistent organization-wide logging.
-
-### Context 7 Artifacts and Conventions
-Defines common vocabulary, ID patterns, and cross-layer consistency for DDD/Hex boundaries and logging primitives.
-
 ### Rules
 1) MUST: Configure only the Root Logger in `src/core/logging.py::setup_logging()` with identical stdout and file handlers using one formatter.
 2) MUST: Use `ContextVar` request id; generate via `generate_request_id(prefix, **context)`; no manual prefixes in messages — the formatter adds `[request_id]`.
@@ -272,7 +266,7 @@ except ImportError:  # pragma: no cover - optional dependency
 
 from src.core.config import settings
 
-# Context 7: Request ID management
+# Request ID management
 request_id_var: ContextVar[str | None] = ContextVar("request_id", default=None)
 
 
@@ -286,7 +280,7 @@ def get_current_request_id() -> str | None:
     return request_id_var.get()
 
 def generate_request_id(prefix: str = "req", **kwargs: str | float | bool) -> str:
-    """Generate a Context 7 compliant request id.
+    """Generate a compliant request id.
 
     The format is: ``{prefix}_{k1_v1}_{k2_v2}_<unix_ts>_<short_uid>`` when context
     kwargs are provided, otherwise ``{prefix}_<unix_ts>_<short_uid>``.

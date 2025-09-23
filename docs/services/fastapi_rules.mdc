@@ -18,7 +18,7 @@ Define FastAPI-specific, testable rules for building clean, DDD/Hex‑aligned HT
 
 ### Scope
 - Covers: API design and consistency; routing; DI; request/response schemas; HTTP error mapping; application‑layer data access boundaries; testing patterns; versioning and extensibility; Redis and RabbitMQ integration in single event loop.
-- Excludes: logging/trace/Context 7 specifics (see `logging_rules.mdc`), and general microservice guidance (see `ms_best_practices_rules.mdc`).
+- Excludes: logging/trace specifics (see `logging_rules.mdc`), and general microservice guidance (see `ms_best_practices_rules.mdc`).
 
 ### Terms and Definitions
 - DTO: Pydantic `BaseModel` used for HTTP request/response payloads.

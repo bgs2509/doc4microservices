@@ -429,12 +429,12 @@ async def test_photo_upload_with_rabbitmq_integration(client, rabbitmq_client):
 async def test_aiogram_photo_handling_with_rabbitmq(aiogram_dp_with_rabbitmq, mocked_bot):
     """Test Aiogram photo handling with RabbitMQ integration."""
     from aiogram.types import Message, User, Chat, PhotoSize
-    
+
     # Arrange
     user = User(id=123, is_bot=False, first_name="Test")
     chat = Chat(id=456, type="private")
     photo = PhotoSize(file_id="test_file_123", file_unique_id="unique_123", width=100, height=100, file_size=1024)
-    
+
     message = Message(
         message_id=1,
         from_user=user,
@@ -442,11 +442,11 @@ async def test_aiogram_photo_handling_with_rabbitmq(aiogram_dp_with_rabbitmq, mo
         date=1234567890,
         photo=[photo]
     )
-    
+
     # Act - Process message through handler
     handler = aiogram_dp_with_rabbitmq._handlers[0].callback
     await handler(message, rabbitmq=aiogram_dp_with_rabbitmq._data["rabbitmq"])
-    
+
     # Assert - Check RabbitMQ operations (implementation depends on RabbitMQClient)
     # This would typically involve checking a test queue or using a mock
 
@@ -517,4 +517,4 @@ async def test_rabbitmq_connection_lifecycle(rabbitmq_container):
 - 2025-01-27 v1.3.0: Added asyncio integration rules for RabbitMQ, dependency injection patterns, event loop compatibility requirements, and updated test fixtures for asyncio compatibility.
 - 2025-09-05 v1.2.0: Added comprehensive testing requirements aligned with FastAPI testing standards, including testcontainers, async test patterns, fixtures, and 100% coverage requirements for critical paths.
 - 2025-09-05 v1.1.0: Updated RabbitMQ rules to include `traceparent` header propagation alongside `x-request-id` to resolve the conflict with logging rules.
-- 2025-09-05 v1.0.0: Initial RabbitMQ rules for Python microservices with aio-pika, DDD/Hex architecture, and Context 7 compliance.
+- 2025-09-05 v1.0.0: Initial RabbitMQ rules for Python microservices with aio-pika, DDD/Hex architecture.
