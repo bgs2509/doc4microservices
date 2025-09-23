@@ -249,16 +249,18 @@ class UserService:
 ```
 
 ### Verification
-- **How to verify**:
-  - Run the full verification suite as defined in the **[Development Commands](LINKS_REFERENCE.md#developer-guides)** guide.
-  - Optionally, run `docker-compose up --build` to validate container build and execution locally.
+- **Automated checks**:
+  - Run the full verification suite as defined in the **[Development Commands](LINKS_REFERENCE.md#developer-guides)** guide to ensure compliance with linting, typing, security, and testing standards.
+- **Manual checks**:
   - Manually inspect routers to ensure endpoints use `response_model` and return Pydantic models, not raw `dict`/`list`.
-  - Manually check that the system router (`/health`, `/ready`) is correctly registered.
-  - Ensure logging follows the canonical implementation defined in the [Logging Rules](LINKS_REFERENCE.md#ide-rules--patterns).
+  - Manually check that the system router (`/health`, `/ready`) is correctly registered and accessible.
+  - Verify that logging follows the canonical implementation defined in the [Logging Rules](LINKS_REFERENCE.md#ide-rules--patterns).
+  - Optionally, run `docker-compose up --build` to validate container build and local execution.
 - **Success criteria**:
-  - The CI pipeline passes all automated checks (lint, type, security, tests, naming).
+  - The CI pipeline passes all automated checks.
   - Operational endpoints (`/health`, `/ready`) are present and functional.
   - Logging is compliant and free of secrets.
+  - All manual checks are successfully passed.
 
 ### Examples
 ```python

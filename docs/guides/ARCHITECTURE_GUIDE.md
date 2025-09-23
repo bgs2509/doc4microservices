@@ -449,4 +449,4 @@ async def handle_user_created_event(event_data: dict) -> None:
 
 ---
 
-> **⚠️ COMPLIANCE REQUIRED**: All implementations must comply with this architecture guide. Violations will result in system instability and maintainability issues. When in doubt, refer to the implementation rules in [../](../).
+> **⚠️ COMPLIANCE REQUIRED**: All implementations must comply with this architecture guide. Violations will result in system instability and maintainability issues. When in doubt, refer to the implementation rules in [main project guide](LINKS_REFERENCE.md#core-documentation)(../).

@@ -492,7 +492,7 @@ If you encounter issues not covered in this guide:
 1. **Check logs**: Always start with service logs using `docker-compose logs -f <service>`
 2. **Verify configuration**: Use `docker-compose config` to validate compose files
 3. **Check connectivity**: Test service-to-service communication
-4. **Review documentation**: Refer to [../../CLAUDE.md](../../CLAUDE.md) and [tech_stack.md](tech_stack.md)
+4. **Review documentation**: Refer to [../../CLAUDE.md](LINKS_REFERENCE.md#core-documentation) and [tech_stack.md](tech_stack.md)
 5. **Check IDE rules**: Review relevant `../*/*.mdc` files (architecture/, services/, infrastructure/, observability/, quality/)
 
 For more detailed debugging, enable debug logging in your services by setting `LOG_LEVEL=DEBUG` in your `.env` file.

@@ -6,7 +6,7 @@ This is the comprehensive documentation index for the microservices project. All
 
 | Need | Go To |
 |------|-------|
-| 🏁 **Get started quickly** | [../README.md](../README.md) → [../CLAUDE.md](../CLAUDE.md) |
+| 🏁 **Get started quickly** | [../README.md](LINKS_REFERENCE.md#core-documentation) → [../CLAUDE.md](../CLAUDE.md) |
 | 🏗️ **Understand architecture** | [guides/ARCHITECTURE_GUIDE.md](guides/ARCHITECTURE_GUIDE.md) |
 | 📋 **Run commands** | [guides/DEVELOPMENT_COMMANDS.md](guides/DEVELOPMENT_COMMANDS.md) |
 | 🎯 **Create new use case** | [guides/USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md) |

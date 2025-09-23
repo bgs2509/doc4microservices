@@ -2,7 +2,7 @@
 
 > **🔧 CANONICAL TECHNOLOGY REFERENCE**: This document is the single source of truth for all technology versions, configurations, and specifications used in the project. All other documentation references this file.
 
-> **📖 Related Documentation**: For development guidance, see [../../CLAUDE.md](../../CLAUDE.md). For service-specific patterns, see [../INDEX.md](../INDEX.md) (architecture/, services/, infrastructure/, observability/, quality/). For complete working examples, see [../examples/index.md](../examples/index.md). For troubleshooting, see [troubleshooting.md](troubleshooting.md).
+> **📖 Related Documentation**: For development guidance, see [development guidance](LINKS_REFERENCE.md#core-documentation). For service-specific patterns, see [../INDEX.md](../INDEX.md) (architecture/, services/, infrastructure/, observability/, quality/). [complete working examples](LINKS_REFERENCE.md#examples-and-templates). For troubleshooting, see [troubleshooting.md](troubleshooting.md).
 
 ## Table of Contents
 - [Architecture](#architecture)

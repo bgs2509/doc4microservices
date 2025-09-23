@@ -31,7 +31,7 @@ This guide provides comprehensive instructions for creating complete, production
 
 ### 2. **Development Standards**
 - **Commands**: Use [canonical development commands](DEVELOPMENT_COMMANDS.md)
-- **Technology**: Follow [complete technology specifications](../reference/tech_stack.md)
+- **Technology**: Follow [complete technology specifications](LINKS_REFERENCE.md#core-documentation)
 - **Architecture**: Follow [comprehensive architecture guide](ARCHITECTURE_GUIDE.md)
 - **Naming**: Follow [../architecture/naming_conventions.mdc](../architecture/naming_conventions.mdc)
 - **Patterns**: See [../INDEX.md](../INDEX.md) for service-specific implementation patterns

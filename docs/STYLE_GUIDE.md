@@ -124,7 +124,7 @@ Main document content...
 
 ---
 
-> **📖 NAVIGATION**: To return to main guide see [CLAUDE.md](../CLAUDE.md)
+> **📖 NAVIGATION**: To return to main guide see [CLAUDE.md](LINKS_REFERENCE.md#core-documentation)
 ```
 
 ## Writing Principles
