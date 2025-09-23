@@ -249,14 +249,12 @@ services:
 
 ### Verification
 - **Automated checks**:
-  - `uv run ruff check .` - Validates Python naming conventions
-  - `find . -name "*-*" -type f ! -name "docker-compose*" ! -name ".dockerignore" ! -path "./.github/*" ! -name ".gitignore" ! -name ".pre-commit-config.yaml"` - Finds user-controlled files with hyphens (should return empty, excludes required external tool files)
-  - Custom scripts to validate Docker and configuration naming for user-controlled identifiers
+  - Run the full verification suite as defined in the **[Development Commands](LINKS_REFERENCE.md#developer-guides)** guide, which includes checks for Python and file naming conventions.
+  - Use custom scripts to validate Docker and configuration naming for user-controlled identifiers where automated checks are not sufficient.
 - **Manual review**:
-  - Code review checklist includes naming convention validation
-  - Documentation review for consistency
-  - Database schema review for naming compliance
-  - Verify that any hyphenated files are justified exceptions from the approved list
+  - Code review checklists MUST include naming convention validation.
+  - Documentation, database schemas, and configurations MUST be reviewed for naming compliance.
+  - Any hyphenated files MUST be verified against the approved list of exceptions.
 
 ### Changes
 - 2025-09-21 v1.1.0: Added comprehensive exceptions for required external tool files (docker-compose.yml, .github/*, etc.)

@@ -456,4 +456,36 @@ docker-compose exec redis redis-cli -a redis123 BGSAVE
 
 ---
 
-> **📖 Documentation Hierarchy**: For complete project guidance, see [../../CLAUDE.md](../../CLAUDE.md). For architectural details, see [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md). For technology specifications, see [../reference/tech_stack.md](../reference/tech_stack.md).
+#> **📖 Documentation Hierarchy**: For complete project guidance, see [../../CLAUDE.md](../../CLAUDE.md). For architectural details, see [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md). For technology specifications, see [../reference/tech_stack.md](../reference/tech_stack.md).
+
+---
+
+## 📝 Verification and Linting
+
+This section contains the canonical set of commands for verifying code quality, style, and conventions. These should be run before committing code.
+
+### Full Verification Suite
+```bash
+# Run all checks: lint, format, types, security, tests, and naming
+uv run ruff check .
+uv run ruff format . --check
+uv run mypy .
+uv run bandit -r .
+uv run pytest
+find . -name "*-*" -type f ! -name "docker-compose*" ! -name ".dockerignore" ! -path "./.github/*" ! -name ".gitignore" ! -name ".pre-commit-config.yaml"
+```
+
+### Individual Checks
+
+| Command | Purpose |
+|---------|---------|
+| `uv run ruff check .` | Lint code for style and errors |
+| `uv run ruff format . --check` | Check code formatting |
+| `uv run mypy .` | Static type checking |
+| `uv run bandit -r .` | Security vulnerability scanning |
+| `uv run pytest` | Run all unit and integration tests |
+| `find . -name "*-*"` | **Check for prohibited hyphens in filenames** (see note) |
+
+> **⚠️ Note on `find` command**: The full command to check for prohibited hyphens in filenames, excluding justified exceptions, is:
+> `find . -name "*-*" -type f ! -name "docker-compose*" ! -name ".dockerignore" ! -path "./.github/*" ! -name ".gitignore" ! -name ".pre-commit-config.yaml"`
+> This command should return an empty result.
