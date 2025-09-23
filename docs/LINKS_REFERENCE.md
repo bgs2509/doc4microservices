@@ -49,6 +49,8 @@
 | **Observability** | Logging Rules | [observability/logging_rules.mdc](observability/logging_rules.mdc) | `.framework/docs/observability/logging_rules.mdc` |
 | **Observability** | Metrics Rules | [observability/metrics_rules.mdc](observability/metrics_rules.mdc) | `.framework/docs/observability/metrics_rules.mdc` |
 | **Observability** | Tracing Rules | [observability/tracing_rules.mdc](observability/tracing_rules.mdc) | `.framework/docs/observability/tracing_rules.mdc` |
+| **Observability** | ELK Rules | [observability/elk_rules.mdc](observability/elk_rules.mdc) | `.framework/docs/observability/elk_rules.mdc` |
+| **Observability** | Observability Rules | [observability/observability_rules.mdc](observability/observability_rules.mdc) | `.framework/docs/observability/observability_rules.mdc` |
 | **Quality** | Testing Standards | [quality/testing-standards.mdc](quality/testing-standards.mdc) | `.framework/docs/quality/testing-standards.mdc` |
 
 <a id="quick-task-navigation"></a>

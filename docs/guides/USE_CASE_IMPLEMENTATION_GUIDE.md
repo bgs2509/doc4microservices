@@ -152,8 +152,8 @@ from ...config.settings import Settings
 # HTTP-only data access via data services
 class DataServiceClient:
     def __init__(self):
-        self.postgres_url = "http://db_postgres_service:8001"
-        self.mongo_url = "http://db_mongo_service:8002"
+        self.postgres_url = "http://db_postgres_service:8000"
+        self.mongo_url = "http://db_mongo_service:8000"
 ```
 
 #### 2. **Aiogram Bot Services (`src/services/bot_service/`)**
@@ -195,8 +195,8 @@ import structlog
 # Event-driven processing with HTTP data access
 class WorkerService:
     def __init__(self):
-        self.postgres_url = "http://db_postgres_service:8001"
-        self.mongo_url = "http://db_mongo_service:8002"
+        self.postgres_url = "http://db_postgres_service:8000"
+        self.mongo_url = "http://db_mongo_service:8000"
         # Event handling via RabbitMQ
 ```
 
