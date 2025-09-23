@@ -1,6 +1,12 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with this microservices framework.
+
+> **📍 CONTEXT**: This framework can be used in two ways:
+> - **Direct**: Working in this repository directly (use paths like `docs/`, `examples/`)
+> - **Submodule**: Added as `.framework/` submodule to your project (use paths like `.framework/docs/`, `.framework/examples/`)
+>
+> The paths below assume **direct usage**. When used as submodule, prefix all paths with `.framework/`.
 
 ## 📚 Documentation Hierarchy
 
@@ -195,9 +201,16 @@ Each serves a distinct and valuable purpose:
 
 The overlap is intentional and beneficial - they reinforce each other while serving different primary purposes.
 
-## Project Overview
+## Framework Overview
 
-This is a microservices architecture project using Python 3.12+ with the **Improved Hybrid Approach** for data access. The project includes:
+This is a **Framework-as-Submodule** for microservices architecture using Python 3.12+ with the **Improved Hybrid Approach** for data access. When added as a Git submodule (`.framework/`), it provides:
+
+- **Centralized Framework**: Proven patterns, AI agents, and complete documentation
+- **Separation of Concerns**: Framework code separate from your application code
+- **Automatic Updates**: `git submodule update --remote` gets latest improvements
+- **AI Compatibility**: AI systems automatically scan the framework for patterns and rules
+
+The framework includes:
 
 - **Infrastructure**: Complete observability stack with Prometheus, Grafana, Jaeger, ELK, and dual database infrastructure (PostgreSQL + MongoDB)
 - **Data Services**: Centralized data access services (db_postgres_service, db_mongo_service) implementing the Database Service pattern
@@ -216,9 +229,17 @@ This is a microservices architecture project using Python 3.12+ with the **Impro
 
 > **📋 CANONICAL COMMAND REFERENCE**: For all development commands, see [docs/guides/DEVELOPMENT_COMMANDS.md](docs/guides/DEVELOPMENT_COMMANDS.md). This includes Docker operations, testing, deployment, troubleshooting, and more.
 
-### Quick Reference
+### Quick Reference for Framework Usage
 ```bash
-# Quick start (full commands in docs/guides/DEVELOPMENT_COMMANDS.md)
+# 1. Add framework as submodule to your project
+mkdir my_awesome_app && cd my_awesome_app && git init
+git submodule add <framework-repo-url> .framework
+git submodule init && git submodule update
+
+# 2. Generate application with AI (AI reads framework patterns)
+# Ask AI: "Create [your app] using framework patterns"
+
+# 3. Quick start your generated application
 cp .env.example .env
 docker-compose up -d
 uv sync --dev
@@ -226,6 +247,7 @@ curl http://localhost:8000/health
 ```
 
 **Essential operations:**
+- **Framework Update**: `git submodule update --remote .framework`
 - **Docker**: [docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations](docs/guides/DEVELOPMENT_COMMANDS.md#docker-compose-operations)
 - **Testing**: [docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands](docs/guides/DEVELOPMENT_COMMANDS.md#testing-commands)
 - **Troubleshooting**: [docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands](docs/guides/DEVELOPMENT_COMMANDS.md#troubleshooting-commands)
@@ -258,33 +280,49 @@ This project implements the **Improved Hybrid Approach** - a microservices archi
 #### RECOMMENDED: Single Root Compose Setup
 Use one main `docker-compose.yml` in the project root, not individual compose files per service.
 
-**Project Structure:**
+**Project Structure with Framework Submodule:**
 ```
-boilerplate_microservices/
-├── docker-compose.yml               # Main orchestration
-├── docker-compose.override.yml      # Development overrides (auto-loaded)
-├── docker-compose.prod.yml          # Production config
-├── services/
-│   ├── db_postgres_service/         # PostgreSQL data access service
-│   │   ├── Dockerfile
-│   │   └── src/
-│   ├── db_mongo_service/            # MongoDB data access service
-│   │   ├── Dockerfile
-│   │   └── src/
-│   ├── api_service/                 # Business logic FastAPI service
-│   │   ├── Dockerfile
-│   │   └── src/
-│   ├── bot_service/                 # Business logic Aiogram service
-│   │   ├── Dockerfile
-│   │   └── src/
-│   └── worker_service/              # Business logic AsyncIO workers
-│       ├── Dockerfile
-│       └── src/
-└── infrastructure/
-    ├── nginx/
-    ├── postgres/
-    ├── mongodb/
-    └── rabbitmq/
+my_awesome_app/                      # Your project repository
+├── .framework/                      # Git submodule (this repository)
+│   ├── docs/                       # Architecture rules and patterns
+│   ├── ai_agents/                  # AI generators and validators
+│   ├── examples/                   # Reference implementations
+│   ├── use_cases/                  # Working applications
+│   └── CLAUDE.md                   # AI instructions
+├── README.md                        # Your project documentation
+├── docker-compose.yml               # Your project infrastructure
+├── .env.example                     # Your project configuration
+└── src/                            # Your application code
+    ├── services/                   # Microservices
+    │   ├── api_service/            # FastAPI REST API service
+    │   │   ├── Dockerfile          # Service-specific container
+    │   │   ├── main.py             # Service implementation
+    │   │   └── requirements.txt    # Service dependencies
+    │   ├── bot_service/            # Aiogram Telegram bot service
+    │   │   ├── Dockerfile
+    │   │   ├── main.py
+    │   │   └── requirements.txt
+    │   ├── worker_service/         # AsyncIO background workers
+    │   │   ├── Dockerfile
+    │   │   ├── main.py
+    │   │   └── requirements.txt
+    │   ├── db_postgres_service/    # PostgreSQL data access service
+    │   │   ├── Dockerfile
+    │   │   └── main.py
+    │   └── db_mongo_service/       # MongoDB data access service
+    │       ├── Dockerfile
+    │       └── main.py
+    ├── shared/                     # Shared components
+    │   ├── dtos.py                # Data transfer objects
+    │   ├── events.py              # Event schemas
+    │   └── utils.py               # Common utilities
+    ├── config/                     # Configuration management
+    │   ├── settings.py            # Centralized settings
+    │   └── logging.py             # Logging configuration
+    └── tests/                     # Test suites
+        ├── unit/                  # Unit tests per service
+        ├── integration/           # Integration tests
+        └── conftest.py            # Test configuration
 ```
 
 **Benefits:**
@@ -339,3 +377,26 @@ See [docs/INDEX.md](docs/INDEX.md) for complete overview of all 15 rule files co
 - **Type Annotations**: All functions must have full type hints (enforced by mypy>=1.8.0)
 - **Security Focus**: Implement OAuth2/JWT, HTTPS, rate limiting, and proper error handling
 - **Troubleshooting**: For common issues and solutions, see [docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)
+
+## Framework Management
+
+### Framework Submodule Operations
+```bash
+# Update framework to latest version
+git submodule update --remote .framework
+git add .framework && git commit -m "Update framework"
+
+# Clone project with framework
+git clone --recursive <your-project-repo>
+
+# If you forgot --recursive
+git submodule init && git submodule update
+```
+
+### AI Development Guidelines
+1. **Automatically scan framework** for patterns, rules, and examples
+2. **Generate user code in `src/`** - never modify framework content when used as submodule
+3. **Follow `docs/` guidelines** for architecture compliance
+4. **Use `ai_agents/`** for validation and generation tools
+5. **Reference `examples/`** for implementation patterns
+6. **Validate against `use_cases/`** for working examples
