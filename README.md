@@ -109,7 +109,7 @@ The framework implements the **Improved Hybrid Approach** - a microservices patt
 - **Event-Driven Communication**: RabbitMQ for inter-service messaging
 - **Service Type Isolation**: Each service type runs in separate processes
 
-> **📖 COMPLETE ARCHITECTURE DETAILS**: See [Architecture Guide](docs/LINKS_REFERENCE.md#основная-документация) for detailed principles, constraints, diagrams, and implementation guidelines.
+> **📖 COMPLETE ARCHITECTURE DETAILS**: See [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation) for detailed principles, constraints, diagrams, and implementation guidelines.
 
 ## 📚 Documentation and AI Knowledge Base
 
@@ -126,10 +126,10 @@ This repository contains comprehensive documentation designed for both AI agents
 ### For Human Developers
 | Document | Purpose | When to Use |
 |----------|---------|-------------|
-| **[CLAUDE.md](CLAUDE.md)** | Complete development guide | Start here - setup, architecture, commands |
-| **[docs/reference/tech_stack.md](docs/reference/tech_stack.md)** *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md) when used as submodule)* | Technology specifications | Check versions, configurations |
-| **[examples/index.md](examples/index.md)** *(or [.framework/examples/index.md](.framework/examples/index.md) when used as submodule)* | Working code examples | Understand implementation patterns |
-| **[docs/reference/troubleshooting.md](docs/reference/troubleshooting.md)** *(or [.framework/docs/reference/troubleshooting.md](.framework/docs/reference/troubleshooting.md) when used as submodule)* | Problem solving | Debug issues, find solutions |
+| **[Main Entry Point](CLAUDE.md)** | Complete developer guide | Start here - setup, architecture, commands |
+| **[Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation)** | Technology specifications | Check versions, configurations |
+| **[Working Examples](examples/index.md)** | Working code examples | Understand implementation patterns |
+| **[Troubleshooting Guide](docs/LINKS_REFERENCE.md#developer-guides)** | Problem solving | Debug issues, find solutions |
 
 ## 📋 Technology Stack
 
