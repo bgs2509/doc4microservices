@@ -18,7 +18,7 @@ This is not just documentation, but a **living framework** that:
 2. **Provides ready architecture** - proven "Improved Hybrid Approach" with PostgreSQL, MongoDB, RabbitMQ, full monitoring
 3. **Updates centrally** - `git submodule update` and all projects get improvements
 4. **AI reads rules automatically** from `.framework/docs/` - generates applications from business requirements
-5. **Ready patterns** - for FastAPI, Aiogram, AsyncIO workers
+5. **Ready patterns** - for FastAPI, Aiogram, AsyncIO workers, PostgreSQL, MongoDB, RabbitMQ, Redis, Docker Compose, monitoring stack
 
 ### **Target Users:**
 - **Python developers** - want to quickly create microservices applications
@@ -36,7 +36,7 @@ Instead of months of architecture development - get production-ready application
 mkdir my_awesome_app && cd my_awesome_app && git init
 
 # 2. Add framework as submodule
-git submodule add <framework-repo-url> .framework
+git submodule add <https://github.com/bgs2509/doc4microservices> .framework
 git submodule init && git submodule update
 
 # 3. Generate with AI (AI reads .framework/docs/ automatically)
@@ -219,10 +219,14 @@ This repository contains comprehensive documentation designed for both AI agents
 - **Docker Compose** - Simple but powerful service orchestration
 
 ### Observability Stack
-- **Prometheus** - Metrics collection and alerting
-- **Grafana** - Visualization and dashboards
-- **Jaeger** - Distributed tracing
-- **ELK Stack** - Centralized logging and search
+- **Prometheus** - Metrics collection, alerting rules, and performance monitoring
+- **Grafana** - Rich visualization dashboards, alerting, and data exploration
+- **Jaeger** - Distributed tracing, request flow analysis, and performance bottleneck identification
+- **ELK Stack** (Elasticsearch, Logstash, Kibana) - Centralized logging, log analysis, and search
+- **Node Exporter** - System metrics collection (CPU, memory, disk, network)
+- **cAdvisor** - Container metrics and resource usage monitoring
+- **AlertManager** - Alert routing, grouping, and notification management
+- **Health Checks** - Service health endpoints and readiness probes
 
 ### Development Tools
 - **UV** - Fast Python package management
