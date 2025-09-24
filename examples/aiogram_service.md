@@ -8,14 +8,14 @@ This document demonstrates the implementation of a Telegram bot using Aiogram as
 > - **Event Processing**: [Worker Service](./worker_service.md) (for media processing), [Communication Patterns](./communication_patterns.md) (RabbitMQ events)
 > - **Testing**: [Comprehensive Testing](./comprehensive_testing.md#end-to-end-testing-examples) (bot interaction testing)
 
-## 🎯 Key Characteristics
+## Key Characteristics
 - **Responsibility:** User interaction through Telegram, command and media file processing.
 - **Data Access:** Only through HTTP calls to Data Services.
 - **Communications:** Publishes events to RabbitMQ, can call other services via HTTP.
 
 ---
 
-## 🏗️ 1. Project Structure (bot_service)
+## 1. Project Structure (bot_service)
 
 ```
 services/bot_service/

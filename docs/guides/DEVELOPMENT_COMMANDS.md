@@ -16,7 +16,7 @@
 
 ---
 
-## 🐳 Docker Compose Operations
+## Docker Compose Operations
 
 ### Basic Operations
 ```bash

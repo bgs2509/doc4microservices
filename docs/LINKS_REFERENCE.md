@@ -58,13 +58,13 @@
 
 | Task | Documents |
 |------|-----------|
-| 🏁 **Quick start** | [README.md](../README.md) → [CLAUDE.md](../CLAUDE.md) |
-| 🏗️ **Understand architecture** | [ARCHITECTURE_GUIDE.md](guides/ARCHITECTURE_GUIDE.md) |
-| 📋 **Run commands** | [DEVELOPMENT_COMMANDS.md](guides/DEVELOPMENT_COMMANDS.md) |
-| 🎯 **Create new use case** | [USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md) |
-| 🔧 **Check versions** | [tech_stack.md](reference/tech_stack.md) |
-| 💻 **See examples** | [../examples/index.md](../examples/index.md) |
-| 🐛 **Solve problems** | [troubleshooting.md](reference/troubleshooting.md) |
+| **Quick start** | [README.md](../README.md) → [CLAUDE.md](../CLAUDE.md) |
+| **Understand architecture** | [ARCHITECTURE_GUIDE.md](guides/ARCHITECTURE_GUIDE.md) |
+| **Run commands** | [DEVELOPMENT_COMMANDS.md](guides/DEVELOPMENT_COMMANDS.md) |
+| **Create new use case** | [USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md) |
+| **Check versions** | [tech_stack.md](reference/tech_stack.md) |
+| **See examples** | [../examples/index.md](../examples/index.md) |
+| **Solve problems** | [troubleshooting.md](reference/troubleshooting.md) |
 
 ## Link Templates
 
@@ -82,8 +82,7 @@ For simplified linking in other documents, use these templates:
 ### Usage Examples
 ```markdown
 <!-- Instead of long construction -->
-[docs/reference/tech_stack.md](docs/reference/tech_stack.md) *(or `.framework/docs/reference/tech_stack.md` when used as submodule)*
-
+  ✅ Ссылка OK: reference/tech_stack.md
 <!-- Use -->
 See [technical specifications](LINKS_REFERENCE.md#core-documentation)
 ```

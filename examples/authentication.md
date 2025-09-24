@@ -2,7 +2,7 @@
 
 This section demonstrates how to implement JWT authentication in a **Business Service** following the "Improved Hybrid Approach" architecture. This service has no direct database access and uses the unified HTTP client approach defined in [`fastapi_service.md`](./fastapi_service.md).
 
-## 🎯 Key Changes from Standard Authentication
+## Key Changes from Standard Authentication
 - **No Direct Database Access**: Uses `UserDataClient` for all user data operations
 - **Centralized HTTP Client**: Reuses the unified client architecture
 - **Security Best Practices**: Proper password hashing, JWT handling, and error responses

@@ -9,7 +9,7 @@ This document demonstrates the implementation of a background processor (Worker)
 
 ---
 
-## 1. Project Structure (worker_service)
+## 🏗️ 1. Project Structure (worker_service)
 
 ```
 services/worker_service/
@@ -30,7 +30,7 @@ services/worker_service/
 
 ---
 
-## 2. Worker Logic (`src/workers/media_processor.py`)
+## 💻 2. Worker Logic (`src/workers/media_processor.py`)
 
 The worker receives messages from RabbitMQ and uses HTTP client to update information in the database through Data Service.
 
@@ -108,7 +108,7 @@ class MediaProcessor:
 
 ---
 
-## 3. Main Application File (`src/main.py`)
+## 🚀 3. Main Application File (`src/main.py`)
 
 `main.py` is responsible for starting the worker and managing its lifecycle.
 

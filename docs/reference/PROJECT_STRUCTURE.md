@@ -52,9 +52,9 @@ my_awesome_app/                      # Your project repository
     │       ├── main.py
     │       └── requirements.txt
     ├── shared/                     # Shared components
-    │   ├── dtos.py                # Data transfer objects
-    │   ├── events.py              # Event schemas
-    │   └── utils.py               # Common utilities
+    │   ├── dtos/                  # Shared Data Transfer Objects
+    │   ├── events/                # Shared Event Schemas
+    │   └── utils/                 # Shared stateless utility functions
     ├── config/                     # Configuration management
     │   ├── settings.py            # Centralized settings
     │   └── logging.py             # Logging configuration

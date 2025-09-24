@@ -17,7 +17,7 @@ This guide provides comprehensive instructions for creating complete, production
 
 ---
 
-## ⚠️ MANDATORY ARCHITECTURE CONSTRAINTS
+## MANDATORY ARCHITECTURE CONSTRAINTS
 
 **Before generating any application, AI agents MUST comply with these non-negotiable constraints:**
 

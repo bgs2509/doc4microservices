@@ -1,28 +1,16 @@
 # Documentation Style Guide
 
-> **📋 PURPOSE**: Unified formatting standards for all project documentation to improve readability and navigation.
+> **PURPOSE**: Unified formatting standards for all project documentation to improve readability and navigation.
 
 ## Header Standards
 
 ### Header Format
 ```markdown
 # Main Document Title
-## 🔧 Section with Emoji (for important sections)
-## Section without Emoji (for regular sections)
+## Section Header
 ### Subsection
 #### Detailed Subsection
 ```
-
-### Recommended Section Emojis
-- 🏗️ **Architecture** - architectural sections
-- 📋 **Commands/Lists** - commands, lists, instructions
-- 🔧 **Technical** - technical details, configurations
-- 💻 **Examples** - code examples and implementations
-- 🎯 **Goals/Objectives** - goals, objectives
-- ⚠️ **Important/Mandatory** - important requirements, constraints
-- 📖 **References** - links, additional materials
-- 🐛 **Troubleshooting** - problem solving
-- 🚀 **Getting Started** - quick start, introduction
 
 ## Link Standards
 
@@ -32,7 +20,7 @@
 See [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
 
 <!-- AVOID: Direct links with submodule variants -->
-[guides/ARCHITECTURE_GUIDE.md](guides/ARCHITECTURE_GUIDE.md) *(or [.framework/...])*
+[guides/ARCHITECTURE_GUIDE.md](guides/ARCHITECTURE_GUIDE.md) *(or [.framework/...])* 
 ```
 
 ### External Links
@@ -46,13 +34,13 @@ See [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
 ### Important Blocks
 ```markdown
 <!-- For architectural principles -->
-> **🏗️ ARCHITECTURAL FOUNDATION**: Principle description
+> **ARCHITECTURAL FOUNDATION**: Principle description
 
 <!-- For mandatory requirements -->
-> **⚠️ MANDATORY**: Mandatory requirement
+> **MANDATORY**: Mandatory requirement
 
 <!-- For links to additional materials -->
-> **📖 DETAILS**: See [document](link) for detailed information
+> **DETAILS**: See [document](#some-document) for detailed information
 ```
 
 ### Requirement Lists
@@ -62,8 +50,8 @@ See [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
 - **Requirement 2**: Description
 
 #### Prohibited Practices (PROHIBITED)
-- ❌ **Practice 1**: Why prohibited
-- ❌ **Practice 2**: Why prohibited
+- **Practice 1**: Why prohibited
+- **Practice 2**: Why prohibited
 ```
 
 ## Table Standards
@@ -72,8 +60,8 @@ See [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
 ```markdown
 | Task | Document |
 |------|----------|
-| 🏁 **Quick start** | [Link](path) |
-| 🏗️ **Understand architecture** | [Link](path) |
+| **Quick start** | [Example Link](./guides/ARCHITECTURE_GUIDE.md) |
+| **Understand architecture** | [Example Link](./guides/ARCHITECTURE_GUIDE.md) |
 ```
 
 ### Technical Specifications
@@ -89,11 +77,11 @@ See [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
 ### Code Examples
 ```markdown
 ```python
-# ✅ CORRECT: Description of correct approach
+# CORRECT: Description of correct approach
 async def good_example():
     return await some_async_operation()
 
-# ❌ INCORRECT: Description of incorrect approach
+# INCORRECT: Description of incorrect approach
 def bad_example():
     return sync_operation()
 ```
@@ -105,26 +93,26 @@ def bad_example():
 ```markdown
 # Document Title
 
-> **📋 PURPOSE**: Brief description of document purpose
+> **PURPOSE**: Brief description of document purpose
 
 ## Table of Contents
-- [Section 1](#section-1)
-- [Section 2](#section-2)
+- [Header Standards](#header-standards)
+- [Link Standards](#link-standards)
 
 ---
 
-## 🎯 Main Content
+## Main Content
 
 Main document content...
 
-## 📖 Related Documents
+## Related Documents
 
 - **Architecture**: [Link](LINKS_REFERENCE.md#core-documentation)
 - **Examples**: [Link](LINKS_REFERENCE.md#examples-and-templates)
 
 ---
 
-> **📖 NAVIGATION**: To return to main guide see [CLAUDE.md](LINKS_REFERENCE.md#core-documentation)
+> **NAVIGATION**: To return to main guide see [CLAUDE.md](LINKS_REFERENCE.md#core-documentation)
 ```
 
 ## Writing Principles
@@ -145,11 +133,10 @@ Main document content...
 ### Pre-publication Checklist
 - [ ] All internal links work
 - [ ] Consistent header style used
-- [ ] Standard emojis applied for sections
 - [ ] No duplication of information from other documents
 - [ ] Links to related documents included
 - [ ] Structure follows template
 
 ---
 
-> **📖 APPLICATION**: Use this guide when creating and editing all project documents to maintain style consistency.
+> **APPLICATION**: Use this guide when creating and editing all project documents to maintain style consistency.

@@ -8,7 +8,7 @@ This document demonstrates the implementation of a **PostgreSQL Data Service** f
 > - **Companion**: [MongoDB Data Service](./mongodb_data_service.md) (for analytics and documents)
 > - **Testing**: [Comprehensive Testing](./comprehensive_testing.md#integration-testing-examples) (real database testing)
 
-## 🎯 Key Characteristics
+## Key Characteristics
 - **Technology:** FastAPI + SQLAlchemy 2.x with async support
 - **Responsibility:** Data models, CRUD operations, transactions, migrations, pagination
 - **Interface:** RESTful HTTP API with RFC 7807 error handling and OpenAPI documentation
