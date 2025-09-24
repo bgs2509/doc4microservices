@@ -2,15 +2,15 @@
 
 > **📋 DOCUMENTATION TYPE**: AI Automation Framework - Enabling AI to generate applications
 > **👥 TARGET USERS**: AI systems, AI developers, business analysts
-> **🔗 RELATED**: [Examples Index](../docs/LINKS_REFERENCE.md#examples-and-templates) | [Working Demonstrations](../docs/LINKS_REFERENCE.md#examples-and-templates) | **[Main Entry Point](../docs/LINKS_REFERENCE.md#core-documentation)**
+> **🔗 RELATED**: [Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates) | [Working Demonstrations](docs/LINKS_REFERENCE.md#examples-and-templates) | **[Main Entry Point](docs/LINKS_REFERENCE.md#core-documentation)**
 
 ## 🎯 Overview
 
-This framework enables AI agents to automatically generate complete, production-ready microservices projects from business requirements using a **fixed architecture** approach. Instead of choosing technologies, the AI validates business feasibility and maps requirements to our predefined **Improved Hybrid Approach** architecture.
+This framework enables AI agents to automatically generate complete, production-ready microservices projects from business requirements using the **Improved Hybrid Approach** architecture. The AI validates business feasibility and maps requirements to our predefined technology stack and architectural patterns.
 
 ## 🏗️ Architecture
 
-### Fixed Technology Stack
+### Improved Hybrid Approach Technology Stack
 - **Data Layer**: PostgreSQL + MongoDB services (HTTP-only access)
 - **Business Layer**: FastAPI + Aiogram + AsyncIO workers
 - **Infrastructure**: RabbitMQ, Redis, Docker Compose
@@ -227,10 +227,11 @@ api_endpoints = "{{api_endpoints}}"         # -> Generated endpoint code
 ## 🏁 Getting Started
 
 ### For AI Agent Developers
-1. **Study the Validation Framework**: Understand how to validate business ideas
-2. **Learn Template System**: Understand variable substitution and code generation
-3. **Practice with Examples**: Use provided examples to understand patterns
-4. **Implement Workflow**: Follow the 5-phase generation workflow
+1. **Read Main Documentation**: Start with [CLAUDE.md](../CLAUDE.md) for complete framework understanding
+2. **Study the Validation Framework**: Understand how to validate business ideas against architecture constraints
+3. **Learn Template System**: Understand variable substitution and code generation workflows
+4. **Practice with Examples**: Use [Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates) to understand patterns
+5. **Implement Workflow**: Follow the 5-phase generation workflow while ensuring architecture compliance
 
 ### For Business Users
 1. **Provide Clear Requirements**: Describe your business idea clearly
@@ -242,9 +243,9 @@ api_endpoints = "{{api_endpoints}}"         # -> Generated endpoint code
 
 This framework embodies the principle of **"Convention over Configuration"** for AI-generated microservices:
 
-- **Fixed Architecture**: No technology choices to make
-- **Standard Patterns**: Proven microservices patterns
-- **Quality by Default**: Built-in quality assurance
-- **Production Ready**: Complete deployment and monitoring
+- **Consistent Architecture**: Improved Hybrid Approach patterns enforced
+- **Standard Patterns**: Proven microservices patterns from framework examples
+- **Quality by Default**: Built-in quality assurance and validation
+- **Production Ready**: Complete deployment and monitoring integration
 
-The goal is to enable AI agents to generate production-quality microservices that follow industry best practices while being specifically optimized for the **Improved Hybrid Approach** architecture pattern.
+The goal is to enable AI agents to generate production-quality microservices that follow the **Improved Hybrid Approach** architecture pattern established in the main framework documentation, ensuring consistency with manual development approaches.

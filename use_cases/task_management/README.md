@@ -2,7 +2,7 @@
 
 > **📋 DOCUMENTATION TYPE**: Working Demonstration - Complete functional application
 > **👥 TARGET USERS**: Business stakeholders, developers, QA teams
-> **🔗 RELATED**: [Learning Patterns](LINKS_REFERENCE.md#examples-and-templates) | [AI Generation](LINKS_REFERENCE.md#ai-agents) | **[Complete Comparison Guide](LINKS_REFERENCE.md#core-documentation)**
+> **🔗 RELATED**: [Learning Patterns](../../docs/LINKS_REFERENCE.md#examples-and-templates) | [AI Generation](../../docs/LINKS_REFERENCE.md#examples-and-templates) | **[Complete Comparison Guide](../../docs/LINKS_REFERENCE.md#core-documentation)**
 
 A complete personal task management system demonstrating all microservices patterns from the boilerplate. This use case showcases the **Improved Hybrid Approach** with centralized data services and business logic separation.
 
@@ -19,7 +19,7 @@ This system provides a comprehensive task management solution with:
 
 ## 🏗️ Architecture
 
-> **⚠️ ARCHITECTURE WARNING**: The flat file structure in this use case (`api_service.py`, `bot_service.py` in the root) is for demonstration purposes only. It is **NOT** the canonical architecture. New projects **MUST** follow the standard project structure with services located in the `src/services/` directory, as detailed in the [Project Structure Guide](LINKS_REFERENCE.md#developer-guides).
+> **⚠️ ARCHITECTURE WARNING**: The flat file structure in this use case (`api_service.py`, `bot_service.py` in the root) is for demonstration purposes only. It is **NOT** the canonical architecture. New projects **MUST** follow the standard project structure with services located in the `src/services/` directory, as detailed in the [Project Structure Guide](../../docs/LINKS_REFERENCE.md#developer-guides).
 
 ### Service Types Demonstrated
 
@@ -88,11 +88,11 @@ Start a chat with your bot and use these commands:
 
 For complete guidance on development, testing, monitoring, and deployment, refer to the canonical project documentation. These guides provide the required patterns and commands.
 
-- **[Development Commands](LINKS_REFERENCE.md#developer-guides)**: For local setup, running tests, and quality checks.
-- **[Architecture Guide](LINKS_REFERENCE.md#core-documentation)**: To understand the mandatory architectural patterns.
-- **[Testing Standards](LINKS_REFERENCE.md#ide-rules-and-patterns)**: For writing unit, integration, and E2E tests.
-- **[Observability Rules](LINKS_REFERENCE.md#ide-rules-and-patterns)**: For using logs, metrics, and traces.
-- **[Troubleshooting Guide](LINKS_REFERENCE.md#developer-guides)**: For resolving common issues.
+- **[Development Commands](../../docs/LINKS_REFERENCE.md#developer-guides)**: For local setup, running tests, and quality checks.
+- **[Architecture Guide](../../docs/LINKS_REFERENCE.md#core-documentation)**: To understand the mandatory architectural patterns.
+- **[Testing Standards](../../docs/LINKS_REFERENCE.md#ide-rules-and-patterns)**: For writing unit, integration, and E2E tests.
+- **[Observability Rules](../../docs/LINKS_REFERENCE.md#ide-rules-and-patterns)**: For using logs, metrics, and traces.
+- **[Troubleshooting Guide](../../docs/LINKS_REFERENCE.md#developer-guides)**: For resolving common issues.
 
 ## 📚 Learning Focus
 
