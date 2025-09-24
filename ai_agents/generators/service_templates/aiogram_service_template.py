@@ -20,14 +20,14 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command, Text
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-import structlog
+import logging
 
 # Configuration
 from .config import BotSettings
 from .models import {{bot_model_imports}}
 
 # Initialize structured logging
-logger = structlog.get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 # Settings
 settings = BotSettings()

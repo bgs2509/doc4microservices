@@ -21,14 +21,14 @@ import json
 import httpx
 import aio_pika
 from aio_pika import Message, DeliveryMode
-import structlog
+import logging
 
 # Configuration
 from .config import WorkerSettings
 from .models import {{worker_model_imports}}
 
 # Initialize structured logging
-logger = structlog.get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 # Settings
 settings = WorkerSettings()

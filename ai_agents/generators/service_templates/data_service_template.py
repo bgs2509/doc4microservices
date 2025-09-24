@@ -20,7 +20,7 @@ from datetime import datetime
 from fastapi import FastAPI, HTTPException, Query, Path, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-import structlog
+import logging
 
 # Database imports based on type
 {{database_imports}}
@@ -31,7 +31,7 @@ from .models import {{data_model_imports}}
 from .database import {{database_connection_imports}}
 
 # Initialize structured logging
-logger = structlog.get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 # Settings
 settings = DataServiceSettings()
@@ -76,7 +76,7 @@ async def log_requests(request, call_next):
     """Log all database requests"""
     start_time = asyncio.get_event_loop().time()
 
-    request_id = request.headers.get("X-Request-ID", f"req-{id(request)}")
+    request_id = request.headers.get("X-Request-ID") or generate_request_id("data")
 
     logger.info(
         "data_request_started",
@@ -193,5 +193,5 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port={{service_port}},
         reload=settings.debug,
-        log_config=None  # Use structlog configuration
+        log_config=None  # Use logging configuration from lifespan
     )

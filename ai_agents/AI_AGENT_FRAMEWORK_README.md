@@ -167,7 +167,7 @@ api_endpoints = "{{api_endpoints}}"         # -> Generated endpoint code
 
 ### Code Quality Standards
 - Python 3.12+ with full type hints
-- Structured logging with structlog
+- Structured logging
 - HTTP-only data access patterns
 - Proper error handling and validation
 - Security best practices

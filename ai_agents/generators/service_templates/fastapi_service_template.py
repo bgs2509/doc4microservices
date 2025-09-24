@@ -21,7 +21,7 @@ from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, Field
-import structlog
+import logging
 
 # Configuration
 from .config import Settings
@@ -29,7 +29,7 @@ from .models import {{model_imports}}
 from .dependencies import {{dependency_imports}}
 
 # Initialize structured logging
-logger = structlog.get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 # Settings
 settings = Settings()
@@ -86,7 +86,7 @@ async def log_requests(request: Request, call_next):
     start_time = asyncio.get_event_loop().time()
 
     # Generate request ID
-    request_id = request.headers.get("X-Request-ID", f"req-{id(request)}")
+    request_id = request.headers.get("X-Request-ID") or generate_request_id("api")
 
     # Log request
     logger.info(
