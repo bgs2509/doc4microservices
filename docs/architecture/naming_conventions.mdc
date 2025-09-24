@@ -172,7 +172,7 @@ These files MUST use hyphens due to external tool requirements and cannot be cha
 
 ### Examples
 
-#### ✅ Correct Examples
+#### Correct Examples
 ```python
 # Files and folders
 user_service/
@@ -242,7 +242,7 @@ class UserProcessingState(UserPublic):
     status: str = "pending"
 ```
 
-#### ❌ Incorrect Examples
+#### Incorrect Examples
 ```python
 # WRONG: Files and folders with hyphens
 user-service/

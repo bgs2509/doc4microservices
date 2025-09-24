@@ -1,6 +1,6 @@
 # Development Commands Reference
 
-> **📋 CANONICAL COMMAND REFERENCE**: This document is the single source of truth for all development commands. All other documentation should reference this file instead of duplicating commands.
+> **CANONICAL COMMAND REFERENCE**: This document is the single source of truth for all development commands. All other documentation should reference this file instead of duplicating commands.
 
 ## Table of Contents
 - [Docker Compose Operations](#docker-compose-operations)
@@ -29,7 +29,7 @@ docker-compose up -d
 # Stop and remove containers
 docker-compose down
 
-# Stop and remove volumes (⚠️ Data loss)
+# Stop and remove volumes (Data loss)
 docker-compose down -v
 ```
 
@@ -68,7 +68,7 @@ docker-compose ps
 
 ---
 
-## 📊 Observability Operations
+## Observability Operations
 
 ### Start Monitoring Stack
 ```bash
@@ -103,11 +103,11 @@ docker-compose exec rabbitmq rabbitmqctl list_queues
 
 ---
 
-## 🗄️ Data Service Operations
+## Data Service Operations
 
 ### Service URLs and Health Checks
 
-> **📋 COMPLETE SERVICE ARCHITECTURE**: For detailed service ports, communication patterns, and architecture, see the [Architecture Guide](../LINKS_REFERENCE.md#core-documentation).
+> **COMPLETE SERVICE ARCHITECTURE**: For detailed service ports, communication patterns, and architecture, see the [Architecture Guide](../LINKS_REFERENCE.md#core-documentation).
 
 ```bash
 # External Access (from host machine)
@@ -126,7 +126,7 @@ open http://localhost:8000/docs      # Business API Service API
 - **MongoDB Data Service**: `http://db_mongo_service:8000`
 - **Business API Service**: `http://api_service:8000`
 
-> **💡 Port Mapping Strategy**: All services run on port 8000 inside containers. Docker Compose maps them to different host ports (8000, 8001, 8002) to avoid conflicts.
+> **Port Mapping Strategy**: All services run on port 8000 inside containers. Docker Compose maps them to different host ports (8000, 8001, 8002) to avoid conflicts.
 
 ### Database Connectivity Checks
 ```bash
@@ -143,7 +143,7 @@ docker-compose exec redis redis-cli ping
 
 ---
 
-## 🚀 Production Deployment
+## Production Deployment
 
 ### Production Commands
 ```bash
@@ -168,7 +168,7 @@ docker-compose -f docker-compose.prod.yml build --no-cache
 
 ---
 
-## 📦 Package Management (UV)
+## Package Management (UV)
 
 ### Dependency Management
 ```bash
@@ -193,7 +193,7 @@ uv run python main.py
 
 ---
 
-## 🔍 Code Quality Commands
+## Code Quality Commands
 
 ### Linting and Formatting
 ```bash
@@ -224,7 +224,7 @@ uv run ruff check . && uv run ruff format . --check && uv run mypy . && uv run b
 
 ---
 
-## 🧪 Testing Commands
+## Testing Commands
 
 ### Test Execution
 ```bash
@@ -259,11 +259,11 @@ uv run pytest --cov=app --cov-report=term-missing
 uv run pytest --cov=app --cov-fail-under=80
 ```
 
-> **🎯 Target**: 100% test coverage for critical paths
+> **Target**: 100% test coverage for critical paths
 
 ---
 
-## ⚙️ Configuration and Validation
+## Configuration and Validation
 
 ### Environment Setup
 ```bash
@@ -274,7 +274,7 @@ cp .env.example .env
 docker-compose config
 
 # Validate environment variables
-docker-compose config --quiet && echo "✅ Configuration valid"
+docker-compose config --quiet && echo "Configuration valid"
 ```
 
 ### Service Health and Connectivity Checks
@@ -292,7 +292,7 @@ docker-compose exec redis redis-cli ping
 
 ---
 
-## 🛠️ Development Workflow
+## Development Workflow
 
 ### Quick Start
 ```bash
@@ -321,7 +321,7 @@ docker-compose up postgres mongodb redis rabbitmq -d
 # Rebuild after dependency changes
 docker-compose down && docker-compose up --build -d
 
-# Reset everything (⚠️ Data loss)
+# Reset everything (Data loss)
 docker-compose down -v && docker-compose up --build -d
 
 # Debug specific service
@@ -331,7 +331,7 @@ docker-compose exec <service_name> bash
 
 ---
 
-## 🔍 Troubleshooting Commands
+## Troubleshooting Commands
 
 ### Service Diagnostics
 ```bash
@@ -399,7 +399,7 @@ docker-compose logs -f --timestamps
 docker-compose exec postgres psql -U postgres -c "SELECT * FROM pg_stat_activity;"
 ```
 
-## 📚 Related Documentation
+## Related Documentation
 
 - **Architecture Details**: [Architecture Guide](../LINKS_REFERENCE.md#core-documentation)
 - **Technology Specifications**: [Technical Specifications](../LINKS_REFERENCE.md#core-documentation)
@@ -408,7 +408,7 @@ docker-compose exec postgres psql -U postgres -c "SELECT * FROM pg_stat_activity
 
 ---
 
-## 🚨 Emergency Procedures
+## Emergency Procedures
 
 ### Service Recovery
 ```bash
@@ -435,11 +435,11 @@ docker-compose exec redis redis-cli -a redis123 BGSAVE
 
 ---
 
-> **📖 Documentation Hierarchy**: For complete project guidance, see [Main Entry Point](../LINKS_REFERENCE.md#core-documentation). For architectural details, see [Architecture Guide](../LINKS_REFERENCE.md#core-documentation). For technology specifications, see [Technical Specifications](../LINKS_REFERENCE.md#core-documentation).
+> **Documentation Hierarchy**: For complete project guidance, see [Main Entry Point](../LINKS_REFERENCE.md#core-documentation). For architectural details, see [Architecture Guide](../LINKS_REFERENCE.md#core-documentation). For technology specifications, see [Technical Specifications](../LINKS_REFERENCE.md#core-documentation).
 
 ---
 
-## 📝 Verification and Linting
+## Verification and Linting
 
 This section contains the canonical set of commands for verifying code quality, style, and conventions. These should be run before committing code.
 
@@ -465,6 +465,6 @@ find . -name "*-*" -type f ! -name "docker-compose*" ! -name ".dockerignore" ! -
 | `uv run pytest` | Run all unit and integration tests |
 | `find . -name "*-*"` | **Check for prohibited hyphens in filenames** (see note) |
 
-> **⚠️ Note on `find` command**: The full command to check for prohibited hyphens in filenames, excluding justified exceptions, is:
+> **Note on `find` command**: The full command to check for prohibited hyphens in filenames, excluding justified exceptions, is:
 > `find . -name "*-*" -type f ! -name "docker-compose*" ! -name ".dockerignore" ! -path "./.github/*" ! -name ".gitignore" ! -name ".pre-commit-config.yaml"`
 > This command should return an empty result.

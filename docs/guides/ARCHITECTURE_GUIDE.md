@@ -1,6 +1,6 @@
 # Architecture Guide
 
-> **🏗️ CANONICAL ARCHITECTURE REFERENCE**: This document is the single source of truth for all architectural decisions, patterns, and constraints. All implementation must follow these guidelines.
+> **CANONICAL ARCHITECTURE REFERENCE**: This document is the single source of truth for all architectural decisions, patterns, and constraints. All implementation must follow these guidelines.
 
 ## Table of Contents
 - [Improved Hybrid Approach Overview](#improved-hybrid-approach-overview)
@@ -78,7 +78,7 @@ These constraints are **NON-NEGOTIABLE** and must be followed in all implementat
   - `db_mongo_service` (Port: 8002) - MongoDB data access service
 - **MANDATORY**: Business Logic Separation - Business services (`api_service`, `bot_service`, `worker_service`) contain ONLY business logic
 - **MANDATORY**: HTTP-Only Data Access - Business services access data EXCLUSIVELY via HTTP APIs to data services
-- **❌ PROHIBITED**: Direct database connections in business services
+- **PROHIBITED**: Direct database connections in business services
 
 #### 2. **Service Type Separation** (Critical for Event Loop Management)
 - **MANDATORY**: Event Loop Isolation - Each service type MUST run in separate processes/containers
@@ -86,7 +86,7 @@ These constraints are **NON-NEGOTIABLE** and must be followed in all implementat
   - **HTTP API Services**: FastAPI + Uvicorn (separate process)
   - **Telegram Bot Services**: Aiogram (separate process)
   - **Background Workers**: AsyncIO workers (separate process)
-- **❌ PROHIBITED**: Running multiple event loop managers (FastAPI + Aiogram) in same process
+- **PROHIBITED**: Running multiple event loop managers (FastAPI + Aiogram) in same process
 - **MANDATORY**: Communication - Use RabbitMQ for inter-service communication
 
 #### 3. **Technology Stack Requirements**
@@ -95,14 +95,14 @@ These constraints are **NON-NEGOTIABLE** and must be followed in all implementat
 - **MANDATORY**: Async Libraries - Use only async-compatible libraries (asyncpg, aio-pika, redis.asyncio)
 - **MANDATORY**: Database Strategy - Dual database approach (PostgreSQL + MongoDB)
 
-> **📋 COMPLETE TECHNOLOGY SPECIFICATIONS**: For detailed versions, configurations, and compatibility information, see the [Technical Specifications](../LINKS_REFERENCE.md#core-documentation).
+> **COMPLETE TECHNOLOGY SPECIFICATIONS**: For detailed versions, configurations, and compatibility information, see the [Technical Specifications](../LINKS_REFERENCE.md#core-documentation).
 
 #### 4. **Naming Conventions** (Enforced Project-Wide)
 - **MANDATORY**: Underscore-Only Policy - Use snake_case for ALL identifiers
-- **❌ PROHIBITED**: Hyphens in any user-controlled names (files, variables, functions, databases, APIs)
+- **PROHIBITED**: Hyphens in any user-controlled names (files, variables, functions, databases, APIs)
 - **MANDATORY**: Consistent naming across all layers (code, database, API, Docker, etc.)
 
-> **📏 COMPLETE NAMING RULES**: See the [Naming Conventions](../LINKS_REFERENCE.md#ide-rules-and-patterns) for comprehensive naming standards.
+> **COMPLETE NAMING RULES**: See the [Naming Conventions](../LINKS_REFERENCE.md#ide-rules-and-patterns) for comprehensive naming standards.
 
 ---
 
@@ -171,7 +171,7 @@ The Improved Hybrid Approach uses dedicated data services to centralize all data
 ### Data Access Patterns
 
 ```python
-# ✅ CORRECT: HTTP-based data access in business service
+# CORRECT: HTTP-based data access in business service
 async def get_user_profile(user_id: str, request_id: str) -> UserProfile:
     # Get user data via PostgreSQL service
     user_data = await postgres_client.get_user(user_id, request_id)
@@ -182,14 +182,14 @@ async def get_user_profile(user_id: str, request_id: str) -> UserProfile:
     # Business logic: combine and transform data
     return UserProfile.combine(user_data, analytics_data)
 
-# ❌ WRONG: Direct database access in business service
+# WRONG: Direct database access in business service
 async def get_user_profile(user_id: str) -> UserProfile:
     # PROHIBITED: Direct database connection
     user = await db.execute(select(User).where(User.id == user_id))
     return UserProfile.from_orm(user)
 ```
 
-> **📋 DETAILED DATA ACCESS RULES**: See the [Data Access Rules](../LINKS_REFERENCE.md#ide-rules-and-patterns) for comprehensive data access patterns.
+> **DETAILED DATA ACCESS RULES**: See the [Data Access Rules](../LINKS_REFERENCE.md#ide-rules-and-patterns) for comprehensive data access patterns.
 
 ---
 
@@ -237,7 +237,7 @@ async def handle_user_created_event(event_data: dict) -> None:
     await notification_service.send_welcome_email(event_data["email"])
 ```
 
-> **📋 DETAILED COMMUNICATION RULES**: See the [RabbitMQ Rules](../LINKS_REFERENCE.md#ide-rules-and-patterns) for comprehensive messaging patterns.
+> **DETAILED COMMUNICATION RULES**: See the [RabbitMQ Rules](../LINKS_REFERENCE.md#ide-rules-and-patterns) for comprehensive messaging patterns.
 
 ---
 
@@ -402,7 +402,7 @@ async def handle_user_created_event(event_data: dict) -> None:
 
 ---
 
-## 🔗 Related Documentation
+## Related Documentation
 
 ### Implementation Resources
 - **Development Commands**: [Development Commands](../LINKS_REFERENCE.md#developer-guides)
@@ -447,4 +447,4 @@ async def handle_user_created_event(event_data: dict) -> None:
 
 ---
 
-> **⚠️ COMPLIANCE REQUIRED**: All implementations must comply with this architecture guide. Violations will result in system instability and maintainability issues. When in doubt, refer to the implementation rules in [Main Project Guide](../LINKS_REFERENCE.md#core-documentation).
+> **COMPLIANCE REQUIRED**: All implementations must comply with this architecture guide. Violations will result in system instability and maintainability issues. When in doubt, refer to the implementation rules in [Main Project Guide](../LINKS_REFERENCE.md#core-documentation).

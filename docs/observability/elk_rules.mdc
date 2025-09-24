@@ -772,7 +772,7 @@ async def process_payment_example():
       "id": "slack-action",
       "group": "threshold met",
       "params": {
-        "message": "🚨 High error rate detected in {{context.group}} - {{context.value}} errors in the last 5 minutes"
+        "message": "High error rate detected in {{context.group}} - {{context.value}} errors in the last 5 minutes"
       }
     }
   ]
@@ -1070,10 +1070,10 @@ elasticsearch_users:
 This comprehensive ELK implementation provides powerful log aggregation, analysis, and visualization capabilities for your microservices architecture. It seamlessly integrates with your existing logging foundation from `logging_rules.mdc` and provides production-ready monitoring and alerting.
 
 **Key Features**:
-✅ Complete ELK stack with Filebeat for log collection
-✅ Advanced Logstash pipelines for parsing structured logs from logging_rules.mdc
-✅ Request ID and trace correlation across all logs
-✅ Production-ready Elasticsearch configuration with ILM
-✅ Comprehensive Kibana dashboards and alerting
-✅ Performance optimization and security considerations
-✅ Integration with existing observability stack
+- Complete ELK stack with Filebeat for log collection
+- Advanced Logstash pipelines for parsing structured logs from logging_rules.mdc
+- Request ID and trace correlation across all logs
+- Production-ready Elasticsearch configuration with ILM
+- Comprehensive Kibana dashboards and alerting
+- Performance optimization and security considerations
+- Integration with existing observability stack

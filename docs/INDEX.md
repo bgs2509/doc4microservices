@@ -3,22 +3,22 @@
 This is the comprehensive documentation index for the microservices project. All documentation is organized into logical categories for easy navigation.
 
 <a id="quick-navigation"></a>
-## 📚 Quick Navigation
+## Quick Navigation
 
 | Need | Go To |
 |------|-------|
-| 🏁 **Get started quickly** | [Project Overview][link-project-overview] → [Main Entry Point][link-main-entry-point] |
-| 🏗️ **Understand architecture** | [Architecture Guide][link-architecture-guide] |
-| 📋 **Run commands** | [Development Commands][link-development-commands] |
-| 🎯 **Create new use case** | [Use Case Implementation Guide][link-use-case-guide] |
-| 🔧 **Check tech specs** | [Technical Specifications][link-tech-specs] |
-| 🐛 **Solve problems** | [Troubleshooting Guide][link-troubleshooting-guide] |
-| 🤖 **Agent workflow** | [Agent Workflow][link-agent-workflow] |
+| **Get started quickly** | [Project Overview][link-project-overview] → [Main Entry Point][link-main-entry-point] |
+| **Understand architecture** | [Architecture Guide][link-architecture-guide] |
+| **Run commands** | [Development Commands][link-development-commands] |
+| **Create new use case** | [Use Case Implementation Guide][link-use-case-guide] |
+| **Check tech specs** | [Technical Specifications][link-tech-specs] |
+| **Solve problems** | [Troubleshooting Guide][link-troubleshooting-guide] |
+| **Agent workflow** | [Agent Workflow][link-agent-workflow] |
 
 <a id="documentation-structure"></a>
-## 📂 Documentation Structure
+## Documentation Structure
 
-### 📖 Core Guides
+### Core Guides
 Essential documentation for development and architecture understanding.
 
 - **[Architecture Guide][link-architecture-guide]** - Comprehensive architecture principles and constraints
@@ -27,7 +27,7 @@ Essential documentation for development and architecture understanding.
 - **[Agent Workflow][link-agent-workflow]** - End-to-end process for AI agents
 
 <a id="reference-materials"></a>
-### 📑 Reference Materials
+### Reference Materials
 Technical specifications, examples, and troubleshooting resources.
 
 - **[Technical Specifications][link-tech-specs]** - Technology specifications and versions
@@ -39,7 +39,7 @@ Technical specifications, examples, and troubleshooting resources.
 - **[Architecture Decision Log Template][link-adr-template]** - Standardised ADR format
 
 <a id="agent-templates"></a>
-## 🤖 Agent-Centric Templates & Checklists
+## Agent-Centric Templates & Checklists
 
 - **[Prompt Validation Guide][link-prompt-validation]** - Mandatory intake checklist before starting work
 - **[Requirements Intake Template][link-intake-template]** - Structured capture of business and technical needs
@@ -47,32 +47,32 @@ Technical specifications, examples, and troubleshooting resources.
 - **[Agent Verification Checklist][link-verification-checklist]** - Quality gates before release
 - **[QA Report Template][link-qa-report]** - Final QA summary for stakeholders
 
-## 🤖 IDE Rules & Patterns
+## IDE Rules & Patterns
 
 IDE rules are organized by category at the docs root level for direct access and better integration.
 
-### 🏗️ Architecture & Design
+### Architecture & Design
 Core architectural patterns and design principles:
 
 - **[Microservices Best Practices][link-ms-best-practices]** - DDD/Hex patterns, project structure, quality requirements
 - **[Data Access Rules][link-data-access-rules]** - Data access patterns and HTTP-only data service communication
 - **[Naming Conventions][link-naming-conventions]** - Mandatory naming standards and conventions
 
-### 🚀 Service Types
+### Service Types
 Service-specific implementation patterns:
 
 - **[FastAPI Rules][link-fastapi-rules]** - FastAPI service patterns and dependency injection
 - **[Aiogram Rules][link-aiogram-rules]** - Telegram bot service standards and patterns
 - **[AsyncIO Rules][link-asyncio-rules]** - Background worker service patterns
 
-### 🏗️ Infrastructure
+### Infrastructure
 Infrastructure component patterns:
 
 - **[Redis Rules][link-redis-rules]** - Redis patterns for caching and idempotency
 - **[RabbitMQ Rules][link-rabbitmq-rules]** - RabbitMQ standards for inter-service communication
 - **[MongoDB Rules][link-mongodb-rules]** - MongoDB patterns and operations
 
-### 📊 Observability
+### Observability
 Monitoring, logging, and tracing patterns:
 
 - **[Logging Rules][link-logging-rules]** - Unified logging with Request ID tracing
@@ -81,12 +81,12 @@ Monitoring, logging, and tracing patterns:
 - **[ELK Rules][link-elk-rules]** - ELK stack configuration and patterns
 - **[Observability Rules][link-observability-rules]** - Overall observability strategy
 
-### 🧪 Quality Assurance
+### Quality Assurance
 Code quality and testing standards:
 
 - **[Testing Standards][link-testing-standards]** - Testing standards with 100% coverage requirements
 
-## 🎯 Documentation by Task
+## Documentation by Task
 
 ### For New Developers
 1. Start with [Project Overview][link-project-overview] for project overview
@@ -118,7 +118,7 @@ Code quality and testing standards:
 2. Use [Naming Conventions][link-naming-conventions]
 3. Apply patterns from [Microservices Best Practices][link-ms-best-practices]
 
-## 🔄 Maintenance
+## Maintenance
 
 This documentation is organized to avoid duplication and maintain clear separation of concerns:
 
@@ -132,7 +132,7 @@ When adding new documentation:
 - Place IDE rules in appropriate category folders at root level
 - Update this index with new content
 
-### 🔗 Link Validation
+### Link Validation
 
 To maintain documentation quality, all internal links should be validated:
 
@@ -148,7 +148,7 @@ find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \;
 # Example: markdown-link-check or similar tool
 ```
 
-### 📋 Documentation Standards
+### Documentation Standards
 
 - **Always use relative paths** for internal links
 - **Update INDEX.md** when adding new documentation
@@ -158,7 +158,7 @@ find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \;
 
 ---
 
-> **📖 Main Entry Point**: For project overview and getting started, see [Main Entry Point][link-main-entry-point]
+> **Main Entry Point**: For project overview and getting started, see [Main Entry Point][link-main-entry-point]
 
 [link-main-entry-point]: LINKS_REFERENCE.md#core-documentation
 [link-project-overview]: LINKS_REFERENCE.md#core-documentation

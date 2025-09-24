@@ -904,9 +904,9 @@ async def metrics_health_check():
 This metrics implementation provides comprehensive monitoring for your microservices using the Golden Signals methodology. The setup integrates seamlessly with your existing logging system and provides production-ready dashboards and alerting capabilities.
 
 **Key Features**:
-✅ Golden Signals implementation (Latency, Traffic, Errors, Saturation)
-✅ Service-specific metrics for FastAPI, Aiogram, and AsyncIO workers
-✅ Request ID correlation with existing logging system
-✅ Production-ready Prometheus and Grafana configuration
-✅ Comprehensive alerting rules and dashboards
-✅ Performance-optimized with cardinality management
+- Golden Signals implementation (Latency, Traffic, Errors, Saturation)
+- Service-specific metrics for FastAPI, Aiogram, and AsyncIO workers
+- Request ID correlation with existing logging system
+- Production-ready Prometheus and Grafana configuration
+- Comprehensive alerting rules and dashboards
+- Performance-optimized with cardinality management

@@ -169,10 +169,10 @@ docker-compose up -d
 When organizing your project:
 
 ### Critical Constraints
-- ❌ **PROHIBITED**: Direct database connections in business services
-- ❌ **PROHIBITED**: Running multiple event loop managers in same process
-- ⚠️ **MANDATORY**: Python 3.12+ for all services
-- ⚠️ **MANDATORY**: Underscore-only naming convention (no hyphens)
+- **PROHIBITED**: Direct database connections in business services
+- **PROHIBITED**: Running multiple event loop managers in same process
+- **MANDATORY**: Python 3.12+ for all services
+- **MANDATORY**: Underscore-only naming convention (no hyphens)
 
 ### Service Communication
 - **Business → Data**: HTTP APIs only

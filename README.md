@@ -1,8 +1,8 @@
 # Microservices Framework
 
-> **🏗️ Framework-as-Submodule** - Centralised microservices architecture framework designed to be used as a Git submodule in your projects. Provides proven patterns, AI agents, and complete documentation for rapid development.
+> **Framework-as-Submodule** - Centralised microservices architecture framework designed to be used as a Git submodule in your projects. Provides proven patterns, AI agents, and complete documentation for rapid development.
 
-## 🎯 What This Solves and Who It's For
+## What This Solves and Who It's For
 
 ### **The Problem**
 Creating microservices architecture is a complex task requiring:
@@ -29,7 +29,7 @@ This is not just documentation, but a **living framework** that:
 ### **Result:**
 Instead of months of architecture development - get production-ready applications in minutes/hours using standardized, updatable framework with AI automation.
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # 1. Create your project
@@ -54,13 +54,13 @@ docker-compose up -d
 
 This transforms microservices application creation into a standardized, repeatable process.
 
-## 🏗️ Project Structure
+## Project Structure
 
 When you add this framework as a submodule, your project follows a clean separation pattern where the framework provides proven architecture patterns while your application code stays completely separate.
 
-> **📋 DETAILED PROJECT STRUCTURE**: See [Project Structure Guide](docs/LINKS_REFERENCE.md#developer-guides) for comprehensive directory organization, service types, and setup guidance.
+> **DETAILED PROJECT STRUCTURE**: See [Project Structure Guide](docs/LINKS_REFERENCE.md#developer-guides) for comprehensive directory organization, service types, and setup guidance.
 
-## 💻 AI Generation Examples
+## AI Generation Examples
 
 **Example AI Prompts:**
 ```
@@ -79,7 +79,7 @@ Build an e-commerce platform with .framework/ architecture:
 - Use PostgreSQL and MongoDB data services
 ```
 
-## 🤖 AI Agent Framework
+## AI Agent Framework
 
 This project includes a comprehensive AI framework for generating applications:
 
@@ -98,21 +98,21 @@ This project includes a comprehensive AI framework for generating applications:
 - **Environment Configuration** - Secure configuration templates and examples
 - **Health Monitoring** - Production-ready observability and health checks
 
-## 🏗 Architecture Overview
+## Architecture Overview
 
 The framework implements the **Improved Hybrid Approach** - a microservices pattern combining centralized data access with distributed business logic.
 
-> **📖 COMPLETE ARCHITECTURE DETAILS**: See [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation) for detailed principles, constraints, diagrams, and implementation guidelines.
+> **COMPLETE ARCHITECTURE DETAILS**: See [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation) for detailed principles, constraints, diagrams, and implementation guidelines.
 
-## 📚 Documentation and AI Knowledge Base
+## Documentation and AI Knowledge Base
 
 This repository contains comprehensive documentation designed for both AI agents and human developers:
 
 ### For AI Agents
 | Component | Purpose | Location |
 |-----------|---------|----------|
-| **🏗️ Main Entry Point** | Complete development guide and navigation | [Main Entry Point](docs/LINKS_REFERENCE.md#core-documentation) |
-| **📋 Implementation Rules** | Service-specific patterns and constraints | [Developer Guides](docs/LINKS_REFERENCE.md#developer-guides) |
+| **Main Entry Point** | Complete development guide and navigation | [Main Entry Point](docs/LINKS_REFERENCE.md#core-documentation) |
+| **Implementation Rules** | Service-specific patterns and constraints | [Developer Guides](docs/LINKS_REFERENCE.md#developer-guides) |
 
 ### For Human Developers
 | Document | Purpose | When to Use |
@@ -121,36 +121,36 @@ This repository contains comprehensive documentation designed for both AI agents
 | **[Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation)** | Technology specifications | Check versions, configurations |
 | **[Troubleshooting Guide](docs/LINKS_REFERENCE.md#developer-guides)** | Problem solving | Debug issues, find solutions |
 
-## 📋 Technology Stack
+## Technology Stack
 
 This project uses a carefully selected, modern technology stack optimized for the Improved Hybrid Approach, including Python 3.12+, FastAPI, Aiogram, PostgreSQL, MongoDB, Docker, and a comprehensive observability suite.
 
-> **🔧 For a complete list of technologies, versions, and configurations, see the [Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation).**
+> **For a complete list of technologies, versions, and configurations, see the [Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation).**
 
-## ✨ Benefits for Development Teams
+## Benefits for Development Teams
 
 ### For AI-Assisted Development
-- **🎯 Zero Architecture Decisions** - Pre-validated patterns and technology choices
-- **⚡ Rapid Prototyping** - From business idea to running application in minutes
-- **🔄 Consistent Quality** - AI generates production-ready code following best practices
-- **📈 Scalable Patterns** - Applications can grow from prototype to production
+- **Zero Architecture Decisions** - Pre-validated patterns and technology choices
+- **Rapid Prototyping** - From business idea to running application in minutes
+- **Consistent Quality** - AI generates production-ready code following best practices
+- **Scalable Patterns** - Applications can grow from prototype to production
 
 ### For Traditional Development
-- **📚 Comprehensive Patterns** - Working examples and implementation guidelines
-- **🛡️ Risk Mitigation** - Battle-tested architectural constraints and best practices
-- **🔧 Developer Experience** - Complete tooling and automation setup
-- **👥 Team Alignment** - Consistent coding standards and patterns
+- **Comprehensive Patterns** - Working examples and implementation guidelines
+- **Risk Mitigation** - Battle-tested architectural constraints and best practices
+- **Developer Experience** - Complete tooling and automation setup
+- **Team Alignment** - Consistent coding standards and patterns
 
-## 🎯 Example Applications AI Can Generate
+## Example Applications AI Can Generate
 
-✅ **E-commerce Platform** - Product catalog, orders, payments, user management, analytics
-✅ **Project Management Tool** - Tasks, projects, time tracking, team collaboration, reporting
-✅ **Content Management System** - Articles, media, user permissions, publishing workflows
-✅ **Social Platform** - User profiles, posts, messaging, engagement analytics
-✅ **IoT Data Platform** - Device management, real-time data ingestion, analytics dashboards
-✅ **Financial Application** - Account management, transactions, reporting, compliance
+- **E-commerce Platform** - Product catalog, orders, payments, user management, analytics
+- **Project Management Tool** - Tasks, projects, time tracking, team collaboration, reporting
+- **Content Management System** - Articles, media, user permissions, publishing workflows
+- **Social Platform** - User profiles, posts, messaging, engagement analytics
+- **IoT Data Platform** - Device management, real-time data ingestion, analytics dashboards
+- **Financial Application** - Account management, transactions, reporting, compliance
 
-## 🔧 Framework Management
+## Framework Management
 
 ### Submodule Operations
 ```bash
@@ -165,7 +165,7 @@ git clone --recursive <your-project-repo>
 git submodule init && git submodule update
 ```
 
-> **📋 COMPLETE SETUP GUIDE**: See [Project Structure Guide](docs/LINKS_REFERENCE.md#developer-guides) for detailed project organization and development workflow.
+> **COMPLETE SETUP GUIDE**: See [Project Structure Guide](docs/LINKS_REFERENCE.md#developer-guides) for detailed project organization and development workflow.
 
 ### For AI Agents
 1. **Automatically scan `.framework/`** for patterns, rules, and examples
@@ -173,16 +173,16 @@ git submodule init && git submodule update
 3. **Follow `.framework/docs/` guidelines** for architecture compliance
 
 ### Quick Links (within .framework/)
-- **🏗️ Architecture Guide**: [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation)
-- **📋 Development Commands**: [Development Commands](docs/LINKS_REFERENCE.md#developer-guides)
-- **🎯 Use Case Implementation**: [Use Case Implementation](docs/LINKS_REFERENCE.md#developer-guides)
-- **🔧 Technology Stack**: [Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation)
-- **🐛 Troubleshooting**: [Troubleshooting](docs/LINKS_REFERENCE.md#developer-guides)
+- **Architecture Guide**: [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation)
+- **Development Commands**: [Development Commands](docs/LINKS_REFERENCE.md#developer-guides)
+- **Use Case Implementation**: [Use Case Implementation](docs/LINKS_REFERENCE.md#developer-guides)
+- **Technology Stack**: [Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation)
+- **Troubleshooting**: [Troubleshooting](docs/LINKS_REFERENCE.md#developer-guides)
 
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**🚀 Ready to use this framework?** Add it as a submodule to your project: `git submodule add <repo-url> .framework`
+**Ready to use this framework?** Add it as a submodule to your project: `git submodule add <repo-url> .framework`

@@ -21,7 +21,7 @@ This guide provides comprehensive instructions for creating complete, production
 
 **Before generating any application, AI agents MUST comply with these non-negotiable constraints:**
 
-> **⚠️ MANDATORY COMPLIANCE**: All constraints are defined in the [canonical architecture documentation](../LINKS_REFERENCE.md#core-documentation). This section provides implementation-specific guidance.
+> **MANDATORY COMPLIANCE**: All constraints are defined in the [canonical architecture documentation](../LINKS_REFERENCE.md#core-documentation). This section provides implementation-specific guidance.
 
 ### 1. **Architecture Compliance (MANDATORY)**
 - **Foundation**: Follow the [Improved Hybrid Approach architecture](../LINKS_REFERENCE.md#core-documentation)
@@ -79,7 +79,7 @@ docker-compose up -d
 
 AI agents generate projects following this standardized structure:
 
-> **📋 AUTHORITATIVE PROJECT STRUCTURE**: See [../reference/PROJECT_STRUCTURE.md](../reference/PROJECT_STRUCTURE.md) for the complete, detailed project structure guide with explanations and setup instructions.
+> **AUTHORITATIVE PROJECT STRUCTURE**: See [../reference/PROJECT_STRUCTURE.md](../reference/PROJECT_STRUCTURE.md) for the complete, detailed project structure guide with explanations and setup instructions.
 
 ### Key Structure Principles
 
@@ -389,7 +389,7 @@ class BusinessService:
 
 ## Validation Checklist
 
-### ✅ Project Structure Validation
+### Project Structure Validation
 
 - [ ] All required directories exist in `src/` structure
 - [ ] Dockerfiles present in each service folder
@@ -397,7 +397,7 @@ class BusinessService:
 - [ ] Environment configuration files present
 - [ ] Shared components properly organized
 
-### ✅ Service Implementation Validation
+### Service Implementation Validation
 
 - [ ] Health check endpoints implemented
 - [ ] HTTP-only data access pattern followed
@@ -405,7 +405,7 @@ class BusinessService:
 - [ ] Proper async/await usage
 - [ ] Structured logging configured
 
-### ✅ Architecture Compliance Validation
+### Architecture Compliance Validation
 
 - [ ] Service type separation enforced
 - [ ] Data services accessible via HTTP on ports 8001, 8002
@@ -413,7 +413,7 @@ class BusinessService:
 - [ ] Redis caching functional
 - [ ] Naming conventions followed (underscore_only)
 
-### ✅ Quality Validation
+### Quality Validation
 
 - [ ] Type annotations on all functions
 - [ ] Error handling comprehensive
@@ -443,4 +443,4 @@ The **AI-first project generation workflow** enables rapid creation of productio
 
 ---
 
-**🚀 Ready to generate your first AI-powered microservices application?** Create a new repository and start collaborating with AI using this knowledge base!
+**Ready to generate your first AI-powered microservices application?** Create a new repository and start collaborating with AI using this knowledge base!

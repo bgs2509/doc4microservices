@@ -117,7 +117,7 @@ async def ready() -> dict[str, str]:
     return {"status": "ready"}
 ```
 
-> **📋 AUTHORITATIVE PROJECT STRUCTURE**: For the complete, detailed project structure guide with explanations and setup instructions, see the [Project Structure Guide](../LINKS_REFERENCE.md#developer-guides).
+> **AUTHORITATIVE PROJECT STRUCTURE**: For the complete, detailed project structure guide with explanations and setup instructions, see the [Project Structure Guide](../LINKS_REFERENCE.md#developer-guides).
 
 - Development workflow (non-normative checklist):
   - Planning & Architecture: define OpenAPI, DB schemas/migrations, indexes; boundaries/integrations (see [FastAPI Rules](LINKS_REFERENCE.md#ide-rules--patterns)).

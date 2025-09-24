@@ -1,6 +1,6 @@
 # Project Links Reference
 
-> **🔗 CENTRAL REFERENCE**: All project documentation links in one place. Use this table instead of duplicating links in documents.
+> **CENTRAL REFERENCE**: All project documentation links in one place. Use this table instead of duplicating links in documents.
 
 <a id="core-documentation"></a>
 ## Core Documentation
@@ -96,11 +96,11 @@ For simplified linking in other documents, use these templates:
 ### Usage Examples
 ```markdown
 <!-- Instead of long construction -->
-  ✅ Ссылка OK: reference/tech_stack.md
+  - Ссылка OK: reference/tech_stack.md
 <!-- Use -->
 See [technical specifications](LINKS_REFERENCE.md#core-documentation)
 ```
 
 ---
 
-> **📖 Usage**: Reference this table from other documents instead of duplicating links. Update this table when adding new documents.
+> **Usage**: Reference this table from other documents instead of duplicating links. Update this table when adding new documents.

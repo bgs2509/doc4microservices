@@ -2,15 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with this microservices framework.
 
-> **📍 CONTEXT**: This framework can be used in two ways:
+> **CONTEXT**: This framework can be used in two ways:
 > - **Direct**: Working in this repository directly (use paths like `docs/`)
 > - **Submodule**: Added as `.framework/` submodule to your project (use paths like `.framework/docs/`)
 >
 > The paths below assume **direct usage**. When used as submodule, prefix all paths with `.framework/`.
 
-## 📚 Documentation Hierarchy
+## Documentation Hierarchy
 
-> **🎯 NAVIGATION GUIDE**: Each document has a single purpose. Use the references below instead of duplicating content.
+> **NAVIGATION GUIDE**: Each document has a single purpose. Use the references below instead of duplicating content.
 
 ### Primary Documentation (Essential Reading)
 
@@ -53,7 +53,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 | Verify quality | [Agent Verification Checklist](docs/INDEX.md#agent-templates) |
 | Report results | [QA Report Template](docs/INDEX.md#agent-templates) |
 
-## 🌐 Framework Overview
+## Framework Overview
 
 - **Architecture**: Improved Hybrid Approach, strict HTTP-only data services, RabbitMQ eventing.
 - **Service Types**: FastAPI (API), Aiogram (bot), AsyncIO workers, dedicated data services (PostgreSQL, MongoDB).
@@ -65,7 +65,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 3. Use RabbitMQ for cross-service eventing (`docs/infrastructure/rabbitmq_rules.mdc`).
 4. Adhere to naming conventions (`docs/architecture/naming_conventions.mdc`).
 
-## 🔄 Agent Workflow (High-Level)
+## Agent Workflow (High-Level)
 
 1. Prompt Validation → `docs/guides/PROMPT_VALIDATION_GUIDE.md`
 2. Requirements Intake → fill `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`

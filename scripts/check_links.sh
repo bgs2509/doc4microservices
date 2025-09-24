@@ -58,9 +58,9 @@ while IFS= read -r -d '' file; do
 
         # Проверяем существование файла
         if ! check_file_exists "$link" "$file_dir" "$file"; then
-            echo "  ❌ Битая ссылка: $link"
+            echo "  Битая ссылка: $link"
         else
-            echo "  ✅ Ссылка OK: $link"
+            echo "  Ссылка OK: $link"
         fi
 
     done < <(grep -n '\[.*\](' "$file")
@@ -72,9 +72,9 @@ echo ""
 echo "=== РЕЗУЛЬТАТЫ ПРОВЕРКИ ==="
 
 if [ ${#missing_files[@]} -eq 0 ]; then
-    echo "✅ Все ссылки корректны!"
+    echo "Все ссылки корректны!"
 else
-    echo "❌ Найдены проблемные ссылки:"
+    echo "Найдены проблемные ссылки:"
     printf '%s\n' "${missing_files[@]}"
 fi
 

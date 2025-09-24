@@ -1049,9 +1049,9 @@ async def debug_trace():
 This comprehensive tracing implementation provides end-to-end visibility into your microservices architecture using OpenTelemetry and Jaeger. The setup seamlessly integrates with your existing Request ID system from logging_rules.mdc and provides detailed insights into request flows across all service types.
 
 **Key Features**:
-✅ Complete OpenTelemetry integration for FastAPI, Aiogram, and AsyncIO services
-✅ Seamless Request ID correlation with existing logging system
-✅ Cross-service trace propagation via RabbitMQ
-✅ Performance-optimized with configurable sampling
-✅ Comprehensive error tracking and debugging capabilities
-✅ Production-ready Jaeger deployment configuration
+- Complete OpenTelemetry integration for FastAPI, Aiogram, and AsyncIO services
+- Seamless Request ID correlation with existing logging system
+- Cross-service trace propagation via RabbitMQ
+- Performance-optimized with configurable sampling
+- Comprehensive error tracking and debugging capabilities
+- Production-ready Jaeger deployment configuration

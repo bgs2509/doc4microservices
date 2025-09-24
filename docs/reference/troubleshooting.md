@@ -183,8 +183,8 @@ docker network ls
 docker network inspect try_microservices_default
 
 # Use service names in URLs
-# ✅ http://api_service:8000/api/v1/users
-# ❌ http://localhost:8000/api/v1/users
+# http://api_service:8000/api/v1/users
+# http://localhost:8000/api/v1/users
 
 # Check service health endpoints
 curl http://localhost:8000/health
@@ -264,11 +264,11 @@ Error: RuntimeError: There is no current event loop
 
 **Solution**:
 ```python
-# ❌ DON'T run multiple event loop managers in same process
+# DON'T run multiple event loop managers in same process
 # app = FastAPI()  # Creates event loop
 # asyncio.run(main())  # Creates another event loop
 
-# ✅ DO use separate containers/processes
+# DO use separate containers/processes
 # FastAPI in one container
 # Aiogram in another container
 # AsyncIO workers in third container
@@ -282,13 +282,13 @@ Warning: Synchronous code in async context
 
 **Solution**:
 ```python
-# ❌ DON'T use blocking code
+# DON'T use blocking code
 def blocking_operation():
     time.sleep(5)  # Blocks event loop
 
 await blocking_operation()  # Will block everything
 
-# ✅ DO use async alternatives
+# DO use async alternatives
 async def async_operation():
     await asyncio.sleep(5)  # Non-blocking
 
@@ -307,10 +307,10 @@ Error: SyncError: You have tried to use a sync method
 
 **Solution**:
 ```python
-# ❌ DON'T use sync libraries in async code
+# DON'T use sync libraries in async code
 import pika      # Sync library (deprecated)
 
-# ✅ DO use async libraries
+# DO use async libraries
 import asyncpg    # Async PostgreSQL
 import aio_pika   # Async RabbitMQ
 ```
@@ -471,7 +471,7 @@ async def make_request():
 
 ## Quick Diagnostic Commands
 
-> **📋 FULL COMMAND REFERENCE**: For complete development and troubleshooting commands, see [Development Commands](../guides/DEVELOPMENT_COMMANDS.md).
+> **FULL COMMAND REFERENCE**: For complete development and troubleshooting commands, see [Development Commands](../guides/DEVELOPMENT_COMMANDS.md).
 
 **Essential diagnostic commands:**
 ```bash
