@@ -41,9 +41,28 @@ import uuid
 import aio_pika
 import orjson
 
-from ..clients.user_data_client import UserDataClient # Assume client exists
+from shared.http.base_client import DataServiceClient, HTTPNotFoundError
+from ..core.config import settings
 
 logger = logging.getLogger(__name__)
+
+class UserDataClient(DataServiceClient):
+    """Client for PostgreSQL Data Service communication."""
+
+    def __init__(self):
+        super().__init__(
+            service_name="PostgreSQL Data Service",
+            base_url=settings.POSTGRES_DATA_SERVICE_URL,
+            timeout=settings.HTTP_CLIENT_TIMEOUT,
+            retries=settings.HTTP_CLIENT_RETRIES
+        )
+
+    async def update_user_files(self, user_id: int, update_payload: dict, request_id: str):
+        """Update user files data."""
+        try:
+            return await self.patch(f"/api/v1/users/{user_id}/files", json=update_payload)
+        except HTTPNotFoundError:
+            return None
 
 class MediaProcessor:
     def __init__(self, rabbitmq_channel: aio_pika.Channel):

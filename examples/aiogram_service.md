@@ -50,10 +50,33 @@ from aiogram.types import Message
 from aiogram.filters import Command
 
 from ..services.media_service import MediaService
-from ..clients.user_data_client import UserDataClient
+from shared.http.base_client import DataServiceClient, HTTPNotFoundError
+from ..core.config import settings
 
 router = Router()
 logger = logging.getLogger(__name__)
+
+class UserDataClient(DataServiceClient):
+    """Client for PostgreSQL Data Service communication."""
+
+    def __init__(self):
+        super().__init__(
+            service_name="PostgreSQL Data Service",
+            base_url=settings.POSTGRES_DATA_SERVICE_URL,
+            timeout=settings.HTTP_CLIENT_TIMEOUT,
+            retries=settings.HTTP_CLIENT_RETRIES
+        )
+
+    async def get_user_by_id(self, user_id: int):
+        """Get user by ID from data service."""
+        try:
+            return await self.get(f"/api/v1/users/{user_id}")
+        except HTTPNotFoundError:
+            return None
+
+    async def create_user_from_bot(self, user_data: dict, request_id: str):
+        """Create user from bot data."""
+        return await self.post("/api/v1/users", json=user_data)
 
 # Dependencies will be injected through middleware or factory
 def get_media_service(**kwargs) -> MediaService:

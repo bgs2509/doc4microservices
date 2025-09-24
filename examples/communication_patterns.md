@@ -2,34 +2,36 @@
 
 ### HTTP API to API Communication
 ```python
-# In api_service: calling another API service
-import httpx
-import uuid
+# In api_service: calling another API service using the shared HTTP client
+from shared.http.base_client import DataServiceClient, HTTPNotFoundError, HTTPTimeoutError
 from typing import Optional, Dict, Any
+import logging
 
-class ExternalAPIService:
+logger = logging.getLogger(__name__)
+
+class ExternalAPIService(DataServiceClient):
     """Service for communicating with other APIs."""
 
     def __init__(self, base_url: str, timeout: int = 30):
-        self.base_url = base_url
-        self.timeout = timeout
+        super().__init__(
+            service_name="External API Service",
+            base_url=base_url,
+            timeout=timeout
+        )
 
     async def get_user_profile(self, user_id: int) -> Optional[Dict[str, Any]]:
-        """Get user profile from user service."""
-        async with httpx.AsyncClient(timeout=self.timeout) as client:
-            try:
-                response = await client.get(
-                    f"{self.base_url}/api/v1/users/{user_id}",
-                    headers={"X-Request-ID": f"req_{uuid.uuid4().hex}"}
-                )
-                response.raise_for_status()
-                return response.json()
-            except httpx.HTTPError as e:
-                logger.error(f"HTTP error getting user {user_id}: {e}")
-                return None
-            except Exception as e:
-                logger.error(f"Error getting user {user_id}: {e}")
-                return None
+        """Get user profile from user service with proper error handling."""
+        try:
+            return await self.get(f"/api/v1/users/{user_id}")
+        except HTTPNotFoundError:
+            logger.info(f"User {user_id} not found")
+            return None
+        except HTTPTimeoutError:
+            logger.error(f"Timeout getting user {user_id}")
+            return None
+        except Exception as e:
+            logger.error(f"Unexpected error getting user {user_id}: {e}")
+            return None
 ```
 
 ### Event-Driven Communication via RabbitMQ

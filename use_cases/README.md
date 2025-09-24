@@ -175,11 +175,11 @@ Use cases demonstrate testing at all levels:
 
 ### For AI Generation
 - **[AI Agents Framework](../ai_agents/)** *(or [.framework/ai_agents/](.framework/ai_agents/) when used as submodule)*: Generate new use cases automatically
-- **[Feasibility Checker](../ai_agents/business_validation/feasibility_checker.yml)**: Validate new use case ideas
+- **[Feasibility Checker](../ai_agents/business_validation/feasibility_checker.yml)** *(or [.framework/ai_agents/business_validation/feasibility_checker.yml](.framework/ai_agents/business_validation/feasibility_checker.yml) when used as submodule)*: Validate new use case ideas
 
 ### For Project Understanding
 - **[Main Guide](../CLAUDE.md)**: Complete project overview and navigation
-- **[Technology Stack](../docs/reference/tech_stack.md)**: Technical specifications and versions
+- **[Technology Stack](../docs/reference/tech_stack.md)** *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md) when used as submodule)*: Technical specifications and versions
 
 ---
 

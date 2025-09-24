@@ -2,7 +2,7 @@
 
 > **📋 DOCUMENTATION TYPE**: Working Demonstration - Complete functional application
 > **👥 TARGET USERS**: Business stakeholders, developers, QA teams
-> **🔗 RELATED**: [Learning Patterns](../../examples/) | [AI Generation](../../ai_agents/) | **[Complete Comparison Guide](../../CLAUDE.md#documentation-types-guide)**
+> **🔗 RELATED**: [Learning Patterns](../../examples/) *(or [.framework/examples/](.framework/examples/) when used as submodule)* | [AI Generation](../../ai_agents/) *(or [.framework/ai_agents/](.framework/ai_agents/) when used as submodule)* | **[Complete Comparison Guide](../../CLAUDE.md#documentation-types-guide)**
 
 A complete personal task management system demonstrating all microservices patterns from the boilerplate. This use case showcases the **Improved Hybrid Approach** with centralized data services and business logic separation.
 
@@ -197,7 +197,7 @@ Start a chat with your bot and use these commands:
 
 ### Local Development Setup
 
-> **📋 Complete development guide**: [Development Commands](../../docs/guides/DEVELOPMENT_COMMANDS.md)
+> **📋 Complete development guide**: [Development Commands](../../docs/guides/DEVELOPMENT_COMMANDS.md) *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md](.framework/docs/guides/DEVELOPMENT_COMMANDS.md) when used as submodule)*
 
 ```bash
 # Quick setup
@@ -234,7 +234,7 @@ task_analytics_worker:
 
 ## 📊 Monitoring
 
-### Task Service Logs
+### Task-Specific Service Logs
 ```bash
 # Task-specific service logs
 docker-compose logs -f task_api_service
@@ -249,24 +249,31 @@ curl http://localhost:8000/api/v1/tasks/stats
 curl http://localhost:8000/api/v1/tasks
 ```
 
-> **📋 Complete monitoring guide**: [Use Cases Monitoring](../README.md#monitoring--observability)
+> **📋 Complete monitoring setup and dashboards**: [Use Cases Monitoring](../README.md#monitoring--observability)
 
 ## 🧪 Testing
 
 ### Quick Task Workflow Test
 ```bash
-# API testing
-curl -X POST http://localhost:8000/api/v1/auth/register ...
-curl -X POST http://localhost:8000/api/v1/tasks ...
+# Complete API testing workflow
+curl -X POST http://localhost:8000/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"username": "testuser", "email": "test@example.com", "password": "testpass123"}'
+
+curl -X POST http://localhost:8000/api/v1/tasks \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Test task", "priority": "medium"}'
+
 curl http://localhost:8000/api/v1/tasks/stats
 ```
 
 ### Bot Commands Test
 ```
-/start /task Buy groceries /mytasks /done 123
+/start → /task Buy groceries tomorrow high priority → /mytasks → /done [task_id]
 ```
 
-> **📋 Complete testing guide**: [Use Cases Testing](../README.md#testing-examples)
+> **📋 Complete testing patterns and examples**: [Use Cases Testing](../README.md#testing-examples)
 
 ## 🚀 Production Deployment
 
@@ -296,7 +303,7 @@ docker-compose up -d --scale task_analytics_worker=2
 
 **Analytics issues**: Check `docker-compose logs task_analytics_worker`
 
-> **📋 Complete troubleshooting guide**: [Use Cases Troubleshooting](../README.md) | [General Troubleshooting](../../docs/reference/troubleshooting.md)
+> **📋 Complete troubleshooting guide**: [Use Cases Troubleshooting](../README.md) | [General Troubleshooting](../../docs/reference/troubleshooting.md) *(or [.framework/docs/reference/troubleshooting.md](.framework/docs/reference/troubleshooting.md) when used as submodule)*
 
 ## 📚 Learning Focus
 
@@ -314,7 +321,7 @@ docker-compose up -d --scale task_analytics_worker=2
 ## 📞 Support
 
 1. Check logs: `docker-compose logs [service-name]`
-2. Review: [Main documentation](../../README.md)
+2. Review: [Main documentation](../../README.md) *(or [.framework/README.md](.framework/README.md) when used as submodule)*
 3. Test: Health check endpoints
 4. Validate: Environment variables
 

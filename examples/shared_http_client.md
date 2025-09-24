@@ -627,13 +627,13 @@ from shared.http.base_client import DataServiceClient, HTTPNotFoundError
 from ..schemas.user import UserCreate, UserUpdate, UserResponse
 from ..core.config import settings
 
-class PostgreSQLDataClient(DataServiceClient):
+class UserDataClient(DataServiceClient):
     """Client for PostgreSQL data service."""
 
     def __init__(self):
         super().__init__(
             service_name="PostgreSQL Data Service",
-            base_url=settings.DB_POSTGRES_SERVICE_URL,
+            base_url=settings.POSTGRES_DATA_SERVICE_URL,
             timeout=settings.HTTP_CLIENT_TIMEOUT,
             retries=settings.HTTP_CLIENT_RETRIES
         )
@@ -668,13 +668,13 @@ class PostgreSQLDataClient(DataServiceClient):
         """Delete user."""
         return await self.delete(f"/api/v1/users/{user_id}")
 
-class MongoDBDataClient(DataServiceClient):
+class AnalyticsDataClient(DataServiceClient):
     """Client for MongoDB data service."""
 
     def __init__(self):
         super().__init__(
             service_name="MongoDB Data Service",
-            base_url=settings.DB_MONGO_SERVICE_URL,
+            base_url=settings.MONGODB_DATA_SERVICE_URL,
             timeout=settings.HTTP_CLIENT_TIMEOUT,
             retries=settings.HTTP_CLIENT_RETRIES
         )
@@ -699,17 +699,17 @@ class MongoDBDataClient(DataServiceClient):
 """Dependency injection for data service clients."""
 
 from functools import lru_cache
-from .data_clients import PostgreSQLDataClient, MongoDBDataClient
+from .data_clients import UserDataClient, AnalyticsDataClient
 
 @lru_cache()
-def get_postgres_client() -> PostgreSQLDataClient:
+def get_user_data_client() -> UserDataClient:
     """Get PostgreSQL data service client."""
-    return PostgreSQLDataClient()
+    return UserDataClient()
 
 @lru_cache()
-def get_mongo_client() -> MongoDBDataClient:
+def get_analytics_data_client() -> AnalyticsDataClient:
     """Get MongoDB data service client."""
-    return MongoDBDataClient()
+    return AnalyticsDataClient()
 ```
 
 #### 3. Using in FastAPI Endpoints (`api_service/src/api/v1/users.py`)
@@ -718,8 +718,8 @@ def get_mongo_client() -> MongoDBDataClient:
 """User management endpoints using shared HTTP client."""
 
 from fastapi import APIRouter, Depends, HTTPException
-from ...clients.data_clients import PostgreSQLDataClient, MongoDBDataClient
-from ...core.dependencies import get_postgres_client, get_mongo_client
+from ...clients.data_clients import UserDataClient, AnalyticsDataClient
+from ...core.dependencies import get_user_data_client, get_analytics_data_client
 from ...schemas.user import UserCreate, UserUpdate, UserResponse
 
 router = APIRouter()
@@ -727,18 +727,18 @@ router = APIRouter()
 @router.post("/", response_model=UserResponse, status_code=201)
 async def create_user(
     user_data: UserCreate,
-    postgres_client: PostgreSQLDataClient = Depends(get_postgres_client),
-    mongo_client: MongoDBDataClient = Depends(get_mongo_client)
+    user_data_client: UserDataClient = Depends(get_user_data_client),
+    analytics_client: AnalyticsDataClient = Depends(get_analytics_data_client)
 ):
     """Create new user with analytics tracking."""
 
     # Create user via PostgreSQL service
-    user = await postgres_client.create_user(user_data)
+    user = await user_data_client.create_user(user_data)
     if not user:
         raise HTTPException(status_code=400, detail="Failed to create user")
 
     # Track user creation event via MongoDB service
-    await mongo_client.track_event({
+    await analytics_client.track_event({
         "event_type": "user_action",
         "event_name": "user_created",
         "user_id": str(user.id),
@@ -750,10 +750,10 @@ async def create_user(
 @router.get("/{user_id}", response_model=UserResponse)
 async def get_user(
     user_id: int,
-    postgres_client: PostgreSQLDataClient = Depends(get_postgres_client)
+    user_data_client: UserDataClient = Depends(get_user_data_client)
 ):
     """Get user by ID."""
-    user = await postgres_client.get_user(user_id)
+    user = await user_data_client.get_user(user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user

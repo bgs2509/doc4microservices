@@ -70,7 +70,7 @@ Specialized client for PostgreSQL Data Service communication, extending the shar
 
 ```python
 from typing import Optional, Dict, Any, List
-from shared.http.base_client import DataServiceClient
+from shared.http.base_client import DataServiceClient, HTTPNotFoundError
 from ..schemas.user import UserCreate, UserUpdate, UserResponse
 from ..core.config import settings
 
@@ -87,30 +87,37 @@ class UserDataClient(DataServiceClient):
 
     async def get_user_by_id(self, user_id: int) -> Optional[UserResponse]:
         """Get user by ID from data service."""
-        return await self.get_typed(
-            f"/api/v1/users/{user_id}",
-            UserResponse
-        )
+        try:
+            return await self.get_typed(
+                f"/api/v1/users/{user_id}",
+                UserResponse
+            )
+        except HTTPNotFoundError:
+            return None
 
     async def get_user_by_username(self, username: str) -> Optional[UserResponse]:
         """Get user by username from data service."""
-        return await self.get_typed(
-            f"/api/v1/users/by-username/{username}",
-            UserResponse
-        )
+        try:
+            return await self.get_typed(
+                f"/api/v1/users/by-username/{username}",
+                UserResponse
+            )
+        except HTTPNotFoundError:
+            return None
 
     async def get_user_by_email(self, email: str) -> Optional[UserResponse]:
         """Get user by email from data service."""
-        return await self.get_typed(
-            f"/api/v1/users/by-email/{email}",
-            UserResponse
-        )
+        try:
+            return await self.get_typed(
+                f"/api/v1/users/by-email/{email}",
+                UserResponse
+            )
+        except HTTPNotFoundError:
+            return None
 
     async def create_user(self, user_data: UserCreate, hashed_password: str) -> Optional[UserResponse]:
         """Create new user via data service with hashed password."""
-        # Transform API schema to Data Service schema
-        from shared.http.base_client import BaseModel
-        from pydantic import Field
+        from pydantic import BaseModel, Field
 
         class DataServiceUserCreate(BaseModel):
             email: str
@@ -167,11 +174,11 @@ class UserDataClient(DataServiceClient):
             "offset": result["offset"]
         }
 
-    async def verify_user_credentials(self, username: str, hashed_password: str) -> Optional[UserResponse]:
+    async def verify_user_credentials(self, username: str, password: str) -> Optional[UserResponse]:
         """Verify user credentials via data service."""
         result = await self.post("/api/v1/users/verify-credentials", {
             "username": username,
-            "hashed_password": hashed_password  # Fixed: use consistent naming
+            "password": password
         })
         return UserResponse(**result) if result else None
 ```
@@ -222,6 +229,12 @@ class UserCreate(BaseModel):
         max_length=100,
         description="User's full name",
         example="John Doe"
+    )
+    bio: Optional[str] = Field(
+        None,
+        max_length=1000,
+        description="User biography",
+        example="Software developer with 5 years of experience"
     )
 
     @validator("password")
@@ -277,9 +290,22 @@ class UserResponse(BaseModel):
         description="User's full name",
         example="John Doe"
     )
+    bio: Optional[str] = Field(
+        None,
+        description="User biography",
+        example="Software developer with 5 years of experience"
+    )
     status: UserStatus = Field(
         ...,
         description="Current user status"
+    )
+    is_verified: bool = Field(
+        ...,
+        description="Whether user is verified"
+    )
+    is_admin: bool = Field(
+        ...,
+        description="Whether user is admin"
     )
     created_at: datetime = Field(
         ...,
@@ -617,19 +643,17 @@ class UserService:
 
     async def authenticate_user(self, username: str, password: str) -> Optional[UserResponse]:
         """Authenticate user credentials."""
-        # Hash the provided password to match against stored hash
-        password_hash = self.auth_service.hash_password(password)
-
-        # Use the data service's credential verification endpoint
-        user = await self.user_client.verify_user_credentials(username, password_hash)
+        # Get user from data service (without password hash)
+        user = await self.get_user_by_username(username)
         if not user:
-            # Try alternative verification if direct hash comparison fails
-            user = await self.get_user_by_username(username)
-            if user and self.auth_service.verify_password(password, user.hashed_password):
-                return user
             return None
 
-        return user
+        # Get password hash from data service for verification
+        credentials_result = await self.user_client.verify_user_credentials(username, password)
+        if credentials_result:
+            return user
+
+        return None
 
     async def _cache_user(self, user: UserResponse) -> None:
         """Cache user data."""
@@ -695,40 +719,36 @@ class UserService:
 
 ## 8. Middleware (`src/core/middleware.py`)
 
-Request ID and correlation tracking middleware.
+Request ID and correlation tracking middleware using the standardized approach from observability patterns.
 
 ```python
 import uuid
-import logging
 from contextvars import ContextVar
-from fastapi import Request, Response
-from starlette.middleware.base import BaseHTTPMiddleware
+from fastapi import Request
+from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
+from starlette.responses import Response
 import structlog
 
-# Context variables for request tracking
-request_id_ctx: ContextVar[str] = ContextVar("request_id", default="")
+# Context variables for request tracking (standardized)
 correlation_id_ctx: ContextVar[str] = ContextVar("correlation_id", default="")
 
 logger = structlog.get_logger(__name__)
 
-class RequestTrackingMiddleware(BaseHTTPMiddleware):
-    """Middleware for request ID and correlation tracking."""
+class CorrelationIdMiddleware(BaseHTTPMiddleware):
+    """Middleware for correlation ID tracking following observability standards."""
 
-    async def dispatch(self, request: Request, call_next):
-        # Generate or extract request ID
-        request_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
-        correlation_id = request.headers.get("X-Correlation-ID") or request_id
+    async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
+        # Try to get ID from header or generate new one
+        correlation_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
 
-        # Set context variables
-        request_id_token = request_id_ctx.set(request_id)
-        correlation_id_token = correlation_id_ctx.set(correlation_id)
+        # Set ID in context variable
+        token = correlation_id_ctx.set(correlation_id)
 
         try:
-            # Process request
             response = await call_next(request)
 
-            # Add tracking headers to response
-            response.headers["X-Request-ID"] = request_id
+            # Add ID to response header
+            response.headers["X-Request-ID"] = correlation_id
             response.headers["X-Correlation-ID"] = correlation_id
 
             return response
@@ -737,7 +757,6 @@ class RequestTrackingMiddleware(BaseHTTPMiddleware):
             logger.error(
                 "Request processing failed",
                 exc_info=e,
-                request_id=request_id,
                 correlation_id=correlation_id,
                 path=request.url.path,
                 method=request.method
@@ -745,9 +764,8 @@ class RequestTrackingMiddleware(BaseHTTPMiddleware):
             raise
 
         finally:
-            # Reset context variables
-            request_id_ctx.reset(request_id_token)
-            correlation_id_ctx.reset(correlation_id_token)
+            # Reset context variable
+            correlation_id_ctx.reset(token)
 
 class ErrorHandlingMiddleware(BaseHTTPMiddleware):
     """Middleware for centralized error handling."""
@@ -909,7 +927,7 @@ import aio_pika
 import structlog
 
 from .core.config import settings
-from .core.middleware import RequestTrackingMiddleware, ErrorHandlingMiddleware
+from .core.middleware import CorrelationIdMiddleware, ErrorHandlingMiddleware
 from .core.errors import (
     user_not_found_handler,
     user_already_exists_handler,
@@ -992,7 +1010,7 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    app.add_middleware(RequestTrackingMiddleware)
+    app.add_middleware(CorrelationIdMiddleware)
     app.add_middleware(ErrorHandlingMiddleware)
 
     # Add exception handlers
