@@ -72,25 +72,9 @@ Each use case shows how different service types work together:
 
 ## 📋 Use Case Structure Template
 
-When adding new use cases, follow this structure:
+> **⚠️ IMPORTANT**: The structure of use cases in this directory may use a simplified flat layout for demonstration purposes. For all new projects, it is **mandatory** to follow the canonical project structure.
 
-```
-use_cases/your_use_case/
-├── README.md                    # Complete use case documentation
-├── docker-compose.yml          # Service orchestration
-├── .env.example                # Environment template
-├── api_service.py              # FastAPI REST API
-├── bot_service.py              # Bot interface (optional)
-├── *_worker.py                 # Background workers (optional)
-├── shared_dtos.py              # Common data transfer objects
-├── tests/                      # Use case specific tests (optional)
-│   ├── test_integration.py     # Cross-service integration tests
-│   └── test_*.py               # Service-specific tests
-└── docs/                       # Use case documentation (optional)
-    ├── api_reference.md        # API endpoint documentation
-    ├── deployment.md           # Deployment instructions
-    └── architecture.md         # Use case specific architecture
-```
+For the complete and mandatory project structure, see the [Project Structure Guide](LINKS_REFERENCE.md#developer-guides).
 
 ## 🚀 Quick Start Any Use Case
 
@@ -117,69 +101,34 @@ docker-compose up -d
 curl http://localhost:8000/health
 ```
 
-## 📊 Monitoring & Observability
-
-Each use case includes complete observability:
-
-### Built-in Monitoring
-- **Grafana Dashboards**: http://localhost:3000 (admin/admin123)
-- **Prometheus Metrics**: http://localhost:9090
-- **RabbitMQ Management**: http://localhost:15672 (admin/admin123)
-
-### Logging & Tracing
-- **Structured Logging**: All services use structured logging with correlation IDs
-- **Distributed Tracing**: Jaeger integration for request tracking
-- **Error Tracking**: Centralized error handling and reporting
-
-## 🧪 Testing Examples
-
-Use cases demonstrate testing at all levels:
-
-### Unit Testing
-- Service logic testing with mocking
-- HTTP client testing patterns
-- Database interaction testing
-
-### Integration Testing
-- Real database testing with testcontainers
-- Service-to-service communication testing
-- Event-driven workflow testing
-
-### End-to-End Testing
-- Complete user workflow testing
-- Cross-service integration validation
-- Performance and load testing
-
 ## 🔧 Development Guidelines
 
 ### Adding New Use Cases
 
-1. **Choose Domain**: Select a clear business domain (e-commerce, content management, etc.)
-2. **Define Services**: Map business functions to service types (API, Bot, Worker)
-3. **Follow Template**: Use the structure template above
-4. **Implement Patterns**: Follow patterns from [examples/](../examples/) *(or [.framework/examples/](.framework/examples/) when used as submodule)*
-5. **Add Documentation**: Include comprehensive README and API docs
-6. **Test Thoroughly**: Include unit, integration, and E2E tests
+1. **Choose Domain**: Select a clear business domain.
+2. **Define Services**: Map business functions to service types (API, Bot, Worker).
+3. **Follow Structure**: Use the canonical project structure referenced in the template section above.
+4. **Implement Patterns**: Follow patterns from the [Examples and Templates](LINKS_REFERENCE.md#examples-and-templates).
+5. **Add Documentation**: Include a comprehensive README.
+6. **Test Thoroughly**: Include unit, integration, and E2E tests.
 
 ### Naming Conventions
-- **Folder Names**: `snake_case` (e.g., `task_management`, `e_commerce_platform`)
-- **Service Names**: `{domain}_{type}_service` (e.g., `task_api_service`, `ecommerce_bot_service`)
-- **Follow**: [Naming conventions guide](../docs/architecture/naming_conventions.mdc) *(or [.framework/docs/architecture/naming_conventions.mdc](.framework/docs/architecture/naming_conventions.mdc) when used as submodule)*
+For all naming standards, refer to the single source of truth: the [Naming Conventions Guide](LINKS_REFERENCE.md#ide-rules-and-patterns).
 
 ## 🔗 Related Documentation
 
 ### For Implementation Guidance
-- **[Implementation Patterns](../examples/)** *(or [.framework/examples/](.framework/examples/) when used as submodule)*: Learn how to implement services correctly
-- **[Architecture Guide](../docs/guides/ARCHITECTURE_GUIDE.md)** *(or [.framework/docs/guides/ARCHITECTURE_GUIDE.md](.framework/docs/guides/ARCHITECTURE_GUIDE.md) when used as submodule)*: Understand architectural constraints
-- **[Development Commands](../docs/guides/DEVELOPMENT_COMMANDS.md)** *(or [.framework/docs/guides/DEVELOPMENT_COMMANDS.md](.framework/docs/guides/DEVELOPMENT_COMMANDS.md) when used as submodule)*: Commands for development and deployment
+- **[Implementation Patterns](LINKS_REFERENCE.md#examples-and-templates)**: Learn how to implement services correctly.
+- **[Architecture Guide](LINKS_REFERENCE.md#core-documentation)**: Understand architectural constraints.
+- **[Development Commands](LINKS_REFERENCE.md#developer-guides)**: Commands for development and deployment.
 
 ### For AI Generation
-- **[AI Agents Framework](../ai_agents/)** *(or [.framework/ai_agents/](.framework/ai_agents/) when used as submodule)*: Generate new use cases automatically
-- **[Feasibility Checker](../ai_agents/business_validation/feasibility_checker.yml)** *(or [.framework/ai_agents/business_validation/feasibility_checker.yml](.framework/ai_agents/business_validation/feasibility_checker.yml) when used as submodule)*: Validate new use case ideas
+- **[AI Agents Framework](LINKS_REFERENCE.md#ai-agents)**: Generate new use cases automatically.
+- **[Feasibility Checker](LINKS_REFERENCE.md#ai-agents)**: Validate new use case ideas.
 
 ### For Project Understanding
-- **[Main Guide](../CLAUDE.md)**: Complete project overview and navigation
-- **[Technology Stack](../docs/reference/tech_stack.md)** *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md) when used as submodule)*: Technical specifications and versions
+- **[Main Guide](LINKS_REFERENCE.md#core-documentation)**: Complete project overview and navigation.
+- **[Technology Stack](LINKS_REFERENCE.md#core-documentation)**: Technical specifications and versions.
 
 ---
 
