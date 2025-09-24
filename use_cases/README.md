@@ -78,17 +78,15 @@ When adding new use cases, follow this structure:
 use_cases/your_use_case/
 ├── README.md                    # Complete use case documentation
 ├── docker-compose.yml          # Service orchestration
-├── docker-compose.override.yml # Development overrides (optional)
 ├── .env.example                # Environment template
-├── services/                   # Business logic services
-│   ├── api_service.py          # FastAPI REST API
-│   ├── bot_service.py          # Bot interface (optional)
-│   ├── worker_service.py       # Background workers (optional)
-│   └── shared_dtos.py          # Common data transfer objects
-├── tests/                      # Use case specific tests
+├── api_service.py              # FastAPI REST API
+├── bot_service.py              # Bot interface (optional)
+├── *_worker.py                 # Background workers (optional)
+├── shared_dtos.py              # Common data transfer objects
+├── tests/                      # Use case specific tests (optional)
 │   ├── test_integration.py     # Cross-service integration tests
 │   └── test_*.py               # Service-specific tests
-└── docs/                       # Use case documentation
+└── docs/                       # Use case documentation (optional)
     ├── api_reference.md        # API endpoint documentation
     ├── deployment.md           # Deployment instructions
     └── architecture.md         # Use case specific architecture

@@ -32,7 +32,7 @@
 See [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
 
 <!-- AVOID: Direct links with submodule variants -->
-[docs/guides/ARCHITECTURE_GUIDE.md](docs/guides/ARCHITECTURE_GUIDE.md) *(or [.framework/...])*
+[guides/ARCHITECTURE_GUIDE.md](guides/ARCHITECTURE_GUIDE.md) *(or [.framework/...])*
 ```
 
 ### External Links

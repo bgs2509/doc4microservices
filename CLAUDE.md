@@ -74,7 +74,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 | Need | Go To |
 |------|-------|
-| 🏁 **Get started quickly** | [README.md](docs/LINKS_REFERENCE.md#core-documentation) → [CLAUDE.md - Development Commands](#development-commands) |
+| 🏁 **Get started quickly** | [README.md](docs/LINKS_REFERENCE.md#core-documentation) → [Development Commands](docs/LINKS_REFERENCE.md#developer-guides) |
 | 🏗️ **Understand architecture** | [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation) |
 | 📋 **Run commands** | [Development Commands](docs/LINKS_REFERENCE.md#developer-guides) |
 | 🎯 **Create new use case** | [Use Case Implementation](docs/LINKS_REFERENCE.md#developer-guides) |
@@ -211,7 +211,7 @@ This is a **Framework-as-Submodule** for microservices architecture using Python
 1. Different service types (FastAPI, Aiogram, AsyncIO workers) MUST run in separate processes/containers to avoid event loop conflicts
 2. Business services MUST access data ONLY via HTTP APIs to data services - direct database connections are PROHIBITED
 3. Use RabbitMQ for inter-service communication and event publishing
-4. **NAMING CONVENTION**: See [naming conventions](docs/LINKS_REFERENCE.md#ide-rules--patterns) for mandatory naming standards
+4. **NAMING CONVENTION**: See [naming conventions](docs/LINKS_REFERENCE.md#ide-rules-and-patterns) for mandatory naming standards
 
 ## Development Commands
 

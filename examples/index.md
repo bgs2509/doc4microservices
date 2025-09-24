@@ -26,7 +26,7 @@ Examples demonstrate the **Improved Hybrid Approach** with centralized data serv
 ### Data Services (Centralized Database Access)
 
 - **[PostgreSQL Data Service Example](./postgres_data_service.md)**: Complete implementation of centralized PostgreSQL access service with SQLAlchemy 2.x, repositories, migrations, and HTTP API endpoints.
-  - *Related*: [FastAPI Service Example](./fastapi_service.md#4-user-data-client-srcclientsuser_data_clientpy) (HTTP client usage), [Shared HTTP Client](./shared_http_client.md) (client implementation)
+  - *Related*: [FastAPI Service Example](./fastapi_service.md#3-user-data-client) (HTTP client usage), [Shared HTTP Client](./shared_http_client.md) (client implementation)
 
 - **[MongoDB Data Service Example](./mongodb_data_service.md)**: Comprehensive MongoDB data service with Motor driver, aggregation pipelines, analytics collections, and document validation.
   - *Related*: [Worker Service Example](./worker_service.md) (analytics tracking), [Shared HTTP Client](./shared_http_client.md#usage-examples) (client integration)
@@ -35,7 +35,7 @@ Examples demonstrate the **Improved Hybrid Approach** with centralized data serv
 
 - **[FastAPI Business Service Example](./fastapi_service.md)**: Complete FastAPI business service with HTTP-only data access, authentication, caching, event publishing, and proper middleware.
   - *Dependencies*: [PostgreSQL Data Service](./postgres_data_service.md), [MongoDB Data Service](./mongodb_data_service.md)
-  - *Uses*: [Shared HTTP Client](./shared_http_client.md#1-fastapi-service-integration-api_servicesrcclientsdata_clientspy), [Comprehensive Testing](./comprehensive_testing.md#unit-testing-examples)
+  - *Uses*: [Shared HTTP Client](./shared_http_client.md#usage-examples), [Comprehensive Testing](./comprehensive_testing.md#unit-testing-examples)
 
 - **[Aiogram Business Service Example](./aiogram_service.md)**: Telegram bot implementation with HTTP data access, media processing, and RabbitMQ event publishing.
   - *Dependencies*: [PostgreSQL Data Service](./postgres_data_service.md#6-api-endpoints-srcapiv1userspy), [MongoDB Data Service](./mongodb_data_service.md#6-api-endpoints-srcapiv1analyticspy)
@@ -50,7 +50,7 @@ Examples demonstrate the **Improved Hybrid Approach** with centralized data serv
 ### HTTP Communication
 
 - **[Shared HTTP Client Module](./shared_http_client.md)**: Enterprise-grade HTTP client with RFC 7807 error handling, circuit breakers, retry logic, and type safety.
-  - *Used by*: [FastAPI Service](./fastapi_service.md#2-user-data-client), [Aiogram Service](./aiogram_service.md), [Worker Service](./worker_service.md)
+  - *Used by*: [FastAPI Service](./fastapi_service.md#3-user-data-client), [Aiogram Service](./aiogram_service.md), [Worker Service](./worker_service.md)
   - *Testing*: [Comprehensive Testing](./comprehensive_testing.md#unit-testing-examples) (mocking patterns)
 
 ### Testing Framework
@@ -64,7 +64,7 @@ Examples demonstrate the **Improved Hybrid Approach** with centralized data serv
 ### Core Architecture Patterns
 
 - **[Authentication and Authorization in Business Service](./authentication.md)**: JWT authentication implementation adapted for HTTP-only data access architecture.
-  - *Implements*: [FastAPI Service](./fastapi_service.md#6-authentication-service) patterns
+  - *Implements*: [FastAPI Service](./fastapi_service.md) authentication patterns
   - *Uses*: [PostgreSQL Data Service](./postgres_data_service.md) for user verification
 
 - **[Inter-Service Communication Patterns](./communication_patterns.md)**: Examples of HTTP synchronous and RabbitMQ asynchronous communication between services.

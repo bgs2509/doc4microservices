@@ -107,7 +107,7 @@ docker-compose exec rabbitmq rabbitmqctl list_queues
 
 ### Service URLs and Health Checks
 
-> **📋 COMPLETE SERVICE ARCHITECTURE**: For detailed service ports, communication patterns, and architecture, see the [Architecture Guide](LINKS_REFERENCE.md#core-documentation).
+> **📋 COMPLETE SERVICE ARCHITECTURE**: For detailed service ports, communication patterns, and architecture, see the [Architecture Guide](../LINKS_REFERENCE.md#core-documentation).
 
 ```bash
 # External Access (from host machine)
@@ -424,11 +424,11 @@ docker-compose logs -f task_bot_service
 
 ## 📚 Related Documentation
 
-- **Architecture Details**: [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
-- **Technology Specifications**: [Technical Specifications](LINKS_REFERENCE.md#core-documentation)
-- **Working Examples**: [Examples Index](LINKS_REFERENCE.md#examples-and-templates)
-- **Troubleshooting Guide**: [Troubleshooting Guide](LINKS_REFERENCE.md#developer-guides)
-- **Main Development Guide**: [Main Entry Point](LINKS_REFERENCE.md#core-documentation)
+- **Architecture Details**: [Architecture Guide](../LINKS_REFERENCE.md#core-documentation)
+- **Technology Specifications**: [Technical Specifications](../LINKS_REFERENCE.md#core-documentation)
+- **Working Examples**: [Examples Index](../LINKS_REFERENCE.md#examples-and-templates)
+- **Troubleshooting Guide**: [Troubleshooting Guide](../LINKS_REFERENCE.md#developer-guides)
+- **Main Development Guide**: [Main Entry Point](../LINKS_REFERENCE.md#core-documentation)
 
 ---
 
@@ -459,7 +459,7 @@ docker-compose exec redis redis-cli -a redis123 BGSAVE
 
 ---
 
-> **📖 Documentation Hierarchy**: For complete project guidance, see [Main Entry Point](LINKS_REFERENCE.md#core-documentation). For architectural details, see [Architecture Guide](LINKS_REFERENCE.md#core-documentation). For technology specifications, see [Technical Specifications](LINKS_REFERENCE.md#core-documentation).
+> **📖 Documentation Hierarchy**: For complete project guidance, see [Main Entry Point](../LINKS_REFERENCE.md#core-documentation). For architectural details, see [Architecture Guide](../LINKS_REFERENCE.md#core-documentation). For technology specifications, see [Technical Specifications](../LINKS_REFERENCE.md#core-documentation).
 
 ---
 

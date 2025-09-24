@@ -1,6 +1,6 @@
 # AI-Powered Project Generation Guide
 
-This guide provides comprehensive instructions for creating complete, production-ready microservices applications using the AI agents framework. All implementations follow the standardized project structure and architectural patterns documented in [Main Entry Point](LINKS_REFERENCE.md#core-documentation).
+This guide provides comprehensive instructions for creating complete, production-ready microservices applications using the AI agents framework. All implementations follow the standardized project structure and architectural patterns documented in [Main Entry Point](../LINKS_REFERENCE.md#core-documentation).
 
 **NEW APPROACH**: This guide covers the **AI-first project generation workflow** where users create new repositories and AI generates complete applications with proper structure.
 
@@ -21,19 +21,19 @@ This guide provides comprehensive instructions for creating complete, production
 
 **Before generating any application, AI agents MUST comply with these non-negotiable constraints:**
 
-> **⚠️ MANDATORY COMPLIANCE**: All constraints are defined in the [canonical architecture documentation](LINKS_REFERENCE.md#core-documentation). This section provides implementation-specific guidance.
+> **⚠️ MANDATORY COMPLIANCE**: All constraints are defined in the [canonical architecture documentation](../LINKS_REFERENCE.md#core-documentation). This section provides implementation-specific guidance.
 
 ### 1. **Architecture Compliance (MANDATORY)**
-- **Foundation**: Follow the [Improved Hybrid Approach architecture](LINKS_REFERENCE.md#core-documentation)
+- **Foundation**: Follow the [Improved Hybrid Approach architecture](../LINKS_REFERENCE.md#core-documentation)
 - **Data Access**: HTTP-only communication with data services
 - **Service Separation**: Each service type in separate containers
 - **Project Structure**: All source code in `src/` folder, Dockerfiles in service folders
 
 ### 2. **Development Standards**
-- **Commands**: Use [canonical development commands](LINKS_REFERENCE.md#developer-guides)
-- **Technology**: Follow [complete technology specifications](LINKS_REFERENCE.md#core-documentation)
-- **Architecture**: Follow [comprehensive architecture guide](LINKS_REFERENCE.md#core-documentation)
-- **Naming**: Follow [Naming Conventions](LINKS_REFERENCE.md#ide-rules-and-patterns)
+- **Commands**: Use [canonical development commands](../LINKS_REFERENCE.md#developer-guides)
+- **Technology**: Follow [complete technology specifications](../LINKS_REFERENCE.md#core-documentation)
+- **Architecture**: Follow [comprehensive architecture guide](../LINKS_REFERENCE.md#core-documentation)
+- **Naming**: Follow [Naming Conventions](../LINKS_REFERENCE.md#ide-rules-and-patterns)
 - **Patterns**: See [Documentation Index](../INDEX.md) for service-specific implementation patterns
 
 **Violation of these constraints will result in non-functional applications. This guide provides compliant generation patterns.**

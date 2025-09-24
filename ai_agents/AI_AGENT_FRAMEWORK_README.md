@@ -2,7 +2,7 @@
 
 > **📋 DOCUMENTATION TYPE**: AI Automation Framework - Enabling AI to generate applications
 > **👥 TARGET USERS**: AI systems, AI developers, business analysts
-> **🔗 RELATED**: [Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates) | [Working Demonstrations](docs/LINKS_REFERENCE.md#examples-and-templates) | **[Main Entry Point](docs/LINKS_REFERENCE.md#core-documentation)**
+> **🔗 RELATED**: [Examples Index](../docs/LINKS_REFERENCE.md#examples-and-templates) | [Working Demonstrations](../docs/LINKS_REFERENCE.md#examples-and-templates) | **[Main Entry Point](../docs/LINKS_REFERENCE.md#core-documentation)**
 
 ## 🎯 Overview
 

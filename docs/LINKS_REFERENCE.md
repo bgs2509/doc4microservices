@@ -82,7 +82,7 @@ For simplified linking in other documents, use these templates:
 ### Usage Examples
 ```markdown
 <!-- Instead of long construction -->
-[docs/reference/tech_stack.md](docs/reference/tech_stack.md) *(or [.framework/docs/reference/tech_stack.md](.framework/docs/reference/tech_stack.md) when used as submodule)*
+[docs/reference/tech_stack.md](docs/reference/tech_stack.md) *(or `.framework/docs/reference/tech_stack.md` when used as submodule)*
 
 <!-- Use -->
 See [technical specifications](LINKS_REFERENCE.md#core-documentation)

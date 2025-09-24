@@ -420,7 +420,7 @@ class PaginationParams(BaseModel):
         le=100,
         description="Number of items per page (1-100)"
     )
-    skip: int = Field(
+    offset: int = Field(
         default=0,
         ge=0,
         description="Number of items to skip"
@@ -502,7 +502,7 @@ class PaginatedResponse(BaseModel, Generic[T]):
         ...,
         description="Items per page"
     )
-    skip: int = Field(
+    offset: int = Field(
         ...,
         description="Items skipped"
     )
@@ -579,7 +579,7 @@ class BaseRepository(Generic[DocumentType]):
 
         # Find documents with pagination
         cursor = self.collection.find(filter_dict)
-        cursor = cursor.sort(sort_spec).skip(pagination.skip).limit(pagination.limit)
+        cursor = cursor.sort(sort_spec).skip(pagination.offset).limit(pagination.limit)
 
         documents = await cursor.to_list(length=pagination.limit)
         items = [self.model(**doc) for doc in documents]
@@ -588,9 +588,9 @@ class BaseRepository(Generic[DocumentType]):
             items=items,
             total=total,
             limit=pagination.limit,
-            skip=pagination.skip,
-            has_next=(pagination.skip + pagination.limit) < total,
-            has_prev=pagination.skip > 0
+            offset=pagination.offset,
+            has_next=(pagination.offset + pagination.limit) < total,
+            has_prev=pagination.offset > 0
         )
 
     async def create(self, document: DocumentType) -> DocumentType:
@@ -1016,7 +1016,7 @@ async def list_analytics_events(
         items=[AnalyticsEventResponse.from_orm(event) for event in result.items],
         total=result.total,
         limit=result.limit,
-        skip=result.skip,
+        offset=result.offset,
         has_next=result.has_next,
         has_prev=result.has_prev
     )
@@ -1474,7 +1474,7 @@ async def test_find_events_by_user(analytics_repository):
         await analytics_repository.create_event(event_data)
 
     # Find events for user_123
-    pagination = PaginationParams(limit=10, skip=0)
+    pagination = PaginationParams(limit=10, offset=0)
     events = await analytics_repository.find_events_by_user("user_123", pagination)
 
     assert len(events) == 2

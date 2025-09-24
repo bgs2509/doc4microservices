@@ -62,23 +62,24 @@ services/api_service/
 
 > **🔗 IMPORTANT**: This service uses the [Shared HTTP Client Module](./shared_http_client.md) to eliminate code duplication and provide enterprise-grade features like circuit breakers, advanced retry logic, and comprehensive error handling.
 
-See the complete implementation in [shared_http_client.md](./shared_http_client.md#shared-http-client-implementation).
+For complete implementation details of the base HTTP client and DataServiceClient, see [shared_http_client.md](./shared_http_client.md).
 
 ## 3. User Data Client (`src/clients/user_data_client.py`)
 
-Specialized client for PostgreSQL Data Service communication.
+Specialized client for PostgreSQL Data Service communication, extending the shared DataServiceClient.
 
 ```python
 from typing import Optional, Dict, Any, List
-from shared.http.base_client import BaseHTTPClient
+from shared.http.base_client import DataServiceClient
 from ..schemas.user import UserCreate, UserUpdate, UserResponse
 from ..core.config import settings
 
-class UserDataClient(BaseHTTPClient):
+class UserDataClient(DataServiceClient):
     """Client for PostgreSQL Data Service communication."""
 
     def __init__(self):
         super().__init__(
+            service_name="PostgreSQL Data Service",
             base_url=settings.POSTGRES_DATA_SERVICE_URL,
             timeout=settings.HTTP_CLIENT_TIMEOUT,
             retries=settings.HTTP_CLIENT_RETRIES
@@ -86,39 +87,59 @@ class UserDataClient(BaseHTTPClient):
 
     async def get_user_by_id(self, user_id: int) -> Optional[UserResponse]:
         """Get user by ID from data service."""
-        result = await self.get(f"/api/v1/users/{user_id}")
-        return UserResponse(**result) if result else None
+        return await self.get_typed(
+            f"/api/v1/users/{user_id}",
+            UserResponse
+        )
 
     async def get_user_by_username(self, username: str) -> Optional[UserResponse]:
         """Get user by username from data service."""
-        result = await self.get(f"/api/v1/users/by-username/{username}")
-        return UserResponse(**result) if result else None
+        return await self.get_typed(
+            f"/api/v1/users/by-username/{username}",
+            UserResponse
+        )
 
     async def get_user_by_email(self, email: str) -> Optional[UserResponse]:
         """Get user by email from data service."""
-        result = await self.get(f"/api/v1/users/by-email/{email}")
-        return UserResponse(**result) if result else None
+        return await self.get_typed(
+            f"/api/v1/users/by-email/{email}",
+            UserResponse
+        )
 
     async def create_user(self, user_data: UserCreate, hashed_password: str) -> Optional[UserResponse]:
         """Create new user via data service with hashed password."""
         # Transform API schema to Data Service schema
-        data_service_payload = {
-            "email": user_data.email,
-            "username": user_data.username,
-            "hashed_password": hashed_password,  # Use hashed_password field for data service
-            "full_name": user_data.full_name,
-            "bio": user_data.bio
-        }
-        result = await self.post("/api/v1/users/", data_service_payload)
-        return UserResponse(**result) if result else None
+        from shared.http.base_client import BaseModel
+        from pydantic import Field
+
+        class DataServiceUserCreate(BaseModel):
+            email: str
+            username: str
+            hashed_password: str = Field(..., description="Already hashed password")
+            full_name: Optional[str] = None
+            bio: Optional[str] = None
+
+        data_service_payload = DataServiceUserCreate(
+            email=user_data.email,
+            username=user_data.username,
+            hashed_password=hashed_password,
+            full_name=user_data.full_name,
+            bio=user_data.bio
+        )
+
+        return await self.post_typed(
+            "/api/v1/users",
+            UserResponse,
+            data_service_payload
+        )
 
     async def update_user(self, user_id: int, user_data: UserUpdate) -> Optional[UserResponse]:
         """Update user via data service."""
-        result = await self.patch(
+        return await self.patch_typed(
             f"/api/v1/users/{user_id}",
-            user_data.model_dump(exclude_unset=True)
+            UserResponse,
+            user_data
         )
-        return UserResponse(**result) if result else None
 
     async def delete_user(self, user_id: int) -> bool:
         """Delete user via data service."""
@@ -135,7 +156,7 @@ class UserDataClient(BaseHTTPClient):
         if filter_active is not None:
             params["active"] = filter_active
 
-        result = await self.get("/api/v1/users/", params=params)
+        result = await self.get("/api/v1/users", params=params)
         if not result:
             return {"users": [], "total": 0, "limit": limit, "offset": offset}
 
@@ -146,11 +167,11 @@ class UserDataClient(BaseHTTPClient):
             "offset": result["offset"]
         }
 
-    async def verify_user_credentials(self, username: str, password_hash: str) -> Optional[UserResponse]:
+    async def verify_user_credentials(self, username: str, hashed_password: str) -> Optional[UserResponse]:
         """Verify user credentials via data service."""
         result = await self.post("/api/v1/users/verify-credentials", {
             "username": username,
-            "password_hash": password_hash
+            "hashed_password": hashed_password  # Fixed: use consistent naming
         })
         return UserResponse(**result) if result else None
 ```
@@ -596,13 +617,16 @@ class UserService:
 
     async def authenticate_user(self, username: str, password: str) -> Optional[UserResponse]:
         """Authenticate user credentials."""
-        user = await self.get_user_by_username(username)
-        if not user:
-            return None
+        # Hash the provided password to match against stored hash
+        password_hash = self.auth_service.hash_password(password)
 
-        # Note: In a real implementation, you'd get the hashed password
-        # from the data service via a separate endpoint
-        if not self.auth_service.verify_password(password, user.password_hash):
+        # Use the data service's credential verification endpoint
+        user = await self.user_client.verify_user_credentials(username, password_hash)
+        if not user:
+            # Try alternative verification if direct hash comparison fails
+            user = await self.get_user_by_username(username)
+            if user and self.auth_service.verify_password(password, user.hashed_password):
+                return user
             return None
 
         return user

@@ -238,7 +238,7 @@ services:
     environment:
       # Bot settings
       BOT_TOKEN: ${BOT_TOKEN:-your-telegram-bot-token-here}
-      BOT_USERNAME: taskmanager_bot
+      BOT_USERNAME: ${BOT_USERNAME:-taskmanager_bot}
 
       # External services
       REDIS_URL: redis://:redis123@redis:6379/0
@@ -275,7 +275,8 @@ services:
       REDIS_URL: redis://:redis123@redis:6379/0
       RABBITMQ_URL: amqp://admin:admin123@rabbitmq:5672/
       TASK_API_URL: http://task_api_service:8000
-      BOT_API_URL: http://task_bot_service:8000
+      # BOT_API_URL not needed - bot service doesn't expose HTTP API
+      # Bot notifications handled via RabbitMQ events
 
       # Reminder settings
       CHECK_INTERVAL_SECONDS: 300  # 5 minutes

@@ -990,7 +990,7 @@ Add references to shared module in all service examples:
 ## HTTP Client Integration
 
 This service uses the shared HTTP client module for data service communication.
-See [shared_http_client.md](shared_http_client.md) for complete implementation details.
+The complete implementation details are provided above in this document.
 ```
 
 ### Step 3: Testing Integration

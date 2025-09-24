@@ -115,7 +115,7 @@ To maintain documentation quality, all internal links should be validated:
 
 ```bash
 # Check for broken internal links (example command)
-find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \; | \ # (or find .framework/docs/ when used as submodule)
+find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \;
   xargs grep -n "\[.*\](" | \
   grep -v "http" | \
   awk -F: \'{print $1":"$2}\' | \
