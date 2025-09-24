@@ -49,18 +49,16 @@ Establish a single, project-wide naming convention standard that prohibits hyphe
    - **MUST NOT** use hyphens in any Python identifiers
    - **MUST NOT** use camelCase except when required by external libraries
 
-   **Pydantic Models (DTOs and Schemas):**
-   - **MUST** name Pydantic models based on their specific purpose and role within the application contract, not their location.
-   - **MUST** use suffixes for shared DTOs to clearly define their function:
-     - `...Base`: For base models containing common, reusable fields.
-     - `...Create`: For models used to create a new entity (e.g., for `POST` requests).
-     - `...Update`: For models used for partial updates (e.g., for `PATCH` requests), where all fields are typically optional.
-     - `...Public`: For models used in public API responses, excluding any sensitive data like passwords.
-     - `...Payload`: For models that define the structure of asynchronous messages (e.g., for RabbitMQ events).
-   - **SHOULD** name service-local models to reflect their internal context (e.g., `UserProcessingState`, `BillingSystemPayload`).
-   - **SHOULD NOT** use generic, non-descriptive suffixes like `...DTO` or `...Schema`. The model's purpose should be clear from its name.
-   - **MUST** locate shared models in a designated shared directory (e.g., `src/shared/dtos/`).
-   - **MUST** locate service-local models inside the corresponding service's directory (e.g., `src/api_service/schemas/`).
+   **Shared Components Naming (DTOs, Events, and Utils):**
+   - **Pydantic Models (DTOs and Event Schemas):**
+     - **MUST** be named based on their specific purpose and role within the application contract, not their location.
+     - **MUST** use suffixes for shared models to clearly define their function: `...Base`, `...Create`, `...Update`, `...Public`, `...Payload`.
+     - **SHOULD NOT** use generic, non-descriptive suffixes like `...DTO` or `...Schema`.
+     - **MUST** be located in a designated shared directory (e.g., `src/shared/dtos/`, `src/shared/events/`).
+     - Service-local models **SHOULD** be named to reflect their internal context (e.g., `UserProcessingState`) and located inside the service's directory.
+   - **Utility Functions (in `utils.py`):**
+     - **MUST** follow the standard `snake_case` naming convention for functions.
+     - **MUST** be stateless and generic.
 
 #### 3) Database Naming
    - **MUST** use snake_case for table names: `user_accounts`, `api_logs`, `service_metrics`
