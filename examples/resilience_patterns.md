@@ -1,4 +1,4 @@
-## Resilience Patterns
+## 🛡️ Resilience Patterns
 
 Resilience is a key characteristic of distributed systems. In this section, we'll examine two important patterns that help improve microservices reliability and stability: **Dead-Letter Queue (DLQ)** and **Circuit Breaker**.
 

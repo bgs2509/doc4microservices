@@ -81,7 +81,7 @@ Examples demonstrate the **Improved Hybrid Approach** with centralized data serv
   - *Applied in*: All service examples
   - *Validated by*: [Comprehensive Testing](./comprehensive_testing.md#integration-testing-examples) (correlation testing)
 
-- **[Testing Strategies](./testing_strategies.md)**: Advanced testing patterns for microservices with real databases, HTTP mocking, and service interaction testing.
+- **[Comprehensive Testing Examples](./comprehensive_testing.md)**: Complete testing suite with testcontainers, performance testing, E2E workflows, and mocking strategies.
   - *Extended by*: [Comprehensive Testing](./comprehensive_testing.md)
   - *Applies to*: All service examples above
 

@@ -2,7 +2,7 @@
 
 This section demonstrates how to implement JWT authentication in a **Business Service** following the "Improved Hybrid Approach" architecture. This service has no direct database access and uses the unified HTTP client approach defined in [`fastapi_service.md`](./fastapi_service.md).
 
-## Key Changes from Standard Authentication
+## 🎯 Key Changes from Standard Authentication
 - **No Direct Database Access**: Uses `UserDataClient` for all user data operations
 - **Centralized HTTP Client**: Reuses the unified client architecture
 - **Security Best Practices**: Proper password hashing, JWT handling, and error responses
@@ -10,7 +10,7 @@ This section demonstrates how to implement JWT authentication in a **Business Se
 
 ---
 
-## 1. Unified Client Usage
+## 💻 1. Unified Client Usage
 
 The authentication service uses the `UserDataClient` defined in [`fastapi_service.md`](./fastapi_service.md). This client provides all necessary methods:
 
@@ -22,7 +22,7 @@ The authentication service uses the `UserDataClient` defined in [`fastapi_servic
 
 ---
 
-## 2. Authentication Service Reference
+## 💻 2. Authentication Service Reference
 
 The `AuthService` class is fully implemented in [`fastapi_service.md`](./fastapi_service.md#6-authentication-service) section. It provides:
 
@@ -41,7 +41,7 @@ class AuthService:
 
 ---
 
-## 3. Dependency for Getting Current User
+## 💻 3. Dependency for Getting Current User
 
 This is the key change. `get_current_user` now uses `UserDataClient` to retrieve user data.
 
@@ -85,7 +85,7 @@ async def get_current_user(
 
 ---
 
-## 4. Token Endpoint (`src/api/v1/auth.py`)
+## 💻 4. Token Endpoint (`src/api/v1/auth.py`)
 
 This endpoint also changes to use `UserDataClient`.
 

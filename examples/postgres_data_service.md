@@ -8,7 +8,7 @@ This document demonstrates the implementation of a **PostgreSQL Data Service** f
 > - **Companion**: [MongoDB Data Service](./mongodb_data_service.md) (for analytics and documents)
 > - **Testing**: [Comprehensive Testing](./comprehensive_testing.md#integration-testing-examples) (real database testing)
 
-## Key Characteristics
+## 🎯 Key Characteristics
 - **Technology:** FastAPI + SQLAlchemy 2.x with async support
 - **Responsibility:** Data models, CRUD operations, transactions, migrations, pagination
 - **Interface:** RESTful HTTP API with RFC 7807 error handling and OpenAPI documentation
@@ -17,7 +17,7 @@ This document demonstrates the implementation of a **PostgreSQL Data Service** f
 
 ---
 
-## 1. Project Structure (db_postgres_service)
+## 🏗️ 1. Project Structure (db_postgres_service)
 
 ```
 services/db_postgres_service/
@@ -62,7 +62,7 @@ services/db_postgres_service/
 
 ---
 
-## 2. Database Models
+## 💻 2. Database Models
 
 ### Base Model (`src/models/base.py`)
 Base model with common fields and utilities.
@@ -182,7 +182,7 @@ class User(BaseModel):
         return f"<User(id={self.id}, username='{self.username}', email='{self.email}')>"
 ```
 
-## 3. Schemas with Pagination (`src/schemas/common.py`)
+## 💻 3. Schemas with Pagination (`src/schemas/common.py`)
 
 Common pagination and filtering schemas.
 
@@ -258,7 +258,7 @@ class FilterParams(BaseModel):
     )
 ```
 
-## 4. User Schemas (`src/schemas/user.py`)
+## 💻 4. User Schemas (`src/schemas/user.py`)
 
 Pydantic schemas for user operations.
 
@@ -414,7 +414,7 @@ class UserFilterParams(BaseModel):
     )
 ```
 
-## 5. Base Repository (`src/repositories/base_repository.py`)
+## 💻 5. Base Repository (`src/repositories/base_repository.py`)
 
 Base repository with pagination and common operations.
 
@@ -525,7 +525,7 @@ class BaseRepository(Generic[ModelType]):
                 query = query.where(getattr(self.model, key) == value)
         return query
 
-## 6. User Repository (`src/repositories/user_repository.py`)
+## 💻 6. User Repository (`src/repositories/user_repository.py`)
 
 User-specific repository with custom queries and filtering.
 
@@ -657,7 +657,7 @@ Alembic is used for managing database schema changes.
 
 ---
 
-## 3. API Endpoints (`src/api/v1/users.py`)
+## 💻 3. API Endpoints (`src/api/v1/users.py`)
 
 Endpoints provide HTTP interface for user data access.
 
@@ -707,7 +707,7 @@ async def get_user_by_username(
 
 ---
 
-## 4. Main Application File (`src/main.py`)
+## 🚀 4. Main Application File (`src/main.py`)
 
 ```python
 from fastapi import FastAPI

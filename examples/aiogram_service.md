@@ -8,14 +8,14 @@ This document demonstrates the implementation of a Telegram bot using Aiogram as
 > - **Event Processing**: [Worker Service](./worker_service.md) (for media processing), [Communication Patterns](./communication_patterns.md) (RabbitMQ events)
 > - **Testing**: [Comprehensive Testing](./comprehensive_testing.md#end-to-end-testing-examples) (bot interaction testing)
 
-## Key Characteristics
+## 🎯 Key Characteristics
 - **Responsibility:** User interaction through Telegram, command and media file processing.
 - **Data Access:** Only through HTTP calls to Data Services.
 - **Communications:** Publishes events to RabbitMQ, can call other services via HTTP.
 
 ---
 
-## 1. Project Structure (bot_service)
+## 🏗️ 1. Project Structure (bot_service)
 
 ```
 services/bot_service/
@@ -39,7 +39,7 @@ services/bot_service/
 
 ---
 
-## 2. Handler Logic (`src/bot/handlers.py`)
+## 💻 2. Handler Logic (`src/bot/handlers.py`)
 
 Command and message handlers use HTTP client for data operations and service layer for business logic.
 
@@ -126,7 +126,7 @@ async def handle_photo(message: Message, rabbitmq_channel, redis_client):
 
 ---
 
-## 3. Service Layer (`src/services/media_service.py`)
+## 💻 3. Service Layer (`src/services/media_service.py`)
 
 The service is responsible for publishing events to RabbitMQ.
 
@@ -164,7 +164,7 @@ class MediaService:
 
 ---
 
-## 4. Main Application File (`src/main.py`)
+## 💻 4. Main Application File (`src/main.py`)
 
 `main.py` initializes the bot, dispatcher, and dependencies such as RabbitMQ and Redis.
 

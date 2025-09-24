@@ -49,6 +49,19 @@ Establish a single, project-wide naming convention standard that prohibits hyphe
    - **MUST NOT** use hyphens in any Python identifiers
    - **MUST NOT** use camelCase except when required by external libraries
 
+   **Pydantic Models (DTOs and Schemas):**
+   - **MUST** name Pydantic models based on their specific purpose and role within the application contract, not their location.
+   - **MUST** use suffixes for shared DTOs to clearly define their function:
+     - `...Base`: For base models containing common, reusable fields.
+     - `...Create`: For models used to create a new entity (e.g., for `POST` requests).
+     - `...Update`: For models used for partial updates (e.g., for `PATCH` requests), where all fields are typically optional.
+     - `...Public`: For models used in public API responses, excluding any sensitive data like passwords.
+     - `...Payload`: For models that define the structure of asynchronous messages (e.g., for RabbitMQ events).
+   - **SHOULD** name service-local models to reflect their internal context (e.g., `UserProcessingState`, `BillingSystemPayload`).
+   - **SHOULD NOT** use generic, non-descriptive suffixes like `...DTO` or `...Schema`. The model's purpose should be clear from its name.
+   - **MUST** locate shared models in a designated shared directory (e.g., `src/shared/dtos/`).
+   - **MUST** locate service-local models inside the corresponding service's directory (e.g., `src/api_service/schemas/`).
+
 #### 3) Database Naming
    - **MUST** use snake_case for table names: `user_accounts`, `api_logs`, `service_metrics`
    - **MUST** use snake_case for column names: `user_id`, `created_at`, `last_login_time`
@@ -207,6 +220,28 @@ services:
 DATABASE_URL=postgresql+asyncpg://user:pass@localhost/user_service_db
 REDIS_HOST=localhost
 API_SECRET_KEY=your_secret_key
+
+# DTO Naming
+# File: src/shared/dtos/user_dtos.py
+from pydantic import BaseModel
+
+class UserBase(BaseModel):
+    email: str
+    full_name: str | None = None
+
+class UserCreate(UserBase):
+    password: str
+
+class UserPublic(UserBase):
+    id: int
+
+# File: src/worker_service/internal/state.py
+from shared.dtos.user_dtos import UserPublic
+
+class UserProcessingState(UserPublic):
+    """Internal model for worker, not shared."""
+    retry_attempts: int = 0
+    status: str = "pending"
 ```
 
 #### ❌ Incorrect Examples
