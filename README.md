@@ -112,16 +112,13 @@ This repository contains comprehensive documentation designed for both AI agents
 | Component | Purpose | Location |
 |-----------|---------|----------|
 | **🏗️ Main Entry Point** | Complete development guide and navigation | [Main Entry Point](docs/LINKS_REFERENCE.md#core-documentation) |
-| **🤖 AI Framework** | Automated application generation | [AI Agents](docs/LINKS_REFERENCE.md#examples-and-templates) |
 | **📋 Implementation Rules** | Service-specific patterns and constraints | [Developer Guides](docs/LINKS_REFERENCE.md#developer-guides) |
-| **💻 Working Examples** | Complete reference implementations | [Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates) |
 
 ### For Human Developers
 | Document | Purpose | When to Use |
 |----------|---------|-------------|
 | **[Main Entry Point](docs/LINKS_REFERENCE.md#core-documentation)** | Complete developer guide | Start here - setup, architecture, commands |
 | **[Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation)** | Technology specifications | Check versions, configurations |
-| **[Working Examples](docs/LINKS_REFERENCE.md#examples-and-templates)** | Working code examples | Understand implementation patterns |
 | **[Troubleshooting Guide](docs/LINKS_REFERENCE.md#developer-guides)** | Problem solving | Debug issues, find solutions |
 
 ## 📋 Technology Stack
@@ -174,16 +171,13 @@ git submodule init && git submodule update
 1. **Automatically scan `.framework/`** for patterns, rules, and examples
 2. **Generate user code in `src/`** - never modify `.framework/` content
 3. **Follow `.framework/docs/` guidelines** for architecture compliance
-4. **Use `.framework/ai_agents/`** for validation and generation tools
 
 ### Quick Links (within .framework/)
 - **🏗️ Architecture Guide**: [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation)
 - **📋 Development Commands**: [Development Commands](docs/LINKS_REFERENCE.md#developer-guides)
 - **🎯 Use Case Implementation**: [Use Case Implementation](docs/LINKS_REFERENCE.md#developer-guides)
 - **🔧 Technology Stack**: [Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation)
-- **💻 Working Examples**: [Examples Index](docs/LINKS_REFERENCE.md#examples-and-templates)
 - **🐛 Troubleshooting**: [Troubleshooting](docs/LINKS_REFERENCE.md#developer-guides)
-- **🚀 Live Demonstrations**: [Working Demonstrations](docs/LINKS_REFERENCE.md#examples-and-templates)
 
 ## 📄 License
 

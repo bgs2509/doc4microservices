@@ -2,7 +2,7 @@
 
 > **🔧 CANONICAL TECHNOLOGY REFERENCE**: This document is the single source of truth for all technology versions, configurations, and specifications used in the project. All other documentation references this file.
 
-> **📖 Related Documentation**: For development guidance, see [Development Commands](../LINKS_REFERENCE.md#developer-guides). For service-specific patterns, see [Documentation Index](../INDEX.md) (architecture/, services/, infrastructure/, observability/, quality/). [complete working examples](../LINKS_REFERENCE.md#examples-and-templates). For troubleshooting, see [Troubleshooting Guide](../LINKS_REFERENCE.md#developer-guides).
+> **📖 Related Documentation**: For development guidance, see [Development Commands](../LINKS_REFERENCE.md#developer-guides). For service-specific patterns, see [Documentation Index](../INDEX.md) (architecture/, services/, infrastructure/, observability/, quality/). For troubleshooting, see [Troubleshooting Guide](../LINKS_REFERENCE.md#developer-guides).
 
 ## Table of Contents
 - [Architecture](#architecture)
@@ -444,7 +444,7 @@ For comprehensive, working implementations of all service types with real-world 
 - **Inter-Service Communication**: HTTP API calls and event-driven patterns
 - **Testing Examples**: Unit, integration, and end-to-end testing patterns
 
-See [Examples Index](../LINKS_REFERENCE.md#examples-and-templates) for detailed implementations.
+See [Use Case Implementation Guide](../LINKS_REFERENCE.md#developer-guides) for end-to-end implementation patterns.
 
 ### Troubleshooting Reference
 

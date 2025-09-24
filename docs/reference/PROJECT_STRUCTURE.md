@@ -5,8 +5,8 @@ This document provides comprehensive guidance on organizing projects when using 
 ## Framework Usage Patterns
 
 This framework can be used in two ways:
-- **Direct**: Working in this repository directly (use paths like `docs/`, `examples/`)
-- **Submodule**: Added as `.framework/` submodule to your project (use paths like `.framework/docs/`, `.framework/examples/`)
+- **Direct**: Working in this repository directly (use paths like `docs/`)
+- **Submodule**: Added as `.framework/` submodule to your project (use paths like `.framework/docs/`)
 
 ## Recommended Project Structure
 
@@ -16,9 +16,6 @@ When you add this framework as a submodule, your project structure should follow
 my_awesome_app/                      # Your project repository
 ├── .framework/                      # Git submodule (this repository)
 │   ├── docs/                       # Architecture rules and patterns
-│   ├── ai_agents/                  # AI generators and validators
-│   ├── examples/                   # Reference implementations
-│   ├── use_cases/                  # Working applications
 │   └── CLAUDE.md                   # AI instructions
 ├── README.md                        # Your project documentation
 ├── docker-compose.yml               # Your project infrastructure
@@ -73,7 +70,7 @@ my_awesome_app/                      # Your project repository
 
 ### Framework Directory (`.framework/`)
 - **Immutable**: Never modify framework content when used as submodule
-- **Patterns**: Contains architecture rules, AI agents, and reference implementations
+- **Patterns**: Contains architecture rules, implementation guides, and automation rulesets
 - **Updates**: Use `git submodule update --remote .framework` to get latest improvements
 
 ### Root-Level Configuration
@@ -146,7 +143,7 @@ git submodule init && git submodule update
 ### Development Workflow
 1. **Add framework as submodule** to your project
 2. **Generate application code** in `src/` using AI or manual development
-3. **Follow framework patterns** from `docs/` *(or `.framework/docs/` when used as submodule)* and `examples/` *(or `.framework/examples/` when used as submodule)*
+3. **Follow framework patterns** from `docs/` *(or `.framework/docs/` when used as submodule)*
 4. **Never modify** `.framework/` content
 5. **Update framework** periodically with `git submodule update --remote`
 
@@ -186,4 +183,3 @@ When organizing your project:
 - **Architecture Details**: [Architecture Guide](../LINKS_REFERENCE.md#core-documentation)
 - **Development Commands**: [Development Commands](../LINKS_REFERENCE.md#developer-guides)
 - **Technology Stack**: [Technical Specifications](../LINKS_REFERENCE.md#core-documentation)
-- **Working Examples**: [Examples Index](../LINKS_REFERENCE.md#examples-and-templates)

@@ -37,7 +37,7 @@ check_file_exists() {
     return 0
 }
 
-# Поиск всех markdown файлов (исключая use_cases и examples)
+# Поиск всех markdown файлов
 echo "Поиск markdown файлов..."
 while IFS= read -r -d '' file; do
     echo "Проверяем: $file"
@@ -65,7 +65,7 @@ while IFS= read -r -d '' file; do
 
     done < <(grep -n '\[.*\](' "$file")
 
-done < <(find /home/bgs/Henry_Bud_GitHub/doc4microservices -name "*.md" -not -path "*/use_cases/*" -not -path "*/examples/*" -print0)
+done < <(find /home/bgs/Henry_Bud_GitHub/doc4microservices -name "*.md" -print0)
 
 # Выводим результаты
 echo ""

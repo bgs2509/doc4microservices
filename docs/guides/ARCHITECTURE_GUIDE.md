@@ -407,7 +407,6 @@ async def handle_user_created_event(event_data: dict) -> None:
 ### Implementation Resources
 - **Development Commands**: [Development Commands](../LINKS_REFERENCE.md#developer-guides)
 - **Technology Specifications**: [Technical Specifications](../LINKS_REFERENCE.md#core-documentation)
-- **Working Examples**: [Examples Index](../LINKS_REFERENCE.md#examples-and-templates)
 - **Troubleshooting**: [Troubleshooting](../LINKS_REFERENCE.md#developer-guides)
 
 ### Implementation Rules
@@ -421,7 +420,6 @@ async def handle_user_created_event(event_data: dict) -> None:
 ### Project Organization
 - **Main Guide**: [Main Entry Point](../LINKS_REFERENCE.md#core-documentation)
 - **Use Case Implementation**: [Use Case Implementation](../LINKS_REFERENCE.md#developer-guides)
-- **Example Use Case**: [Working Demonstrations](../LINKS_REFERENCE.md#examples-and-templates)
 
 ---
 

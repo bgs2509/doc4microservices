@@ -11,7 +11,6 @@ This is the comprehensive documentation index for the microservices project. All
 | 📋 **Run commands** | [Development Commands][link-development-commands] |
 | 🎯 **Create new use case** | [Use Case Implementation Guide][link-use-case-guide] |
 | 🔧 **Check tech specs** | [Technical Specifications][link-tech-specs] |
-| 💻 **See working examples** | [Examples Index][link-examples-index] |
 | 🐛 **Solve problems** | [Troubleshooting Guide][link-troubleshooting-guide] |
 | 🤖 **IDE rules & patterns** | [IDE Rules & Patterns][link-ide-rules] |
 
@@ -28,7 +27,6 @@ Essential documentation for development and architecture understanding.
 Technical specifications, examples, and troubleshooting resources.
 
 - **[Technical Specifications][link-tech-specs]** - Technology specifications and versions
-- **[Examples Index][link-examples-index]** - Working code examples for all service types
 - **[Troubleshooting Guide][link-troubleshooting-guide]** - Common issues and solutions
 
 ## 🤖 IDE Rules & Patterns
@@ -81,8 +79,7 @@ Code quality and testing standards:
 ### For Service Development
 1. Follow [Use Case Implementation Guide][link-use-case-guide]
 2. Check relevant service rules in the `services` directory.
-3. Use examples from [Examples Index][link-examples-index]
-4. Verify setup with [Technical Specifications][link-tech-specs]
+3. Verify setup with [Technical Specifications][link-tech-specs]
 
 ### For Infrastructure Setup
 1. Use [Development Commands][link-development-commands] for Docker operations
@@ -144,7 +141,6 @@ find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \;
 [link-development-commands]: LINKS_REFERENCE.md#developer-guides
 [link-use-case-guide]: LINKS_REFERENCE.md#developer-guides
 [link-troubleshooting-guide]: LINKS_REFERENCE.md#developer-guides
-[link-examples-index]: LINKS_REFERENCE.md#examples-and-templates
 [link-ide-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
 [link-ms-best-practices]: LINKS_REFERENCE.md#ide-rules-and-patterns
 [link-data-access-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns

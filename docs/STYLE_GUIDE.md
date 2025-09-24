@@ -108,7 +108,7 @@ Main document content...
 ## Related Documents
 
 - **Architecture**: [Link](LINKS_REFERENCE.md#core-documentation)
-- **Examples**: [Link](LINKS_REFERENCE.md#examples-and-templates)
+- **Implementation Guide**: [Link](LINKS_REFERENCE.md#developer-guides)
 
 ---
 

@@ -399,34 +399,10 @@ docker-compose logs -f --timestamps
 docker-compose exec postgres psql -U postgres -c "SELECT * FROM pg_stat_activity;"
 ```
 
----
-
-## 🎯 Use Case Specific Commands
-
-### Task Management Use Case
-```bash
-# Navigate to use case
-cd use_cases/task_management # (or cd .framework/use_cases/task_management when used as submodule)
-
-# Start task management system
-docker-compose up -d
-
-# Test task management API
-curl http://localhost:8000/docs    # API documentation
-curl http://localhost:8000/health  # Health check
-
-# Check task management logs
-docker-compose logs -f task_api_service
-docker-compose logs -f task_bot_service
-```
-
----
-
 ## 📚 Related Documentation
 
 - **Architecture Details**: [Architecture Guide](../LINKS_REFERENCE.md#core-documentation)
 - **Technology Specifications**: [Technical Specifications](../LINKS_REFERENCE.md#core-documentation)
-- **Working Examples**: [Examples Index](../LINKS_REFERENCE.md#examples-and-templates)
 - **Troubleshooting Guide**: [Troubleshooting Guide](../LINKS_REFERENCE.md#developer-guides)
 - **Main Development Guide**: [Main Entry Point](../LINKS_REFERENCE.md#core-documentation)
 

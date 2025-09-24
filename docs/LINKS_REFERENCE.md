@@ -23,15 +23,6 @@
 | **Troubleshooting** | [reference/troubleshooting.md](reference/troubleshooting.md) | `.framework/docs/reference/troubleshooting.md` | Diagnostics and problem solving |
 | **Style Guide** | [STYLE_GUIDE.md](STYLE_GUIDE.md) | `.framework/docs/STYLE_GUIDE.md` | Documentation formatting standards |
 
-<a id="examples-and-templates"></a>
-## Examples and Templates
-
-| Document | Direct Path | Submodule Path | Purpose |
-|----------|-------------|----------------|---------|
-| **Examples Index** | [../examples/index.md](../examples/index.md) | `.framework/examples/index.md` | Working code examples |
-| **AI Agents** | [../ai_agents/AI_AGENT_FRAMEWORK_README.md](../ai_agents/AI_AGENT_FRAMEWORK_README.md) | `.framework/ai_agents/` | Automated generation |
-| **Working Demonstrations** | [../use_cases/README.md](../use_cases/README.md) | `.framework/use_cases/` | Complete applications |
-
 <a id="ide-rules-and-patterns"></a>
 ## IDE Rules & Patterns
 
@@ -63,7 +54,6 @@
 | **Run commands** | [DEVELOPMENT_COMMANDS.md](guides/DEVELOPMENT_COMMANDS.md) |
 | **Create new use case** | [USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md) |
 | **Check versions** | [tech_stack.md](reference/tech_stack.md) |
-| **See examples** | [../examples/index.md](../examples/index.md) |
 | **Solve problems** | [troubleshooting.md](reference/troubleshooting.md) |
 
 ## Link Templates
