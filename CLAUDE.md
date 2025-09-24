@@ -244,7 +244,7 @@ See [IDE Rules & Patterns](docs/LINKS_REFERENCE.md#ide-rules-and-patterns) for c
 ## Framework Management
 
 ### Framework Submodule Operations
-> **📋 COMPLETE SUBMODULE GUIDE**: See [README.md#framework-management](README.md#framework-management) and [Project Structure](docs/LINKS_REFERENCE.md#developer-guides) for detailed submodule operations and project setup.
+> **📋 COMPLETE SUBMODULE GUIDE**: See [README.md#-framework-management](README.md#-framework-management) and [Project Structure](docs/LINKS_REFERENCE.md#developer-guides) for detailed submodule operations and project setup.
 
 ```bash
 # Quick reference - Update framework
