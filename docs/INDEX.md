@@ -12,7 +12,7 @@ This is the comprehensive documentation index for the microservices project. All
 | 🎯 **Create new use case** | [Use Case Implementation Guide][link-use-case-guide] |
 | 🔧 **Check tech specs** | [Technical Specifications][link-tech-specs] |
 | 🐛 **Solve problems** | [Troubleshooting Guide][link-troubleshooting-guide] |
-| 🤖 **IDE rules & patterns** | [IDE Rules & Patterns][link-ide-rules] |
+| 🤖 **Agent workflow** | [Agent Workflow][link-agent-workflow] |
 
 ## 📂 Documentation Structure
 
@@ -22,12 +22,26 @@ Essential documentation for development and architecture understanding.
 - **[Architecture Guide][link-architecture-guide]** - Comprehensive architecture principles and constraints
 - **[Development Commands][link-development-commands]** - Complete command reference for development workflow
 - **[Use Case Implementation Guide][link-use-case-guide]** - Step-by-step guide for creating new use cases
+- **[Agent Workflow][link-agent-workflow]** - End-to-end process for AI agents
 
 ### 📑 Reference Materials
 Technical specifications, examples, and troubleshooting resources.
 
 - **[Technical Specifications][link-tech-specs]** - Technology specifications and versions
 - **[Troubleshooting Guide][link-troubleshooting-guide]** - Common issues and solutions
+- **[Agent Context Summary][link-agent-context]** - Quick orientation for AI agents
+- **[Agent Toolbox][link-agent-toolbox]** - Machine-friendly command catalog
+- **[Deliverables Catalog][link-deliverables]** - Required artefacts and storage rules
+- **[Prompt Templates][link-prompt-templates]** - Reusable prompts for clarifications and reports
+- **[Architecture Decision Log Template][link-adr-template]** - Standardised ADR format
+
+## 🤖 Agent-Centric Templates & Checklists
+
+- **[Prompt Validation Guide][link-prompt-validation]** - Mandatory intake checklist before starting work
+- **[Requirements Intake Template][link-intake-template]** - Structured capture of business and technical needs
+- **[Implementation Plan Template][link-plan-template]** - Planning artifact for approval prior to coding
+- **[Agent Verification Checklist][link-verification-checklist]** - Quality gates before release
+- **[QA Report Template][link-qa-report]** - Final QA summary for stakeholders
 
 ## 🤖 IDE Rules & Patterns
 
@@ -87,6 +101,14 @@ Code quality and testing standards:
 3. Setup observability with the rules in the `observability` directory.
 4. Troubleshoot with [Troubleshooting Guide][link-troubleshooting-guide]
 
+### For Agent-Led Delivery
+1. Validate the prompt using [Prompt Validation Guide][link-prompt-validation]
+2. Capture requirements with [Requirements Intake Template][link-intake-template]
+3. Draft plan via [Implementation Plan Template][link-plan-template]
+4. Execute using [Agent Workflow][link-agent-workflow] and [Agent Toolbox][link-agent-toolbox]
+5. Verify with [Agent Verification Checklist][link-verification-checklist]
+6. Report results using [QA Report Template][link-qa-report]
+
 ### For Code Quality
 1. Follow [Testing Standards][link-testing-standards]
 2. Use [Naming Conventions][link-naming-conventions]
@@ -115,7 +137,7 @@ To maintain documentation quality, all internal links should be validated:
 find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \;
   xargs grep -n "\[.*\](" | \
   grep -v "http" | \
-  awk -F: \'{print $1":"$2}\' | \
+  awk -F: '{print $1":"$2}' | \
   sort | uniq
 
 # Recommended: Add link checker to CI/CD pipeline
@@ -141,6 +163,17 @@ find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \;
 [link-development-commands]: LINKS_REFERENCE.md#developer-guides
 [link-use-case-guide]: LINKS_REFERENCE.md#developer-guides
 [link-troubleshooting-guide]: LINKS_REFERENCE.md#developer-guides
+[link-agent-workflow]: guides/AGENT_WORKFLOW.md
+[link-agent-context]: reference/AGENT_CONTEXT_SUMMARY.md
+[link-agent-toolbox]: reference/AGENT_TOOLBOX.md
+[link-deliverables]: reference/DELIVERABLES_CATALOG.md
+[link-prompt-templates]: reference/PROMPT_TEMPLATES.md
+[link-adr-template]: reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md
+[link-prompt-validation]: guides/PROMPT_VALIDATION_GUIDE.md
+[link-intake-template]: guides/REQUIREMENTS_INTAKE_TEMPLATE.md
+[link-plan-template]: guides/IMPLEMENTATION_PLAN_TEMPLATE.md
+[link-verification-checklist]: quality/AGENT_VERIFICATION_CHECKLIST.md
+[link-qa-report]: quality/QA_REPORT_TEMPLATE.md
 [link-ide-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
 [link-ms-best-practices]: LINKS_REFERENCE.md#ide-rules-and-patterns
 [link-data-access-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
