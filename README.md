@@ -152,32 +152,9 @@ This project uses a carefully selected, modern technology stack optimized for th
 
 ## Framework Management
 
-### Submodule Operations
-```bash
-# Update framework to latest version
-git submodule update --remote .framework
-git add .framework && git commit -m "Update framework"
+This framework is designed to be used as a Git submodule, allowing centralized updates and consistent patterns across all projects.
 
-# Clone project with framework
-git clone --recursive <your-project-repo>
-
-# If you forgot --recursive
-git submodule init && git submodule update
-```
-
-> **COMPLETE SETUP GUIDE**: See [Project Structure Guide](docs/LINKS_REFERENCE.md#developer-guides) for detailed project organization and development workflow.
-
-### For AI Agents
-1. **Automatically scan `.framework/`** for patterns, rules, and examples
-2. **Generate user code in `src/`** - never modify `.framework/` content
-3. **Follow `.framework/docs/` guidelines** for architecture compliance
-
-### Quick Links (within .framework/)
-- **Architecture Guide**: [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation)
-- **Development Commands**: [Development Commands](docs/LINKS_REFERENCE.md#developer-guides)
-- **Use Case Implementation**: [Use Case Implementation](docs/LINKS_REFERENCE.md#developer-guides)
-- **Technology Stack**: [Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation)
-- **Troubleshooting**: [Troubleshooting](docs/LINKS_REFERENCE.md#developer-guides)
+> **COMPLETE FRAMEWORK MANAGEMENT GUIDE**: See [Project Structure Guide](docs/LINKS_REFERENCE.md#developer-guides) for detailed submodule operations, development workflow, and AI agent guidelines.
 
 ## License
 

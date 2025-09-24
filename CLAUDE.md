@@ -55,35 +55,29 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 ## Framework Overview
 
-- **Architecture**: Improved Hybrid Approach, strict HTTP-only data services, RabbitMQ eventing.
-- **Service Types**: FastAPI (API), Aiogram (bot), AsyncIO workers, dedicated data services (PostgreSQL, MongoDB).
-- **Quality**: Enforced via Ruff, mypy, bandit, pytest, coverage thresholds (`docs/guides/DEVELOPMENT_COMMANDS.md`, `docs/quality/testing-standards.mdc`).
+This framework implements the **Improved Hybrid Approach** with FastAPI, Aiogram, and AsyncIO services, strict HTTP-only data access, and RabbitMQ eventing.
 
-**Critical Constraints**
-1. Separate containers/processes for each service type (`docs/architecture/ms_best_practices_rules.mdc`).
-2. Business services must use HTTP to access data services (`docs/architecture/data-access-rules.mdc`).
-3. Use RabbitMQ for cross-service eventing (`docs/infrastructure/rabbitmq_rules.mdc`).
-4. Adhere to naming conventions (`docs/architecture/naming_conventions.mdc`).
+> **COMPLETE ARCHITECTURE DETAILS**: See [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation) for detailed principles, constraints, service types, and implementation guidelines.
 
 ## Agent Workflow (High-Level)
 
-1. Prompt Validation → `docs/guides/PROMPT_VALIDATION_GUIDE.md`
-2. Requirements Intake → fill `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`
-3. Implementation Planning → populate `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`
-4. Execution → follow `docs/guides/AGENT_WORKFLOW.md`, using `docs/reference/AGENT_TOOLBOX.md`
-5. Verification → run `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`
-6. Release Handoff → summarise with `docs/quality/QA_REPORT_TEMPLATE.md` and update deliverables (`docs/reference/DELIVERABLES_CATALOG.md`)
+1. Prompt Validation → [Prompt Validation Guide](docs/guides/PROMPT_VALIDATION_GUIDE.md)
+2. Requirements Intake → fill [Requirements Intake Template](docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md)
+3. Implementation Planning → populate [Implementation Plan Template](docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md)
+4. Execution → follow [Agent Workflow](docs/guides/AGENT_WORKFLOW.md), using [Agent Toolbox](docs/reference/AGENT_TOOLBOX.md)
+5. Verification → run [Agent Verification Checklist](docs/quality/AGENT_VERIFICATION_CHECKLIST.md)
+6. Release Handoff → summarise with [QA Report Template](docs/quality/QA_REPORT_TEMPLATE.md) and update deliverables ([Deliverables Catalog](docs/reference/DELIVERABLES_CATALOG.md))
 
 ## Important Notes
 
-- Never modify framework files when used as submodule; generate application code under the host project (`README.md`).
-- Maintain `.env` files, Docker configurations, and shared components per `docs/guides/shared_components.md`.
+- Never modify framework files when used as submodule; generate application code under the host project ([README.md](../README.md)).
+- Maintain `.env` files, Docker configurations, and shared components per [Shared Components Guide](docs/guides/shared_components.md).
 - Use ADR template for significant decisions impacting architecture or infrastructure.
-- Reference `docs/reference/tech_stack.md` when selecting technologies or versions.
+- Reference [Technical Specifications](docs/reference/tech_stack.md) when selecting technologies or versions.
 - Update documentation and changelog (when available) in tandem with code changes.
 
 ## Framework Management
 
-- Update the framework submodule with `git submodule update --remote .framework` as needed.
+- See [Project Structure Guide](docs/LINKS_REFERENCE.md#developer-guides) for complete submodule operations and development workflow.
 - Keep documentation synchronized: update `docs/INDEX.md` and `docs/reference/AGENT_CONTEXT_SUMMARY.md` when new files are added.
-- Follow `docs/STYLE_GUIDE.md` for formatting and wording.
+- Follow [Style Guide](docs/STYLE_GUIDE.md) for formatting and wording.
