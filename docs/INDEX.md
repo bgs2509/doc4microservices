@@ -2,6 +2,7 @@
 
 This is the comprehensive documentation index for the microservices project. All documentation is organized into logical categories for easy navigation.
 
+<a id="quick-navigation"></a>
 ## 📚 Quick Navigation
 
 | Need | Go To |
@@ -14,6 +15,7 @@ This is the comprehensive documentation index for the microservices project. All
 | 🐛 **Solve problems** | [Troubleshooting Guide][link-troubleshooting-guide] |
 | 🤖 **Agent workflow** | [Agent Workflow][link-agent-workflow] |
 
+<a id="documentation-structure"></a>
 ## 📂 Documentation Structure
 
 ### 📖 Core Guides
@@ -24,6 +26,7 @@ Essential documentation for development and architecture understanding.
 - **[Use Case Implementation Guide][link-use-case-guide]** - Step-by-step guide for creating new use cases
 - **[Agent Workflow][link-agent-workflow]** - End-to-end process for AI agents
 
+<a id="reference-materials"></a>
 ### 📑 Reference Materials
 Technical specifications, examples, and troubleshooting resources.
 
@@ -35,11 +38,12 @@ Technical specifications, examples, and troubleshooting resources.
 - **[Prompt Templates][link-prompt-templates]** - Reusable prompts for clarifications and reports
 - **[Architecture Decision Log Template][link-adr-template]** - Standardised ADR format
 
+<a id="agent-templates"></a>
 ## 🤖 Agent-Centric Templates & Checklists
 
 - **[Prompt Validation Guide][link-prompt-validation]** - Mandatory intake checklist before starting work
 - **[Requirements Intake Template][link-intake-template]** - Structured capture of business and technical needs
-- **[Implementation Plan Template][link-plan-template]** - Planning artifact for approval prior to coding
+- **[Implementation Plan Template][link-plan-template]** - Planning artefact for approval prior to coding
 - **[Agent Verification Checklist][link-verification-checklist]** - Quality gates before release
 - **[QA Report Template][link-qa-report]** - Final QA summary for stakeholders
 

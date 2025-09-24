@@ -18,25 +18,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 - **[Technical Specifications](docs/LINKS_REFERENCE.md#core-documentation)** — technology versions and configurations.
 - **[Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation)** — mandatory architecture principles and communication patterns.
 - **[Development Commands](docs/LINKS_REFERENCE.md#developer-guides)** — canonical command catalog for local/dev/CI operations.
-- **[Agent Workflow](docs/INDEX.md#📂-documentation-structure)** — end-to-end process for AI agents.
+- **[Agent Workflow](docs/INDEX.md#documentation-structure)** — end-to-end process for AI agents.
 
 ### Reference Materials
 
-- **[Agent Context Summary](docs/INDEX.md#📑-reference-materials)** — fastest orientation for agents; links to critical rules.
-- **[Agent Toolbox](docs/INDEX.md#📑-reference-materials)** — machine-friendly command lookup.
-- **[Deliverables Catalog](docs/INDEX.md#📑-reference-materials)** — required artefacts and storage locations.
-- **[Prompt Templates](docs/INDEX.md#📑-reference-materials)** — reusable prompts for clarification and reporting.
+- **[Agent Context Summary](docs/INDEX.md#reference-materials)** — fastest orientation for agents; links to critical rules.
+- **[Agent Toolbox](docs/INDEX.md#reference-materials)** — machine-friendly command lookup.
+- **[Deliverables Catalog](docs/INDEX.md#reference-materials)** — required artefacts and storage locations.
+- **[Prompt Templates](docs/INDEX.md#reference-materials)** — reusable prompts for clarification and reporting.
 - **[Project Structure](docs/LINKS_REFERENCE.md#developer-guides)** — canonical repository layout when the framework is a submodule.
 - **[Troubleshooting](docs/LINKS_REFERENCE.md#developer-guides)** — symptom-based diagnostics and recovery playbook.
 
 ### Agent Templates & Checklists
 
-- **[Prompt Validation Guide](docs/INDEX.md#🤖-agent-centric-templates--checklists)** — ensure user prompt completeness before any work.
-- **[Requirements Intake Template](docs/INDEX.md#🤖-agent-centric-templates--checklists)** — structured capture of inputs.
-- **[Implementation Plan Template](docs/INDEX.md#🤖-agent-centric-templates--checklists)** — planning artefact for approval.
-- **[Agent Verification Checklist](docs/INDEX.md#🤖-agent-centric-templates--checklists)** — mandatory quality gates.
-- **[QA Report Template](docs/INDEX.md#🤖-agent-centric-templates--checklists)** — final summary for stakeholders.
-- **[Architecture Decision Log Template](docs/INDEX.md#📑-reference-materials)** — standardized ADR format when major decisions arise.
+- **[Prompt Validation Guide](docs/INDEX.md#agent-templates)** — ensure user prompt completeness before any work.
+- **[Requirements Intake Template](docs/INDEX.md#agent-templates)** — structured capture of inputs.
+- **[Implementation Plan Template](docs/INDEX.md#agent-templates)** — planning artefact for approval.
+- **[Agent Verification Checklist](docs/INDEX.md#agent-templates)** — mandatory quality gates.
+- **[QA Report Template](docs/INDEX.md#agent-templates)** — final summary for stakeholders.
+- **[Architecture Decision Log Template](docs/INDEX.md#reference-materials)** — standardized ADR format when major decisions arise.
 
 ### IDE Rules & Patterns
 
@@ -46,12 +46,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 | Need | Go To |
 |------|-------|
-| Validate a new prompt | [Prompt Validation Guide](docs/INDEX.md#🤖-agent-centric-templates--checklists) |
-| Prepare requirements | [Requirements Intake Template](docs/INDEX.md#🤖-agent-centric-templates--checklists) |
-| Build a plan | [Implementation Plan Template](docs/INDEX.md#🤖-agent-centric-templates--checklists) |
-| Execute tasks | [Agent Workflow](docs/INDEX.md#📂-documentation-structure) + [Agent Toolbox](docs/INDEX.md#📑-reference-materials) |
-| Verify quality | [Agent Verification Checklist](docs/INDEX.md#🤖-agent-centric-templates--checklists) |
-| Report results | [QA Report Template](docs/INDEX.md#🤖-agent-centric-templates--checklists) |
+| Validate a new prompt | [Prompt Validation Guide](docs/INDEX.md#agent-templates) |
+| Prepare requirements | [Requirements Intake Template](docs/INDEX.md#agent-templates) |
+| Build a plan | [Implementation Plan Template](docs/INDEX.md#agent-templates) |
+| Execute tasks | [Agent Workflow](docs/INDEX.md#documentation-structure) + [Agent Toolbox](docs/INDEX.md#reference-materials) |
+| Verify quality | [Agent Verification Checklist](docs/INDEX.md#agent-templates) |
+| Report results | [QA Report Template](docs/INDEX.md#agent-templates) |
 
 ## 🌐 Framework Overview
 

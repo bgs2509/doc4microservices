@@ -19,13 +19,13 @@
 
 | Deliverable | When Needed | Notes |
 |-------------|-------------|-------|
-| Change Log Entry | When a release is prepared | Follow `docs/reference/CHANGELOG_RULES.md` if present |
+| Change Log Entry | When a release is prepared | Follow the team's changelog policy when available |
 | Observability Dashboards Export | When custom dashboards are created | Document queries and panels |
 | Post-Incident Report | When failures occur during delivery | Base the write-up on `docs/reference/troubleshooting.md` guidance |
 
 ## Versioning & Retention
 
-- Align release notes and version bumps with `docs/reference/CHANGELOG_RULES.md` when available.
+- Align release notes and version bumps with the team's changelog policy when available.
 - Store artefacts in the project repository or associated knowledge base with clear version tags.
 - Retain verification reports and QA summaries for auditability per team policy.
 
