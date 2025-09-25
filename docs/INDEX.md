@@ -37,6 +37,7 @@ Technical specifications, examples, and troubleshooting resources.
 - **[Deliverables Catalog][link-deliverables]** - Required artefacts and storage rules
 - **[Prompt Templates][link-prompt-templates]** - Reusable prompts for clarifications and reports
 - **[Architecture Decision Log Template][link-adr-template]** - Standardised ADR format
+- **[Framework Improvement Roadmap][link-framework-roadmap]** - Priority improvements and documentation gaps analysis
 
 <a id="agent-templates"></a>
 ## Agent-Centric Templates & Checklists
@@ -173,6 +174,7 @@ find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \;
 [link-deliverables]: reference/DELIVERABLES_CATALOG.md
 [link-prompt-templates]: reference/PROMPT_TEMPLATES.md
 [link-adr-template]: reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md
+[link-framework-roadmap]: development/FRAMEWORK_IMPROVEMENT_ROADMAP.md
 [link-prompt-validation]: guides/PROMPT_VALIDATION_GUIDE.md
 [link-intake-template]: guides/REQUIREMENTS_INTAKE_TEMPLATE.md
 [link-plan-template]: guides/IMPLEMENTATION_PLAN_TEMPLATE.md
