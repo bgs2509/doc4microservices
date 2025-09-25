@@ -39,25 +39,27 @@
 | **Architecture Decision Log Template** | [reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md](reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md) | `.framework/docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md` | Standardised ADR format |
 
 <a id="ide-rules-and-patterns"></a>
-## IDE Rules & Patterns
+## Atomic Knowledge Base
 
-| Category | Document | Direct Path | Submodule Path |
-|----------|----------|-------------|----------------|
-| **Architecture** | Microservices Best Practices | [architecture/ms_best_practices_rules.mdc](architecture/ms_best_practices_rules.mdc) | `.framework/docs/architecture/ms_best_practices_rules.mdc` |
-| **Architecture** | Data Access Rules | [architecture/data-access-rules.mdc](architecture/data-access-rules.mdc) | `.framework/docs/architecture/data-access-rules.mdc` |
-| **Architecture** | Naming Conventions | [architecture/naming_conventions.mdc](architecture/naming_conventions.mdc) | `.framework/docs/architecture/naming_conventions.mdc` |
-| **Services** | FastAPI Rules | [services/fastapi_rules.mdc](services/fastapi_rules.mdc) | `.framework/docs/services/fastapi_rules.mdc` |
-| **Services** | Aiogram Rules | [services/aiogram_rules.mdc](services/aiogram_rules.mdc) | `.framework/docs/services/aiogram_rules.mdc` |
-| **Services** | AsyncIO Rules | [services/asyncio_rules.mdc](services/asyncio_rules.mdc) | `.framework/docs/services/asyncio_rules.mdc` |
-| **Infrastructure** | Redis Rules | [infrastructure/redis_rules.mdc](infrastructure/redis_rules.mdc) | `.framework/docs/infrastructure/redis_rules.mdc` |
-| **Infrastructure** | RabbitMQ Rules | [infrastructure/rabbitmq_rules.mdc](infrastructure/rabbitmq_rules.mdc) | `.framework/docs/infrastructure/rabbitmq_rules.mdc` |
-| **Infrastructure** | MongoDB Rules | [infrastructure/mongodb_rules.mdc](infrastructure/mongodb_rules.mdc) | `.framework/docs/infrastructure/mongodb_rules.mdc` |
-| **Observability** | Logging Rules | [observability/logging_rules.mdc](observability/logging_rules.mdc) | `.framework/docs/observability/logging_rules.mdc` |
-| **Observability** | Metrics Rules | [observability/metrics_rules.mdc](observability/metrics_rules.mdc) | `.framework/docs/observability/metrics_rules.mdc` |
-| **Observability** | Tracing Rules | [observability/tracing_rules.mdc](observability/tracing_rules.mdc) | `.framework/docs/observability/tracing_rules.mdc` |
-| **Observability** | ELK Rules | [observability/elk_rules.mdc](observability/elk_rules.mdc) | `.framework/docs/observability/elk_rules.mdc` |
-| **Observability** | Observability Rules | [observability/observability_rules.mdc](observability/observability_rules.mdc) | `.framework/docs/observability/observability_rules.mdc` |
-| **Quality** | Testing Standards | [quality/testing-standards.mdc](quality/testing-standards.mdc) | `.framework/docs/quality/testing-standards.mdc` |
+Centralised atomic documentation for domain-specific rules. See [INDEX.md](INDEX.md) for the full topic list.
+
+| Domain | Entry Point | Example Topics |
+|--------|-------------|----------------|
+| Architecture | [atomic/architecture/](atomic/architecture/) | hybrid approach, service separation, naming conventions |
+| Services | [atomic/services/](atomic/services/) | FastAPI, Aiogram, AsyncIO workers, data services |
+| Integrations | [atomic/integrations/](atomic/integrations/) | Redis, RabbitMQ, HTTP, cross-service coordination |
+| Infrastructure | [atomic/infrastructure/](atomic/infrastructure/) | databases, containerisation, configuration, deployment |
+| Observability | [atomic/observability/](atomic/observability/) | logging, metrics, tracing, error tracking, ELK |
+| Testing | [atomic/testing/](atomic/testing/) | unit, integration, service, end-to-end, QA |
+
+<a id="legacy-archive"></a>
+## Legacy Archive
+
+Historical `.mdc` sources are preserved for context only.
+
+| Scope | Location | Notes |
+|-------|----------|-------|
+| Legacy documentation | [legacy/README.md](legacy/README.md) | Original `.mdc` rule sets for audit and comparison |
 
 <a id="quality-assets"></a>
 ## Quality Assets

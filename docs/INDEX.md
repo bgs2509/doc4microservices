@@ -1,198 +1,282 @@
 # Documentation Index
 
-This is the comprehensive documentation index for the microservices project. All documentation is organized into logical categories for easy navigation.
+The documentation is organised into atomic knowledge modules with a dedicated legacy archive. Use this index as the entry point for the authoritative materials.
 
-<a id="quick-navigation"></a>
 ## Quick Navigation
 
 | Need | Go To |
 |------|-------|
-| **Get started quickly** | [Project Overview][link-project-overview] → [Main Entry Point][link-main-entry-point] |
-| **Understand architecture** | [Architecture Guide][link-architecture-guide] |
-| **Run commands** | [Development Commands][link-development-commands] |
-| **Create new use case** | [Use Case Implementation Guide][link-use-case-guide] |
-| **Check tech specs** | [Technical Specifications][link-tech-specs] |
-| **Solve problems** | [Troubleshooting Guide][link-troubleshooting-guide] |
-| **Agent workflow** | [Agent Workflow][link-agent-workflow] |
+| Understand architecture | [Improved Hybrid Overview](atomic/architecture/improved-hybrid-overview.md) |
+| Implement a FastAPI service | [FastAPI Basic Setup](atomic/services/fastapi/basic-setup.md) |
+| Configure integrations | [Redis Connection Management](atomic/integrations/redis/connection-management.md) |
+| Prepare infrastructure | [PostgreSQL Setup](atomic/infrastructure/databases/postgresql-setup.md) |
+| Set up observability | [Structured Logging Patterns](atomic/observability/logging/structured-logging.md) |
+| Align testing strategy | [Pytest Setup](atomic/testing/unit-testing/pytest-setup.md) |
+| Reference legacy rules | [Legacy Documentation Archive](legacy/README.md) |
 
-<a id="documentation-structure"></a>
-## Documentation Structure
+## Documentation Pillars
 
 ### Core Guides
-Essential documentation for development and architecture understanding.
+- [Architecture Guide](LINKS_REFERENCE.md#core-documentation) — canonical architectural principles
+- [Development Commands](LINKS_REFERENCE.md#developer-guides) — command reference for local workflows
+- [Use Case Implementation Guide](LINKS_REFERENCE.md#developer-guides) — step-by-step delivery process
+- [Agent Workflow](guides/AGENT_WORKFLOW.md) — end-to-end agent operating model
 
-- **[Architecture Guide][link-architecture-guide]** - Comprehensive architecture principles and constraints
-- **[Development Commands][link-development-commands]** - Complete command reference for development workflow
-- **[Use Case Implementation Guide][link-use-case-guide]** - Step-by-step guide for creating new use cases
-- **[Agent Workflow][link-agent-workflow]** - End-to-end process for AI agents
-
-<a id="reference-materials"></a>
 ### Reference Materials
-Technical specifications, examples, and troubleshooting resources.
+- [Technical Specifications](LINKS_REFERENCE.md#core-documentation) — platform versions and runtime constraints
+- [Troubleshooting Guide](LINKS_REFERENCE.md#developer-guides) — diagnostics and recovery procedures
+- [Agent Context Summary](reference/AGENT_CONTEXT_SUMMARY.md) — onboarding context for AI agents
+- [Agent Toolbox](reference/AGENT_TOOLBOX.md) — machine-friendly command catalogue
+- [Deliverables Catalog](reference/DELIVERABLES_CATALOG.md) — artefact ownership and storage rules
+- [Prompt Templates](reference/PROMPT_TEMPLATES.md) — reusable communication templates
+- [Architecture Decision Log Template](reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md) — ADR format and conventions
+- [Framework Improvement Roadmap](development/FRAMEWORK_IMPROVEMENT_ROADMAP.md) — platform evolution backlog
 
-- **[Technical Specifications][link-tech-specs]** - Technology specifications and versions
-- **[Troubleshooting Guide][link-troubleshooting-guide]** - Common issues and solutions
-- **[Agent Context Summary][link-agent-context]** - Quick orientation for AI agents
-- **[Agent Toolbox][link-agent-toolbox]** - Machine-friendly command catalog
-- **[Deliverables Catalog][link-deliverables]** - Required artefacts and storage rules
-- **[Prompt Templates][link-prompt-templates]** - Reusable prompts for clarifications and reports
-- **[Architecture Decision Log Template][link-adr-template]** - Standardised ADR format
-- **[Framework Improvement Roadmap][link-framework-roadmap]** - Priority improvements and documentation gaps analysis
+### Agent Templates & Checklists
+- [Prompt Validation Guide](guides/PROMPT_VALIDATION_GUIDE.md) — pre-work validation checklist
+- [Requirements Intake Template](guides/REQUIREMENTS_INTAKE_TEMPLATE.md) — capturing functional and non-functional needs
+- [Implementation Plan Template](guides/IMPLEMENTATION_PLAN_TEMPLATE.md) — planning artefact for approvals
+- [Agent Verification Checklist](quality/AGENT_VERIFICATION_CHECKLIST.md) — release quality gates
+- [QA Report Template](quality/QA_REPORT_TEMPLATE.md) — final QA handoff format
 
-<a id="agent-templates"></a>
-## Agent-Centric Templates & Checklists
+## Atomic Knowledge Base
 
-- **[Prompt Validation Guide][link-prompt-validation]** - Mandatory intake checklist before starting work
-- **[Requirements Intake Template][link-intake-template]** - Structured capture of business and technical needs
-- **[Implementation Plan Template][link-plan-template]** - Planning artefact for approval prior to coding
-- **[Agent Verification Checklist][link-verification-checklist]** - Quality gates before release
-- **[QA Report Template][link-qa-report]** - Final QA summary for stakeholders
+See [Atomic Documentation Hub](atomic/README.md) for contribution rules.
 
-## IDE Rules & Patterns
+### Architecture
 
-IDE rules are organized by category at the docs root level for direct access and better integration.
+- [Improved Hybrid Approach Overview](atomic/architecture/improved-hybrid-overview.md) — High-level view of the improved hybrid service model.
+- [Service Separation Principles](atomic/architecture/service-separation-principles.md) — Guidelines for splitting responsibilities across services.
+- [Event Loop Management](atomic/architecture/event-loop-management.md) — Ownership, lifecycle, and orchestration rules for event loops.
+- [Data Access Architecture](atomic/architecture/data-access-architecture.md) — Patterns for safe data access and service boundaries.
+- [DDD and Hexagonal Principles](atomic/architecture/ddd-hexagonal-principles.md) — DDD layering and hexagonal architecture applications.
+- [Naming Conventions](atomic/architecture/naming-conventions.md) — Mandatory naming standards for code and infrastructure.
+- [Quality Standards](atomic/architecture/quality-standards.md) — Quality bar, verification steps, and acceptance criteria.
+- [Project Structure Patterns](atomic/architecture/project-structure-patterns.md) — Reference microservice and repository structures.
 
-### Architecture & Design
-Core architectural patterns and design principles:
+### Services
 
-- **[Microservices Best Practices][link-ms-best-practices]** - DDD/Hex patterns, project structure, quality requirements
-- **[Data Access Rules][link-data-access-rules]** - Data access patterns and HTTP-only data service communication
-- **[Naming Conventions][link-naming-conventions]** - Mandatory naming standards and conventions
+#### FastAPI
 
-### Service Types
-Service-specific implementation patterns:
+- [FastAPI Basic Setup](atomic/services/fastapi/basic-setup.md) — Baseline FastAPI service bootstrap.
+- [FastAPI Application Factory](atomic/services/fastapi/application-factory.md) — App factory pattern and lifecycle.
+- [FastAPI Lifespan Management](atomic/services/fastapi/lifespan-management.md) — Startup and shutdown handling.
+- [FastAPI Routing Patterns](atomic/services/fastapi/routing-patterns.md) — Routing structure and API design.
+- [FastAPI Dependency Injection](atomic/services/fastapi/dependency-injection.md) — DI patterns and container usage.
+- [FastAPI Schema Validation](atomic/services/fastapi/schema-validation.md) — Pydantic schema patterns.
+- [FastAPI Error Handling](atomic/services/fastapi/error-handling.md) — HTTP error handling strategies.
+- [FastAPI Security Patterns](atomic/services/fastapi/security-patterns.md) — Authentication and authorization approaches.
+- [FastAPI OpenAPI Documentation](atomic/services/fastapi/openapi-documentation.md) — OpenAPI customization and docs.
+- [FastAPI Performance Optimization](atomic/services/fastapi/performance-optimization.md) — Performance tuning and profiling.
+- [FastAPI Testing Strategies](atomic/services/fastapi/testing-strategies.md) — Testing guidance for FastAPI services.
 
-- **[FastAPI Rules][link-fastapi-rules]** - FastAPI service patterns and dependency injection
-- **[Aiogram Rules][link-aiogram-rules]** - Telegram bot service standards and patterns
-- **[AsyncIO Rules][link-asyncio-rules]** - Background worker service patterns
+#### Aiogram
+
+- [Aiogram Basic Setup](atomic/services/aiogram/basic-setup.md) — Baseline Aiogram bot configuration.
+- [Aiogram Bot Initialization](atomic/services/aiogram/bot-initialization.md) — Bot and dispatcher initialization.
+- [Aiogram Handler Patterns](atomic/services/aiogram/handler-patterns.md) — Message and callback handler structure.
+- [Aiogram Middleware Setup](atomic/services/aiogram/middleware-setup.md) — Middleware registration and ordering.
+- [Aiogram State Management](atomic/services/aiogram/state-management.md) — Finite state machine usage.
+- [Aiogram Dependency Injection](atomic/services/aiogram/dependency-injection.md) — DI patterns for Aiogram.
+- [Aiogram Webhook Configuration](atomic/services/aiogram/webhook-configuration.md) — Webhook versus polling configuration.
+- [Aiogram Testing Strategies](atomic/services/aiogram/testing-strategies.md) — Testing approaches for bots.
+
+#### AsyncIO Workers
+
+- [AsyncIO Worker Basic Setup](atomic/services/asyncio-workers/basic-setup.md) — Baseline AsyncIO worker bootstrap.
+- [AsyncIO Main Function Patterns](atomic/services/asyncio-workers/main-function-patterns.md) — Patterns for worker entrypoints.
+- [AsyncIO Signal Handling](atomic/services/asyncio-workers/signal-handling.md) — Graceful shutdown and signal processing.
+- [AsyncIO Task Management](atomic/services/asyncio-workers/task-management.md) — Task orchestration and supervision.
+- [AsyncIO Dependency Management](atomic/services/asyncio-workers/dependency-management.md) — Dependency wiring and context.
+- [AsyncIO Worker Error Handling](atomic/services/asyncio-workers/error-handling.md) — Failure handling and retries.
+- [AsyncIO Worker Testing Strategies](atomic/services/asyncio-workers/testing-strategies.md) — Testing async workers.
+
+#### Data Services
+
+- [PostgreSQL Service Setup](atomic/services/data-services/postgres-service-setup.md) — PostgreSQL-focused data service setup.
+- [MongoDB Service Setup](atomic/services/data-services/mongo-service-setup.md) — MongoDB-focused data service setup.
+- [Data Service Repository Patterns](atomic/services/data-services/repository-patterns.md) — Repository implementations and patterns.
+- [Data Service HTTP API Design](atomic/services/data-services/http-api-design.md) — Designing HTTP APIs for data services.
+- [Data Service Transaction Management](atomic/services/data-services/transaction-management.md) — Transaction and consistency guidance.
+- [Data Service Testing Strategies](atomic/services/data-services/testing-strategies.md) — Testing data service behaviour.
+
+### Integrations
+
+#### Redis
+
+- [Redis Connection Management](atomic/integrations/redis/connection-management.md) — Connection pooling and clients.
+- [Redis Key Naming Conventions](atomic/integrations/redis/key-naming-conventions.md) — Key naming standards.
+- [Redis Data Serialization](atomic/integrations/redis/data-serialization.md) — Serialization practices.
+- [Redis Idempotency Patterns](atomic/integrations/redis/idempotency-patterns.md) — Idempotency with Redis.
+- [Redis Caching Strategies](atomic/integrations/redis/caching-strategies.md) — Caching patterns and TTL guidance.
+- [Redis and FastAPI Integration](atomic/integrations/redis/fastapi-integration.md) — FastAPI + Redis patterns.
+- [Redis and Aiogram Integration](atomic/integrations/redis/aiogram-integration.md) — Aiogram + Redis integration.
+- [Redis and AsyncIO Integration](atomic/integrations/redis/asyncio-integration.md) — Redis usage from workers.
+- [Redis Testing Patterns](atomic/integrations/redis/testing-patterns.md) — Testing Redis interactions.
+
+#### RabbitMQ
+
+- [RabbitMQ Connection Management](atomic/integrations/rabbitmq/connection-management.md) — Connection and channel handling.
+- [RabbitMQ Exchange and Queue Declaration](atomic/integrations/rabbitmq/exchange-queue-declaration.md) — Exchange/queue setup patterns.
+- [RabbitMQ Message Publishing](atomic/integrations/rabbitmq/message-publishing.md) — Publishing strategies and confirmations.
+- [RabbitMQ Message Consuming](atomic/integrations/rabbitmq/message-consuming.md) — Consumer patterns and ack flow.
+- [RabbitMQ DTO Contracts](atomic/integrations/rabbitmq/dto-contracts.md) — Message DTO and schema rules.
+- [RabbitMQ Error Handling](atomic/integrations/rabbitmq/error-handling.md) — Error handling and dead letters.
+- [RabbitMQ Idempotency Patterns](atomic/integrations/rabbitmq/idempotency-patterns.md) — Idempotency strategies for messaging.
+- [RabbitMQ and FastAPI Integration](atomic/integrations/rabbitmq/fastapi-integration.md) — FastAPI integration patterns.
+- [RabbitMQ and Aiogram Integration](atomic/integrations/rabbitmq/aiogram-integration.md) — Aiogram integration patterns.
+- [RabbitMQ and AsyncIO Integration](atomic/integrations/rabbitmq/asyncio-integration.md) — Worker integration patterns.
+- [RabbitMQ Testing Patterns](atomic/integrations/rabbitmq/testing-patterns.md) — Testing messaging workflows.
+
+#### HTTP Communication
+
+- [Business to Data Service Calls](atomic/integrations/http-communication/business-to-data-calls.md) — Business → data service HTTP patterns.
+- [HTTP Client Patterns](atomic/integrations/http-communication/http-client-patterns.md) — HTTP client configuration and reuse.
+- [HTTP Error Handling Strategies](atomic/integrations/http-communication/error-handling-strategies.md) — Resilience for HTTP clients.
+- [HTTP Timeout and Retry Patterns](atomic/integrations/http-communication/timeout-retry-patterns.md) — Timeouts, retries, and circuit breakers.
+- [HTTP Request Tracing](atomic/integrations/http-communication/request-tracing.md) — Request ID propagation.
+- [HTTP Integration Testing](atomic/integrations/http-communication/testing-http-integration.md) — Testing cross-service HTTP flows.
+
+#### Cross-Service
+
+- [Cross-Service Discovery](atomic/integrations/cross-service/service-discovery.md) — Service discovery approaches.
+- [Cross-Service Health Checks](atomic/integrations/cross-service/health-checks.md) — Health check patterns.
+- [Cross-Service Graceful Shutdown](atomic/integrations/cross-service/graceful-shutdown.md) — Coordinated shutdown across services.
+- [Cross-Service Distributed Tracing](atomic/integrations/cross-service/distributed-tracing.md) — Cross-service trace correlation.
 
 ### Infrastructure
-Infrastructure component patterns:
 
-- **[Redis Rules][link-redis-rules]** - Redis patterns for caching and idempotency
-- **[RabbitMQ Rules][link-rabbitmq-rules]** - RabbitMQ standards for inter-service communication
-- **[MongoDB Rules][link-mongodb-rules]** - MongoDB patterns and operations
+#### Databases
+
+- [Database PostgreSQL Setup](atomic/infrastructure/databases/postgresql-setup.md) — PostgreSQL configuration and tuning.
+- [Database MongoDB Setup](atomic/infrastructure/databases/mongodb-setup.md) — MongoDB configuration and tuning.
+- [Database Connection Pooling](atomic/infrastructure/databases/connection-pooling.md) — Pooling strategies.
+- [Database Migrations](atomic/infrastructure/databases/migrations.md) — Migration tooling and workflows.
+- [Database Performance Optimization](atomic/infrastructure/databases/performance-optimization.md) — Performance troubleshooting.
+
+#### Containerization
+
+- [Dockerfile Patterns](atomic/infrastructure/containerization/dockerfile-patterns.md) — Dockerfile best practices.
+- [Docker Compose Setup](atomic/infrastructure/containerization/docker-compose-setup.md) — Compose configuration standards.
+- [Container Networking](atomic/infrastructure/containerization/container-networking.md) — Networking patterns for containers.
+- [Container Volume Management](atomic/infrastructure/containerization/volume-management.md) — Volume usage and persistence.
+- [Multi-Stage Builds](atomic/infrastructure/containerization/multi-stage-builds.md) — Multi-stage Docker build patterns.
+
+#### Configuration
+
+- [Environment Variables Management](atomic/infrastructure/configuration/environment-variables.md) — Managing environment variables.
+- [Secrets Management](atomic/infrastructure/configuration/secrets-management.md) — Secrets storage and rotation.
+- [Settings Patterns](atomic/infrastructure/configuration/settings-patterns.md) — Application settings organization.
+- [Configuration Validation](atomic/infrastructure/configuration/configuration-validation.md) — Validating configuration at startup.
+
+#### Deployment
+
+- [Production Deployment](atomic/infrastructure/deployment/production-deployment.md) — Deploying to production.
+- [Development Environment Setup](atomic/infrastructure/deployment/development-environment.md) — Local development environment.
+- [CI/CD Patterns](atomic/infrastructure/deployment/ci-cd-patterns.md) — CI/CD pipeline guidance.
+- [Deployment Monitoring Setup](atomic/infrastructure/deployment/monitoring-setup.md) — Monitoring deployed services.
 
 ### Observability
-Monitoring, logging, and tracing patterns:
 
-- **[Logging Rules][link-logging-rules]** - Unified logging with Request ID tracing
-- **[Metrics Rules][link-metrics-rules]** - Prometheus metrics collection patterns
-- **[Tracing Rules][link-tracing-rules]** - Distributed tracing with OpenTelemetry
-- **[ELK Rules][link-elk-rules]** - ELK stack configuration and patterns
-- **[Observability Rules][link-observability-rules]** - Overall observability strategy
+#### Logging
 
-### Quality Assurance
-Code quality and testing standards:
+- [Structured Logging Patterns](atomic/observability/logging/structured-logging.md) — Structured logging guidelines.
+- [Request ID Tracking](atomic/observability/logging/request-id-tracking.md) — Request ID and correlation IDs.
+- [Log Correlation](atomic/observability/logging/log-correlation.md) — Correlating log events.
+- [Log Formatting Standards](atomic/observability/logging/log-formatting.md) — Log formatting rules.
+- [Sensitive Data Handling](atomic/observability/logging/sensitive-data-handling.md) — Protecting sensitive data in logs.
+- [Centralized Logging](atomic/observability/logging/centralized-logging.md) — Centralized log aggregation.
 
-- **[Testing Standards][link-testing-standards]** - Testing standards with 100% coverage requirements
+#### Metrics
 
-## Documentation by Task
+- [Prometheus Setup](atomic/observability/metrics/prometheus-setup.md) — Prometheus configuration.
+- [Service-Level Metrics](atomic/observability/metrics/service-metrics.md) — Service-level metric expectations.
+- [Golden Signals Implementation](atomic/observability/metrics/golden-signals.md) — Measuring and monitoring golden signals.
+- [Custom Metrics Patterns](atomic/observability/metrics/custom-metrics.md) — Creating custom metrics.
+- [Monitoring Dashboards](atomic/observability/metrics/dashboards.md) — Grafana and dashboard practices.
 
-### For New Developers
-1. Start with [Project Overview][link-project-overview] for project overview
-2. Read [Main Entry Point][link-main-entry-point] for development guidance
-3. Study [Architecture Guide][link-architecture-guide] for architecture understanding
-4. Use [Development Commands][link-development-commands] for daily commands
+#### Tracing
 
-### For Service Development
-1. Follow [Use Case Implementation Guide][link-use-case-guide]
-2. Check relevant service rules in the `services` directory.
-3. Verify setup with [Technical Specifications][link-tech-specs]
+- [OpenTelemetry Setup](atomic/observability/tracing/opentelemetry-setup.md) — Setting up OpenTelemetry.
+- [Distributed Tracing](atomic/observability/tracing/distributed-tracing.md) — Distributed tracing strategy.
+- [Jaeger Configuration](atomic/observability/tracing/jaeger-configuration.md) — Configuring Jaeger.
+- [Trace Correlation](atomic/observability/tracing/trace-correlation.md) — Correlating traces across services.
+- [Tracing for Performance Monitoring](atomic/observability/tracing/performance-monitoring.md) — Tracing performance diagnostics.
 
-### For Infrastructure Setup
-1. Use [Development Commands][link-development-commands] for Docker operations
-2. Follow infrastructure rules in the `infrastructure` directory.
-3. Setup observability with the rules in the `observability` directory.
-4. Troubleshoot with [Troubleshooting Guide][link-troubleshooting-guide]
+#### Error Tracking
 
-### For Agent-Led Delivery
-1. Validate the prompt using [Prompt Validation Guide][link-prompt-validation]
-2. Capture requirements with [Requirements Intake Template][link-intake-template]
-3. Draft plan via [Implementation Plan Template][link-plan-template]
-4. Execute using [Agent Workflow][link-agent-workflow] and [Agent Toolbox][link-agent-toolbox]
-5. Verify with [Agent Verification Checklist][link-verification-checklist]
-6. Report results using [QA Report Template][link-qa-report]
+- [Sentry Integration](atomic/observability/error-tracking/sentry-integration.md) — Integrating Sentry.
+- [Error Grouping Strategies](atomic/observability/error-tracking/error-grouping.md) — Grouping and triaging errors.
+- [Error Alerting Patterns](atomic/observability/error-tracking/alerting-patterns.md) — Alerting best practices.
 
-### For Code Quality
-1. Follow [Testing Standards][link-testing-standards]
-2. Use [Naming Conventions][link-naming-conventions]
-3. Apply patterns from [Microservices Best Practices][link-ms-best-practices]
+#### ELK Stack
+
+- [Elasticsearch Setup](atomic/observability/elk-stack/elasticsearch-setup.md) — Configuring Elasticsearch.
+- [Logstash Configuration](atomic/observability/elk-stack/logstash-configuration.md) — Configuring Logstash.
+- [Kibana Dashboards](atomic/observability/elk-stack/kibana-dashboards.md) — Kibana dashboard practices.
+- [Filebeat Setup](atomic/observability/elk-stack/filebeat-setup.md) — Configuring Filebeat.
+
+### Testing
+
+#### Unit Testing
+
+- [Pytest Setup](atomic/testing/unit-testing/pytest-setup.md) — Pytest configuration and conventions.
+- [Test Fixture Patterns](atomic/testing/unit-testing/fixture-patterns.md) — Fixture organization.
+- [Mocking Strategies](atomic/testing/unit-testing/mocking-strategies.md) — Mocking guidance.
+- [Parametrized Tests](atomic/testing/unit-testing/parametrized-tests.md) — Using parametrized tests.
+- [Coverage Requirements](atomic/testing/unit-testing/coverage-requirements.md) — Coverage targets and reporting.
+
+#### Integration Testing
+
+- [Testcontainers Setup](atomic/testing/integration-testing/testcontainers-setup.md) — Testcontainers usage.
+- [Database Integration Testing](atomic/testing/integration-testing/database-testing.md) — Database integration testing.
+- [Redis Integration Testing](atomic/testing/integration-testing/redis-testing.md) — Redis integration tests.
+- [RabbitMQ Integration Testing](atomic/testing/integration-testing/rabbitmq-testing.md) — RabbitMQ integration tests.
+- [HTTP Integration Testing](atomic/testing/integration-testing/http-integration-testing.md) — HTTP integration validation.
+
+#### Service Testing
+
+- [FastAPI Service Testing Patterns](atomic/testing/service-testing/fastapi-testing-patterns.md) — Testing FastAPI services.
+- [Aiogram Service Testing Patterns](atomic/testing/service-testing/aiogram-testing-patterns.md) — Testing Aiogram bots.
+- [AsyncIO Service Testing Patterns](atomic/testing/service-testing/asyncio-testing-patterns.md) — Testing async workers.
+- [Data Service Testing Patterns](atomic/testing/service-testing/data-service-testing.md) — Testing data services.
+
+#### End-to-End Testing
+
+- [End-to-End Test Setup](atomic/testing/end-to-end-testing/e2e-test-setup.md) — E2E infrastructure setup.
+- [User Journey Testing](atomic/testing/end-to-end-testing/user-journey-testing.md) — User journey test design.
+- [End-to-End Performance Testing](atomic/testing/end-to-end-testing/performance-testing.md) — Performance testing guidance.
+
+#### Quality Assurance
+
+- [Linting Standards](atomic/testing/quality-assurance/linting-standards.md) — Static analysis and linting.
+- [Type Checking](atomic/testing/quality-assurance/type-checking.md) — Type checking setup.
+- [Security Testing](atomic/testing/quality-assurance/security-testing.md) — Security testing guidance.
+- [Code Review Checklist](atomic/testing/quality-assurance/code-review-checklist.md) — Checklist for reviews.
+
+## Legacy Archive
+
+Historical `.mdc` sources are preserved for traceability. Reference them only for context; new guidance must be captured in the atomic knowledge base.
+
+- [Architecture — Data Access Rules](legacy/architecture/data-access-rules.mdc)
+- [Architecture — Microservices Best Practices](legacy/architecture/ms_best_practices_rules.mdc)
+- [Architecture — Naming Conventions](legacy/architecture/naming_conventions.mdc)
+- [Services — FastAPI Rules](legacy/services/fastapi_rules.mdc)
+- [Services — Aiogram Rules](legacy/services/aiogram_rules.mdc)
+- [Services — AsyncIO Rules](legacy/services/asyncio_rules.mdc)
+- [Infrastructure — Redis Rules](legacy/infrastructure/redis_rules.mdc)
+- [Infrastructure — RabbitMQ Rules](legacy/infrastructure/rabbitmq_rules.mdc)
+- [Infrastructure — MongoDB Rules](legacy/infrastructure/mongodb_rules.mdc)
+- [Observability — Logging Rules](legacy/observability/logging_rules.mdc)
+- [Observability — Metrics Rules](legacy/observability/metrics_rules.mdc)
+- [Observability — Tracing Rules](legacy/observability/tracing_rules.mdc)
+- [Observability — ELK Rules](legacy/observability/elk_rules.mdc)
+- [Observability — General Rules](legacy/observability/observability_rules.mdc)
+- [Quality — Testing Standards](legacy/quality/testing-standards.mdc)
 
 ## Maintenance
 
-This documentation is organized to avoid duplication and maintain clear separation of concerns:
-
-- **Guides** contain step-by-step instructions
-- **Reference** contains specifications and examples
-- **Root categories** contain IDE automation patterns organized by domain
-
-When adding new documentation:
-- Place guides in `guides/`
-- Place technical references in `reference/`
-- Place IDE rules in appropriate category folders at root level
-- Update this index with new content
-
-### Link Validation
-
-To maintain documentation quality, all internal links should be validated:
-
-```bash
-# Check for broken internal links (example command)
-find docs/ -name "*.md" -exec grep -l "\[.*\](" {} \;
-  xargs grep -n "\[.*\](" | \
-  grep -v "http" | \
-  awk -F: '{print $1":"$2}' | \
-  sort | uniq
-
-# Recommended: Add link checker to CI/CD pipeline
-# Example: markdown-link-check or similar tool
-```
-
-### Documentation Standards
-
-- **Always use relative paths** for internal links
-- **Update INDEX.md** when adding new documentation
-- **Follow naming conventions** from [Naming Conventions][link-naming-conventions]
-- **Avoid duplication** between documentation files
-- **Reference canonical sources** for shared information
-
----
-
-> **Main Entry Point**: For project overview and getting started, see [Main Entry Point][link-main-entry-point]
-
-[link-main-entry-point]: LINKS_REFERENCE.md#core-documentation
-[link-project-overview]: LINKS_REFERENCE.md#core-documentation
-[link-architecture-guide]: LINKS_REFERENCE.md#core-documentation
-[link-tech-specs]: LINKS_REFERENCE.md#core-documentation
-[link-development-commands]: LINKS_REFERENCE.md#developer-guides
-[link-use-case-guide]: LINKS_REFERENCE.md#developer-guides
-[link-troubleshooting-guide]: LINKS_REFERENCE.md#developer-guides
-[link-agent-workflow]: guides/AGENT_WORKFLOW.md
-[link-agent-context]: reference/AGENT_CONTEXT_SUMMARY.md
-[link-agent-toolbox]: reference/AGENT_TOOLBOX.md
-[link-deliverables]: reference/DELIVERABLES_CATALOG.md
-[link-prompt-templates]: reference/PROMPT_TEMPLATES.md
-[link-adr-template]: reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md
-[link-framework-roadmap]: development/FRAMEWORK_IMPROVEMENT_ROADMAP.md
-[link-prompt-validation]: guides/PROMPT_VALIDATION_GUIDE.md
-[link-intake-template]: guides/REQUIREMENTS_INTAKE_TEMPLATE.md
-[link-plan-template]: guides/IMPLEMENTATION_PLAN_TEMPLATE.md
-[link-verification-checklist]: quality/AGENT_VERIFICATION_CHECKLIST.md
-[link-qa-report]: quality/QA_REPORT_TEMPLATE.md
-[link-ide-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-ms-best-practices]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-data-access-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-naming-conventions]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-fastapi-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-aiogram-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-asyncio-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-redis-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-rabbitmq-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-mongodb-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-logging-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-metrics-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-tracing-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-elk-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-observability-rules]: LINKS_REFERENCE.md#ide-rules-and-patterns
-[link-testing-standards]: LINKS_REFERENCE.md#ide-rules-and-patterns
+- Add new guidance to the appropriate `docs/atomic/` module and keep files atomic in scope.
+- Update this index whenever a new atomic topic is created or archived.
+- Archive superseded `.mdc` materials in `docs/legacy/` without modification for audit purposes.
+- Validate internal links as part of CI to avoid regressions in navigation.
