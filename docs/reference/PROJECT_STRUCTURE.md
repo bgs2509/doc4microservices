@@ -15,7 +15,7 @@ When you add this framework as a submodule, your project structure should follow
 ```
 my_awesome_app/                      # Your project repository
 ├── .framework/                      # Git submodule (this repository)
-│   ├── docs/                       # Architecture rules and patterns
+│   ├── docs/                       # Atomic knowledge base and guides
 │   └── CLAUDE.md                   # AI instructions
 ├── README.md                        # Your project documentation
 ├── docker-compose.yml               # Your project infrastructure
@@ -70,7 +70,8 @@ my_awesome_app/                      # Your project repository
 
 ### Framework Directory (`.framework/`)
 - **Immutable**: Never modify framework content when used as submodule
-- **Patterns**: Contains architecture rules, implementation guides, and automation rulesets
+- **Patterns**: Contains atomic rules, implementation guides, and automation rule sets
+- **Legacy**: Archived `.mdc` sources live in `docs/legacy/` for historical reference
 - **Updates**: Use `git submodule update --remote .framework` to get latest improvements
 
 ### Root-Level Configuration
@@ -100,7 +101,7 @@ my_awesome_app/                      # Your project repository
 - **Purpose**: Business logic only, HTTP-only data access
 
 ### Service File Structure
-The structure below is a simplified overview for quick setup. For the complete, mandatory source code organization inside a service (including the `src/` layout, DDD/Hexagonal layers, and testing directories), see the **[Microservices Best Practices](../LINKS_REFERENCE.md#ide-rules-and-patterns)** rules.
+The structure below is a simplified overview for quick setup. For the complete, mandatory source code organization inside a service (including the `src/` layout, DDD/Hexagonal layers, and testing directories), see [Project Structure Patterns](../atomic/architecture/project-structure-patterns.md) for the mandatory layout.
 
 Each service contains at a minimum:
 - **`Dockerfile`**: Service-specific container configuration
