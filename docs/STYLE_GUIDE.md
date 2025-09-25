@@ -20,7 +20,7 @@
 See [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
 
 <!-- AVOID: Direct links with submodule variants -->
-[guides/ARCHITECTURE_GUIDE.md](../guides/ARCHITECTURE_GUIDE.md) *(or [.framework/...])* 
+[Architecture Guide](guides/ARCHITECTURE_GUIDE.md) *(or `.framework/docs/...` in submodule mode)*
 ```
 
 ### External Links
@@ -40,7 +40,7 @@ See [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
 > **MANDATORY**: Mandatory requirement
 
 <!-- For links to additional materials -->
-> **DETAILS**: See [document](#some-document) for detailed information
+> **DETAILS**: See [Link Standards](#link-standards) for detailed information
 ```
 
 ### Requirement Lists
