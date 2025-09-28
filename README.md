@@ -42,8 +42,11 @@ git submodule init && git submodule update
 # 3. Generate with AI (AI reads .framework/docs/ automatically)
 # Ask AI: "Create [your app] using .framework/ patterns"
 
-# 4. Deploy ready application
-docker-compose up -d
+# 4. Используйте документацию
+# Применяйте паттерны из docs/atomic/ при настройке собственного окружения в рабочем проекте.
+# Смотрите:
+# - docs/atomic/infrastructure/containerization/docker-compose-setup.md
+# - docs/reference/PROJECT_STRUCTURE.md
 ```
 
 ### **Key Benefits:**
