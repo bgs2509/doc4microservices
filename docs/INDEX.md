@@ -144,6 +144,28 @@ See [Atomic Documentation Hub](atomic/README.md) for contribution rules.
 - [Cross-Service Graceful Shutdown](atomic/integrations/cross-service/graceful-shutdown.md) — Coordinated shutdown across services.
 - [Cross-Service Distributed Tracing](atomic/integrations/cross-service/distributed-tracing.md) — Cross-service trace correlation.
 
+### Security
+- [Authentication Guide](atomic/security/authentication-guide.md) — Core authentication patterns and flows.
+- [Authorization Patterns](atomic/security/authorization-patterns.md) — RBAC, ABAC, and policy enforcement strategies.
+
+### File Storage & Media
+- [File Upload Patterns](atomic/file-storage/upload-patterns.md) — Validation, scanning, and multi-storage flows.
+- [Cloud Storage Integration](atomic/file-storage/cloud-integration.md) — Provider-agnostic storage adapters.
+- [Media Processing Workflows](atomic/file-storage/media-processing.md) — Transcoding, optimization, and pipelines.
+- [CDN Integration](atomic/file-storage/cdn-integration.md) — Edge delivery and cache invalidation patterns.
+
+### External Integrations
+- [Payment Gateway Integration](atomic/external-integrations/payment-gateways.md) — PCI-safe payment flows and reconciliation.
+- [Communication APIs](atomic/external-integrations/communication-apis.md) — Email, SMS, and voice integration patterns.
+- [Webhook Handling](atomic/external-integrations/webhook-handling.md) — Secure inbound webhook processing.
+- [API Rate Limiting](atomic/external-integrations/api-rate-limiting.md) — Protection against API overuse.
+
+### Real-time Communication
+- [WebSocket Patterns](atomic/real-time/websocket-patterns.md) — Connection lifecycle, scaling, and security.
+- [Server-Sent Events](atomic/real-time/sse-implementation.md) — Streaming updates with SSE.
+- [Push Notifications](atomic/real-time/push-notifications.md) — Device messaging workflows.
+- [Real-Time Synchronization Patterns](atomic/real-time/real-time-sync-patterns.md) — Conflict-free data sync strategies.
+
 ### Infrastructure
 
 #### Databases
