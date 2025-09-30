@@ -1305,7 +1305,7 @@ class TestPCICompliance:
 
 - `docs/atomic/external-integrations/webhook-handling.md` - Webhook processing
 - `docs/atomic/external-integrations/api-rate-limiting.md` - Rate limiting patterns
-- `docs/atomic/security/authentication-guide.md` - Authentication for payments
+- `docs/atomic/security/authentication-authorization-guide.md` - Authentication for payments
 - `docs/atomic/services/fastapi/error-handling.md` - Error handling patterns
 - `docs/atomic/testing/integration-testing/http-integration-testing.md` - HTTP testing
 

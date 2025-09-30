@@ -1550,7 +1550,7 @@ class TestWebhookStorage:
 - `docs/atomic/external-integrations/payment-gateways.md` - Payment webhooks
 - `docs/atomic/external-integrations/communication-apis.md` - Communication webhooks
 - `docs/atomic/external-integrations/api-rate-limiting.md` - Rate limiting patterns
-- `docs/atomic/security/authentication-guide.md` - Webhook authentication
+- `docs/atomic/security/authentication-authorization-guide.md` - Webhook authentication
 - `docs/atomic/testing/integration-testing/http-integration-testing.md` - HTTP testing
 
 ## Implementation Checklist

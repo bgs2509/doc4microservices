@@ -1322,8 +1322,8 @@ class TestAuthorizationPerformance:
 
 ## Related Documents
 
-- `docs/atomic/security/authentication-guide.md` - Authentication implementation
-- `docs/atomic/security/security-testing.md` - Security testing patterns
+- `docs/atomic/security/authentication-authorization-guide.md` - Authentication implementation
+- `docs/atomic/security/security-testing-guide.md` - Security testing patterns
 - `docs/atomic/services/fastapi/security-patterns.md` - FastAPI security basics
 - `docs/atomic/integrations/redis/fastapi-integration.md` - Redis caching integration
 - `docs/atomic/architecture/data-access-architecture.md` - Data service patterns

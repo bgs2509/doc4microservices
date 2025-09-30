@@ -1,6 +1,6 @@
 # Documentation Index
 
-The documentation is organised into atomic knowledge modules with a dedicated legacy archive. Use this index as the entry point for the authoritative materials.
+The documentation is organised into atomic knowledge modules. Use this index as the entry point for the authoritative materials.
 
 ## Quick Navigation
 
@@ -12,7 +12,6 @@ The documentation is organised into atomic knowledge modules with a dedicated le
 | Prepare infrastructure | [PostgreSQL Setup](atomic/infrastructure/databases/postgresql-setup.md) |
 | Set up observability | [Structured Logging Patterns](atomic/observability/logging/structured-logging.md) |
 | Align testing strategy | [Pytest Setup](atomic/testing/unit-testing/pytest-setup.md) |
-| Reference legacy rules | [Legacy Documentation Archive](legacy/README.md) |
 
 ## Documentation Pillars
 
@@ -30,7 +29,6 @@ The documentation is organised into atomic knowledge modules with a dedicated le
 - [Deliverables Catalog](reference/DELIVERABLES_CATALOG.md) — artefact ownership and storage rules
 - [Prompt Templates](reference/PROMPT_TEMPLATES.md) — reusable communication templates
 - [Architecture Decision Log Template](reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md) — ADR format and conventions
-- [Framework Improvement Roadmap](development/FRAMEWORK_IMPROVEMENT_ROADMAP.md) — platform evolution backlog
 
 ### Agent Templates & Checklists
 - [Prompt Validation Guide](guides/PROMPT_VALIDATION_GUIDE.md) — pre-work validation checklist
@@ -145,8 +143,10 @@ See [Atomic Documentation Hub](atomic/README.md) for contribution rules.
 - [Cross-Service Distributed Tracing](atomic/integrations/cross-service/distributed-tracing.md) — Cross-service trace correlation.
 
 ### Security
-- [Authentication Guide](atomic/security/authentication-guide.md) — Core authentication patterns and flows.
+- [Authentication & Authorization Guide](atomic/security/authentication-authorization-guide.md) — Core authentication and authorization patterns and flows.
 - [Authorization Patterns](atomic/security/authorization-patterns.md) — RBAC, ABAC, and policy enforcement strategies.
+- [Security Testing Guide](atomic/security/security-testing-guide.md) — Security testing patterns and strategies.
+- [Session Management Patterns](atomic/security/session-management-patterns.md) — Session lifecycle and management.
 
 ### File Storage & Media
 - [File Upload Patterns](atomic/file-storage/upload-patterns.md) — Validation, scanning, and multi-storage flows.
@@ -280,32 +280,10 @@ See [Atomic Documentation Hub](atomic/README.md) for contribution rules.
 
 - [Linting Standards](atomic/testing/quality-assurance/linting-standards.md) — Static analysis and linting.
 - [Type Checking](atomic/testing/quality-assurance/type-checking.md) — Type checking setup.
-- [Security Testing](atomic/testing/quality-assurance/security-testing.md) — Security testing guidance.
 - [Code Review Checklist](atomic/testing/quality-assurance/code-review-checklist.md) — Checklist for reviews.
-
-## Legacy Archive
-
-Historical `.mdc` sources are preserved for traceability. Reference them only for context; new guidance must be captured in the atomic knowledge base.
-
-- [Architecture — Data Access Rules](legacy/architecture/data-access-rules.mdc)
-- [Architecture — Microservices Best Practices](legacy/architecture/ms_best_practices_rules.mdc)
-- [Architecture — Naming Conventions](legacy/architecture/naming_conventions.mdc)
-- [Services — FastAPI Rules](legacy/services/fastapi_rules.mdc)
-- [Services — Aiogram Rules](legacy/services/aiogram_rules.mdc)
-- [Services — AsyncIO Rules](legacy/services/asyncio_rules.mdc)
-- [Infrastructure — Redis Rules](legacy/infrastructure/redis_rules.mdc)
-- [Infrastructure — RabbitMQ Rules](legacy/infrastructure/rabbitmq_rules.mdc)
-- [Infrastructure — MongoDB Rules](legacy/infrastructure/mongodb_rules.mdc)
-- [Observability — Logging Rules](legacy/observability/logging_rules.mdc)
-- [Observability — Metrics Rules](legacy/observability/metrics_rules.mdc)
-- [Observability — Tracing Rules](legacy/observability/tracing_rules.mdc)
-- [Observability — ELK Rules](legacy/observability/elk_rules.mdc)
-- [Observability — General Rules](legacy/observability/observability_rules.mdc)
-- [Quality — Testing Standards](legacy/quality/testing-standards.mdc)
 
 ## Maintenance
 
 - Add new guidance to the appropriate `docs/atomic/` module and keep files atomic in scope.
-- Update this index whenever a new atomic topic is created or archived.
-- Archive superseded `.mdc` materials in `docs/legacy/` without modification for audit purposes.
+- Update this index whenever a new atomic topic is created.
 - Validate internal links as part of CI to avoid regressions in navigation.

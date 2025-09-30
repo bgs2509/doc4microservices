@@ -1653,7 +1653,7 @@ class TestCommunicationManager:
 - `docs/atomic/external-integrations/api-rate-limiting.md` - Rate limiting patterns
 - `docs/atomic/services/fastapi/error-handling.md` - Error handling patterns
 - `docs/atomic/testing/integration-testing/http-integration-testing.md` - HTTP testing
-- `docs/atomic/security/authentication-guide.md` - Secure API integration
+- `docs/atomic/security/authentication-authorization-guide.md` - Secure API integration
 
 ## Implementation Checklist
 
