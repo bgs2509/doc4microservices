@@ -1,8 +1,10 @@
 # Project Structure Patterns
 
-This document details the canonical structure for repositories using the Improved Hybrid Approach. Treat it as the authoritative map for scaffolding new services and auditing existing ones.
+This document details the canonical structure for repositories using the Improved Hybrid Approach. It covers both **single-service** and **multi-service project** layouts.
 
-## Repository Layout
+## Single Service Repository Layout
+
+Use this structure when developing an individual microservice in its own repository:
 
 ```
 my_service/
@@ -27,6 +29,52 @@ my_service/
 └── README.md
 ```
 
+## Multi-Service Project Layout
+
+Use this structure when managing multiple microservices in a single repository with the framework as a submodule:
+
+```
+my_awesome_app/
+├── .framework/                      # Git submodule (this repository)
+├── services/                        # All microservices (independent deployable units)
+│   ├── api-service/                # FastAPI REST API (port 8000)
+│   │   ├── src/                    # DDD/Hexagonal structure (same as single service)
+│   │   │   ├── api/
+│   │   │   ├── application/
+│   │   │   ├── domain/
+│   │   │   ├── infrastructure/
+│   │   │   ├── schemas/
+│   │   │   └── core/
+│   │   ├── tests/
+│   │   ├── Dockerfile
+│   │   └── requirements.txt
+│   ├── bot-service/                # Aiogram Telegram bot
+│   ├── worker-service/             # AsyncIO workers
+│   ├── db-postgres-service/        # PostgreSQL data service (port 8001)
+│   └── db-mongo-service/           # MongoDB data service (port 8002)
+├── shared/                          # Shared components across services
+│   ├── dtos/
+│   ├── events/
+│   └── utils/
+├── nginx/                           # API Gateway
+│   ├── nginx.conf
+│   ├── conf.d/
+│   ├── Dockerfile
+│   └── certs/
+├── infrastructure/                  # Observability (optional)
+│   ├── monitoring/
+│   └── logging/
+├── docker-compose.yml
+├── .env.example
+└── README.md
+```
+
+**Key Differences:**
+- **Single Service**: `src/` at root, standalone deployment
+- **Multi-Service**: `services/{service-name}/src/` structure, each service self-contained
+- **Multi-Service**: Adds `nginx/` for API Gateway, `shared/` for cross-service code
+- **Multi-Service**: Single `docker-compose.yml` orchestrates all services
+
 ## Service Modules
 
 - **api/** – minimal routing logic; no business decisions.
@@ -39,9 +87,15 @@ my_service/
 
 ## Shared Components
 
-- Cross-service DTOs reside in `src/shared/dtos/` with clear ownership.
-- Shared events live in `src/shared/events/` to align messaging contracts.
-- Utilities under `src/shared/utils/` remain stateless and generic.
+### Single Service
+- Typically no shared components needed (all code in `src/`)
+- If service has multiple modules, use `src/shared/` for internal shared code
+
+### Multi-Service Project
+- Cross-service DTOs reside in `shared/dtos/` with clear ownership
+- Shared events live in `shared/events/` to align messaging contracts
+- Utilities under `shared/utils/` remain stateless and generic
+- **Important**: Keep shared code minimal; prefer service-specific implementations
 
 ## Documentation Expectations
 

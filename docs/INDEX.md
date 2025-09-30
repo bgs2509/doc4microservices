@@ -168,6 +168,13 @@ See [Atomic Documentation Hub](atomic/README.md) for contribution rules.
 
 ### Infrastructure
 
+#### API Gateway
+
+- [Nginx Setup and Configuration](atomic/infrastructure/api-gateway/nginx-setup.md) — Basic nginx setup as API Gateway.
+- [Nginx Routing Patterns](atomic/infrastructure/api-gateway/routing-patterns.md) — Advanced routing strategies for microservices.
+- [Nginx Security Hardening](atomic/infrastructure/api-gateway/security-hardening.md) — Security best practices, rate limiting, and DDoS protection.
+- [Nginx SSL Configuration](atomic/infrastructure/api-gateway/ssl-configuration.md) — HTTPS setup and certificate management.
+
 #### Databases
 
 - [Database PostgreSQL Setup](atomic/infrastructure/databases/postgresql-setup.md) — PostgreSQL configuration and tuning.

@@ -86,7 +86,7 @@ AI agents generate projects following this standardized structure:
 1. **Root-Level Configuration**: Docker Compose, environment, and project configs in root
 2. **Source Code Organization**: All code in `src/` with clear separation
 3. **Service-Specific Dockerfiles**: Each service has its own Dockerfile in its folder
-4. **Shared Components**: Common code in `src/shared/` and `src/config/`
+4. **Shared Components**: Common code in `shared/` at root level
 5. **Comprehensive Testing**: Unit and integration tests with proper fixtures
 
 ---
@@ -129,7 +129,7 @@ AI prepares deployment assets to:
 
 ### Service Implementation Standards
 
-#### 1. **FastAPI Services (`src/services/api_service/`)**
+#### 1. **FastAPI Services (`services/api-service/`)**
 ```python
 # Generated main.py structure
 """
@@ -145,8 +145,8 @@ import httpx
 from fastapi import FastAPI, HTTPException
 import structlog
 
-# Service-specific imports from src/shared/
-from ...shared.dtos import {{model_imports}}
+# Service-specific imports from shared/
+from shared.dtos import {{model_imports}}
 from ...config.settings import Settings
 
 # HTTP-only data access via data services
@@ -156,7 +156,7 @@ class DataServiceClient:
         self.mongo_url = "http://db_mongo_service:8000"
 ```
 
-#### 2. **Aiogram Bot Services (`src/services/bot_service/`)**
+#### 2. **Aiogram Bot Services (`services/bot-service/`)**
 ```python
 # Generated main.py structure
 """
@@ -174,11 +174,11 @@ import structlog
 # HTTP-only communication with API service
 class BotService:
     def __init__(self):
-        self.api_url = "http://api_service:8000"
+        self.api_url = "http://api-service:8000"
         # No direct database access
 ```
 
-#### 3. **Worker Services (`src/services/worker_service/`)**
+#### 3. **Worker Services (`services/worker-service/`)**
 ```python
 # Generated main.py structure
 """
@@ -202,7 +202,7 @@ class WorkerService:
 
 ### Docker Configuration Standards
 
-#### 1. **Service Dockerfiles (`src/services/*/Dockerfile`)**
+#### 1. **Service Dockerfiles (`services/*/Dockerfile`)**
 ```dockerfile
 FROM python:3.12-slim
 
@@ -214,15 +214,14 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy service-specific requirements
-COPY src/services/{{service_name}}/requirements.txt ./
+COPY services/{{service_name}}/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy shared modules
-COPY src/shared/ ./shared/
-COPY src/config/ ./config/
+COPY shared/ ./shared/
 
 # Copy service code
-COPY src/services/{{service_name}}/ ./
+COPY services/{{service_name}}/ ./
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
@@ -253,7 +252,7 @@ services:
   db_postgres_service:
     build:
       context: "."
-      dockerfile: "./src/services/db_postgres_service/Dockerfile"
+      dockerfile: "./services/db-postgres-service/Dockerfile"
     environment:
       DATABASE_URL: postgresql://postgres:postgres123@postgres:5432/{{project_name}}_db
     ports:
@@ -264,12 +263,12 @@ services:
       - app_network
 
   # Business Services
-  api_service:
+  api-service:
     build:
       context: "."
-      dockerfile: "./src/services/api_service/Dockerfile"
+      dockerfile: "./services/api-service/Dockerfile"
     environment:
-      POSTGRES_SERVICE_URL: http://db_postgres_service:8000
+      POSTGRES_SERVICE_URL: http://db-postgres-service:8000
       MONGO_SERVICE_URL: http://db_mongo_service:8000
     ports:
       - "8000:8000"
