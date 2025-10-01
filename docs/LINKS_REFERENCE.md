@@ -52,15 +52,6 @@ Centralised atomic documentation for domain-specific rules. See [INDEX.md](INDEX
 | Observability | [atomic/observability/](atomic/observability/) | logging, metrics, tracing, error tracking, ELK |
 | Testing | [atomic/testing/](atomic/testing/) | unit, integration, service, end-to-end, QA |
 
-<a id="legacy-archive"></a>
-## Legacy Archive
-
-Historical `.mdc` sources are preserved for context only.
-
-| Scope | Location | Notes |
-|-------|----------|-------|
-| Legacy documentation | [legacy/README.md](legacy/README.md) | Original `.mdc` rule sets for audit and comparison |
-
 <a id="quality-assets"></a>
 ## Quality Assets
 
