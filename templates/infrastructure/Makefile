@@ -58,7 +58,7 @@ setup: ## Initial project setup
 		cp .env.example .env; \
 		echo "$(YELLOW)⚠ Please edit .env file with your configuration$(RESET)"; \
 	fi
-	@mkdir -p services/{api-service,bot-service,worker-service,db-postgres-service,db-mongo-service}
+	@mkdir -p services/{api_service,bot_service,worker_service,db_postgres_service,db_mongo_service}
 	@mkdir -p nginx/certs nginx/conf.d
 	@mkdir -p infrastructure/monitoring/{prometheus,grafana}
 	@mkdir -p logs
@@ -109,16 +109,16 @@ ps: ## Show running services status
 	@echo "$(BLUE)════════════════════════════════════════════════════════════════$(RESET)"
 	@docker-compose -f $(COMPOSE_FILE) ps
 
-logs: ## Show logs from all services (or specific: make logs SERVICE=api-service)
+logs: ## Show logs from all services (or specific: make logs SERVICE=api_service)
 	@if [ -z "$(SERVICE)" ]; then \
 		docker-compose -f $(COMPOSE_FILE) logs -f; \
 	else \
 		docker-compose -f $(COMPOSE_FILE) logs -f $(SERVICE); \
 	fi
 
-shell: ## Open shell in service container (make shell SERVICE=api-service)
+shell: ## Open shell in service container (make shell SERVICE=api_service)
 	@if [ -z "$(SERVICE)" ]; then \
-		echo "$(RED)Error: SERVICE not specified. Usage: make shell SERVICE=api-service$(RESET)"; \
+		echo "$(RED)Error: SERVICE not specified. Usage: make shell SERVICE=api_service$(RESET)"; \
 	else \
 		docker-compose -f $(COMPOSE_FILE) exec $(SERVICE) /bin/sh; \
 	fi
@@ -148,9 +148,9 @@ test-cov: ## Run tests with coverage report
 	done
 	@echo "$(GREEN)✓ Coverage reports generated in each service/htmlcov/$(RESET)"
 
-test-service: ## Run tests for specific service (make test-service SERVICE=api-service)
+test-service: ## Run tests for specific service (make test-service SERVICE=api_service)
 	@if [ -z "$(SERVICE)" ]; then \
-		echo "$(RED)Error: SERVICE not specified. Usage: make test-service SERVICE=api-service$(RESET)"; \
+		echo "$(RED)Error: SERVICE not specified. Usage: make test-service SERVICE=api_service$(RESET)"; \
 	else \
 		echo "$(GREEN)Testing services/$(SERVICE)...$(RESET)"; \
 		cd services/$(SERVICE) && pytest tests/ -v; \
@@ -210,12 +210,12 @@ format-check: ## Check if code needs formatting
 # ════════════════════════════════════════════════════════════════════════════════
 db-migrate: ## Run database migrations
 	@echo "$(GREEN)Running database migrations...$(RESET)"
-	@docker-compose -f $(COMPOSE_FILE) exec db-postgres-service alembic upgrade head
+	@docker-compose -f $(COMPOSE_FILE) exec db_postgres_service alembic upgrade head
 	@echo "$(GREEN)✓ Migrations applied$(RESET)"
 
 db-rollback: ## Rollback last migration
 	@echo "$(YELLOW)Rolling back last migration...$(RESET)"
-	@docker-compose -f $(COMPOSE_FILE) exec db-postgres-service alembic downgrade -1
+	@docker-compose -f $(COMPOSE_FILE) exec db_postgres_service alembic downgrade -1
 	@echo "$(GREEN)✓ Rollback complete$(RESET)"
 
 db-migration: ## Create new migration (make db-migration MSG="add users table")
@@ -223,7 +223,7 @@ db-migration: ## Create new migration (make db-migration MSG="add users table")
 		echo "$(RED)Error: MSG not specified. Usage: make db-migration MSG='add users table'$(RESET)"; \
 	else \
 		echo "$(GREEN)Creating migration: $(MSG)$(RESET)"; \
-		docker-compose -f $(COMPOSE_FILE) exec db-postgres-service alembic revision --autogenerate -m "$(MSG)"; \
+		docker-compose -f $(COMPOSE_FILE) exec db_postgres_service alembic revision --autogenerate -m "$(MSG)"; \
 	fi
 
 db-reset: ## Reset database (WARNING: destroys all data)

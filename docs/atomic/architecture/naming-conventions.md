@@ -595,7 +595,7 @@ server {
 ## Related Documents
 
 - [Project Structure Patterns](project-structure-patterns.md) - Folder organization and service layout
-- [Linting Standards](../../testing/quality-assurance/linting-standards.md) - Automated naming validation
+- [Linting Standards](../testing/quality-assurance/linting-standards.md) - Automated naming validation
 - [Service Separation Principles](service-separation-principles.md) - Service type naming conventions
 
 ---

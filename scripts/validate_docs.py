@@ -32,9 +32,18 @@ def collect_anchors(path: Path) -> set[str]:
 
 def iter_links(path: Path) -> Iterable[tuple[int, str]]:
     text = path.read_text(encoding="utf-8")
+    original_text = text
+
+    # Remove code blocks first (triple backticks)
+    text = re.sub(r"```[\s\S]+?```", lambda m: " " * len(m.group()), text)
+
+    # Remove inline code (single backticks)
+    text = re.sub(r"`[^`\n]+`", lambda m: " " * len(m.group()), text)
+
+    # Find links in the cleaned text
     for match in MARKDOWN_LINK_RE.finditer(text):
         link = match.group(2).strip()
-        line = text.count("\n", 0, match.start()) + 1
+        line = original_text.count("\n", 0, match.start()) + 1
         yield line, link
 
 
