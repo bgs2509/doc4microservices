@@ -1,0 +1,299 @@
+name: CI Pipeline
+
+# ════════════════════════════════════════════════════════════════════════════════
+# Continuous Integration Pipeline
+# Runs on every push and pull request
+# ════════════════════════════════════════════════════════════════════════════════
+
+on:
+  push:
+    branches: [main, develop, feature/**]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  PYTHON_VERSION: '3.12'
+
+jobs:
+  # ══════════════════════════════════════════════════════════════════════════════
+  # CODE QUALITY CHECKS
+  # ══════════════════════════════════════════════════════════════════════════════
+  lint:
+    name: Code Quality & Linting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-lint-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-lint-
+            ${{ runner.os }}-pip-
+
+      - name: Install linting tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff mypy bandit
+
+      - name: Run Ruff (linter + formatter check)
+        run: |
+          echo "::group::Ruff Linting"
+          ruff check services/ shared/ --output-format=github
+          echo "::endgroup::"
+
+          echo "::group::Ruff Format Check"
+          ruff format --check services/ shared/
+          echo "::endgroup::"
+
+      - name: Run Mypy (type checking)
+        run: |
+          echo "::group::Mypy Type Checking"
+          mypy --config-file pyproject.toml services/ shared/ || true
+          echo "::endgroup::"
+
+      - name: Run Bandit (security)
+        run: |
+          echo "::group::Bandit Security Check"
+          bandit -r services/ shared/ -ll -f json -o bandit-report.json || true
+          bandit -r services/ shared/ -ll
+          echo "::endgroup::"
+
+      - name: Upload Bandit report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: bandit-security-report
+          path: bandit-report.json
+
+  # ══════════════════════════════════════════════════════════════════════════════
+  # UNIT TESTS
+  # ══════════════════════════════════════════════════════════════════════════════
+  test-unit:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - api-service
+          - bot-service
+          - worker-service
+          - db-postgres-service
+          - db-mongo-service
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.service }}-${{ hashFiles(format('services/{0}/requirements.txt', matrix.service)) }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.service }}-
+            ${{ runner.os }}-pip-
+
+      - name: Install service dependencies
+        run: |
+          cd services/${{ matrix.service }}
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio pytest-cov pytest-mock
+
+      - name: Run unit tests
+        run: |
+          cd services/${{ matrix.service }}
+          if [ -d "tests/unit" ]; then
+            pytest tests/unit/ -v --tb=short --cov=src --cov-report=xml --cov-report=term
+          else
+            echo "No unit tests found for ${{ matrix.service }}"
+          fi
+
+      - name: Upload coverage to Codecov
+        if: matrix.service == 'api-service'
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./services/${{ matrix.service }}/coverage.xml
+          flags: ${{ matrix.service }}
+          name: ${{ matrix.service }}-coverage
+
+  # ══════════════════════════════════════════════════════════════════════════════
+  # INTEGRATION TESTS
+  # ══════════════════════════════════════════════════════════════════════════════
+  test-integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      mongodb:
+        image: mongo:7
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand({ping: 1})'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017:27017
+
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+      rabbitmq:
+        image: rabbitmq:3-management-alpine
+        env:
+          RABBITMQ_DEFAULT_USER: admin
+          RABBITMQ_DEFAULT_PASS: admin
+        options: >-
+          --health-cmd "rabbitmq-diagnostics ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5672:5672
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Install all service dependencies
+          for service in services/*; do
+            if [ -f "$service/requirements.txt" ]; then
+              pip install -r $service/requirements.txt
+            fi
+          done
+          pip install pytest pytest-asyncio testcontainers
+
+      - name: Run integration tests
+        env:
+          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/test_db
+          MONGO_URL: mongodb://localhost:27017
+          REDIS_URL: redis://localhost:6379/0
+          RABBITMQ_URL: amqp://admin:admin@localhost:5672/
+        run: |
+          for service in services/*; do
+            if [ -d "$service/tests/integration" ]; then
+              echo "Running integration tests for $service"
+              cd $service && pytest tests/integration/ -v --tb=short && cd ../..
+            fi
+          done
+
+  # ══════════════════════════════════════════════════════════════════════════════
+  # BUILD DOCKER IMAGES
+  # ══════════════════════════════════════════════════════════════════════════════
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: [lint, test-unit]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build services
+        run: |
+          docker-compose build
+          docker-compose config --services
+
+      - name: Test docker-compose up
+        run: |
+          docker-compose up -d
+          sleep 30
+          docker-compose ps
+          docker-compose logs
+          docker-compose down -v
+
+  # ══════════════════════════════════════════════════════════════════════════════
+  # SECURITY SCANNING
+  # ══════════════════════════════════════════════════════════════════════════════
+  security:
+    name: Security Scanning
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # ══════════════════════════════════════════════════════════════════════════════
+  # SUMMARY
+  # ══════════════════════════════════════════════════════════════════════════════
+  ci-success:
+    name: CI Pipeline Success
+    runs-on: ubuntu-latest
+    needs: [lint, test-unit, test-integration, build, security]
+    if: success()
+
+    steps:
+      - name: Success notification
+        run: |
+          echo "✅ All CI checks passed successfully!"
+          echo "Commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"

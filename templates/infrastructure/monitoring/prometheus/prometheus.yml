@@ -1,0 +1,94 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# Prometheus Configuration
+# ════════════════════════════════════════════════════════════════════════════════
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'microservices'
+    environment: 'production'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+          # - alertmanager:9093
+
+# Load rules
+rule_files:
+  - '/etc/prometheus/alerts/*.yml'
+
+# Scrape configurations
+scrape_configs:
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Prometheus itself
+  # ═══════════════════════════════════════════════════════════════════════════
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Business Services
+  # ═══════════════════════════════════════════════════════════════════════════
+  - job_name: 'api-service'
+    static_configs:
+      - targets: ['api-service:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  - job_name: 'bot-service'
+    static_configs:
+      - targets: ['bot-service:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+
+  - job_name: 'worker-service'
+    static_configs:
+      - targets: ['worker-service:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Data Services
+  # ═══════════════════════════════════════════════════════════════════════════
+  - job_name: 'db-postgres-service'
+    static_configs:
+      - targets: ['db-postgres-service:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+
+  - job_name: 'db-mongo-service'
+    static_configs:
+      - targets: ['db-mongo-service:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Infrastructure
+  # ═══════════════════════════════════════════════════════════════════════════
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:9187']
+    scrape_interval: 30s
+
+  - job_name: 'mongodb'
+    static_configs:
+      - targets: ['mongodb-exporter:9216']
+    scrape_interval: 30s
+
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+    scrape_interval: 30s
+
+  - job_name: 'rabbitmq'
+    static_configs:
+      - targets: ['rabbitmq:15692']
+    scrape_interval: 30s
+
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:9113']
+    scrape_interval: 30s
