@@ -129,7 +129,7 @@ AI prepares deployment assets to:
 
 ### Service Implementation Standards
 
-#### 1. **FastAPI Services (`services/api-service/`)**
+#### 1. **FastAPI Services (`services/api_service/`)**
 ```python
 # Generated main.py structure
 """
@@ -156,7 +156,7 @@ class DataServiceClient:
         self.mongo_url = "http://db_mongo_service:8000"
 ```
 
-#### 2. **Aiogram Bot Services (`services/bot-service/`)**
+#### 2. **Aiogram Bot Services (`services/bot_service/`)**
 ```python
 # Generated main.py structure
 """
@@ -174,11 +174,11 @@ import structlog
 # HTTP-only communication with API service
 class BotService:
     def __init__(self):
-        self.api_url = "http://api-service:8000"
+        self.api_url = "http://api_service:8000"
         # No direct database access
 ```
 
-#### 3. **Worker Services (`services/worker-service/`)**
+#### 3. **Worker Services (`services/worker_service/`)**
 ```python
 # Generated main.py structure
 """
@@ -252,7 +252,7 @@ services:
   db_postgres_service:
     build:
       context: "."
-      dockerfile: "./services/db-postgres-service/Dockerfile"
+      dockerfile: "./services/db_postgres_service/Dockerfile"
     environment:
       DATABASE_URL: postgresql://postgres:postgres123@postgres:5432/{{project_name}}_db
     ports:
@@ -263,12 +263,12 @@ services:
       - app_network
 
   # Business Services
-  api-service:
+  api_service:
     build:
       context: "."
-      dockerfile: "./services/api-service/Dockerfile"
+      dockerfile: "./services/api_service/Dockerfile"
     environment:
-      POSTGRES_SERVICE_URL: http://db-postgres-service:8000
+      POSTGRES_SERVICE_URL: http://db_postgres_service:8000
       MONGO_SERVICE_URL: http://db_mongo_service:8000
     ports:
       - "8000:8000"

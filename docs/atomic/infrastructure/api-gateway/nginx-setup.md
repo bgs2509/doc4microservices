@@ -20,7 +20,7 @@ External Traffic (Internet)
          ↓
     ┌────┴─────┬─────────┬───────────┐
     ↓          ↓         ↓           ↓
-api-service  bot-service  db-*-services
+api_service  bot_service  db-*-services
 (internal)   (internal)   (internal)
 ```
 
@@ -104,28 +104,28 @@ http {
 # Use Docker service names for internal DNS resolution
 
 upstream api_service {
-    # api-service is the Docker Compose service name
-    server api-service:8000;
+    # api_service is the Docker Compose service name
+    server api_service:8000;
     # For multiple instances (load balancing):
-    # server api-service-1:8000;
-    # server api-service-2:8000;
+    # server api_service-1:8000;
+    # server api_service-2:8000;
     keepalive 32;
 }
 
 upstream bot_webhook_service {
-    server bot-service:8002;
+    server bot_service:8002;
     keepalive 16;
 }
 
 upstream db_postgres_service {
     # Data services should NOT be exposed externally
     # Only include if you need admin/debug access (not recommended for production)
-    server db-postgres-service:8001;
+    server db_postgres_service:8001;
     keepalive 16;
 }
 
 upstream db_mongo_service {
-    server db-mongo-service:8002;
+    server db_mongo_service:8002;
     keepalive 16;
 }
 ```
@@ -245,8 +245,8 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      - api-service
-      - bot-service
+      - api_service
+      - bot_service
     networks:
       - app-network
     volumes:
@@ -257,15 +257,15 @@ services:
       - nginx-logs:/var/log/nginx
     restart: unless-stopped
 
-  api-service:
-    build: ./services/api-service
+  api_service:
+    build: ./services/api_service
     # NO ports exposed - internal only
     networks:
       - app-network
     restart: unless-stopped
 
-  bot-service:
-    build: ./services/bot-service
+  bot_service:
+    build: ./services/bot_service
     # NO ports exposed - internal only
     networks:
       - app-network
@@ -326,13 +326,13 @@ curl http://localhost/api/v1/health
 **Solution**:
 ```bash
 # Check if service is running
-docker-compose ps api-service
+docker-compose ps api_service
 
 # Check service logs
-docker-compose logs api-service
+docker-compose logs api_service
 
 # Verify Docker network connectivity
-docker-compose exec nginx ping api-service
+docker-compose exec nginx ping api_service
 ```
 
 ### Issue: 504 Gateway Timeout

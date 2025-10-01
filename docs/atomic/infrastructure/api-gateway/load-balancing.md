@@ -15,12 +15,12 @@ upstream api_service {
     least_conn;
 
     # Backend servers
-    server api-service-1:8000 weight=3 max_fails=3 fail_timeout=30s;
-    server api-service-2:8000 weight=3 max_fails=3 fail_timeout=30s;
-    server api-service-3:8000 weight=2 max_fails=3 fail_timeout=30s;
+    server api_service_1:8000 weight=3 max_fails=3 fail_timeout=30s;
+    server api_service_2:8000 weight=3 max_fails=3 fail_timeout=30s;
+    server api_service_3:8000 weight=2 max_fails=3 fail_timeout=30s;
 
     # Backup server (used only when primary servers are down)
-    server api-service-backup:8000 backup;
+    server api_service_backup:8000 backup;
 
     # Connection keepalive for better performance
     keepalive 32;
@@ -31,24 +31,24 @@ upstream api_service {
 # Data Service (PostgreSQL) - Internal only
 upstream db_postgres_service {
     least_conn;
-    server db-postgres-service-1:8001 max_fails=2 fail_timeout=10s;
-    server db-postgres-service-2:8001 max_fails=2 fail_timeout=10s;
+    server db_postgres_service_1:8001 max_fails=2 fail_timeout=10s;
+    server db_postgres_service_2:8001 max_fails=2 fail_timeout=10s;
     keepalive 16;
 }
 
 # Data Service (MongoDB) - Internal only
 upstream db_mongo_service {
     least_conn;
-    server db-mongo-service-1:8002 max_fails=2 fail_timeout=10s;
-    server db-mongo-service-2:8002 max_fails=2 fail_timeout=10s;
+    server db_mongo_service_1:8002 max_fails=2 fail_timeout=10s;
+    server db_mongo_service_2:8002 max_fails=2 fail_timeout=10s;
     keepalive 16;
 }
 
 # Worker Service (AsyncIO)
 upstream worker_service {
     least_conn;
-    server worker-service-1:8003 max_fails=3 fail_timeout=20s;
-    server worker-service-2:8003 max_fails=3 fail_timeout=20s;
+    server worker_service_1:8003 max_fails=3 fail_timeout=20s;
+    server worker_service_2:8003 max_fails=3 fail_timeout=20s;
 }
 ```
 
@@ -467,28 +467,28 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
     depends_on:
-      - api-service-1
-      - api-service-2
-      - api-service-3
+      - api_service_1
+      - api_service_2
+      - api_service_3
     networks:
       - frontend
       - backend
 
-  api-service-1:
+  api_service_1:
     build: ./services/api
     environment:
       - SERVICE_ID=1
     networks:
       - backend
 
-  api-service-2:
+  api_service_2:
     build: ./services/api
     environment:
       - SERVICE_ID=2
     networks:
       - backend
 
-  api-service-3:
+  api_service_3:
     build: ./services/api
     environment:
       - SERVICE_ID=3
@@ -517,13 +517,13 @@ done
 
 ```bash
 # Stop one backend server
-docker-compose stop api-service-1
+docker-compose stop api_service_1
 
 # Verify traffic routes to remaining servers
 curl http://localhost/api/health
 
 # Restart server
-docker-compose start api-service-1
+docker-compose start api_service_1
 
 # Verify server rejoins pool after health check passes
 ```

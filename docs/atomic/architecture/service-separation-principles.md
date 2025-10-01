@@ -44,7 +44,7 @@ This guide defines the boundaries between business, data, and platform services 
 
 ## Enforcement
 
-- Code reviews block any direct DB access in business services (`rg "asyncpg" services/api-service` should return zero matches outside data services).
+- Code reviews block any direct DB access in business services (`rg "asyncpg" services/api_service` should return zero matches outside data services).
 - CI runs static checks (import blocks, architecture tests) to detect illegal module dependencies.
 - Deployment manifests isolate data services behind internal networks so only platform-approved clients can reach them.
 

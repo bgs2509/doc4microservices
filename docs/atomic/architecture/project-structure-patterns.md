@@ -37,7 +37,7 @@ Use this structure when managing multiple microservices in a single repository w
 my_awesome_app/
 ├── .framework/                      # Git submodule (this repository)
 ├── services/                        # All microservices (independent deployable units)
-│   ├── api-service/                # FastAPI REST API (port 8000)
+│   ├── api_service/                # FastAPI REST API (port 8000)
 │   │   ├── src/                    # DDD/Hexagonal structure (same as single service)
 │   │   │   ├── api/
 │   │   │   ├── application/
@@ -48,10 +48,10 @@ my_awesome_app/
 │   │   ├── tests/
 │   │   ├── Dockerfile
 │   │   └── requirements.txt
-│   ├── bot-service/                # Aiogram Telegram bot
-│   ├── worker-service/             # AsyncIO workers
-│   ├── db-postgres-service/        # PostgreSQL data service (port 8001)
-│   └── db-mongo-service/           # MongoDB data service (port 8002)
+│   ├── bot_service/                # Aiogram Telegram bot
+│   ├── worker_service/             # AsyncIO workers
+│   ├── db_postgres_service/        # PostgreSQL data service (port 8001)
+│   └── db_mongo_service/           # MongoDB data service (port 8002)
 ├── shared/                          # Shared components across services
 │   ├── dtos/
 │   ├── events/

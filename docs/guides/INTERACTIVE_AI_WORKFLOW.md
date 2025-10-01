@@ -405,11 +405,11 @@ AI uses `.framework/docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`:
 **Duration:** 2 days
 
 **Tasks:**
-- [ ] Copy `templates/services/api-service/` → `./services/api-service/`
-- [ ] Copy `templates/services/bot-service/` → `./services/bot-service/`
-- [ ] Copy `templates/services/worker-service/` → `./services/worker-service/`
-- [ ] Copy `templates/services/db-postgres-service/` → `./services/db-postgres-service/`
-- [ ] Copy `templates/services/db-mongo-service/` → `./services/db-mongo-service/`
+- [ ] Copy `templates/services/api_service/` → `./services/api_service/`
+- [ ] Copy `templates/services/bot_service/` → `./services/bot_service/`
+- [ ] Copy `templates/services/worker_service/` → `./services/worker_service/`
+- [ ] Copy `templates/services/db_postgres_service/` → `./services/db_postgres_service/`
+- [ ] Copy `templates/services/db_mongo_service/` → `./services/db_mongo_service/`
 - [ ] Test: `docker-compose up` → all services healthy
 
 **Deliverable:** 5 running services with health checks
@@ -788,11 +788,11 @@ docker-compose up -d postgres mongodb redis rabbitmq
 **Creating services...**
 
 Generated:
-✅ `services/api-service/` (copied from templates + customized)
-✅ `services/bot-service/`
-✅ `services/worker-service/`
-✅ `services/db-postgres-service/`
-✅ `services/db-mongo-service/`
+✅ `services/api_service/` (copied from templates + customized)
+✅ `services/bot_service/`
+✅ `services/worker_service/`
+✅ `services/db_postgres_service/`
+✅ `services/db_mongo_service/`
 
 **Building services...**
 
@@ -843,7 +843,7 @@ Health checks:
 
 **Files modified:**
 
-1. **services/db-postgres-service/src/models/user.py**
+1. **services/db_postgres_service/src/models/user.py**
 ```python
 # Added field
 class User(Base):
@@ -852,7 +852,7 @@ class User(Base):
     email_verified_at: DateTime | None = Column(DateTime, nullable=True)
 ```
 
-2. **services/api-service/src/application/use_cases/create_loan.py**
+2. **services/api_service/src/application/use_cases/create_loan.py**
 ```python
 async def execute(self, loan_data: LoanCreate, user_id: str) -> Loan:
     # Existing validation
@@ -875,7 +875,7 @@ async def execute(self, loan_data: LoanCreate, user_id: str) -> Loan:
     # ... rest of loan creation
 ```
 
-3. **services/api-service/tests/unit/test_create_loan.py**
+3. **services/api_service/tests/unit/test_create_loan.py**
 ```python
 # NEW: Test email verification
 @pytest.mark.asyncio

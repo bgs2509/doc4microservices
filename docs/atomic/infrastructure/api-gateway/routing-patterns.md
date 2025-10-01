@@ -50,7 +50,7 @@ server {
 Route based on domain/subdomain:
 
 ```nginx
-# api.example.com -> api-service
+# api.example.com -> api_service
 server {
     listen 80;
     server_name api.example.com;
@@ -340,8 +340,8 @@ server {
 
 ```nginx
 upstream api_service {
-    server api-service:8000 max_fails=3 fail_timeout=30s;
-    server api-service-backup:8000 backup;
+    server api_service:8000 max_fails=3 fail_timeout=30s;
+    server api_service_backup:8000 backup;
 }
 
 server {
