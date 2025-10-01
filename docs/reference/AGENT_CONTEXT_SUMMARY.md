@@ -5,7 +5,7 @@
 ## Core Orientation
 
 - **Framework Model**: Framework-as-submodule (`README.md`). Application code lives outside `.framework/`; the framework supplies patterns, infrastructure, and rules.
-- **Architecture Paradigm**: Improved Hybrid Approach with HTTP-only data access, dedicated data services, and event-driven coordination (`docs/guides/ARCHITECTURE_GUIDE.md`).
+- **Architecture Paradigm**: Improved Hybrid Approach with HTTP-only data access, dedicated data services, Nginx API Gateway, and event-driven coordination (`docs/guides/ARCHITECTURE_GUIDE.md`).
 - **Primary Entry Point**: `CLAUDE.md` explains how AI agents should traverse documentation and obey mandatory constraints.
 
 ## Mandatory References
@@ -36,11 +36,12 @@
 
 ## Critical Rules Snapshot
 
-1. **Service Separation**: FastAPI, Aiogram, and AsyncIO workers run in separate processes/containers (`docs/architecture/ms_best_practices_rules.mdc`).
-2. **Data Access**: Business services must call data services over HTTP; direct database access is prohibited (`docs/architecture/data-access-rules.mdc`).
-3. **Eventing**: RabbitMQ is the mandatory broker for asynchronous communication (`docs/infrastructure/rabbitmq_rules.mdc`).
-4. **Naming**: Follow the naming standards in `docs/architecture/naming_conventions.mdc` for all files, modules, and identifiers.
-5. **Quality Gates**: Ruff, mypy, bandit, pytest, and coverage thresholds are non-negotiable (`docs/guides/DEVELOPMENT_COMMANDS.md`, `docs/quality/testing-standards.mdc`).
+1. **Service Separation**: FastAPI, Aiogram, and AsyncIO workers run in separate processes/containers (`docs/atomic/architecture/service-separation-principles.md`).
+2. **Data Access**: Business services must call data services over HTTP; direct database access is prohibited (`docs/atomic/architecture/data-access-architecture.md`).
+3. **API Gateway**: Nginx is MANDATORY for production deployments (TLS, load balancing, rate limiting) (`docs/atomic/infrastructure/api-gateway/`).
+4. **Eventing**: RabbitMQ is the mandatory broker for asynchronous communication (`docs/atomic/integrations/rabbitmq/`).
+5. **Naming**: Follow the naming standards in `docs/atomic/architecture/naming-conventions.md` for all files, modules, and identifiers.
+6. **Quality Gates**: Ruff, mypy, bandit, pytest, and coverage thresholds are non-negotiable (`docs/guides/DEVELOPMENT_COMMANDS.md`).
 
 ## Workflow Overview (High-Level)
 

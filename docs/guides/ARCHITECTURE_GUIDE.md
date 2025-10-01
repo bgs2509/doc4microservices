@@ -31,6 +31,11 @@ The **Improved Hybrid Approach** is the foundational architecture pattern for th
 
 ```mermaid
 graph TB
+    subgraph "External Access"
+        CLIENT[External Clients]
+        NGINX[Nginx API Gateway :80/:443]
+    end
+
     subgraph "Business Services"
         API[FastAPI Service :8000]
         BOT[Aiogram Bot]
@@ -48,6 +53,10 @@ graph TB
         REDIS[(Redis)]
         RABBIT[RabbitMQ]
     end
+
+    CLIENT -->|HTTPS| NGINX
+    NGINX -->|Reverse Proxy| API
+    NGINX -->|Reverse Proxy| BOT
 
     API -->|HTTP only| PG
     API -->|HTTP only| MONGO
@@ -89,15 +98,28 @@ These constraints are **NON-NEGOTIABLE** and must be followed in all implementat
 - **PROHIBITED**: Running multiple event loop managers (FastAPI + Aiogram) in same process
 - **MANDATORY**: Communication - Use RabbitMQ for inter-service communication
 
-#### 3. **Technology Stack Requirements**
+#### 3. **API Gateway** (Production Requirement)
+- **MANDATORY**: Nginx as API Gateway for production deployments
+- **Responsibilities**:
+  - TLS/SSL termination (HTTPS)
+  - Reverse proxy and load balancing
+  - Rate limiting and DDoS protection
+  - CORS and security headers
+  - Request routing and URL rewriting
+- **Configuration**: See [Nginx Setup](../atomic/infrastructure/api-gateway/nginx-setup.md) and [Load Balancing](../atomic/infrastructure/api-gateway/load-balancing.md)
+- **Development**: Optional for local development (can access services directly)
+- **Production**: MANDATORY for all production environments
+
+#### 4. **Technology Stack Requirements**
 - **MANDATORY**: Python Version - 3.12+ MANDATORY for all services (unified runtime)
 - **MANDATORY**: Base Image - `python:3.12-slim` for all Docker containers
 - **MANDATORY**: Async Libraries - Use only async-compatible libraries (asyncpg, aio-pika, redis.asyncio)
 - **MANDATORY**: Database Strategy - Dual database approach (PostgreSQL + MongoDB)
+- **MANDATORY**: API Gateway - Nginx 1.25+ for production deployments
 
 > **COMPLETE TECHNOLOGY SPECIFICATIONS**: For detailed versions, configurations, and compatibility information, see the [Technical Specifications](../LINKS_REFERENCE.md#core-documentation).
 
-#### 4. **Naming Conventions** (Enforced Project-Wide)
+#### 5. **Naming Conventions** (Enforced Project-Wide)
 - **MANDATORY**: Underscore-Only Policy - Use snake_case for ALL identifiers
 - **PROHIBITED**: Hyphens in any user-controlled names (files, variables, functions, databases, APIs)
 - **MANDATORY**: Consistent naming across all layers (code, database, API, Docker, etc.)

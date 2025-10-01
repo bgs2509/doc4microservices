@@ -159,10 +159,27 @@ This section provides technology-specific implementation details for the **Impro
 - **Version**: v2.29.0+
 - **Comment**: Describes multi-service environment (Postgres, Redis, RabbitMQ, ChromaDB, ELK, Prometheus/Grafana, Nginx). Compatible with async services and dependencies.
 
-### Web Server
+### API Gateway / Web Server
 - **Technology**: Nginx
-- **Image**: nginx:1.26.1
-- **Comment**: Reverse proxy and static files. Compatible with Uvicorn/Gunicorn, TLS/HTTP2, rate limiting. Integrates well with Prometheus exporters and ELK logging.
+- **Version**: 1.25+ (recommended: 1.26.1)
+- **Image**: nginx:1.26.1-alpine
+- **Purpose**: API Gateway and reverse proxy for production deployments
+- **Responsibilities**:
+  - TLS/SSL termination (HTTPS)
+  - Reverse proxy and load balancing across backend services
+  - Rate limiting and DDoS protection
+  - CORS and security headers
+  - Request routing and URL rewriting
+- **Integration**:
+  - Proxies requests to FastAPI services (Port: 8000)
+  - Proxies webhook requests to Aiogram Bot (Port: 8000)
+  - Load balances across multiple instances of each service
+  - Integrates with Prometheus exporters and ELK logging
+- **Configuration**: See [Nginx Setup](../atomic/infrastructure/api-gateway/nginx-setup.md), [Load Balancing](../atomic/infrastructure/api-gateway/load-balancing.md), and [Security Hardening](../atomic/infrastructure/api-gateway/security-hardening.md)
+- **Environment**:
+  - **Development**: Optional (can access services directly)
+  - **Production**: MANDATORY for all deployments
+- **Comment**: Compatible with Uvicorn/Gunicorn, TLS/HTTP2, WebSocket proxying. Essential for production security and performance.
 
 ### Python Interpreter
 - **Technology**: Python
