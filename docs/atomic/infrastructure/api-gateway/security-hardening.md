@@ -561,4 +561,4 @@ limit_req_zone $binary_remote_addr zone=good:10m rate=10r/s;
 - [Nginx Setup](nginx-setup.md) - Basic nginx configuration
 - [SSL Configuration](ssl-configuration.md) - HTTPS and TLS setup
 - [Routing Patterns](routing-patterns.md) - Request routing strategies
-- [Security Testing](../../testing/quality-assurance/security-testing-guide.md) - Testing security controls
+- [Security Testing Guide](../../security/security-testing-guide.md) - Testing security controls

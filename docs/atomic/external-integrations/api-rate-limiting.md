@@ -684,7 +684,7 @@ async def test_rate_limited_client_retries_on_429():
 
 ## Related Documentation
 
-- [Authentication Guide](authentication-authorization-guide.md) - JWT tokens and user authentication
+- [Authentication & Authorization Guide](../security/authentication-authorization-guide.md) - JWT tokens and user authentication
 - [Payment Gateway Integration](payment-gateways.md) - Rate-limited payment processing
 - [Communication APIs](communication-apis.md) - Email/SMS rate limiting
 - [Webhook Handling](webhook-handling.md) - Webhook rate protection
