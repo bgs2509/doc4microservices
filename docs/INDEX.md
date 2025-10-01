@@ -142,6 +142,20 @@ See [Atomic Documentation Hub](atomic/README.md) for contribution rules.
 - [Cross-Service Graceful Shutdown](atomic/integrations/cross-service/graceful-shutdown.md) — Coordinated shutdown across services.
 - [Cross-Service Distributed Tracing](atomic/integrations/cross-service/distributed-tracing.md) — Cross-service trace correlation.
 
+### Databases
+
+#### PostgreSQL
+
+- [PostgreSQL Basic Setup](atomic/databases/postgresql/basic-setup.md) — Docker-based PostgreSQL installation, configuration, and connection management.
+- [SQLAlchemy Integration](atomic/databases/postgresql/sqlalchemy-integration.md) — SQLAlchemy 2.0 async patterns, models, repository pattern, and best practices.
+
+#### PostgreSQL Advanced
+
+- [Complex Relationship Modeling](atomic/databases/postgresql-advanced/complex-relationship-modeling.md) — Advanced entity relationships and join strategies.
+- [Multi-tenant Patterns](atomic/databases/postgresql-advanced/multi-tenant-patterns.md) — Multi-tenancy database design patterns.
+- [Performance Optimization](atomic/databases/postgresql-advanced/performance-optimization.md) — Query optimization, indexing, and profiling.
+- [Production Migrations](atomic/databases/postgresql-advanced/production-migrations.md) — Safe production migration strategies with Alembic.
+
 ### Security
 - [Authentication & Authorization Guide](atomic/security/authentication-authorization-guide.md) — Core authentication and authorization patterns and flows.
 - [Authorization Patterns](atomic/security/authorization-patterns.md) — RBAC, ABAC, and policy enforcement strategies.
@@ -152,7 +166,8 @@ See [Atomic Documentation Hub](atomic/README.md) for contribution rules.
 - [File Upload Patterns](atomic/file-storage/upload-patterns.md) — Validation, scanning, and multi-storage flows.
 - [Cloud Storage Integration](atomic/file-storage/cloud-integration.md) — Provider-agnostic storage adapters.
 - [Media Processing Workflows](atomic/file-storage/media-processing.md) — Transcoding, optimization, and pipelines.
-- [CDN Integration](atomic/file-storage/cdn-integration.md) — Edge delivery and cache invalidation patterns.
+- [CDN Integration](atomic/file-storage/cdn-integration.md) — CDN patterns, edge delivery, and cache strategies.
+- [Backup Strategies](atomic/file-storage/backup-strategies.md) — File backup and disaster recovery.
 
 ### External Integrations
 - [Payment Gateway Integration](atomic/external-integrations/payment-gateways.md) — PCI-safe payment flows and reconciliation.
@@ -172,6 +187,7 @@ See [Atomic Documentation Hub](atomic/README.md) for contribution rules.
 
 - [Nginx Setup and Configuration](atomic/infrastructure/api-gateway/nginx-setup.md) — Basic nginx setup as API Gateway.
 - [Nginx Routing Patterns](atomic/infrastructure/api-gateway/routing-patterns.md) — Advanced routing strategies for microservices.
+- [Nginx Load Balancing](atomic/infrastructure/api-gateway/load-balancing.md) — Load balancing strategies, health checks, and high availability.
 - [Nginx Security Hardening](atomic/infrastructure/api-gateway/security-hardening.md) — Security best practices, rate limiting, and DDoS protection.
 - [Nginx SSL Configuration](atomic/infrastructure/api-gateway/ssl-configuration.md) — HTTPS setup and certificate management.
 
