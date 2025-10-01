@@ -801,7 +801,7 @@ class TestMediaProcessing:
 ## Related Documentation
 
 - [File Upload Patterns](upload-patterns.md) - File upload and validation
-- [Cloud Storage Integration](cloud-storage-integration.md) - Storage backends
+- [Cloud Storage Integration](cloud-integration.md) - Storage backends
 - [Backup Strategies](backup-strategies.md) - Media backup and archival
 - [External Integrations](../external-integrations/) - Third-party media services
 

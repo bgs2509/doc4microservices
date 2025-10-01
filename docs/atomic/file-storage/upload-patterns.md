@@ -840,8 +840,8 @@ class TestFileUpload:
 
 ## Related Documentation
 
-- [Media Processing Patterns](media-processing-patterns.md) - Image/video processing workflows
-- [Cloud Storage Integration](cloud-storage-integration.md) - AWS S3, Google Cloud, Azure storage
+- [Media Processing Patterns](media-processing.md) - Image/video processing workflows
+- [Cloud Storage Integration](cloud-integration.md) - AWS S3, Google Cloud, Azure storage
 - [Backup Strategies](backup-strategies.md) - File backup and disaster recovery
 - [Authentication Guide](../security/authentication-authorization-guide.md) - User authentication for uploads
 

@@ -1148,7 +1148,7 @@ class TestCloudStorage:
 ## Related Documentation
 
 - [File Upload Patterns](upload-patterns.md) - File upload and validation
-- [Media Processing Patterns](media-processing-patterns.md) - Media processing workflows
+- [Media Processing Patterns](media-processing.md) - Media processing workflows
 - [Backup Strategies](backup-strategies.md) - Backup and disaster recovery
 - [External Integrations](../external-integrations/) - Third-party service integrations
 

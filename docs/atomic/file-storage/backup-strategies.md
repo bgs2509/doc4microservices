@@ -1211,8 +1211,8 @@ class TestBackupService:
 ## Related Documentation
 
 - [File Upload Patterns](upload-patterns.md) - File upload and validation
-- [Media Processing Patterns](media-processing-patterns.md) - Media processing workflows
-- [Cloud Storage Integration](cloud-storage-integration.md) - Multi-cloud storage
+- [Media Processing Patterns](media-processing.md) - Media processing workflows
+- [Cloud Storage Integration](cloud-integration.md) - Multi-cloud storage
 - [Infrastructure](../infrastructure/) - Infrastructure and deployment guides
 
 ## Implementation Notes
