@@ -9,7 +9,7 @@ services:
   # ══════════════════════════════════════════════════════════════════════════════
   # BUSINESS SERVICES - Development mode with hot reload
   # ══════════════════════════════════════════════════════════════════════════════
-  api-service:
+  api_service:
     build:
       target: development
     environment:
@@ -18,11 +18,11 @@ services:
       - LOG_LEVEL=debug
       - API_RELOAD=true
     volumes:
-      - ./services/api-service/src:/app/src:ro
+      - ./services/api_service/src:/app/src:ro
     ports:
       - "8000:8000"  # Expose directly for development
 
-  bot-service:
+  bot_service:
     build:
       target: development
     environment:
@@ -30,9 +30,9 @@ services:
       - DEBUG=true
       - LOG_LEVEL=debug
     volumes:
-      - ./services/bot-service/src:/app/src:ro
+      - ./services/bot_service/src:/app/src:ro
 
-  worker-service:
+  worker_service:
     build:
       target: development
     environment:
@@ -40,9 +40,9 @@ services:
       - DEBUG=true
       - LOG_LEVEL=debug
     volumes:
-      - ./services/worker-service/src:/app/src:ro
+      - ./services/worker_service/src:/app/src:ro
 
-  db-postgres-service:
+  db_postgres_service:
     build:
       target: development
     environment:
@@ -50,11 +50,11 @@ services:
       - DEBUG=true
       - LOG_LEVEL=debug
     volumes:
-      - ./services/db-postgres-service/src:/app/src:ro
+      - ./services/db_postgres_service/src:/app/src:ro
     ports:
       - "8001:8000"  # Expose directly for development
 
-  db-mongo-service:
+  db_mongo_service:
     build:
       target: development
     environment:
@@ -62,7 +62,7 @@ services:
       - DEBUG=true
       - LOG_LEVEL=debug
     volumes:
-      - ./services/db-mongo-service/src:/app/src:ro
+      - ./services/db_mongo_service/src:/app/src:ro
     ports:
       - "8002:8000"  # Expose directly for development
 
@@ -98,7 +98,7 @@ services:
     environment:
       - ADMINER_DEFAULT_SERVER=postgres
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
 
   mongo-express:
@@ -113,7 +113,7 @@ services:
     depends_on:
       - mongodb
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
 
   redis-commander:
@@ -126,5 +126,5 @@ services:
     depends_on:
       - redis
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped

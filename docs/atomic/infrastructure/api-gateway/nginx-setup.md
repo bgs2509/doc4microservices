@@ -248,7 +248,7 @@ services:
       - api_service
       - bot_service
     networks:
-      - app-network
+      - app_network
     volumes:
       # For development: live reload configs
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
@@ -261,18 +261,18 @@ services:
     build: ./services/api_service
     # NO ports exposed - internal only
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
 
   bot_service:
     build: ./services/bot_service
     # NO ports exposed - internal only
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
 
 networks:
-  app-network:
+  app_network:
     driver: bridge
 
 volumes:

@@ -18,15 +18,15 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      api-service:
+      api_service:
         condition: service_healthy
-      bot-service:
+      bot_service:
         condition: service_started
     networks:
-      - app-network
+      - app_network
     volumes:
       - ./nginx/certs:/etc/nginx/certs:ro
-      - nginx-logs:/var/log/nginx
+      - nginx_logs:/var/log/nginx
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/health"]
@@ -37,9 +37,9 @@ services:
   # ══════════════════════════════════════════════════════════════════════════════
   # BUSINESS SERVICES (internal only, no exposed ports)
   # ══════════════════════════════════════════════════════════════════════════════
-  api-service:
+  api_service:
     build:
-      context: ./services/api-service
+      context: ./services/api_service
       dockerfile: Dockerfile
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-3.12}
@@ -51,8 +51,8 @@ services:
       - DEBUG=${DEBUG:-false}
 
       # Data service URLs
-      - POSTGRES_SERVICE_URL=http://db-postgres-service:8000
-      - MONGO_SERVICE_URL=http://db-mongo-service:8000
+      - POSTGRES_SERVICE_URL=http://db_postgres_service:8000
+      - MONGO_SERVICE_URL=http://db_mongo_service:8000
 
       # Infrastructure
       - RABBITMQ_URL=amqp://${RABBITMQ_USER:-admin}:${RABBITMQ_PASSWORD:-admin}@rabbitmq:5672/
@@ -74,18 +74,18 @@ services:
       - JAEGER_PORT=${JAEGER_PORT:-6831}
 
     depends_on:
-      db-postgres-service:
+      db_postgres_service:
         condition: service_healthy
-      db-mongo-service:
+      db_mongo_service:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
       redis:
         condition: service_healthy
     networks:
-      - app-network
+      - app_network
     volumes:
-      - api-logs:/var/log/app
+      - api_logs:/var/log/app
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
@@ -94,9 +94,9 @@ services:
       retries: 3
       start_period: 40s
 
-  bot-service:
+  bot_service:
     build:
-      context: ./services/bot-service
+      context: ./services/bot_service
       dockerfile: Dockerfile
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-3.12}
@@ -113,8 +113,8 @@ services:
       - BOT_WEBHOOK_SECRET=${BOT_WEBHOOK_SECRET:-}
 
       # Data service URLs
-      - POSTGRES_SERVICE_URL=http://db-postgres-service:8000
-      - MONGO_SERVICE_URL=http://db-mongo-service:8000
+      - POSTGRES_SERVICE_URL=http://db_postgres_service:8000
+      - MONGO_SERVICE_URL=http://db_mongo_service:8000
 
       # Infrastructure
       - RABBITMQ_URL=amqp://${RABBITMQ_USER:-admin}:${RABBITMQ_PASSWORD:-admin}@rabbitmq:5672/
@@ -124,23 +124,23 @@ services:
       - SENTRY_DSN=${SENTRY_DSN:-}
 
     depends_on:
-      db-postgres-service:
+      db_postgres_service:
         condition: service_healthy
-      db-mongo-service:
+      db_mongo_service:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
       redis:
         condition: service_healthy
     networks:
-      - app-network
+      - app_network
     volumes:
-      - bot-logs:/var/log/app
+      - bot_logs:/var/log/app
     restart: unless-stopped
 
-  worker-service:
+  worker_service:
     build:
-      context: ./services/worker-service
+      context: ./services/worker_service
       dockerfile: Dockerfile
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-3.12}
@@ -151,8 +151,8 @@ services:
       - LOG_FORMAT=${LOG_FORMAT:-json}
 
       # Data service URLs
-      - POSTGRES_SERVICE_URL=http://db-postgres-service:8000
-      - MONGO_SERVICE_URL=http://db-mongo-service:8000
+      - POSTGRES_SERVICE_URL=http://db_postgres_service:8000
+      - MONGO_SERVICE_URL=http://db_mongo_service:8000
 
       # Infrastructure
       - RABBITMQ_URL=amqp://${RABBITMQ_USER:-admin}:${RABBITMQ_PASSWORD:-admin}@rabbitmq:5672/
@@ -166,27 +166,27 @@ services:
       - SENTRY_DSN=${SENTRY_DSN:-}
 
     depends_on:
-      db-postgres-service:
+      db_postgres_service:
         condition: service_healthy
-      db-mongo-service:
+      db_mongo_service:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
       redis:
         condition: service_healthy
     networks:
-      - app-network
+      - app_network
     volumes:
-      - worker-logs:/var/log/app
+      - worker_logs:/var/log/app
     restart: unless-stopped
-    # Scale workers: docker-compose up --scale worker-service=3
+    # Scale workers: docker-compose up --scale worker_service=3
 
   # ══════════════════════════════════════════════════════════════════════════════
   # DATA SERVICES (internal ports only)
   # ══════════════════════════════════════════════════════════════════════════════
-  db-postgres-service:
+  db_postgres_service:
     build:
-      context: ./services/db-postgres-service
+      context: ./services/db_postgres_service
       dockerfile: Dockerfile
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-3.12}
@@ -208,9 +208,9 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      - app-network
+      - app_network
     volumes:
-      - postgres-service-logs:/var/log/app
+      - postgres_service_logs:/var/log/app
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
@@ -219,9 +219,9 @@ services:
       retries: 3
       start_period: 40s
 
-  db-mongo-service:
+  db_mongo_service:
     build:
-      context: ./services/db-mongo-service
+      context: ./services/db_mongo_service
       dockerfile: Dockerfile
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-3.12}
@@ -243,9 +243,9 @@ services:
       mongodb:
         condition: service_healthy
     networks:
-      - app-network
+      - app_network
     volumes:
-      - mongo-service-logs:/var/log/app
+      - mongo_service_logs:/var/log/app
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
@@ -268,10 +268,10 @@ services:
     ports:
       - "${POSTGRES_EXTERNAL_PORT:-5432}:5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./scripts/postgres-init:/docker-entrypoint-initdb.d:ro
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
@@ -303,10 +303,10 @@ services:
     ports:
       - "${MONGO_EXTERNAL_PORT:-27017}:27017"
     volumes:
-      - mongodb-data:/data/db
-      - mongodb-config:/data/configdb
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
@@ -321,10 +321,10 @@ services:
     ports:
       - "${REDIS_EXTERNAL_PORT:-6379}:6379"
     volumes:
-      - redis-data:/data
+      - redis_data:/data
       - ./config/redis.conf:/usr/local/etc/redis/redis.conf:ro
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -345,10 +345,10 @@ services:
       - "${RABBITMQ_EXTERNAL_PORT:-5672}:5672"
       - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
     volumes:
-      - rabbitmq-data:/var/lib/rabbitmq
-      - rabbitmq-logs:/var/log/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_logs:/var/log/rabbitmq
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "ping"]
@@ -365,7 +365,7 @@ services:
     volumes:
       - ./infrastructure/monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./infrastructure/monitoring/prometheus/alerts:/etc/prometheus/alerts:ro
-      - prometheus-data:/prometheus
+      - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -375,7 +375,7 @@ services:
     ports:
       - "${PROMETHEUS_PORT:-9090}:9090"
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
     profiles:
       - observability
@@ -385,7 +385,7 @@ services:
     container_name: ${PROJECT_NAME:-myapp}_grafana
     volumes:
       - ./infrastructure/monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
-      - grafana-data:/var/lib/grafana
+      - grafana_data:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:-admin}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
@@ -396,7 +396,7 @@ services:
     depends_on:
       - prometheus
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
     profiles:
       - observability
@@ -413,7 +413,7 @@ services:
       - "${JAEGER_OTLP_GRPC_PORT:-4317}:4317"
       - "${JAEGER_OTLP_HTTP_PORT:-4318}:4318"
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
     profiles:
       - observability
@@ -422,7 +422,7 @@ services:
 # NETWORKS
 # ════════════════════════════════════════════════════════════════════════════════
 networks:
-  app-network:
+  app_network:
     driver: bridge
     ipam:
       driver: default
@@ -434,35 +434,35 @@ networks:
 # ════════════════════════════════════════════════════════════════════════════════
 volumes:
   # Database volumes
-  postgres-data:
+  postgres_data:
     driver: local
-  mongodb-data:
+  mongodb_data:
     driver: local
-  mongodb-config:
+  mongodb_config:
     driver: local
-  redis-data:
+  redis_data:
     driver: local
-  rabbitmq-data:
+  rabbitmq_data:
     driver: local
 
   # Logs volumes
-  nginx-logs:
+  nginx_logs:
     driver: local
-  api-logs:
+  api_logs:
     driver: local
-  bot-logs:
+  bot_logs:
     driver: local
-  worker-logs:
+  worker_logs:
     driver: local
-  postgres-service-logs:
+  postgres_service_logs:
     driver: local
-  mongo-service-logs:
+  mongo_service_logs:
     driver: local
-  rabbitmq-logs:
+  rabbitmq_logs:
     driver: local
 
   # Observability volumes
-  prometheus-data:
+  prometheus_data:
     driver: local
-  grafana-data:
+  grafana_data:
     driver: local

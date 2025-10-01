@@ -166,7 +166,7 @@
 
 ## 🎯 What About Service Scaffolding? (Not in This List)
 
-### Why api-service scaffolding NOT in 100% list:
+### Why api_service scaffolding NOT in 100% list:
 
 Service scaffolding templates (Dockerfile, requirements.txt, main.py, config.py) are **95% universal** because:
 
@@ -199,7 +199,7 @@ This is **by design** - scaffolding provides framework, AI adds business logic.
 
 | Scenario | Template Behavior | Confusion? |
 |----------|------------------|------------|
-| Project without bot | bot-service in docker-compose unused | ❌ No - just not started |
+| Project without bot | bot_service in docker-compose unused | ❌ No - just not started |
 | Project without RabbitMQ | RabbitMQ in docker-compose unused | ❌ No - just not connected to |
 | CLI-only tool | nginx unused | ❌ No - AI omits nginx from deployment |
 | Pure analytics | API endpoints unused | ❌ No - minimal API for health checks still useful |

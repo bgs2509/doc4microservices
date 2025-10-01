@@ -34,7 +34,7 @@ templates/
 │           └── prometheus.yml       # Grafana datasource
 │
 ├── services/                🚧 IN PROGRESS - 95% Universal (scaffolding only)
-│   ├── api-service/         ✅ STARTED
+│   ├── api_service/         ✅ STARTED
 │   │   ├── Dockerfile               # Multi-stage build
 │   │   ├── requirements.txt         # Base dependencies
 │   │   ├── src/
@@ -58,10 +58,10 @@ templates/
 │   │   └── tests/
 │   │       └── conftest.py          # ⏳ TODO
 │   │
-│   ├── bot-service/         ⏳ TODO
-│   ├── worker-service/      ⏳ TODO
-│   ├── db-postgres-service/ ⏳ TODO
-│   └── db-mongo-service/    ⏳ TODO
+│   ├── bot_service/         ⏳ TODO
+│   ├── worker_service/      ⏳ TODO
+│   ├── db_postgres_service/ ⏳ TODO
+│   └── db_mongo_service/    ⏳ TODO
 │
 └── shared/                  ⏳ TODO - 100% Universal utilities
     ├── utils/
@@ -119,10 +119,10 @@ templates/
 - ⏳ tests/conftest.py (base fixtures)
 
 ### 6-9. Other Service Scaffolding
-- ⏳ bot-service/ (Aiogram scaffolding)
-- ⏳ worker-service/ (AsyncIO scaffolding)
-- ⏳ db-postgres-service/ (SQLAlchemy scaffolding + Alembic)
-- ⏳ db-mongo-service/ (Motor scaffolding)
+- ⏳ bot_service/ (Aiogram scaffolding)
+- ⏳ worker_service/ (AsyncIO scaffolding)
+- ⏳ db_postgres_service/ (SQLAlchemy scaffolding + Alembic)
+- ⏳ db_mongo_service/ (Motor scaffolding)
 
 ### 10. Shared Utilities
 - ⏳ shared/utils/ (logger, request_id, validators, exceptions)
@@ -201,11 +201,11 @@ Templates use `{{variable}}` placeholders for AI substitution:
 | Makefile | ✅ 100% | 100% | 🔴 P0 |
 | CI/CD | ✅ 100% | 100% | 🔴 P0 |
 | Observability | ✅ 100% | 100% | 🔴 P0 |
-| api-service | 🚧 40% | 95% | 🔴 P0 |
-| bot-service | ⏳ 0% | 85% | 🟡 P1 |
-| worker-service | ⏳ 0% | 90% | 🟡 P1 |
-| db-postgres-service | ⏳ 0% | 100% | 🔴 P0 |
-| db-mongo-service | ⏳ 0% | 95% | 🟡 P1 |
+| api_service | 🚧 40% | 95% | 🔴 P0 |
+| bot_service | ⏳ 0% | 85% | 🟡 P1 |
+| worker_service | ⏳ 0% | 90% | 🟡 P1 |
+| db_postgres_service | ⏳ 0% | 100% | 🔴 P0 |
+| db_mongo_service | ⏳ 0% | 95% | 🟡 P1 |
 | shared/utils | ⏳ 0% | 100% | 🔴 P0 |
 
 **Overall Completion: ~50%**
@@ -213,12 +213,12 @@ Templates use `{{variable}}` placeholders for AI substitution:
 ## 🚀 Next Steps
 
 ### Phase 1: Complete API Service (Priority: 🔴 P0)
-1. Complete remaining api-service files (8 files)
+1. Complete remaining api_service files (8 files)
 2. This unblocks 33/35 business ideas
 
 ### Phase 2: Data Services (Priority: 🔴 P0)
-1. db-postgres-service scaffolding
-2. db-mongo-service scaffolding
+1. db_postgres_service scaffolding
+2. db_mongo_service scaffolding
 3. Critical for ALL 35 business ideas
 
 ### Phase 3: Shared Utilities (Priority: 🔴 P0)
@@ -227,8 +227,8 @@ Templates use `{{variable}}` placeholders for AI substitution:
 3. Used by all services
 
 ### Phase 4: Worker & Bot Services (Priority: 🟡 P1)
-1. worker-service scaffolding
-2. bot-service scaffolding
+1. worker_service scaffolding
+2. bot_service scaffolding
 3. Needed by 32/35 and 25/35 ideas respectively
 
 ## 📝 Notes

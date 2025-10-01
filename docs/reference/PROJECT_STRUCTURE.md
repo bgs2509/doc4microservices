@@ -165,58 +165,58 @@ services:
       - api_service
       - bot_service
     networks:
-      - app-network
+      - app_network
 
   # Business Services (no exposed ports, internal only)
   api_service:
     build: ./services/api_service
     networks:
-      - app-network
+      - app_network
 
   bot_service:
     build: ./services/bot_service
     networks:
-      - app-network
+      - app_network
 
   worker_service:
     build: ./services/worker_service
     networks:
-      - app-network
+      - app_network
 
   # Data Services (internal ports only)
   db_postgres_service:
     build: ./services/db_postgres_service
     networks:
-      - app-network
+      - app_network
 
   db_mongo_service:
     build: ./services/db_mongo_service
     networks:
-      - app-network
+      - app_network
 
   # Infrastructure
   postgres:
     image: postgres:16
     networks:
-      - app-network
+      - app_network
 
   mongodb:
     image: mongo:7
     networks:
-      - app-network
+      - app_network
 
   redis:
     image: redis:7-alpine
     networks:
-      - app-network
+      - app_network
 
   rabbitmq:
     image: rabbitmq:3-management
     networks:
-      - app-network
+      - app_network
 
 networks:
-  app-network:
+  app_network:
     driver: bridge
 ```
 

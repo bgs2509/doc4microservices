@@ -9,7 +9,7 @@ services:
   # ══════════════════════════════════════════════════════════════════════════════
   # BUSINESS SERVICES - Production optimizations
   # ══════════════════════════════════════════════════════════════════════════════
-  api-service:
+  api_service:
     build:
       target: production
     environment:
@@ -33,7 +33,7 @@ services:
         max_attempts: 3
         window: 120s
 
-  bot-service:
+  bot_service:
     build:
       target: production
     environment:
@@ -50,7 +50,7 @@ services:
           cpus: '0.25'
           memory: 128M
 
-  worker-service:
+  worker_service:
     build:
       target: production
     environment:
@@ -68,7 +68,7 @@ services:
           cpus: '0.5'
           memory: 256M
 
-  db-postgres-service:
+  db_postgres_service:
     build:
       target: production
     environment:
@@ -85,7 +85,7 @@ services:
           cpus: '0.5'
           memory: 256M
 
-  db-mongo-service:
+  db_mongo_service:
     build:
       target: production
     environment:

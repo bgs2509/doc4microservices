@@ -208,7 +208,7 @@ services:
       - ./nginx/html:/var/www/certbot:ro
 
     networks:
-      - app-network
+      - app_network
     restart: unless-stopped
 
   certbot:
@@ -231,7 +231,7 @@ volumes:
   certbot-var:
 
 networks:
-  app-network:
+  app_network:
     driver: bridge
 ```
 

@@ -32,36 +32,36 @@ scrape_configs:
   # ═══════════════════════════════════════════════════════════════════════════
   # Business Services
   # ═══════════════════════════════════════════════════════════════════════════
-  - job_name: 'api-service'
+  - job_name: 'api_service'
     static_configs:
-      - targets: ['api-service:8000']
+      - targets: ['api_service:8000']
     metrics_path: '/metrics'
     scrape_interval: 10s
 
-  - job_name: 'bot-service'
+  - job_name: 'bot_service'
     static_configs:
-      - targets: ['bot-service:8000']
+      - targets: ['bot_service:8000']
     metrics_path: '/metrics'
     scrape_interval: 15s
 
-  - job_name: 'worker-service'
+  - job_name: 'worker_service'
     static_configs:
-      - targets: ['worker-service:8000']
+      - targets: ['worker_service:8000']
     metrics_path: '/metrics'
     scrape_interval: 15s
 
   # ═══════════════════════════════════════════════════════════════════════════
   # Data Services
   # ═══════════════════════════════════════════════════════════════════════════
-  - job_name: 'db-postgres-service'
+  - job_name: 'db_postgres_service'
     static_configs:
-      - targets: ['db-postgres-service:8000']
+      - targets: ['db_postgres_service:8000']
     metrics_path: '/metrics'
     scrape_interval: 15s
 
-  - job_name: 'db-mongo-service'
+  - job_name: 'db_mongo_service'
     static_configs:
-      - targets: ['db-mongo-service:8000']
+      - targets: ['db_mongo_service:8000']
     metrics_path: '/metrics'
     scrape_interval: 15s
 
