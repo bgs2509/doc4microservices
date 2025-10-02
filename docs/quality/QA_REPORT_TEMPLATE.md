@@ -33,7 +33,7 @@
 ## Test & Coverage Details
 
 - Test command(s) executed:
-- Coverage percentage (compare with `docs/quality/testing-standards.mdc`):
+- Coverage percentage (compare with `docs/atomic/testing/`):
 - Location of reports (`htmlcov/`, `coverage.xml`, CI artifacts):
 
 ## Defects & Risks

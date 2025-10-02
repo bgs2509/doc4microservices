@@ -27,8 +27,8 @@
 - Performance / SLA expectations:
 - Security / compliance requirements:
 - Reliability & availability targets:
-- Architecture alignment confirmation (Improved Hybrid Approach, HTTP-only data access, service separation; see `docs/guides/ARCHITECTURE_GUIDE.md` and `docs/architecture/*.mdc`):
-- Observability expectations (logging, metrics, tracing; see `docs/observability/`):
+- Architecture alignment confirmation (Improved Hybrid Approach, HTTP-only data access, service separation; see `docs/guides/ARCHITECTURE_GUIDE.md` and `docs/atomic/architecture/`):
+- Observability expectations (logging, metrics, tracing; see `docs/atomic/observability/`):
 
 ## Dependencies & Integrations
 
@@ -41,7 +41,7 @@
 - Primary data sources:
 - Expected data volume / growth:
 - Data retention or compliance rules:
-- Mapping to data services (`docs/reference/PROJECT_STRUCTURE.md`, `docs/infrastructure/*.mdc`):
+- Mapping to data services (`docs/reference/PROJECT_STRUCTURE.md`, `docs/atomic/infrastructure/`):
 
 ## Scope Boundaries
 

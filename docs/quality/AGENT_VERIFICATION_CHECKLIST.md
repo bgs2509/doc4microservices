@@ -31,7 +31,7 @@
 | Check | Command | Expected Result | Evidence | Status |
 |-------|---------|-----------------|----------|--------|
 | Full test suite | `uv run pytest` or plan-specific command | Tests pass |  |  |
-| Coverage threshold | `uv run pytest --cov=app --cov-report=html --cov-report=xml` | Coverage meets targets from `docs/quality/testing-standards.mdc` |  |  |
+| Coverage threshold | `uv run pytest --cov=app --cov-report=html --cov-report=xml` | Coverage meets targets from `docs/atomic/testing/` |  |  |
 | Coverage artefacts | Inspect `htmlcov/`, `coverage.xml` | Reports generated |  |  |
 
 ## Artefact Validation
@@ -40,7 +40,7 @@
 |-------|--------|-----------------|----------|--------|
 | Project structure compliance | Review against `docs/reference/PROJECT_STRUCTURE.md` | Files placed correctly |  |  |
 | Shared components usage | Confirm adherence to `docs/guides/shared_components.md` | No duplication or rule violations |  |  |
-| Naming conventions | Spot-check against `docs/architecture/naming_conventions.mdc` | No prohibited names |  |  |
+| Naming conventions | Spot-check against `docs/atomic/architecture/naming-conventions.md` | No prohibited names |  |  |
 | Documentation updates | Ensure relevant docs updated (plans, ADRs, etc.) | Artefacts listed in `docs/reference/DELIVERABLES_CATALOG.md` |  |  |
 
 ## Release Gate
@@ -60,5 +60,5 @@
 ## Maintenance
 
 - Align commands with `docs/guides/DEVELOPMENT_COMMANDS.md` if they change.
-- Keep coverage targets synchronized with `docs/quality/testing-standards.mdc`.
+- Keep coverage targets synchronized with `docs/atomic/testing/`.
 - Update link references in `docs/reference/AGENT_CONTEXT_SUMMARY.md` and `docs/INDEX.md` when modifying this checklist.

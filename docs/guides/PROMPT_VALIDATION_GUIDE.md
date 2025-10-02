@@ -12,11 +12,11 @@ Run prompt validation immediately after receiving a new user request and before 
 |-------|----------------|--------------------|
 | **Business Context** | Anchors the solution in a clear problem statement, target users, and success metrics. | `README.md`, `docs/reference/tech_stack.md`, `docs/reference/AGENT_CONTEXT_SUMMARY.md` |
 | **Functional Requirements** | Defines the capabilities the generated services must expose. | `docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md`, `docs/reference/PROJECT_STRUCTURE.md` |
-| **Non-Functional Constraints** | Ensures compliance with architecture, performance, and security requirements. | `docs/guides/ARCHITECTURE_GUIDE.md`, `docs/architecture/ms_best_practices_rules.mdc`, `docs/observability/*` |
-| **Dependencies & Integrations** | Identifies external systems, queues, or data flows that must be modeled. | `docs/infrastructure/*`, `docs/services/*`, `docs/reference/DELIVERABLES_CATALOG.md` |
+| **Non-Functional Constraints** | Ensures compliance with architecture, performance, and security requirements. | `docs/guides/ARCHITECTURE_GUIDE.md`, `docs/atomic/architecture/`, `docs/atomic/observability/` |
+| **Dependencies & Integrations** | Identifies external systems, queues, or data flows that must be modeled. | `docs/atomic/infrastructure/`, `docs/atomic/services/`, `docs/reference/DELIVERABLES_CATALOG.md` |
 | **Scope Boundaries** | Prevents unplanned features from entering the delivery plan. | `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md` |
 | **Expected Deliverables** | Aligns produced artefacts with framework expectations. | `docs/reference/DELIVERABLES_CATALOG.md`, `docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md` |
-| **Acceptance Criteria** | Adds measurable success checks that feed the verification stage. | `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`, `docs/quality/testing-standards.mdc` |
+| **Acceptance Criteria** | Adds measurable success checks that feed the verification stage. | `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`, `docs/atomic/testing/` |
 | **Open Questions & Risks** | Triggers early clarification to avoid rework. | `docs/reference/troubleshooting.md`, `docs/reference/PROMPT_TEMPLATES.md` |
 
 ## Validation Procedure

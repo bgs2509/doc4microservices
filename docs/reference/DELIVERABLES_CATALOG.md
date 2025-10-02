@@ -11,7 +11,7 @@
 | Implementation Plan | Detailed plan with stages, DoD, and references. | Planning | Reviewer sign-off, alignment with architecture rules | Project docs (e.g., `artifacts/plans/`) | `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md` |
 | Architecture Decision Record (optional) | Formalised decision for significant architectural choices. | Planning / Execution | Peer review, compliance with architecture guide | Project docs (e.g., `artifacts/adr/`) | `docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md` |
 | Generated Code & Config | Service implementations, infrastructure, shared components. | Implementation | Testing & verification gates | Application repository (`src/`, configs) | Framework rules |
-| Test Artefacts | Unit/integration tests, coverage reports. | Verification | Thresholds in `docs/quality/testing-standards.mdc` | `htmlcov/`, `coverage.xml`, CI artefacts | Testing standards |
+| Test Artefacts | Unit/integration tests, coverage reports. | Verification | Thresholds in `docs/atomic/testing/` | `htmlcov/`, `coverage.xml`, CI artefacts | Testing standards |
 | Verification Checklist Result | Completed checklist with statuses and evidence. | Verification | Sign-off via `docs/quality/AGENT_VERIFICATION_CHECKLIST.md` | `artifacts/reports/verification-checklist.md` | `docs/quality/AGENT_VERIFICATION_CHECKLIST.md` |
 | QA Report | Final QA summary with defects and sign-off. | Release | Stakeholder approval | `artifacts/reports/qa-report.md` | `docs/quality/QA_REPORT_TEMPLATE.md` |
 

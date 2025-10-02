@@ -20,10 +20,10 @@
 
 | Area | Description | Relevant Rules / Docs |
 |------|-------------|-----------------------|
-| Services | | `docs/services/*.mdc`, `docs/guides/ARCHITECTURE_GUIDE.md` |
-| Data access | | `docs/architecture/data-access-rules.mdc`, `docs/infrastructure/*.mdc` |
-| Observability | | `docs/observability/` |
-| Security / compliance | | `docs/quality/testing-standards.mdc`, policy docs |
+| Services | | `docs/atomic/services/`, `docs/guides/ARCHITECTURE_GUIDE.md` |
+| Data access | | `docs/atomic/architecture/data-access-architecture.md`, `docs/atomic/infrastructure/` |
+| Observability | | `docs/atomic/observability/` |
+| Security / compliance | | `docs/atomic/testing/`, policy docs |
 
 ## Work Plan
 
@@ -42,7 +42,7 @@
 
 - Linting & formatting commands (`docs/guides/DEVELOPMENT_COMMANDS.md`):
 - Type checking & security tools:
-- Test suites and coverage targets (`docs/quality/testing-standards.mdc`):
+- Test suites and coverage targets (`docs/atomic/testing/`):
 - Observability validation (if applicable):
 
 ## Deliverables & Acceptance
