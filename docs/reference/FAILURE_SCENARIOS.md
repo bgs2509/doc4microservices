@@ -121,7 +121,7 @@ This document covers **edge cases** and **failure scenarios** that can occur at 
 > - Single source of truth for data operations
 >
 > **Compliant solution**:
-> FastAPI service → HTTP calls → `db_postgres_service` (Port 8001) → PostgreSQL
+> FastAPI service → HTTP calls → `template_data_postgres_api` (Port 8001) → PostgreSQL
 >
 > Performance impact is negligible (<5ms overhead for internal HTTP calls).
 >
@@ -232,7 +232,7 @@ This document covers **edge cases** and **failure scenarios** that can occur at 
 >
 > **Uncovered areas**:
 > - `payment_service/refund_handler.py`: 45% coverage
-> - `api_service/webhooks/stripe.py`: 62% coverage
+> - `template_business_api/webhooks/stripe.py`: 62% coverage
 >
 > **Options**:
 > 1. **Add tests** (recommended): I can generate tests for these areas (~15 minutes)

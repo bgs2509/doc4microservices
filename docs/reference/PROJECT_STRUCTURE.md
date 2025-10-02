@@ -18,7 +18,7 @@ my_awesome_app/                      # Your project repository
 │   ├── docs/                       # Atomic knowledge base and guides
 │   └── CLAUDE.md                   # AI instructions
 ├── services/                        # All microservices (independent deployable units)
-│   ├── api_service/                # FastAPI REST API service (port 8000)
+│   ├── template_business_api/                # FastAPI REST API service (port 8000)
 │   │   ├── src/                    # Service source code (DDD/Hexagonal structure)
 │   │   │   ├── api/                # Transport adapters (FastAPI routers)
 │   │   │   ├── application/        # Use cases, orchestrators
@@ -33,22 +33,22 @@ my_awesome_app/                      # Your project repository
 │   │   ├── Dockerfile              # Service-specific container
 │   │   ├── requirements.txt        # Service dependencies
 │   │   └── pyproject.toml          # Service Python config
-│   ├── bot_service/                # Aiogram Telegram bot service
+│   ├── template_business_bot/                # Aiogram Telegram bot service
 │   │   ├── src/
 │   │   ├── tests/
 │   │   ├── Dockerfile
 │   │   └── requirements.txt
-│   ├── worker_service/             # AsyncIO background workers
+│   ├── template_business_worker/             # AsyncIO background workers
 │   │   ├── src/
 │   │   ├── tests/
 │   │   ├── Dockerfile
 │   │   └── requirements.txt
-│   ├── db_postgres_service/        # PostgreSQL data access service (port 8001)
+│   ├── template_data_postgres_api/        # PostgreSQL data access service (port 8001)
 │   │   ├── src/
 │   │   ├── tests/
 │   │   ├── Dockerfile
 │   │   └── requirements.txt
-│   └── db_mongo_service/           # MongoDB data access service (port 8002)
+│   └── template_data_mongo_api/           # MongoDB data access service (port 8002)
 │       ├── src/
 │       ├── tests/
 │       ├── Dockerfile
@@ -105,14 +105,14 @@ my_awesome_app/                      # Your project repository
 ### Service Types
 
 #### Business Services
-- **`api_service/`**: FastAPI REST API service (Port: 8000)
-- **`bot_service/`**: Aiogram Telegram bot service
-- **`worker_service/`**: AsyncIO background workers
+- **`template_business_api/`**: FastAPI REST API service (Port: 8000)
+- **`template_business_bot/`**: Aiogram Telegram bot service
+- **`template_business_worker/`**: AsyncIO background workers
 - **Purpose**: Business logic only, HTTP-only data access
 
 #### Data Services
-- **`db_postgres_service/`**: PostgreSQL data access service (Port: 8001)
-- **`db_mongo_service/`**: MongoDB data access service (Port: 8002)
+- **`template_data_postgres_api/`**: PostgreSQL data access service (Port: 8001)
+- **`template_data_mongo_api/`**: MongoDB data access service (Port: 8002)
 - **Purpose**: Centralized database operations, no business logic
 
 ### Shared Components (`shared/`)
@@ -162,35 +162,35 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      - api_service
-      - bot_service
+      - template_business_api
+      - template_business_bot
     networks:
       - app_network
 
   # Business Services (no exposed ports, internal only)
-  api_service:
-    build: ./services/api_service
+  template_business_api:
+    build: ./services/template_business_api
     networks:
       - app_network
 
-  bot_service:
-    build: ./services/bot_service
+  template_business_bot:
+    build: ./services/template_business_bot
     networks:
       - app_network
 
-  worker_service:
-    build: ./services/worker_service
+  template_business_worker:
+    build: ./services/template_business_worker
     networks:
       - app_network
 
   # Data Services (internal ports only)
-  db_postgres_service:
-    build: ./services/db_postgres_service
+  template_data_postgres_api:
+    build: ./services/template_data_postgres_api
     networks:
       - app_network
 
-  db_mongo_service:
-    build: ./services/db_mongo_service
+  template_data_mongo_api:
+    build: ./services/template_data_mongo_api
     networks:
       - app_network
 

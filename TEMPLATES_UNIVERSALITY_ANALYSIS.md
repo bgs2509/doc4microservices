@@ -99,8 +99,8 @@ For each created template, we analyze:
 **VERDICT**: ✅ 100% UNIVERSAL (35/35)
 
 #### ✅ conf.d/upstream.conf (100% Universal)
-**Analysis**: Defines upstreams for api_service, bot_service, etc.
-**Edge case**: Not all projects need bot_service
+**Analysis**: Defines upstreams for template_business_api, template_business_bot, etc.
+**Edge case**: Not all projects need template_business_bot
 **Solution**: Unused upstreams are harmless, nginx ignores them
 **VERDICT**: ✅ 100% UNIVERSAL (35/35)
 
@@ -183,13 +183,13 @@ For each created template, we analyze:
 ### Scenario 1: Pure Analytics Platform (no user-facing API)
 **Example**: "Система мониторинга качества воздуха" (IoT sensors only)
 **Issue**: Template includes API service, but project might only need workers
-**Solution**: ✅ Templates are optional - AI can omit api_service if not needed
+**Solution**: ✅ Templates are optional - AI can omit template_business_api if not needed
 **Confusion risk**: LOW (AI understands to omit unused services)
 
 ### Scenario 2: CLI-only Tool
 **Example**: Hypothetical "Database migration tool" (no web interface)
 **Issue**: Template includes nginx, API service - not needed
-**Solution**: ✅ Templates are modular - AI uses only worker_service
+**Solution**: ✅ Templates are modular - AI uses only template_business_worker
 **Confusion risk**: LOW (AI selects relevant templates)
 
 ### Scenario 3: Real-time Only (WebSocket-heavy)
@@ -248,10 +248,10 @@ For each created template, we analyze:
 ### Service Scaffolding
 | Template | Universal Score | Works For | Confusion Risk |
 |----------|----------------|-----------|----------------|
-| api_service/Dockerfile | 95% | 35/35 | Low |
-| api_service/requirements.txt | 95% | 35/35 | Low |
-| api_service/main.py | 95% | 35/35 | Low |
-| api_service/config.py | 95% | 35/35 | Low |
+| template_business_api/Dockerfile | 95% | 35/35 | Low |
+| template_business_api/requirements.txt | 95% | 35/35 | Low |
+| template_business_api/main.py | 95% | 35/35 | Low |
+| template_business_api/config.py | 95% | 35/35 | Low |
 
 ---
 
@@ -268,7 +268,7 @@ For each created template, we analyze:
 **Total**: 14/19 templates are 100% universal
 
 ### Templates That Work for 35/35 but Need Minor Customization (95% Universal):
-7. ✅ api_service scaffolding (4 files)
+7. ✅ template_business_api scaffolding (4 files)
 
 **Total**: 5/19 templates are 95% universal (need business logic added)
 
@@ -282,9 +282,9 @@ For each created template, we analyze:
 
 1. **Infrastructure is truly universal** - PostgreSQL, Redis, RabbitMQ, Nginx needed by all 35 ideas
 
-2. **Service scaffolding is universal structure** - Even if specific project doesn't need bot_service, the scaffolding structure (core/, api/, infrastructure/) applies to ALL services
+2. **Service scaffolding is universal structure** - Even if specific project doesn't need template_business_bot, the scaffolding structure (core/, api/, infrastructure/) applies to ALL services
 
-3. **Optional ≠ Confusing** - Unused templates (e.g., bot_service in analytics app) don't confuse AI - they're simply omitted
+3. **Optional ≠ Confusing** - Unused templates (e.g., template_business_bot in analytics app) don't confuse AI - they're simply omitted
 
 4. **AI is smart enough** - Modern AI can:
    - Omit irrelevant services

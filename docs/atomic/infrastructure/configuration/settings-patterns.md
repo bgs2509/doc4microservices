@@ -9,7 +9,7 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    service_name: str = "api_service"
+    service_name: str = "template_business_api"
     data_service_url: str
     redis_url: str
 

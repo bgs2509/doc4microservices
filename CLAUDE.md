@@ -87,6 +87,29 @@ This framework implements the **Improved Hybrid Approach** with FastAPI, Aiogram
 
 > **COMPLETE ARCHITECTURE DETAILS**: See [Architecture Guide](docs/LINKS_REFERENCE.md#core-documentation) for detailed principles, constraints, service types, and implementation guidelines.
 
+## Template Service Naming
+
+**IMPORTANT**: Framework templates use the `template_` context prefix to indicate placeholder names that must be replaced when generating real applications.
+
+**Template Service Names**:
+- `template_business_api` — FastAPI business logic service
+- `template_business_bot` — Aiogram Telegram bot service
+- `template_business_worker` — AsyncIO background worker service
+- `template_data_postgres_api` — PostgreSQL HTTP data access service
+- `template_data_mongo_api` — MongoDB HTTP data access service
+
+**When Generating Code**: Replace with actual `{context}_{domain}_{type}` names:
+- P2P Lending: `template_business_api` → `finance_lending_api`
+- Telemedicine: `template_business_api` → `healthcare_telemedicine_api`
+- Construction Bot: `template_business_bot` → `construction_house_bot`
+
+**See**: [Template Naming Guide](docs/guides/TEMPLATE_NAMING_GUIDE.md) for complete renaming instructions and examples.
+
+**Why `template_` prefix?**:
+- Clearly signals these are placeholders, not production service names
+- Follows mandatory `{context}_{domain}_{type}` naming pattern ([Naming Conventions](docs/atomic/architecture/naming-conventions.md))
+- Prevents confusion about whether templates represent real business services
+
 ## Agent Workflow (High-Level)
 
 For the **complete 7-stage AI code generation process** with detailed instructions, examples, and navigation matrix, see:

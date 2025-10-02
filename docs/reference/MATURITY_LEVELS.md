@@ -68,12 +68,12 @@ Validate business idea, build MVP, demonstrate to stakeholders.
 ```
 project/
 ├── services/
-│   ├── api_service/              # FastAPI
+│   ├── template_business_api/              # FastAPI
 │   │   ├── main.py
 │   │   ├── routers/
 │   │   ├── domain/
 │   │   └── tests/
-│   └── db_postgres_service/      # Data service
+│   └── template_data_postgres_api/      # Data service
 │       ├── main.py
 │       ├── models/
 │       ├── repositories/
@@ -133,7 +133,7 @@ Enable active team development with proper observability and debugging tools.
 
 ```
 services/
-├── api_service/
+├── template_business_api/
 │   ├── logging_config.py         # NEW: Structured logging
 │   ├── middleware/                # NEW: Request ID, error handling
 │   │   ├── request_id.py
@@ -216,7 +216,7 @@ infrastructure/
     └── dashboards/
         └── api_overview.json
 services/
-├── api_service/
+├── template_business_api/
 │   ├── metrics.py                 # NEW: Prometheus metrics
 │   └── Dockerfile.prod            # NEW: Multi-stage build
 docker-compose.prod.yml            # NEW: Production config
@@ -317,7 +317,7 @@ infrastructure/
 └── databases/                     # NEW: Replication
     └── postgres-replication/
 services/
-├── api_service/
+├── template_business_api/
 │   ├── security/                  # NEW: Auth & RBAC
 │   │   ├── oauth.py
 │   │   ├── jwt.py

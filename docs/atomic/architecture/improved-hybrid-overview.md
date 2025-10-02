@@ -13,8 +13,8 @@ The Improved Hybrid Approach combines strict service boundaries with shared tool
 
 | Category | Role | Examples |
 |----------|------|----------|
-| Business services | Deliver user-facing or domain logic via HTTP or messaging interfaces. | `api_service`, `bot_service`, `worker_service` |
-| Data services | Own direct database access and expose domain-driven HTTP APIs. | `db_postgres_service`, `db_mongo_service` |
+| Business services | Deliver user-facing or domain logic via HTTP or messaging interfaces. | `template_business_api`, `template_business_bot`, `template_business_worker` |
+| Data services | Own direct database access and expose domain-driven HTTP APIs. | `template_data_postgres_api`, `template_data_mongo_api` |
 | Integration services | Provide reusable interfaces to brokers, caches, third-party APIs. | Redis, RabbitMQ bridges |
 | Platform components | Observability, CI/CD, configuration, shared libraries. | `docs/atomic/*`, `scripts/` |
 

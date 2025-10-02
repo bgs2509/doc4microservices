@@ -324,7 +324,7 @@ async def startup_event():
         encoding="utf-8",
         decode_responses=True
     )
-    rate_limiter = DistributedRateLimiter(redis_client, "api_service")
+    rate_limiter = DistributedRateLimiter(redis_client, "template_business_api")
 
 async def get_rate_limiter() -> DistributedRateLimiter:
     if not rate_limiter:

@@ -83,7 +83,7 @@ server {
     ssl_ciphers HIGH:!aNULL:!MD5;
 
     location / {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -139,7 +139,7 @@ server {
     ssl_certificate_key /etc/nginx/certs/example.com.key;
 
     location / {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -265,7 +265,7 @@ server {
     include /etc/nginx/conf.d/ssl-params.conf;
 
     location / {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -329,7 +329,7 @@ server {
 
     # Route based on hostname
     if ($host = api.example.com) {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 
     if ($host = admin.example.com) {
@@ -384,7 +384,7 @@ server {
         # Pass client cert info to backend
         proxy_set_header X-SSL-Client-Cert $ssl_client_cert;
         proxy_set_header X-SSL-Client-DN $ssl_client_s_dn;
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```

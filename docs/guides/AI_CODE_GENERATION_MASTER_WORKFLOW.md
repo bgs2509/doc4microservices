@@ -418,14 +418,14 @@ docker-compose ps  # All services "healthy"
 
 **AI Generates**:
 - PostgreSQL service:
-  - `services/db_postgres_service/src/models/user.py` (SQLAlchemy models)
-  - `services/db_postgres_service/src/repositories/user_repository.py`
-  - `services/db_postgres_service/src/api/v1/users_router.py` (HTTP API)
-  - `services/db_postgres_service/alembic/versions/001_create_users.py` (migration)
+  - `services/template_data_postgres_api/src/models/user.py` (SQLAlchemy models)
+  - `services/template_data_postgres_api/src/repositories/user_repository.py`
+  - `services/template_data_postgres_api/src/api/v1/users_router.py` (HTTP API)
+  - `services/template_data_postgres_api/alembic/versions/001_create_users.py` (migration)
 - MongoDB service:
-  - `services/db_mongo_service/src/models/audit_log.py` (Motor models)
-  - `services/db_mongo_service/src/repositories/audit_repository.py`
-  - `services/db_mongo_service/src/api/v1/audit_router.py`
+  - `services/template_data_mongo_api/src/models/audit_log.py` (Motor models)
+  - `services/template_data_mongo_api/src/repositories/audit_repository.py`
+  - `services/template_data_mongo_api/src/api/v1/audit_router.py`
 
 **Validation**:
 ```bash
@@ -448,20 +448,20 @@ curl http://localhost:8002/health
 
 **AI Generates**:
 - Domain layer:
-  - `services/api_service/src/domain/entities/loan.py`
-  - `services/api_service/src/domain/value_objects/amount.py`
+  - `services/template_business_api/src/domain/entities/loan.py`
+  - `services/template_business_api/src/domain/value_objects/amount.py`
 - Application layer:
-  - `services/api_service/src/application/use_cases/create_loan.py`
-  - `services/api_service/src/application/dtos/loan_dto.py`
+  - `services/template_business_api/src/application/use_cases/create_loan.py`
+  - `services/template_business_api/src/application/dtos/loan_dto.py`
 - Infrastructure layer:
-  - `services/api_service/src/infrastructure/http_clients/postgres_client.py`
-  - `services/api_service/src/infrastructure/rabbitmq/event_publisher.py`
+  - `services/template_business_api/src/infrastructure/http_clients/postgres_client.py`
+  - `services/template_business_api/src/infrastructure/rabbitmq/event_publisher.py`
 - API layer:
-  - `services/api_service/src/api/v1/loans_router.py`
+  - `services/template_business_api/src/api/v1/loans_router.py`
 
 **Key Pattern** (HTTP-only data access):
 ```python
-# services/api_service/src/application/use_cases/create_loan.py
+# services/template_business_api/src/application/use_cases/create_loan.py
 class CreateLoanUseCase:
     def __init__(self, postgres_client: PostgresHTTPClient):
         self.postgres_client = postgres_client  # HTTP client, NOT direct DB
@@ -493,9 +493,9 @@ class CreateLoanUseCase:
 
 **Validation**:
 ```bash
-uv run ruff check services/api_service/
-uv run mypy services/api_service/
-uv run pytest services/api_service/tests/
+uv run ruff check services/template_business_api/
+uv run mypy services/template_business_api/
+uv run pytest services/template_business_api/tests/
 ```
 
 ##### **Phase 4: Background Workers**
@@ -506,9 +506,9 @@ uv run pytest services/api_service/tests/
 - `docs/atomic/integrations/rabbitmq/message-consuming.md`
 
 **AI Generates**:
-- `services/worker_service/src/workers/credit_score_worker.py`
-- `services/worker_service/src/workers/payment_reminder_worker.py`
-- `services/worker_service/src/main.py` (orchestrator)
+- `services/template_business_worker/src/workers/credit_score_worker.py`
+- `services/template_business_worker/src/workers/payment_reminder_worker.py`
+- `services/template_business_worker/src/main.py` (orchestrator)
 
 ##### **Phase 5: Telegram Bot**
 
@@ -518,9 +518,9 @@ uv run pytest services/api_service/tests/
 - `docs/atomic/integrations/rabbitmq/aiogram-integration.md`
 
 **AI Generates**:
-- `services/bot_service/src/handlers/commands.py`
-- `services/bot_service/src/handlers/notifications.py`
-- `services/bot_service/src/main.py`
+- `services/template_business_bot/src/handlers/commands.py`
+- `services/template_business_bot/src/handlers/notifications.py`
+- `services/template_business_bot/src/main.py`
 
 ##### **Phase 6: Testing & Quality**
 
@@ -873,7 +873,7 @@ Please provide these details to proceed.
 
 **AI generates**:
 
-**File 1**: `services/api_service/src/domain/entities/loan.py`
+**File 1**: `services/template_business_api/src/domain/entities/loan.py`
 ```python
 """Loan domain entity."""
 from dataclasses import dataclass
@@ -903,7 +903,7 @@ class Loan:
             raise ValueError("Loan duration must be between 1 and 60 months")
 ```
 
-**File 2**: `services/api_service/src/application/use_cases/create_loan.py`
+**File 2**: `services/template_business_api/src/application/use_cases/create_loan.py`
 ```python
 """Create loan use case."""
 from decimal import Decimal
@@ -957,7 +957,7 @@ class CreateLoanUseCase:
         return Loan(**loan_dict)
 ```
 
-**File 3**: `services/api_service/src/api/v1/loans_router.py`
+**File 3**: `services/template_business_api/src/api/v1/loans_router.py`
 ```python
 """Loans API router."""
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -993,8 +993,8 @@ async def create_loan(
 
 **AI validates**:
 ```bash
-uv run ruff check services/api_service/
-uv run mypy services/api_service/
+uv run ruff check services/template_business_api/
+uv run mypy services/template_business_api/
 ```
 
 **Result**: ✅ No errors → commit code
@@ -1075,7 +1075,7 @@ cp .env.example .env
 docker-compose -f docker-compose.prod.yml up -d
 
 # 3. Run migrations
-docker-compose exec db_postgres_service alembic upgrade head
+docker-compose exec template_data_postgres_api alembic upgrade head
 
 # 4. Verify health
 curl https://api.p2p-lending.com/health

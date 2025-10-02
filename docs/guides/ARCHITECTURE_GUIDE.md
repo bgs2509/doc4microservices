@@ -43,8 +43,8 @@ graph TB
     end
 
     subgraph "Data Services"
-        PG[db_postgres_service :8001]
-        MONGO[db_mongo_service :8002]
+        PG[template_data_postgres_api :8001]
+        MONGO[template_data_mongo_api :8002]
     end
 
     subgraph "Infrastructure"
@@ -83,9 +83,9 @@ These constraints are **NON-NEGOTIABLE** and must be followed in all implementat
 
 #### 1. **Data Access Architecture** (Improved Hybrid Approach)
 - **MANDATORY**: Centralized Data Services - Two dedicated data services handle ALL database operations:
-  - `db_postgres_service` (Port: 8001) - PostgreSQL data access service
-  - `db_mongo_service` (Port: 8002) - MongoDB data access service
-- **MANDATORY**: Business Logic Separation - Business services (`api_service`, `bot_service`, `worker_service`) contain ONLY business logic
+  - `template_data_postgres_api` (Port: 8001) - PostgreSQL data access service
+  - `template_data_mongo_api` (Port: 8002) - MongoDB data access service
+- **MANDATORY**: Business Logic Separation - Business services (`template_business_api`, `template_business_bot`, `template_business_worker`) contain ONLY business logic
 - **MANDATORY**: HTTP-Only Data Access - Business services access data EXCLUSIVELY via HTTP APIs to data services
 - **PROHIBITED**: Direct database connections in business services
 
@@ -172,13 +172,13 @@ These constraints are **NON-NEGOTIABLE** and must be followed in all implementat
 The Improved Hybrid Approach uses dedicated data services to centralize all database operations while maintaining service autonomy for business logic.
 
 #### Data Service Responsibilities
-- **PostgreSQL Data Service** (`db_postgres_service`):
+- **PostgreSQL Data Service** (`template_data_postgres_api`):
   - Handles all relational data operations
   - Users, products, orders, payments
   - ACID transactions and complex queries
   - Port: 8001 (external), Port: 8000 (internal)
 
-- **MongoDB Data Service** (`db_mongo_service`):
+- **MongoDB Data Service** (`template_data_mongo_api`):
   - Handles all document and analytics data
   - User behavior, application logs, analytics events
   - Aggregation pipelines and real-time analytics
@@ -278,7 +278,7 @@ async def handle_user_created_event(event_data: dict) -> None:
   "event_type": "user.created",
   "event_id": "uuid-v6",
   "timestamp": "2025-01-15T10:30:00Z",
-  "service": "api_service",
+  "service": "template_business_api",
   "request_id": "req-uuid",
   "user_id": "user-uuid",
   "data": {

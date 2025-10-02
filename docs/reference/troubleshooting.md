@@ -173,7 +173,7 @@ docker-compose restart redis
 ### Inter-Service HTTP Communication
 **Problem**: HTTP requests between services fail
 ```
-Error: ConnectionError: Cannot connect to host api_service
+Error: ConnectionError: Cannot connect to host template_business_api
 ```
 
 **Solution**:
@@ -183,7 +183,7 @@ docker network ls
 docker network inspect try_microservices_default
 
 # Use service names in URLs
-# http://api_service:8000/api/v1/users
+# http://template_business_api:8000/api/v1/users
 # http://localhost:8000/api/v1/users
 
 # Check service health endpoints
@@ -411,7 +411,7 @@ Error: OOMKilled
 ```yaml
 # Add memory limits to docker-compose.yml
 services:
-  api_service:
+  template_business_api:
     deploy:
       resources:
         limits:

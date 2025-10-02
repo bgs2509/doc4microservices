@@ -129,7 +129,7 @@ AI prepares deployment assets to:
 
 ### Service Implementation Standards
 
-#### 1. **FastAPI Services (`services/api_service/`)**
+#### 1. **FastAPI Services (`services/template_business_api/`)**
 ```python
 # Generated main.py structure
 """
@@ -152,11 +152,11 @@ from ...config.settings import Settings
 # HTTP-only data access via data services
 class DataServiceClient:
     def __init__(self):
-        self.postgres_url = "http://db_postgres_service:8000"
-        self.mongo_url = "http://db_mongo_service:8000"
+        self.postgres_url = "http://template_data_postgres_api:8000"
+        self.mongo_url = "http://template_data_mongo_api:8000"
 ```
 
-#### 2. **Aiogram Bot Services (`services/bot_service/`)**
+#### 2. **Aiogram Bot Services (`services/template_business_bot/`)**
 ```python
 # Generated main.py structure
 """
@@ -174,11 +174,11 @@ import structlog
 # HTTP-only communication with API service
 class BotService:
     def __init__(self):
-        self.api_url = "http://api_service:8000"
+        self.api_url = "http://template_business_api:8000"
         # No direct database access
 ```
 
-#### 3. **Worker Services (`services/worker_service/`)**
+#### 3. **Worker Services (`services/template_business_worker/`)**
 ```python
 # Generated main.py structure
 """
@@ -195,8 +195,8 @@ import structlog
 # Event-driven processing with HTTP data access
 class WorkerService:
     def __init__(self):
-        self.postgres_url = "http://db_postgres_service:8000"
-        self.mongo_url = "http://db_mongo_service:8000"
+        self.postgres_url = "http://template_data_postgres_api:8000"
+        self.mongo_url = "http://template_data_mongo_api:8000"
         # Event handling via RabbitMQ
 ```
 
@@ -249,10 +249,10 @@ services:
       - app_network
 
   # Data Services
-  db_postgres_service:
+  template_data_postgres_api:
     build:
       context: "."
-      dockerfile: "./services/db_postgres_service/Dockerfile"
+      dockerfile: "./services/template_data_postgres_api/Dockerfile"
     environment:
       DATABASE_URL: postgresql://postgres:postgres123@postgres:5432/{{project_name}}_db
     ports:
@@ -263,18 +263,18 @@ services:
       - app_network
 
   # Business Services
-  api_service:
+  template_business_api:
     build:
       context: "."
-      dockerfile: "./services/api_service/Dockerfile"
+      dockerfile: "./services/template_business_api/Dockerfile"
     environment:
-      POSTGRES_SERVICE_URL: http://db_postgres_service:8000
-      MONGO_SERVICE_URL: http://db_mongo_service:8000
+      POSTGRES_SERVICE_URL: http://template_data_postgres_api:8000
+      MONGO_SERVICE_URL: http://template_data_mongo_api:8000
     ports:
       - "8000:8000"
     depends_on:
-      - db_postgres_service
-      - db_mongo_service
+      - template_data_postgres_api
+      - template_data_mongo_api
     networks:
       - app_network
 
