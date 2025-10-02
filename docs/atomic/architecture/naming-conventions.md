@@ -6,9 +6,9 @@
 
 | Element Type | Pattern | Example | Separator |
 |--------------|---------|---------|-----------|
-| **Service** | `{context}_{domain}_{type}` | `finance_lending_api` | `_` |
-| **Service (with function)** | `{context}_{domain}_{function}_{type}` | `logistics_fleet_tracking_api` | `_` |
-| **Python Class** | `{Noun}{Suffix}` | `UserService`, `OrderRepository` | - |
+| **Microservice/Application** | `{context}_{domain}_{type}` | `finance_lending_api` | `_` |
+| **Microservice (4-part)** | `{context}_{domain}_{function}_{type}` | `logistics_fleet_tracking_api` | `_` |
+| **Python Class** | `{Noun}{Suffix}` | `UserService`, `OrderRepository` | None (PascalCase) |
 | **Python Function** | `{verb}_{noun}[_qualifier]` | `get_user_by_id`, `create_order` | `_` |
 | **Python Variable** | `{noun}[_qualifier]` | `user_id`, `max_attempts` | `_` |
 | **Python Parameter** | `{noun}[_qualifier]` | `user_id: int`, `is_active: bool` | `_` |
@@ -17,11 +17,13 @@
 | **Folder/Package** | `{service_name}/` | `finance_lending_api/` | `_` |
 | **Docker Compose Service** | `{service_name}` | `finance_lending_api` | `_` |
 | **Kubernetes Service** | `{service-name}` | `finance-lending-api` | `-` |
-| **Database Table** | `{plural_noun}` | `users`, `order_items` | `_` |
+| **Database Table** | `{plural_noun}[_{qualifier}]` | `users`, `order_items` | `_` |
 | **Database Column** | `{noun}[_qualifier]` | `created_at`, `user_id` | `_` |
 | **Env Variable** | `{NOUN}_{QUALIFIER}` | `DATABASE_URL`, `API_KEY` | `_` |
-| **REST API Path** | `/{noun}[/{id}]` | `/api/v1/users/{id}` | `-` |
+| **REST API Path** | `/api/v{N}/{resource}[/{id}]` | `/api/v1/users/{id}` | `/` (segments), `-` (words) |
 | **Git Branch** | `{type}/{description}` | `feature/user-auth` | `-` |
+
+> **✅ Validation**: After naming elements, verify compliance with the [Validation Checklist](#validation-checklist) (Section 4).
 
 ---
 
@@ -79,9 +81,17 @@ Choose suffix by purpose:
 
 ### Step 4: Python Function Rules
 
-**Pattern**: `{verb}_{noun}[_qualifier]`
+**Common Patterns**:
 
-Common verbs:
+| Pattern | Use Case | Example |
+|---------|----------|---------|
+| `{verb}_{noun}` | Simple action | `create_order`, `delete_user` |
+| `{verb}_{noun}_by_{field}` | Retrieval with criteria | `get_user_by_id`, `find_order_by_status` |
+| `{verb}_{noun}_to_{target}` | Action with destination | `send_email_to_user`, `export_data_to_csv` |
+| `{verb}_{noun}_from_{source}` | Action with source | `fetch_data_from_api`, `import_users_from_csv` |
+| `{verb}_{adjective}_{noun}` | Modified action | `create_new_user`, `update_existing_order` |
+
+**Common verbs**:
 - `get_`, `find_`, `fetch_` (retrieval)
 - `create_`, `add_` (creation)
 - `update_`, `modify_` (modification)
@@ -89,8 +99,6 @@ Common verbs:
 - `validate_`, `check_` (validation)
 - `calculate_`, `compute_` (computation)
 - `send_`, `notify_` (communication)
-
-**Example**: `get_user_by_id`, `calculate_order_total`
 
 ### Step 5: Python Variable/Parameter Rules
 
@@ -147,7 +155,7 @@ This approach ensures compatibility across all technologies while maintaining cl
 | **Python code** | `snake_case` (underscore) | PEP 8 requirement, import system | `finance_lending_api.py`, `get_user()` |
 | **Database** | `snake_case` (underscore) | SQL standard, PostgreSQL/MongoDB requirement | `user_accounts`, `created_at` |
 | **Docker Compose services** | `snake_case` (underscore) | Internal use, matches code layer | `finance_lending_api` |
-| **Container names (dev)** | `snake_case` (underscore) | Compose v1 compatibility, consistency | `finance_lending_api_1` |
+| **Container names (dev)** | `snake_case` (underscore) | Internal dev naming, consistency | `finance_lending_api_1` |
 | **Kubernetes services** | `kebab-case` (hyphen) | RFC 1035 compliance, DNS requirement | `finance-lending-api` |
 | **DNS hostnames** | `kebab-case` (hyphen) | RFC 1035/1123 standard | `api-service.example.com` |
 | **Nginx server_name** | `kebab-case` (hyphen) | DNS hostname validation | `lending.example.com` |
@@ -179,7 +187,7 @@ These components **require underscores** due to language/platform restrictions:
 - Classes use `PascalCase`; data classes and Pydantic models follow the same rule.
 - Functions, methods, and variables use `snake_case`.
 - Constants use `UPPER_SNAKE_CASE` and live at module scope.
-- DTOs adopt descriptive suffixes (`...Base`, `...Create`, `...Update`, `...Public`, `...Payload`). Avoid generic names like `DataDTO`.
+- DTOs use action-based middle components: `{Noun}CreateDTO`, `{Noun}UpdateDTO`, `{Noun}PublicDTO`, `{Noun}Payload` (not `UserDTOCreate`). Avoid generic names like `DataDTO`.
 
 **PyPI Distribution Names Exception**:
 - PyPI package names can use hyphens: `scikit-learn`, `django-rest-framework`
@@ -188,22 +196,27 @@ These components **require underscores** due to language/platform restrictions:
 
 #### Databases
 
-| Component | Convention | Examples |
-|-----------|------------|----------|
-| PostgreSQL tables | `snake_case` | `user_accounts`, `order_items` |
-| PostgreSQL columns | `snake_case` | `created_at`, `user_id`, `is_active` |
-| PostgreSQL indexes | `snake_case` | `idx_user_email`, `idx_order_created` |
-| PostgreSQL constraints | `snake_case` | `fk_order_customer`, `uk_user_email` |
-| PostgreSQL schemas | `snake_case` | `public`, `analytics`, `audit_log` |
-| MongoDB collections | `snake_case` | `analytics_events`, `user_sessions` |
-| MongoDB fields | `snake_case` | `event_type`, `created_at` |
-| MongoDB databases | `snake_case` | `user_service_db`, `analytics_db` |
+| Component | Convention | Pattern | Examples |
+|-----------|------------|---------|----------|
+| PostgreSQL tables | `snake_case` | `{plural_noun}[_{qualifier}]` | `user_accounts`, `order_items` |
+| PostgreSQL columns | `snake_case` | `{noun}[_{qualifier}]` | `created_at`, `user_id`, `is_active` |
+| PostgreSQL indexes | `snake_case` | `idx_{table}_{column}` | `idx_user_email`, `idx_order_created` |
+| PostgreSQL constraints | `snake_case` | `{type}_{table}_{column}` | `fk_order_customer`, `uk_user_email` |
+| PostgreSQL schemas | `snake_case` | `{noun}[_{qualifier}]` | `public`, `analytics`, `audit_log` |
+| MongoDB collections | `snake_case` | `{plural_noun}[_{qualifier}]` | `analytics_events`, `user_sessions` |
+| MongoDB fields | `snake_case` | `{noun}[_{qualifier}]` | `event_type`, `created_at` |
+| MongoDB databases | `snake_case` | `{service}_db` or `{noun}_db` | `user_service_db`, `analytics_db` |
 
 **Rules**:
 - PostgreSQL **prohibits hyphens** in unquoted identifiers (interpreted as subtraction operator).
 - MongoDB **discourages hyphens** (requires special syntax: `db.getCollection("name-with-hyphen")`).
 - Use `snake_case` for all database identifiers to avoid quoting everywhere.
-- Migrations use sequential prefixes: `202501010101_initial_schema.py`, `202501020930_add_user_index.py`.
+- **Database migrations**: Follow tool-specific conventions:
+  - **Alembic** (recommended): Auto-generated revision hash + description: `a1b2c3d4e5f6_add_user_table.py`
+  - **Manual timestamps** (if needed): `YYYYMMDDHHmmss_{description}.py` in UTC timezone
+    - Example: `20250102143000_initial_schema.py`, `20250105093015_add_user_index.py`
+  - Always include descriptive suffix after timestamp/hash
+  - Use `snake_case` for description part
 
 #### Environment Variables
 
@@ -269,7 +282,7 @@ volumes:
 
 **Rationale**:
 - Matches Python module names (folder `finance_lending_api/` matches service name)
-- Compose v1 uses underscores in generated names (`project_service_1`)
+- Docker Compose generates container names with underscores (`project_service_1`)
 - Internal development environment, no DNS constraints
 
 #### Production (Kubernetes) - Hyphen Required
@@ -348,27 +361,36 @@ These components **require hyphens** due to DNS/network standards:
 
 **Example nginx configuration**:
 ```nginx
-# Upstream name uses underscore (internal, matches Docker Compose)
+# DEVELOPMENT (Docker Compose)
+# Upstream name uses underscore (internal identifier)
 upstream finance_lending_api {
-    server finance-lending-api:8000;  # Server hostname uses hyphen (DNS)
+    server finance_lending_api:8000;  # Compose service name (underscore)
 }
 
-# Server block
+# PRODUCTION (Kubernetes)
+# Upstream name still uses underscore (internal identifier)
+upstream finance_lending_api {
+    server finance-lending-api:8000;  # K8s DNS name (hyphen required)
+}
+
+# Server block (same for both environments)
 server {
     listen 80;
-    server_name lending.example.com;  # Hyphen (DNS hostname)
+    server_name lending.example.com;  # DNS hostname (hyphen)
 
     location /api/ {
-        proxy_pass http://finance_lending_api;  # Upstream name (underscore OK)
+        proxy_pass http://finance_lending_api;  # Upstream name (underscore)
         proxy_set_header Host $host;
     }
 }
 ```
 
 **Rationale**:
-- Upstream names are internal identifiers (underscores allowed)
+- Upstream names are internal identifiers (underscores allowed in both environments)
 - Server names and hostnames must be DNS-compliant (hyphens only)
-- Backend server addresses follow DNS rules
+- Backend server addresses follow environment rules:
+  - Dev (Compose): `finance_lending_api` (underscore)
+  - Prod (K8s): `finance-lending-api` (hyphen required by DNS)
 
 #### REST API Paths
 
@@ -396,9 +418,15 @@ PUT  /api/v1/appointments/{id}     # matches healthcare_appointment_api
 |-----------|------------|----------|
 | Feature branches | `kebab-case` | `feature/lending-api`, `feature/user-auth` |
 | Bugfix branches | `kebab-case` | `bugfix/fix-login`, `bugfix/calc-error` |
+| Hotfix branches | `kebab-case` | `hotfix/security-patch`, `hotfix/critical-bug` |
 | Release branches | `kebab-case` | `release/v1.2.0`, `release/v2.0.0-beta` |
+| Refactor branches | `kebab-case` | `refactor/simplify-auth`, `refactor/optimize-db` |
+| Chore branches | `kebab-case` | `chore/update-deps`, `chore/cleanup-logs` |
+| Docs branches | `kebab-case` | `docs/api-guide`, `docs/setup-instructions` |
+| Test branches | `kebab-case` | `test/add-integration-tests`, `test/e2e-coverage` |
+| Performance branches | `kebab-case` | `perf/optimize-queries`, `perf/reduce-memory` |
 
-**Rationale**: Git convention, URL compatibility, readability.
+**Rationale**: Git convention, URL compatibility, readability. Follows conventional commit types.
 
 ---
 
@@ -411,11 +439,18 @@ PUT  /api/v1/appointments/{id}     # matches healthcare_appointment_api
 | **Python modules** | ✅ Required | ❌ Prohibited | - | `[a-z_][a-z0-9_]*` |
 | **PostgreSQL (unquoted)** | ✅ Required | ❌ Prohibited | 63 bytes | `[a-z_][a-z0-9_$]*` |
 | **MongoDB databases** | ✅ Allowed | ❌ Prohibited | 64 bytes | `[a-zA-Z0-9_]+` |
+| **MongoDB collections** | ✅ Allowed | ❌ Prohibited | - | `[a-zA-Z0-9_]+` |
 | **Environment variables** | ✅ Required | ❌ Prohibited | - | `[A-Z_][A-Z0-9_]*` |
+| **RabbitMQ queues** | ✅ Allowed | ✅ Allowed | 255 chars | `[a-zA-Z0-9_.-]+` |
+| **RabbitMQ exchanges** | ✅ Allowed | ✅ Allowed | 255 chars | `[a-zA-Z0-9_.-]+` |
+| **Redis keys** | ✅ Allowed | ✅ Allowed | 512 MB | Any binary-safe string |
+| **Nginx server_name** | ❌ Prohibited | ✅ Required | 253 chars | DNS hostname (RFC 1035) |
+| **Nginx upstream** | ✅ Allowed | ✅ Allowed | - | `[a-zA-Z0-9_-]+` |
+| **Git branches** | ✅ Allowed | ✅ Recommended | - | `[a-zA-Z0-9_/-]+` |
 
 ---
 
-## Section 2: Semantic Naming Patterns
+## Section 2: Microservice Naming Patterns
 
 ### Service Naming Formula
 
@@ -469,6 +504,19 @@ Use when domain has multiple possible functions (ambiguous):
    YES → Use 4-part with explicit function
    NO → Use 3-part
 ```
+
+**Important Distinction**:
+- **Ambiguous domain** (needs 4-part): Domain could mean MULTIPLE DIFFERENT functions
+  - Example: `logistics_fleet` → could be tracking OR management OR maintenance (unrelated functions)
+  - Solution: `logistics_fleet_tracking_api` (explicit function clarifies)
+
+- **Comprehensive domain** (use 3-part): Domain/type combination implies handling COMPLETE workflow
+  - Example: `construction_house_bot` → bot manages entire house workflow (calculations + uploads + tracking)
+  - Function is implied by scope: "bot for house construction" = comprehensive management
+  - NO ambiguity: team knows bot handles all house-related tasks
+
+**Rule**: If service handles MULTIPLE functions as part of ONE cohesive workflow → 3-part.
+If domain could mean DIFFERENT unrelated workflows → 4-part with explicit function.
 
 ---
 
@@ -711,7 +759,7 @@ def send_email_to_user(user_id: int, subject: str, body: str) -> None:
 | Variable Type | Pattern | Example |
 |--------------|---------|---------|
 | ID reference | `{noun}_id` | `user_id`, `order_id` |
-| Boolean flag | `is_{adjective}` or `has_{noun}` | `is_active`, `has_permission` |
+| Boolean flag | `is_{adj}`, `has_{noun}`, `can_{verb}`, `should_{verb}`, `will_{verb}` | `is_active`, `has_permission`, `can_edit`, `should_retry` |
 | Timestamp | `{action}_at` | `created_at`, `updated_at`, `deleted_at` |
 | Count/Quantity | `{noun}_count` or `num_{noun}` | `retry_count`, `num_attempts` |
 | Maximum value | `max_{noun}` | `max_retries`, `max_file_size` |
@@ -752,6 +800,42 @@ api_timeout: int = 30
 
 ---
 
+### Python Private Members
+
+Python uses naming conventions to indicate member visibility:
+
+| Pattern | Visibility | Use Case | Example |
+|---------|------------|----------|---------|
+| `_single_leading` | Internal use | Not imported by `from module import *` | `_cache`, `_helper_func()`, `_internal_id` |
+| `__double_leading` | Name mangling | Prevent subclass conflicts (mangled to `_ClassName__attr`) | `__private_id`, `__secret_key` |
+| `_trailing_` | Avoid keyword conflicts | When name conflicts with Python keyword | `class_`, `type_`, `id_` |
+| `__dunder__` | Magic methods | Reserved for Python special methods | `__init__`, `__str__`, `__eq__` |
+
+**Examples**:
+```python
+class UserService:
+    def __init__(self):
+        self.public_id = 123              # Public attribute
+        self._internal_cache = {}         # Internal, not exported by *
+        self.__private_key = "secret"     # Name mangled to _UserService__private_key
+
+    def process_user(self):               # Public method
+        return self._validate_user()     # Internal helper
+
+    def _validate_user(self):            # Internal method (convention)
+        return self.__check_secret()     # Private method (mangled)
+
+    def __check_secret(self):            # Name mangled method
+        return True
+```
+
+**Rules**:
+- Single underscore `_`: Convention only, not enforced
+- Double underscore `__`: Name mangling enforced by Python interpreter
+- Never use `__dunder__` for custom names (reserved for Python magic methods)
+
+---
+
 ### Files & Folders
 
 | Element | Pattern | Example |
@@ -762,15 +846,35 @@ api_timeout: int = 30
 | Test file | `test_{module_name}.py` | `test_user_service.py` |
 | Config file | Tool-specific | `pyproject.toml`, `.env`, `Dockerfile` |
 
-**File-folder alignment**: Directory name should match Python package name:
+**File-folder alignment**: Directory name should match Python package name.
+
+**Two common structures**:
+
 ```
+# Option A: Flat structure (simple services, not distributed as package)
 services/
-  finance_lending_api/          # Folder (snake_case)
+  finance_lending_api/          # Project root = Python package
+    __init__.py
+    main.py
+    domain/
+      user_service.py
+```
+
+```
+# Option B: src layout (distributable packages, testing isolation)
+services/
+  finance_lending_api/          # Project root (contains pyproject.toml, tests/)
     src/
-      finance_lending_api/      # Python package (snake_case)
+      finance_lending_api/      # Installable Python package
         __init__.py
         main.py
+    tests/
+      test_main.py
+    pyproject.toml
 ```
+
+**Use Option A** for internal microservices (most cases).
+**Use Option B** when creating distributable packages or needing test isolation.
 
 ---
 
@@ -783,7 +887,7 @@ services/
 | Index | `idx_{table}_{column}` | `idx_users_email`, `idx_orders_created_at` |
 | Foreign key constraint | `fk_{table}_{ref_table}` | `fk_orders_users`, `fk_order_items_orders` |
 | Unique constraint | `uk_{table}_{column}` | `uk_users_email` |
-| Primary key | `pk_{table}` | `pk_users` |
+| Primary key | `pk_{table}` (optional, usually auto-generated by DB) | `pk_users` |
 
 **Examples**:
 ```sql
@@ -820,14 +924,68 @@ When deploying from Docker Compose (underscores) to Kubernetes (hyphens), use au
 
 **Examples**:
 ```python
-# Python conversion
+import re
+
 def service_to_k8s(service_name: str) -> str:
-    """Convert Docker Compose service name to Kubernetes-compatible name."""
-    return service_name.replace('_', '-')
+    """Convert Docker Compose service name to Kubernetes DNS-compliant name.
+
+    Args:
+        service_name: Docker Compose service name (e.g., "finance_lending_api")
+
+    Returns:
+        Kubernetes-compatible DNS name (e.g., "finance-lending-api")
+
+    Raises:
+        ValueError: If conversion results in invalid Kubernetes DNS name
+
+    Examples:
+        >>> service_to_k8s("finance_lending_api")
+        "finance-lending-api"
+
+        >>> service_to_k8s("Finance_API")
+        "finance-api"
+
+        >>> service_to_k8s("_internal_api")
+        ValueError: Invalid K8s DNS name: leading/trailing hyphens not allowed
+    """
+    # 1. Convert to lowercase (K8s requires lowercase)
+    name = service_name.lower()
+
+    # 2. Replace underscores with hyphens
+    name = name.replace('_', '-')
+
+    # 3. Remove leading/trailing hyphens (invalid in DNS)
+    name = name.strip('-')
+
+    # 4. Collapse multiple consecutive hyphens
+    name = re.sub(r'-+', '-', name)
+
+    # 5. Validate RFC 1035 DNS label format
+    if not re.match(r'^[a-z0-9]([-a-z0-9]*[a-z0-9])?$', name):
+        raise ValueError(
+            f"Invalid K8s DNS name: '{name}' "
+            f"(from '{service_name}'). Must match: [a-z0-9]([-a-z0-9]*[a-z0-9])?"
+        )
+
+    # 6. Validate length (max 253 chars for K8s Service name)
+    if len(name) > 253:
+        raise ValueError(
+            f"K8s DNS name too long: {len(name)} chars (max 253). "
+            f"Name: '{name}'"
+        )
+
+    return name
+
 
 # Examples
 compose_name = "finance_lending_api"
 k8s_name = service_to_k8s(compose_name)  # "finance-lending-api"
+
+# Edge cases handled:
+service_to_k8s("Finance_API")         # "finance-api" (lowercase)
+service_to_k8s("finance__double_api") # "finance-double-api" (collapse hyphens)
+# service_to_k8s("_internal_api")     # ValueError: leading hyphen
+# service_to_k8s("api_")              # ValueError: trailing hyphen
 ```
 
 **Service Name Mapping**:
@@ -960,8 +1118,11 @@ construction_tracking_api         # Team C (cost tracking implied)
 
 ### HTTP Headers
 
+> **Note**: HTTP headers are infrastructure/protocol-level naming, not application naming conventions. Included here for Nginx configuration awareness.
+
 - Standard format: `X-Request-ID`, `Content-Type`, `Authorization`
 - Nginx drops underscore headers by default (security feature)
+- Custom headers should use hyphens (HTTP convention)
 
 ### Context Code Conflicts Warning
 
@@ -987,7 +1148,9 @@ logistics_delivery_api                 # Logistics
 observability_logging_api              # Observability (different context entirely)
 ```
 
-**Best Practice**: Maintain a **Context Registry** document listing all used context names.
+**Best Practice**: Maintain a **Context Registry** to track all context names and prevent conflicts.
+
+→ **See**: [Context Registry](context-registry.md) for the authoritative list of all contexts, their purposes, and ownership.
 
 ---
 
@@ -998,7 +1161,7 @@ observability_logging_api              # Observability (different context entire
 | Layer | Separator | Why |
 |-------|-----------|-----|
 | **Code & Data** | Underscore `_` | Python, SQL, MongoDB require it |
-| **Container (Dev)** | Underscore `_` | Matches code layer, Compose v1 compatibility |
+| **Container (Dev)** | Underscore `_` | Matches code layer, internal dev environment |
 | **Container (Prod)** | Hyphen `-` | Kubernetes, DNS require it |
 | **Network & DNS** | Hyphen `-` | RFC standards require it |
 
