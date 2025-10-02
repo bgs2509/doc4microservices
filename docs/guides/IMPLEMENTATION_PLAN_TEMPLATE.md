@@ -14,7 +14,29 @@
 
 - Problem & objective recap (link to `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md` artefact):
 - High-level solution concept:
+- **Maturity Level**: [1-PoC / 2-Development / 3-Pre-Production / 4-Production]
+- **Optional Modules**: [List selected modules: Workers, Bot, MongoDB, etc.]
+- **Estimated Generation Time**: [Based on level and modules]
 - Key assumptions:
+
+## Maturity Level Features
+
+### ✅ Included at Selected Level
+
+| Category | Feature | Justification |
+|----------|---------|---------------|
+| Example | Structured logging | Level ≥ 2 requirement |
+| Example | Nginx API Gateway | Level ≥ 3 requirement |
+| Example | OAuth/JWT | Level 4 requirement |
+
+> **Reference**: See `docs/reference/MATURITY_LEVELS.md` for complete feature matrix.
+
+### ❌ Skipped Features (Available at Higher Levels)
+
+| Feature | Available At Level | Upgrade Impact |
+|---------|-------------------|----------------|
+| Example | ELK Stack | Level 4 | ~1 day to add |
+| Example | CI/CD Pipelines | Level 4 | ~2 days to add |
 
 ## Architecture Impact
 

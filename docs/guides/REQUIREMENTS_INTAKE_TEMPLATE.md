@@ -9,6 +9,13 @@
 - **Date**:
 - **Communication Channel**:
 
+## Target Configuration
+
+- **Maturity Level**: [1-PoC / 2-Development / 3-Pre-Production / 4-Production]
+- **Optional Modules**: [None / Workers / Bot / MongoDB / RabbitMQ / Redis / File Storage / Real-Time]
+- **Estimated Generation Time**: [~5 min / ~10 min / ~15 min / ~30 min based on level]
+- **Reference**: See `docs/reference/MATURITY_LEVELS.md` for level details
+
 ## Business Context & Objectives
 
 - Problem statement:

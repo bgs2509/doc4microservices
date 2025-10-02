@@ -11,7 +11,9 @@ Run prompt validation immediately after receiving a new user request and before 
 | Field | Why It Matters | Primary References |
 |-------|----------------|--------------------|
 | **Business Context** | Anchors the solution in a clear problem statement, target users, and success metrics. | `README.md`, `docs/reference/tech_stack.md`, `docs/reference/AGENT_CONTEXT_SUMMARY.md` |
+| **Target Maturity Level** | Determines infrastructure complexity, observability, security, and generation time. Prevents over-engineering for MVPs and ensures production readiness for enterprise deployments. | `docs/reference/MATURITY_LEVELS.md`, `docs/reference/CONDITIONAL_STAGE_RULES.md` |
 | **Functional Requirements** | Defines the capabilities the generated services must expose. | `docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md`, `docs/reference/PROJECT_STRUCTURE.md` |
+| **Optional Modules** | Identifies additional services beyond core (Workers, Bot, MongoDB, Redis, etc.). Available at any maturity level. | `docs/reference/MATURITY_LEVELS.md` (modules section) |
 | **Non-Functional Constraints** | Ensures compliance with architecture, performance, and security requirements. | `docs/guides/ARCHITECTURE_GUIDE.md`, `docs/atomic/architecture/`, `docs/atomic/observability/` |
 | **Dependencies & Integrations** | Identifies external systems, queues, or data flows that must be modeled. | `docs/atomic/infrastructure/`, `docs/atomic/services/`, `docs/reference/DELIVERABLES_CATALOG.md` |
 | **Scope Boundaries** | Prevents unplanned features from entering the delivery plan. | `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md` |
@@ -40,6 +42,8 @@ Run prompt validation immediately after receiving a new user request and before 
 | Missing Information | Required Action | Blocker? |
 |---------------------|-----------------|----------|
 | Business context or overall goal | Ask the requester to restate the problem, target users, and success metrics. | Yes |
+| Target maturity level | Ask: "Choose maturity level: 1=PoC (~5 min), 2=Development (~10 min), 3=Pre-Production (~15 min), 4=Production (~30 min)". See `PROMPT_TEMPLATES.md` for full prompt. | Yes |
+| Optional modules | If applicable, clarify: "Need Telegram Bot? Background Workers? MongoDB? RabbitMQ? Redis?" | No (defaults to core only) |
 | Functional requirements | Request a prioritized feature list or user stories. | Yes |
 | Architecture and quality constraints | Ask for performance/security expectations or confirm adherence to framework defaults. | Yes |
 | Dependencies or integrations | Clarify external systems, message queues, and data sources. | Yes |

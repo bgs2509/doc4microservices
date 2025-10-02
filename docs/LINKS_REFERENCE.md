@@ -33,11 +33,14 @@
 | Document | Direct Path | Submodule Path | Purpose |
 |----------|-------------|----------------|---------|
 | **Agent Context Summary** | [reference/AGENT_CONTEXT_SUMMARY.md](reference/AGENT_CONTEXT_SUMMARY.md) | `.framework/docs/reference/AGENT_CONTEXT_SUMMARY.md` | Quick orientation for AI agents |
+| **Maturity Levels** | [reference/MATURITY_LEVELS.md](reference/MATURITY_LEVELS.md) | `.framework/docs/reference/MATURITY_LEVELS.md` | 4 incremental levels from PoC to Production |
+| **Conditional Stage Rules** | [reference/CONDITIONAL_STAGE_RULES.md](reference/CONDITIONAL_STAGE_RULES.md) | `.framework/docs/reference/CONDITIONAL_STAGE_RULES.md` | Stage skipping rules per maturity level |
 | **AI Navigation Matrix** | [reference/AI_NAVIGATION_MATRIX.md](reference/AI_NAVIGATION_MATRIX.md) | `.framework/docs/reference/AI_NAVIGATION_MATRIX.md` | Exact document mapping per workflow stage |
 | **Agent Toolbox** | [reference/AGENT_TOOLBOX.md](reference/AGENT_TOOLBOX.md) | `.framework/docs/reference/AGENT_TOOLBOX.md` | Machine-friendly command catalog |
 | **Deliverables Catalog** | [reference/DELIVERABLES_CATALOG.md](reference/DELIVERABLES_CATALOG.md) | `.framework/docs/reference/DELIVERABLES_CATALOG.md` | Required artefacts and storage rules |
 | **Prompt Templates** | [reference/PROMPT_TEMPLATES.md](reference/PROMPT_TEMPLATES.md) | `.framework/docs/reference/PROMPT_TEMPLATES.md` | Reusable prompts for clarification and reporting |
 | **Architecture Decision Log Template** | [reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md](reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md) | `.framework/docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md` | Standardised ADR format |
+| **Abbreviations Registry** | [reference/ABBREVIATIONS_REGISTRY.md](reference/ABBREVIATIONS_REGISTRY.md) | `.framework/docs/reference/ABBREVIATIONS_REGISTRY.md` | Standardized abbreviations for service naming (length optimization) |
 
 <a id="ide-rules-and-patterns"></a>
 ## Atomic Knowledge Base

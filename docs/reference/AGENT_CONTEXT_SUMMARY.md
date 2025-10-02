@@ -13,6 +13,7 @@
 | Need | Primary Sources |
 |------|-----------------|
 | Full documentation map | `docs/LINKS_REFERENCE.md`, `docs/INDEX.md` |
+| Maturity level selection | `docs/reference/MATURITY_LEVELS.md`, `docs/reference/CONDITIONAL_STAGE_RULES.md` |
 | Architecture constraints | `docs/guides/ARCHITECTURE_GUIDE.md`, `docs/atomic/architecture/improved-hybrid-overview.md`, `docs/atomic/architecture/data-access-architecture.md`, `docs/atomic/architecture/naming-conventions.md` |
 | Service implementation patterns | `docs/atomic/services/fastapi/`, `docs/atomic/services/aiogram/`, `docs/atomic/services/asyncio-workers/`, `docs/atomic/services/data-services/` |
 | Infrastructure integration rules | `docs/atomic/integrations/redis/`, `docs/atomic/integrations/rabbitmq/`, `docs/atomic/integrations/http-communication/` |
@@ -51,14 +52,16 @@
 
 **Quick summary**:
 1. **Stage 0: Initialization** → Load framework context (CLAUDE.md, this file, Master Workflow)
-2. **Stage 1: Prompt Validation** → `docs/guides/PROMPT_VALIDATION_GUIDE.md`
+2. **Stage 1: Prompt Validation** → `docs/guides/PROMPT_VALIDATION_GUIDE.md` — **SELECT MATURITY LEVEL (1-4)**
 3. **Stage 2: Requirements Intake** → populate `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`
 4. **Stage 3: Implementation Planning** → use `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`
-5. **Stage 4: Code Generation** → follow atomic docs per `docs/reference/AI_NAVIGATION_MATRIX.md`
-6. **Stage 5: Verification** → `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`
+5. **Stage 4: Code Generation** → **CONDITIONAL** based on maturity level per `docs/reference/CONDITIONAL_STAGE_RULES.md`
+6. **Stage 5: Verification** → `docs/quality/AGENT_VERIFICATION_CHECKLIST.md` (criteria vary by level)
 7. **Stage 6: Reporting & Handoff** → `docs/quality/QA_REPORT_TEMPLATE.md`, update `docs/reference/DELIVERABLES_CATALOG.md`
 
 **Navigation**: Use `docs/reference/AI_NAVIGATION_MATRIX.md` for exact document mapping at each stage.
+
+**Maturity Levels**: 4 levels from PoC (~5 min) to Production (~30 min). See `docs/reference/MATURITY_LEVELS.md` for details.
 
 ## Maintenance
 

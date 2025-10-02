@@ -25,11 +25,14 @@ The documentation is organised into atomic knowledge modules. Use this index as 
 - [Technical Specifications](LINKS_REFERENCE.md#core-documentation) — platform versions and runtime constraints
 - [Troubleshooting Guide](LINKS_REFERENCE.md#developer-guides) — diagnostics and recovery procedures
 - [Agent Context Summary](reference/AGENT_CONTEXT_SUMMARY.md) — onboarding context for AI agents
+- [Maturity Levels](reference/MATURITY_LEVELS.md) — 4 incremental levels from PoC to Production
+- [Conditional Stage Rules](reference/CONDITIONAL_STAGE_RULES.md) — stage skipping rules per maturity level
 - [AI Navigation Matrix](reference/AI_NAVIGATION_MATRIX.md) — exact document mapping per workflow stage
 - [Agent Toolbox](reference/AGENT_TOOLBOX.md) — machine-friendly command catalogue
 - [Deliverables Catalog](reference/DELIVERABLES_CATALOG.md) — artefact ownership and storage rules
 - [Prompt Templates](reference/PROMPT_TEMPLATES.md) — reusable communication templates
 - [Architecture Decision Log Template](reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md) — ADR format and conventions
+- [Abbreviations Registry](reference/ABBREVIATIONS_REGISTRY.md) — standardized abbreviations for service naming (length optimization)
 
 ### Agent Templates & Checklists
 - [Prompt Validation Guide](guides/PROMPT_VALIDATION_GUIDE.md) — pre-work validation checklist
