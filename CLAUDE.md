@@ -8,6 +8,34 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 >
 > The paths below assume **direct usage**. When used as submodule, prefix all paths with `.framework/`.
 
+## AI Agent Reading Order (MANDATORY)
+
+**When starting work, AI agents MUST read documents in this exact order:**
+
+### **Stage 0: Initialization** (Before receiving user prompt)
+
+1. **CLAUDE.md** (this file) — Entry point, navigation, framework overview
+2. **docs/reference/AGENT_CONTEXT_SUMMARY.md** — Critical rules snapshot, mandatory constraints
+3. **docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md** — Complete 7-stage process with detailed instructions
+
+**Purpose**: Load context about framework architecture (Improved Hybrid Approach), mandatory constraints (HTTP-only data access, service separation), and available documentation.
+
+**Expected outcome**: AI understands where to find specific information during workflow execution.
+
+### **Stage 1-6: Dynamic Reading** (During workflow execution)
+
+After initialization, AI reads documents **on-demand** based on the current workflow stage.
+
+**Navigation Guide**: See [AI Navigation Matrix](docs/reference/AI_NAVIGATION_MATRIX.md) for exact document mapping per stage. This matrix shows:
+- Which documents to read at each stage
+- What outputs AI should generate
+- Which tools/templates to use
+- Success criteria for each stage
+
+**Key Principle**: Don't read everything upfront. Read what's needed for the current stage to minimize context usage and maximize efficiency.
+
+---
+
 ## Documentation Hierarchy
 
 > **NAVIGATION GUIDE**: Each document has a single purpose. Use the references below instead of duplicating content.
@@ -61,12 +89,25 @@ This framework implements the **Improved Hybrid Approach** with FastAPI, Aiogram
 
 ## Agent Workflow (High-Level)
 
-1. Prompt Validation → [Prompt Validation Guide](docs/guides/PROMPT_VALIDATION_GUIDE.md)
-2. Requirements Intake → fill [Requirements Intake Template](docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md)
-3. Implementation Planning → populate [Implementation Plan Template](docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md)
-4. Execution → follow [Agent Workflow](docs/guides/AGENT_WORKFLOW.md), using [Agent Toolbox](docs/reference/AGENT_TOOLBOX.md)
-5. Verification → run [Agent Verification Checklist](docs/quality/AGENT_VERIFICATION_CHECKLIST.md)
-6. Release Handoff → summarise with [QA Report Template](docs/quality/QA_REPORT_TEMPLATE.md) and update deliverables ([Deliverables Catalog](docs/reference/DELIVERABLES_CATALOG.md))
+For the **complete 7-stage AI code generation process** with detailed instructions, examples, and navigation matrix, see:
+
+**→ [AI Code Generation Master Workflow](docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md)**
+
+This unified workflow document includes:
+- **Part 1**: AI Reading Order (what to read when)
+- **Part 2**: 7-Stage Process (Init → Validation → Intake → Planning → Generation → Verification → Handoff)
+- **Part 3**: Navigation Matrix (exact documents per stage)
+- **Part 4**: Example Walkthrough (complete P2P lending example)
+- **Part 5**: Common Issues & Recovery
+
+**Quick stage summary**:
+1. **Stage 0**: AI Initialization (load framework context)
+2. **Stage 1**: Prompt Validation (ensure completeness)
+3. **Stage 2**: Requirements Clarification & Intake (structured capture)
+4. **Stage 3**: Architecture Mapping & Planning (detailed plan)
+5. **Stage 4**: Code Generation (phase-by-phase implementation)
+6. **Stage 5**: Quality Verification (all checks pass)
+7. **Stage 6**: QA Report & Handoff (stakeholder sign-off)
 
 ## Important Notes
 

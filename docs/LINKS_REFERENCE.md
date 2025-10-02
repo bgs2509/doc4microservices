@@ -17,9 +17,9 @@
 
 | Document | Direct Path | Submodule Path | Purpose |
 |----------|-------------|----------------|---------|
+| **AI Code Generation Master Workflow** | [guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md](guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md) | `.framework/docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md` | Complete 7-stage AI process (unified workflow) |
 | **Development Commands** | [guides/DEVELOPMENT_COMMANDS.md](guides/DEVELOPMENT_COMMANDS.md) | `.framework/docs/guides/DEVELOPMENT_COMMANDS.md` | All development commands |
 | **Use Case Implementation** | [guides/USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md) | `.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md` | Step-by-step creation of new use cases |
-| **Agent Workflow** | [guides/AGENT_WORKFLOW.md](guides/AGENT_WORKFLOW.md) | `.framework/docs/guides/AGENT_WORKFLOW.md` | End-to-end process for AI agents |
 | **Prompt Validation Guide** | [guides/PROMPT_VALIDATION_GUIDE.md](guides/PROMPT_VALIDATION_GUIDE.md) | `.framework/docs/guides/PROMPT_VALIDATION_GUIDE.md` | Mandatory intake checklist before work starts |
 | **Requirements Intake Template** | [guides/REQUIREMENTS_INTAKE_TEMPLATE.md](guides/REQUIREMENTS_INTAKE_TEMPLATE.md) | `.framework/docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md` | Structured capture of inputs |
 | **Implementation Plan Template** | [guides/IMPLEMENTATION_PLAN_TEMPLATE.md](guides/IMPLEMENTATION_PLAN_TEMPLATE.md) | `.framework/docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md` | Planning artefact for approval |
@@ -33,6 +33,7 @@
 | Document | Direct Path | Submodule Path | Purpose |
 |----------|-------------|----------------|---------|
 | **Agent Context Summary** | [reference/AGENT_CONTEXT_SUMMARY.md](reference/AGENT_CONTEXT_SUMMARY.md) | `.framework/docs/reference/AGENT_CONTEXT_SUMMARY.md` | Quick orientation for AI agents |
+| **AI Navigation Matrix** | [reference/AI_NAVIGATION_MATRIX.md](reference/AI_NAVIGATION_MATRIX.md) | `.framework/docs/reference/AI_NAVIGATION_MATRIX.md` | Exact document mapping per workflow stage |
 | **Agent Toolbox** | [reference/AGENT_TOOLBOX.md](reference/AGENT_TOOLBOX.md) | `.framework/docs/reference/AGENT_TOOLBOX.md` | Machine-friendly command catalog |
 | **Deliverables Catalog** | [reference/DELIVERABLES_CATALOG.md](reference/DELIVERABLES_CATALOG.md) | `.framework/docs/reference/DELIVERABLES_CATALOG.md` | Required artefacts and storage rules |
 | **Prompt Templates** | [reference/PROMPT_TEMPLATES.md](reference/PROMPT_TEMPLATES.md) | `.framework/docs/reference/PROMPT_TEMPLATES.md` | Reusable prompts for clarification and reporting |
@@ -69,7 +70,7 @@ Centralised atomic documentation for domain-specific rules. See [INDEX.md](INDEX
 | **Understand architecture** | [ARCHITECTURE_GUIDE.md](guides/ARCHITECTURE_GUIDE.md) |
 | **Run commands** | [DEVELOPMENT_COMMANDS.md](guides/DEVELOPMENT_COMMANDS.md) |
 | **Create new use case** | [USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md) |
-| **Agent-led delivery** | [PROMPT_VALIDATION_GUIDE.md](guides/PROMPT_VALIDATION_GUIDE.md) → [AGENT_WORKFLOW.md](guides/AGENT_WORKFLOW.md) |
+| **AI-led code generation** | [AI_CODE_GENERATION_MASTER_WORKFLOW.md](guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md) → [AI_NAVIGATION_MATRIX.md](reference/AI_NAVIGATION_MATRIX.md) |
 | **Check versions** | [tech_stack.md](reference/tech_stack.md) |
 | **Solve problems** | [troubleshooting.md](reference/troubleshooting.md) |
 

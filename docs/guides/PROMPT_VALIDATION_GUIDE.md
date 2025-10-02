@@ -4,7 +4,7 @@
 
 ## When to Run This Checklist
 
-Run prompt validation immediately after receiving a new user request and before starting the Requirements Intake step described in `AGENT_WORKFLOW.md`. If any mandatory field is missing, pause all further actions and ask the requester for clarification using the prompt augmentation templates.
+Run prompt validation immediately after receiving a new user request and before starting the Requirements Intake step (Stage 2 in `AI_CODE_GENERATION_MASTER_WORKFLOW.md`). If any mandatory field is missing, pause all further actions and ask the requester for clarification using the prompt augmentation templates.
 
 ## Critical Input Checklist
 
@@ -49,8 +49,8 @@ Run prompt validation immediately after receiving a new user request and before 
 
 ## Integration With Agent Workflow
 
-- This guide is executed **before** the "Requirements Intake" step in `docs/guides/AGENT_WORKFLOW.md`.
-- Only after successful validation should the agent populate `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md` and draft an implementation plan.
+- This guide is executed at **Stage 1** in `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md`.
+- Only after successful validation should the agent proceed to Stage 2 (Requirements Intake) and populate `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`.
 - The validated prompt becomes part of the project artefacts referenced in `docs/reference/DELIVERABLES_CATALOG.md`.
 
 ## Maintenance

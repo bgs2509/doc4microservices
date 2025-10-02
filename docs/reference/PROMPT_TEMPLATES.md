@@ -31,7 +31,7 @@
 
 | Scenario | Prompt Body | Variables | Expected Agent Output | References |
 |----------|-------------|-----------|-----------------------|------------|
-| Kick off implementation | "Proceed with implementing the plan. Reference the architecture and service rules as you create code." | None | Execution acknowledgement | `docs/guides/AGENT_WORKFLOW.md`, `docs/services/*` |
+| Kick off implementation | "Proceed with implementing the plan. Reference the architecture and service rules as you create code." | None | Execution acknowledgement | `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md` Stage 4, `docs/atomic/services/*` |
 | Request progress update | "Provide a status update for each stage in the implementation plan, including blockers." | None | Status report | Implementation plan |
 
 ## Verification & Release

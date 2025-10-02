@@ -13,21 +13,23 @@
 | Need | Primary Sources |
 |------|-----------------|
 | Full documentation map | `docs/LINKS_REFERENCE.md`, `docs/INDEX.md` |
-| Architecture constraints | `docs/architecture/ms_best_practices_rules.mdc`, `docs/architecture/data-access-rules.mdc`, `docs/architecture/naming_conventions.mdc` |
-| Service implementation patterns | `docs/services/fastapi_rules.mdc`, `docs/services/aiogram_rules.mdc`, `docs/services/asyncio_rules.mdc` |
-| Infrastructure rules | `docs/infrastructure/redis_rules.mdc`, `docs/infrastructure/rabbitmq_rules.mdc`, `docs/infrastructure/mongodb_rules.mdc` |
-| Observability | `docs/observability/` folder (logging, metrics, tracing, ELK, observability strategy) |
-| Quality and testing | `docs/quality/testing-standards.mdc`, `docs/guides/DEVELOPMENT_COMMANDS.md` |
+| Architecture constraints | `docs/guides/ARCHITECTURE_GUIDE.md`, `docs/atomic/architecture/improved-hybrid-overview.md`, `docs/atomic/architecture/data-access-architecture.md`, `docs/atomic/architecture/naming-conventions.md` |
+| Service implementation patterns | `docs/atomic/services/fastapi/`, `docs/atomic/services/aiogram/`, `docs/atomic/services/asyncio-workers/`, `docs/atomic/services/data-services/` |
+| Infrastructure integration rules | `docs/atomic/integrations/redis/`, `docs/atomic/integrations/rabbitmq/`, `docs/atomic/integrations/http-communication/` |
+| Database patterns | `docs/atomic/databases/postgresql/`, `docs/atomic/databases/postgresql-advanced/`, `docs/atomic/infrastructure/databases/` |
+| Observability | `docs/atomic/observability/` (logging, metrics, tracing, error tracking, ELK stack) |
+| Quality and testing | `docs/atomic/testing/`, `docs/guides/DEVELOPMENT_COMMANDS.md` |
 
 ## Agent-Focused Documents
 
 | Purpose | Document |
 |---------|----------|
+| Complete workflow process | `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md` |
+| Stage-by-stage navigation | `docs/reference/AI_NAVIGATION_MATRIX.md` |
 | Prompt validation | `docs/guides/PROMPT_VALIDATION_GUIDE.md` |
 | Prompt augmentation snippets | `docs/reference/PROMPT_TEMPLATES.md` |
 | Requirements capture | `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md` |
 | Delivery planning | `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md` |
-| Execution workflow | `docs/guides/AGENT_WORKFLOW.md` |
 | Tooling catalog | `docs/reference/AGENT_TOOLBOX.md` |
 | Deliverables inventory | `docs/reference/DELIVERABLES_CATALOG.md` |
 | Verification checklist | `docs/quality/AGENT_VERIFICATION_CHECKLIST.md` |
@@ -43,14 +45,20 @@
 5. **Naming**: Follow the naming standards in `docs/atomic/architecture/naming-conventions.md` for all files, modules, and identifiers.
 6. **Quality Gates**: Ruff, mypy, bandit, pytest, and coverage thresholds are non-negotiable (`docs/guides/DEVELOPMENT_COMMANDS.md`).
 
-## Workflow Overview (High-Level)
+## Workflow Overview
 
-1. **Prompt Validation** → `docs/guides/PROMPT_VALIDATION_GUIDE.md`
-2. **Requirements Intake** → populate `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`
-3. **Implementation Planning** → use `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`
-4. **Execution** → follow `docs/guides/AGENT_WORKFLOW.md` and tooling from `docs/reference/AGENT_TOOLBOX.md`
-5. **Verification** → `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`
-6. **Reporting & Hand-off** → `docs/quality/QA_REPORT_TEMPLATE.md`, update deliverables per `docs/reference/DELIVERABLES_CATALOG.md`
+**Complete 7-stage process**: See `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md`
+
+**Quick summary**:
+1. **Stage 0: Initialization** → Load framework context (CLAUDE.md, this file, Master Workflow)
+2. **Stage 1: Prompt Validation** → `docs/guides/PROMPT_VALIDATION_GUIDE.md`
+3. **Stage 2: Requirements Intake** → populate `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`
+4. **Stage 3: Implementation Planning** → use `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`
+5. **Stage 4: Code Generation** → follow atomic docs per `docs/reference/AI_NAVIGATION_MATRIX.md`
+6. **Stage 5: Verification** → `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`
+7. **Stage 6: Reporting & Handoff** → `docs/quality/QA_REPORT_TEMPLATE.md`, update `docs/reference/DELIVERABLES_CATALOG.md`
+
+**Navigation**: Use `docs/reference/AI_NAVIGATION_MATRIX.md` for exact document mapping at each stage.
 
 ## Maintenance
 

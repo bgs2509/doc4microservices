@@ -17,14 +17,15 @@ The documentation is organised into atomic knowledge modules. Use this index as 
 
 ### Core Guides
 - [Architecture Guide](LINKS_REFERENCE.md#core-documentation) — canonical architectural principles
+- [AI Code Generation Master Workflow](guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md) — complete 7-stage AI process (unified workflow)
 - [Development Commands](LINKS_REFERENCE.md#developer-guides) — command reference for local workflows
 - [Use Case Implementation Guide](LINKS_REFERENCE.md#developer-guides) — step-by-step delivery process
-- [Agent Workflow](guides/AGENT_WORKFLOW.md) — end-to-end agent operating model
 
 ### Reference Materials
 - [Technical Specifications](LINKS_REFERENCE.md#core-documentation) — platform versions and runtime constraints
 - [Troubleshooting Guide](LINKS_REFERENCE.md#developer-guides) — diagnostics and recovery procedures
 - [Agent Context Summary](reference/AGENT_CONTEXT_SUMMARY.md) — onboarding context for AI agents
+- [AI Navigation Matrix](reference/AI_NAVIGATION_MATRIX.md) — exact document mapping per workflow stage
 - [Agent Toolbox](reference/AGENT_TOOLBOX.md) — machine-friendly command catalogue
 - [Deliverables Catalog](reference/DELIVERABLES_CATALOG.md) — artefact ownership and storage rules
 - [Prompt Templates](reference/PROMPT_TEMPLATES.md) — reusable communication templates
