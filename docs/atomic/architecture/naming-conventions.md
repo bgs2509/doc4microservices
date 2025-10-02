@@ -152,7 +152,7 @@ This approach ensures compatibility across all technologies while maintaining cl
 | **DNS hostnames** | `kebab-case` (hyphen) | RFC 1035/1123 standard | `api-service.example.com` |
 | **Nginx server_name** | `kebab-case` (hyphen) | DNS hostname validation | `lending.example.com` |
 | **Nginx upstreams** | `snake_case` (underscore) | Internal name, matches service names | `upstream finance_lending_api` |
-| **REST API paths** | `kebab-case` (hyphen) | SEO-friendly, URL standard | `/api/v1/lending-platform` |
+| **REST API paths** | `kebab-case` (hyphen) | SEO-friendly, URL standard | `/api/v1/lending` |
 | **Git branches** | `kebab-case` (hyphen) | Git convention, URL compatibility | `feature/lending-api` |
 | **Environment variables** | `UPPER_SNAKE_CASE` (underscore) | POSIX standard, shell requirement | `DATABASE_URL` |
 
@@ -374,15 +374,15 @@ server {
 
 | Component | Convention | Examples |
 |-----------|------------|----------|
-| URL path segments | `kebab-case` | `/api/v1/lending-platform`, `/user-accounts/{id}` |
+| URL path segments | `kebab-case` | `/api/v1/lending`, `/api/v1/users/{id}` |
 | URL slugs | `kebab-case` | `/properties/house-123`, `/blog/my-post-title` |
 
 **Example API endpoints**:
 ```
-GET  /api/v1/lending-platform/{id}
-POST /api/v1/user-accounts
-GET  /api/v1/payment-history
-PUT  /api/v1/tenant-profiles/{id}
+GET  /api/v1/lending/{id}         # matches finance_lending_api
+POST /api/v1/users                 # matches user_auth_api
+GET  /api/v1/payments              # matches finance_payment_api
+PUT  /api/v1/appointments/{id}     # matches healthcare_appointment_api
 ```
 
 **Rationale**:
@@ -526,10 +526,10 @@ Use when domain has multiple possible functions (ambiguous):
 | `logistics` | Transport & delivery | `logistics_fleet_tracking_api`, `logistics_delivery_tracking_api` |
 | `ecommerce` | Online commerce | `ecommerce_marketplace_api`, `ecommerce_dropship_api` |
 | `corporate` | Enterprise tools | `corporate_crm_api`, `corporate_hr_api` |
-| `property_management` | Real estate | `property_mgmt_house_api`, `property_mgmt_tenant_api` |
+| `property_management` | Real estate | `property_house_api`, `property_tenant_api` |
 | `communication` | Messaging & notifications | `communication_notification_worker`, `communication_telegram_bot` |
 | `analytics` | Data & reporting | `analytics_reporting_api`, `analytics_dashboard_api` |
-| `user_management` | Auth & profiles | `user_mgmt_auth_api`, `user_mgmt_profile_api` |
+| `user_management` | Auth & profiles | `user_auth_api`, `user_profile_api` |
 | `integration` | Third-party APIs | `integration_stripe_api`, `integration_google_api` |
 | `environment` | Ecology & monitoring | `environment_emission_api`, `environment_recycling_api` |
 
@@ -570,32 +570,36 @@ Use when domain has multiple possible functions (ambiguous):
 
 ---
 
-### Function Naming Patterns
+### Function Naming Patterns (4-Part Only)
 
-| Function | Use When | Examples |
-|----------|----------|----------|
-| `management` | Service handles full process | `construction_house_management_bot`, `corporate_fleet_management_api` |
-| `matching` | Service finds pairs/matches | `finance_lending_matching_api`, `logistics_carpool_matching_api` |
-| `tracking` | Service monitors/tracks | `logistics_delivery_tracking_api`, `environment_emission_tracking_api` |
-| `notification` | Service sends alerts | `communication_email_notification_worker`, `user_management_notification_api` |
-| `calculation` | Service computes | `construction_material_calculation_api`, `finance_pricing_calculation_api` |
-| `consultation` | Service provides advice | `healthcare_telemedicine_consultation_api` |
-| `booking` | Service handles reservations | `healthcare_appointment_booking_api`, `logistics_parking_booking_api` |
-| `processing` | Service processes data | `finance_payment_processing_worker` |
-| `reporting` | Service generates reports | `analytics_financial_reporting_api` |
+Use explicit function words **only** when domain is ambiguous. Most services use 3-part (function implied).
+
+| Function | Use When (Domain Ambiguous) | 4-Part Example |
+|----------|----------------------------|----------------|
+| `tracking` | Fleet/delivery could be tracking OR routing OR management | `logistics_fleet_tracking_api`, `logistics_delivery_tracking_api` |
+| `notification` | Communication could be notification OR email OR SMS | `communication_notification_worker` |
+| `reporting` | Analytics could be reporting OR querying OR processing | `analytics_reporting_api` |
+| `aggregation` | Data could be aggregation OR transformation OR storage | `analytics_data_aggregation_worker` |
+| `inventory` | Warehouse could be inventory OR fulfillment OR shipping | `logistics_warehouse_inventory_api` |
+
+**Note**: For clear domains, use 3-part:
+- `finance_lending_api` (matching implied)
+- `healthcare_telemedicine_api` (consultation implied)
+- `construction_house_bot` (management implied)
+- `finance_payment_worker` (processing implied)
 
 ---
 
 ### Service Type Catalog
 
-| Type | Description | Technology | Example |
-|------|-------------|------------|---------|
-| `api` | REST API service | FastAPI, Flask | `finance_lending_matching_api` |
-| `worker` | Background job processor | Celery, RQ | `finance_payment_processing_worker` |
-| `bot` | Chat bot interface | Aiogram, Telegram Bot API | `construction_house_management_bot` |
-| `gateway` | API Gateway / proxy | Kong, Nginx | `ecommerce_api_gateway` |
-| `stream` | Stream processor | Kafka Streams, Flink | `logistics_tracking_stream_processor` |
-| `scheduler` | Task scheduler | APScheduler, Celery Beat | `finance_reporting_scheduler` |
+| Type | Description | Technology | Example (3-part) |
+|------|-------------|------------|------------------|
+| `api` | REST API service | FastAPI, Flask | `finance_lending_api` |
+| `worker` | Background job processor | Celery, RQ | `finance_payment_worker` |
+| `bot` | Chat bot interface | Aiogram, Telegram Bot API | `construction_house_bot` |
+| `gateway` | API Gateway / proxy | Kong, Nginx | `ecommerce_gateway` |
+| `stream` | Stream processor | Kafka Streams, Flink | `logistics_tracking_stream` |
+| `scheduler` | Task scheduler | APScheduler, Celery Beat | `analytics_scheduler` |
 | `cli` | Command-line tool | Click, Typer | `database_migration_cli` |
 | `webhook` | Webhook receiver | FastAPI | `integration_stripe_webhook` |
 
@@ -846,7 +850,7 @@ All names refer to the **same logical service**, just using layer-appropriate se
 - [ ] REST API paths use `kebab-case`
 - [ ] Git branches use `kebab-case`
 - [ ] Environment variables use `UPPER_SNAKE_CASE`
-- [ ] Service names follow `{context}_{domain}_{function}_{type}` pattern
+- [ ] Service names follow 3-part `{context}_{domain}_{type}` (or 4-part when domain ambiguous)
 - [ ] Class names have appropriate suffixes (Service, Repository, DTO, Handler, Router)
 - [ ] Function names start with appropriate verbs (get_, create_, update_, validate_)
 - [ ] No hyphens in Python code
@@ -925,14 +929,14 @@ Use broad terms when service handles entire workflow:
 
 | Generic Term | Use When | Example |
 |--------------|----------|---------|
-| `management` | Full process control | `construction_house_management_bot` |
-| `assistant` | Helper/support tool | `finance_personal_assistant_api` |
-| `platform` | Complete solution | `education_webinar_platform_api` |
-| `hub` | Central aggregator | `corporate_communication_hub_api` |
+| `management` | Full process control | `construction_house_bot` |
+| `assistant` | Helper/support tool | `finance_assistant_api` |
+| `platform` | Complete solution | `education_platform_api` |
+| `hub` | Central aggregator | `corporate_hub_api` |
 
 **Example**: Telegram bot doing calculations + uploads + cost tracking:
 ```
-construction_house_management_bot  ✅
+construction_house_bot  ✅  (management implied by bot handling full workflow)
 ```
 
 #### Strategy B: Split into Microservices
@@ -940,9 +944,9 @@ construction_house_management_bot  ✅
 When functions are truly independent (different teams, scaling, deployment):
 
 ```
-construction_house_calculation_api      # Team A
-construction_house_documentation_api    # Team B
-construction_house_cost_tracking_api    # Team C
+construction_calculation_api      # Team A (house context obvious in namespace)
+construction_documentation_api    # Team B
+construction_tracking_api         # Team C (cost tracking implied)
 ```
 
 **Decision Rule**:
@@ -963,24 +967,24 @@ construction_house_cost_tracking_api    # Team C
 
 ⚠️ **CRITICAL**: Never reuse context names for different meanings across your project.
 
-**❌ BAD Examples (Conflicting Codes)**:
+**❌ BAD Examples (Conflicting Contexts)**:
 ```python
 # DON'T DO THIS!
-property_management_house_calc_api     # pm = Property Management
-project_management_task_tracker_api    # pm = Project Management  ⚠️ CONFLICT!
+property_house_api                     # property = Property Management
+project_house_api                      # property = Project Management  ⚠️ CONFLICT!
 
 logistics_delivery_api                 # log = Logistics
-observability_log_aggregator_api       # log = Logging  ⚠️ CONFLICT!
+observability_logging_api              # log = Logging  ⚠️ CONFLICT!
 ```
 
 **✅ GOOD Examples (Unique Contexts)**:
 ```python
-# Use distinct full words
-property_management_house_calc_api     # Property Management
-project_management_task_tracker_api    # Project Management (different context)
+# Use distinct full context names
+property_house_api                     # Property Management
+project_task_api                       # Project Management (different domain: task vs house)
 
 logistics_delivery_api                 # Logistics
-observability_logging_aggregator_api   # Observability logging
+observability_logging_api              # Observability (different context entirely)
 ```
 
 **Best Practice**: Maintain a **Context Registry** document listing all used context names.
