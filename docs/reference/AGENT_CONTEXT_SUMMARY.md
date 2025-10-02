@@ -36,6 +36,7 @@
 | Verification checklist | `docs/quality/AGENT_VERIFICATION_CHECKLIST.md` |
 | QA reporting | `docs/quality/QA_REPORT_TEMPLATE.md` |
 | Architecture decisions | `docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md` |
+| Failure & recovery handling | `docs/reference/FAILURE_SCENARIOS.md` |
 
 ## Critical Rules Snapshot
 

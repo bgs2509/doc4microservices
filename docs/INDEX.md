@@ -31,6 +31,7 @@ The documentation is organised into atomic knowledge modules. Use this index as 
 - [Agent Toolbox](reference/AGENT_TOOLBOX.md) — machine-friendly command catalogue
 - [Deliverables Catalog](reference/DELIVERABLES_CATALOG.md) — artefact ownership and storage rules
 - [Prompt Templates](reference/PROMPT_TEMPLATES.md) — reusable communication templates
+- [Failure Scenarios & Recovery Guide](reference/FAILURE_SCENARIOS.md) — edge cases handling and recovery procedures
 - [Architecture Decision Log Template](reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md) — ADR format and conventions
 - [Semantic Shortening Guide](guides/SEMANTIC_SHORTENING_GUIDE.md) — 3-part service naming formula and decision tree
 

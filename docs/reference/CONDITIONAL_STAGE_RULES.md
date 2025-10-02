@@ -366,6 +366,204 @@ The ONLY difference between levels is Stage 4 sub-phases.
 
 ---
 
+## Optional Modules Implementation
+
+The following modules can be requested at **any maturity level** and are implemented as additional sub-stages during Stage 4. AI must check if user requested these modules during Stage 1 (Prompt Validation).
+
+### 4.X: File Storage Module (CONDITIONAL)
+
+**When**: If user requested File Storage (S3/MinIO, file uploads, media processing)
+
+**Documents to Read:**
+- `docs/atomic/file-storage/upload-patterns.md`
+- `docs/atomic/file-storage/cloud-integration.md`
+- `docs/atomic/file-storage/media-processing.md` (if media processing needed)
+- `docs/atomic/file-storage/cdn-integration.md` (if Level ≥ 3)
+- `docs/atomic/file-storage/backup-strategies.md` (if Level = 4)
+
+**Generate:**
+- **File upload service** (FastAPI endpoints for multipart upload)
+- **Storage adapter layer** (S3/MinIO/local filesystem abstraction)
+- **File validation** (size limits, MIME type checking, virus scanning)
+- **File metadata storage** (PostgreSQL schema for file records)
+- **Pre-signed URLs** (secure direct uploads)
+
+**Additional for Level ≥ 2:**
+- Structured logging for upload events
+- Health checks for storage connectivity
+
+**Additional for Level ≥ 3:**
+- CDN integration (CloudFront/CloudFlare)
+- Image optimization (thumbnail generation, compression)
+
+**Additional for Level = 4:**
+- Automated backup to secondary storage
+- Encryption at rest (AWS KMS, server-side encryption)
+- Access control (presigned URLs with expiration)
+- Audit logging (who uploaded/downloaded what)
+
+**Testing:**
+- Unit tests for storage adapter
+- Integration tests with testcontainers (MinIO)
+- Upload/download E2E tests
+
+**Example Use Case:**
+User wants to allow profile picture uploads, document attachments, or media gallery.
+
+---
+
+### 4.Y: Real-Time Communication Module (CONDITIONAL)
+
+**When**: If user requested Real-Time features (WebSockets, Server-Sent Events, Push Notifications)
+
+**Documents to Read:**
+- `docs/atomic/real-time/websocket-patterns.md`
+- `docs/atomic/real-time/sse-implementation.md`
+- `docs/atomic/real-time/push-notifications.md` (if mobile push needed)
+- `docs/atomic/real-time/real-time-sync-patterns.md`
+
+**Generate:**
+- **WebSocket endpoints** (FastAPI WebSocket routes)
+- **Connection manager** (track active connections, broadcast)
+- **Event broadcaster** (RabbitMQ → WebSocket bridge)
+- **SSE endpoints** (alternative to WebSockets for simpler cases)
+- **Redis pub/sub integration** (for scaling across multiple instances)
+
+**Additional for Level ≥ 2:**
+- Connection lifecycle logging (connect/disconnect events)
+- Heartbeat/ping-pong keep-alive
+
+**Additional for Level ≥ 3:**
+- Nginx WebSocket proxying configuration
+- Rate limiting (connections per IP)
+- Metrics (active connections, messages/sec)
+
+**Additional for Level = 4:**
+- JWT authentication for WebSocket connections
+- Message encryption (end-to-end)
+- Connection recovery patterns
+- Push notifications (FCM/APNs integration)
+
+**Testing:**
+- WebSocket connection tests
+- Message broadcast tests
+- Reconnection handling tests
+
+**Example Use Case:**
+User wants live chat, real-time notifications, collaborative editing, or live dashboards.
+
+---
+
+### 4.Z: Payment Gateway Integration Module (CONDITIONAL)
+
+**When**: If user requested Payment processing (Stripe, PayPal, cryptocurrency, invoicing)
+
+**Documents to Read:**
+- `docs/atomic/external-integrations/payment-gateways.md`
+- `docs/atomic/external-integrations/webhook-handling.md`
+- `docs/atomic/security/session-management-patterns.md` (for payment session security)
+
+**Generate:**
+- **Payment service wrapper** (Stripe/PayPal SDK integration)
+- **Payment intent/session creation** (FastAPI endpoints)
+- **Webhook handlers** (payment confirmation, refunds, disputes)
+- **Payment state machine** (pending → processing → completed/failed)
+- **Idempotency keys** (prevent duplicate charges)
+- **Payment history storage** (PostgreSQL schema: payments, transactions, refunds)
+
+**Additional for Level ≥ 2:**
+- Payment event logging (structured logs for auditing)
+- Webhook signature verification
+
+**Additional for Level ≥ 3:**
+- PCI-DSS compliance notes (no card data storage)
+- Rate limiting on payment endpoints
+- Fraud detection hooks (basic rules)
+
+**Additional for Level = 4:**
+- Full audit logging (all payment events, user actions)
+- Encryption for sensitive payment metadata
+- Multi-currency support
+- Reconciliation reports (automated daily)
+- Webhook retry logic with exponential backoff
+- Circuit breakers for payment gateway calls
+- Fallback to secondary gateway (if primary fails)
+
+**Testing:**
+- Payment flow tests (mock Stripe/PayPal)
+- Webhook verification tests
+- Idempotency tests (duplicate request handling)
+- Refund flow tests
+
+**Example Use Case:**
+User wants e-commerce checkout, subscription billing, marketplace payments, or donation processing.
+
+---
+
+### 4.A: Communication APIs Module (CONDITIONAL)
+
+**When**: If user requested Email/SMS/Voice communication (Twilio, SendGrid, AWS SES)
+
+**Documents to Read:**
+- `docs/atomic/external-integrations/communication-apis.md`
+- `docs/atomic/observability/logging/sensitive-data-handling.md` (for PII in logs)
+
+**Generate:**
+- **Email service adapter** (SendGrid/SES integration)
+- **SMS service adapter** (Twilio integration)
+- **Template rendering** (Jinja2 for email/SMS templates)
+- **Message queue integration** (RabbitMQ for async sending)
+- **Delivery status tracking** (webhooks from providers)
+- **Storage** (MongoDB for sent message history)
+
+**Additional for Level ≥ 2:**
+- Structured logging (omit sensitive data like phone numbers)
+- Retry logic for failed sends
+
+**Additional for Level ≥ 3:**
+- Rate limiting (prevent spam)
+- Metrics (emails sent, SMS delivered, failures)
+
+**Additional for Level = 4:**
+- User preferences (opt-out, frequency limits)
+- GDPR compliance (consent tracking, deletion)
+- Email verification (double opt-in)
+- Bounce/complaint handling
+- Cost tracking (per provider)
+
+**Testing:**
+- Mock email/SMS sending tests
+- Template rendering tests
+- Webhook handling tests (delivery status)
+
+**Example Use Case:**
+User wants password reset emails, order confirmations, 2FA SMS, or transactional notifications.
+
+---
+
+## Module Execution Order
+
+When multiple optional modules are requested, AI should execute them in this order during Stage 4:
+
+```
+4.1: Infrastructure
+4.2: Data Layer (PostgreSQL/MongoDB)
+4.3: Business Logic (FastAPI core)
+4.4: Background Workers (if requested)
+4.5: Telegram Bot (if requested)
+4.X: File Storage (if requested)
+4.Y: Real-Time Communication (if requested)
+4.Z: Payment Gateway Integration (if requested)
+4.A: Communication APIs (if requested)
+4.6: Testing (include tests for all active modules)
+4.7: CI/CD (Level 4 only)
+4.8: Documentation (Level 4 only)
+```
+
+**Rationale**: Core infrastructure and data layer must be ready before any optional modules can be implemented. Business logic comes before optional modules because modules often depend on core entities and use cases.
+
+---
+
 ## Decision Tree for AI
 
 ```
