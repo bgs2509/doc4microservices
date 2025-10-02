@@ -2,9 +2,12 @@
 
 ## AI Quick Reference
 
+> **LENGTH OPTIMIZATION**: For services with names >30 chars, use [Abbreviations Registry](../../reference/ABBREVIATIONS_REGISTRY.md) to shorten while preserving meaning.
+
 | Element Type | Pattern | Example | Separator |
 |--------------|---------|---------|-----------|
 | **Service** | `{context}_{domain}_{function}_{type}` | `finance_lending_matching_api` | `_` |
+| **Service (Abbreviated)** | `{ctx}_{dom}_{func}_{type}` | `fin_lend_match_api` | `_` |
 | **Python Class** | `{Noun}{Suffix}` | `UserService`, `OrderRepository` | - |
 | **Python Function** | `{verb}_{noun}[_qualifier]` | `get_user_by_id`, `create_order` | `_` |
 | **Python Variable** | `{noun}[_qualifier]` | `user_id`, `max_attempts` | `_` |
@@ -884,6 +887,176 @@ observability_logging_aggregator_api   # Observability logging
 ```
 
 **Best Practice**: Maintain a **Context Registry** document listing all used context names.
+
+---
+
+## Section 6: Name Length Optimization with Abbreviations
+
+### Problem Statement
+
+Long service names can become unwieldy, especially in production environments:
+
+**Examples of excessive length:**
+```
+property_management_house_calculation_api       (45 chars)
+healthcare_telemedicine_consultation_api        (42 chars)
+construction_house_documentation_worker         (40 chars)
+communication_email_notification_worker         (39 chars)
+```
+
+**Issues:**
+- Hard to read in logs and monitoring dashboards
+- Exceed DNS label length recommendations
+- Difficult to type in CLI commands
+- Cluttered Kubernetes resource names
+
+### Solution: Standardized Abbreviations
+
+**Target**: Limit each part to **5-6 characters** maximum.
+
+**Formula**:
+```
+{context}_{domain}_{function}_{type}  →  {ctx}_{dom}_{func}_{type}
+```
+
+**Abbreviated examples:**
+```
+propman_house_calc_api                          (22 chars) ✅ -23 chars
+health_telem_conslt_api                         (23 chars) ✅ -21 chars
+constr_house_doc_worker                         (23 chars) ✅ -17 chars
+comm_email_notif_worker                         (23 chars) ✅ -16 chars
+```
+
+### Abbreviation Registry
+
+**📖 Complete catalog**: See **[Abbreviations Registry](../../reference/ABBREVIATIONS_REGISTRY.md)** for:
+- Full abbreviation dictionary (context, domain, function)
+- Usage rules and consistency guidelines
+- Conflict resolution strategies
+- Transformation examples
+- How to propose new abbreviations
+
+### Quick Abbreviation Reference
+
+**Most common abbreviations:**
+
+| Category | Full | Short | Length |
+|----------|------|-------|--------|
+| **Context** | finance | `fin` | 3 |
+| | healthcare | `health` | 6 |
+| | construction | `constr` | 6 |
+| | education | `edu` | 3 |
+| | logistics | `logist` | 6 |
+| | ecommerce | `ecom` | 4 |
+| **Domain** | lending | `lend` | 4 |
+| | payment | `pay` | 3 |
+| | telemedicine | `telem` | 5 |
+| | appointment | `appt` | 4 |
+| **Function** | management | `mgmt` | 4 |
+| | matching | `match` | 5 |
+| | notification | `notif` | 5 |
+| | calculation | `calc` | 4 |
+| | tracking | `track` | 5 |
+
+### When to Abbreviate
+
+**Abbreviate when:**
+- ✅ Full service name exceeds **30 characters**
+- ✅ Deploying to Kubernetes (production)
+- ✅ Service name appears in DNS (external URLs)
+- ✅ Team consensus prefers shorter names
+
+**Keep full names when:**
+- ❌ Total length < 30 characters (unnecessary optimization)
+- ❌ Development/local environment only
+- ❌ Code clarity is critical (onboarding new developers)
+- ❌ Domain-specific terms don't have standard abbreviations
+
+### Usage Example
+
+**Development environment** (full names for clarity):
+```yaml
+# docker-compose.yml
+services:
+  finance_lending_matching_api:
+    build: ./services/finance/lending_api
+    container_name: finance_lending_matching_api
+```
+
+**Production environment** (abbreviated for efficiency):
+```yaml
+# kubernetes/deployment.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: fin-lend-match-api
+  namespace: finance
+```
+
+### Transformation Rules
+
+**Automatic conversion** at deployment:
+```python
+def abbreviate_service_name(full_name: str, registry: dict) -> str:
+    """Convert full service name to abbreviated form using registry."""
+    parts = full_name.split('_')
+    abbreviated = [registry.get(part, part) for part in parts]
+    return '_'.join(abbreviated)
+
+# Example
+full = "finance_lending_matching_api"
+short = abbreviate_service_name(full, ABBREVIATION_REGISTRY)
+# Result: "fin_lend_match_api"
+
+# For Kubernetes (hyphen separator)
+k8s_name = short.replace('_', '-')
+# Result: "fin-lend-match-api"
+```
+
+### Validation Checklist
+
+- [ ] Service name > 30 chars → consider abbreviation
+- [ ] Check [Abbreviations Registry](../../reference/ABBREVIATIONS_REGISTRY.md) for approved abbreviations
+- [ ] Never invent ad-hoc abbreviations (must be documented)
+- [ ] Ensure consistency: same abbreviation for same word everywhere
+- [ ] Update registry if proposing new abbreviation
+- [ ] Test readability with team before committing
+
+### Common Pitfalls
+
+❌ **DON'T**:
+```python
+# Inconsistent abbreviations
+fin_lending_match_api      # "lending" not abbreviated
+fin_lnd_match_api          # Wrong abbreviation (use "lend")
+finance_lend_match_api     # "finance" not abbreviated
+
+# Ambiguous abbreviations
+pm_house_mgmt_api          # "pm" = property or project management?
+log_track_api              # "log" = logistics or logging?
+```
+
+✅ **DO**:
+```python
+# Consistent registry-based abbreviations
+fin_lend_match_api         # All parts abbreviated correctly
+propman_house_calc_api     # Unambiguous "propman" for property_management
+logist_deliv_track_api     # Clear "logist" for logistics
+```
+
+### Best Practices
+
+1. **Registry First**: Always check the registry before naming
+2. **Team Consensus**: Propose abbreviations in PR reviews
+3. **Document Everything**: Update registry when adding new abbreviations
+4. **Be Consistent**: One word → one abbreviation across entire project
+5. **Prioritize Clarity**: If abbreviation is confusing, keep full name
+
+### References
+
+- **[Abbreviations Registry](../../reference/ABBREVIATIONS_REGISTRY.md)** — Complete abbreviation catalog
+- **[Service Catalog](../../../README.md#services)** — Current service inventory
+- **[Deployment Guide](../../guides/deployment.md)** — Name transformation in CI/CD
 
 ---
 
