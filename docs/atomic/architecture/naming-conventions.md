@@ -2,12 +2,12 @@
 
 ## AI Quick Reference
 
-> **LENGTH OPTIMIZATION**: For services with names >30 chars, use [Abbreviations Registry](../../reference/ABBREVIATIONS_REGISTRY.md) to shorten while preserving meaning.
+> **NAMING PHILOSOPHY**: Use **semantic shortening** — clear context + domain, omit redundant function words. Average length: 20-27 chars (no abbreviations needed).
 
 | Element Type | Pattern | Example | Separator |
 |--------------|---------|---------|-----------|
-| **Service** | `{context}_{domain}_{function}_{type}` | `finance_lending_matching_api` | `_` |
-| **Service (Abbreviated)** | `{ctx}_{dom}_{func}_{type}` | `fin_lend_match_api` | `_` |
+| **Service** | `{context}_{domain}_{type}` | `finance_lending_api` | `_` |
+| **Service (with function)** | `{context}_{domain}_{function}_{type}` | `logistics_fleet_tracking_api` | `_` |
 | **Python Class** | `{Noun}{Suffix}` | `UserService`, `OrderRepository` | - |
 | **Python Function** | `{verb}_{noun}[_qualifier]` | `get_user_by_id`, `create_order` | `_` |
 | **Python Variable** | `{noun}[_qualifier]` | `user_id`, `max_attempts` | `_` |
@@ -41,14 +41,29 @@ Is it INFRASTRUCTURE?     → Step 8 (Infrastructure Rules)
 
 ### Step 2: Service Formula
 
-**Pattern**: `{context}_{domain}_{function}_{type}`
+**Default Pattern (3-part)**: `{context}_{domain}_{type}`
 
 - **Context**: Business area (finance, healthcare, construction...)
 - **Domain**: Subdomain (lending, telemedicine, house...)
-- **Function**: Action (matching, tracking, management...)
 - **Type**: Tech type (api, worker, bot, gateway...)
 
-**Example**: `finance_lending_matching_api`
+**Examples (3-part)**:
+- `finance_lending_api` — Lending platform (matching/approval implied)
+- `healthcare_telemedicine_api` — Telemedicine service (consultation implied)
+- `construction_house_bot` — House management (management implied)
+
+**Extended Pattern (4-part)**: `{context}_{domain}_{function}_{type}`
+
+Use 4-part only when function is NOT implied by domain:
+
+**Examples (4-part needed)**:
+- `logistics_fleet_tracking_api` — Fleet could mean tracking, management, or maintenance
+- `analytics_reporting_api` — Analytics could mean reporting, querying, or processing
+- `communication_notification_worker` — Communication could mean email, SMS, or notifications
+
+**Decision Rule**:
+- If domain clearly implies ONE function → use 3-part
+- If domain has MULTIPLE possible functions → use 4-part with explicit function
 
 ### Step 3: Python Class Rules
 
@@ -404,43 +419,125 @@ PUT  /api/v1/tenant-profiles/{id}
 
 ### Service Naming Formula
 
-**Pattern**: `{context}_{domain}_{function}_{type}`
+**Primary Pattern (3-part)**: `{context}_{domain}_{type}`
 
-This hierarchical formula creates self-documenting service names:
+This hierarchical formula creates self-documenting service names where function is implied:
 - **{context}**: Business area (finance, healthcare, construction...)
 - **{domain}**: Subdomain within context (lending, telemedicine, house...)
-- **{function}**: What the service does (matching, tracking, management...)
 - **{type}**: Technical service type (api, worker, bot...)
 
-**Examples**:
-- `finance_lending_matching_api` - Finance domain, lending subdomain, matching function, API type
-- `healthcare_telemedicine_consultation_api` - Healthcare, telemedicine, consultation, API
-- `construction_house_management_bot` - Construction, house, management, Telegram bot
+**Philosophy**: Function words are often redundant when context+domain already imply the action:
+- `lending` domain → matching/approval implied
+- `payment` domain → processing implied
+- `telemedicine` domain → consultation implied
+- `worker` type → background processing implied
+
+**Examples (3-part)**:
+- `finance_lending_api` — Lending platform (19 chars, matching implied)
+- `healthcare_telemedicine_api` — Telemedicine service (27 chars, consultation implied)
+- `construction_house_bot` — House management bot (22 chars, management implied)
+
+**Extended Pattern (4-part)**: `{context}_{domain}_{function}_{type}`
+
+Use when domain has multiple possible functions (ambiguous):
+
+**Examples (4-part)**:
+- `logistics_fleet_tracking_api` — Fleet needs clarification (vs management, maintenance)
+- `analytics_reporting_api` — Analytics needs clarification (vs querying, processing)
+- `communication_notification_worker` — Communication needs clarification (vs email, SMS)
+
+---
+
+### When to Use 3-Part vs 4-Part
+
+| Scenario | Use 3-Part | Use 4-Part | Example |
+|----------|------------|------------|---------|
+| **Domain implies single function** | ✅ | ❌ | `finance_lending_api` (lending = matching) |
+| **Multiple functions possible** | ❌ | ✅ | `logistics_fleet_tracking_api` (tracking vs management) |
+| **Type implies function** | ✅ | ❌ | `finance_payment_worker` (worker = processing) |
+| **Function is unique/specific** | ❌ | ✅ | `analytics_reporting_api` (vs querying) |
+| **Domain + type = clear action** | ✅ | ❌ | `healthcare_telemedicine_api` (consultation obvious) |
+| **Context is ambiguous** | ❌ | ✅ | `communication_notification_worker` (vs email/SMS) |
+
+**Decision Algorithm**:
+```
+1. Can team understand service purpose from {context}_{domain}_{type}?
+   YES → Use 3-part
+   NO → Go to step 2
+
+2. Would removing function word create ambiguity?
+   YES → Use 4-part with explicit function
+   NO → Use 3-part
+```
+
+---
+
+### Domain-Function Mapping (Implied Functions)
+
+**Finance Context** (mostly 3-part):
+| Domain | Implied Function | 3-Part Name | Chars |
+|--------|------------------|-------------|-------|
+| `lending` | matching, approval | `finance_lending_api` | 19 |
+| `payment` | processing | `finance_payment_api` | 19 |
+| `crypto` | portfolio management | `finance_crypto_api` | 18 |
+| `billing` | invoicing, cycles | `finance_billing_api` | 19 |
+| `trading` | algorithmic trading | `finance_trading_api` | 19 |
+
+**Healthcare Context** (mostly 3-part):
+| Domain | Implied Function | 3-Part Name | Chars |
+|--------|------------------|-------------|-------|
+| `telemedicine` | consultation | `healthcare_telemedicine_api` | 27 |
+| `appointment` | booking | `healthcare_appointment_api` | 26 |
+| `pharmacy` | medication management | `healthcare_pharmacy_api` | 23 |
+| `mental_health` | therapy, counseling | `healthcare_mental_health_api` | 28 |
+
+**Construction Context** (mostly 3-part):
+| Domain | Implied Function | 3-Part Name | Chars |
+|--------|------------------|-------------|-------|
+| `house` | project management | `construction_house_bot` | 22 |
+| `material` | calculation, inventory | `construction_material_api` | 25 |
+| `renovation` | planning | `construction_renovation_api` | 27 |
+| `commercial` | project management | `construction_commercial_api` | 27 |
+
+**Logistics Context** (needs 4-part often):
+| Domain | Multiple Functions | 4-Part Name (explicit) | Chars |
+|--------|--------------------|------------------------|-------|
+| `fleet` | tracking OR management OR maintenance | `logistics_fleet_tracking_api` | 28 |
+| `delivery` | routing OR tracking | `logistics_delivery_tracking_api` | 31 |
+| `warehouse` | inventory OR fulfillment | `logistics_warehouse_inventory_api` | 34 |
+
+**Analytics Context** (needs 4-part often):
+| Domain | Multiple Functions | 4-Part Name (explicit) | Chars |
+|--------|--------------------|------------------------|-------|
+| `reporting` | generation (not querying) | `analytics_reporting_api` | 23 |
+| `data` | aggregation OR transformation | `analytics_data_aggregation_worker` | 34 |
+| `dashboard` | visualization (clear) | `analytics_dashboard_api` | 23 |
 
 ---
 
 ### Extended Context Catalog
 
-| Context (Full) | Business Domain | Example Services |
-|---------------|-----------------|------------------|
-| `finance` | Financial services | `finance_lending_api`, `finance_crypto_portfolio_api` |
+| Context (Full) | Business Domain | Example Services (3-part) |
+|---------------|-----------------|---------------------------|
+| `finance` | Financial services | `finance_lending_api`, `finance_crypto_api` |
 | `healthcare` | Medical & health | `healthcare_telemedicine_api`, `healthcare_appointment_api` |
-| `construction` | Building & construction | `construction_house_management_bot`, `construction_material_calc_api` |
+| `construction` | Building & construction | `construction_house_bot`, `construction_material_api` |
 | `education` | Learning & training | `education_lms_api`, `education_courses_api` |
-| `logistics` | Transport & delivery | `logistics_fleet_management_api`, `logistics_delivery_tracking_api` |
-| `ecommerce` | Online commerce | `ecommerce_marketplace_api`, `ecommerce_dropshipping_api` |
-| `corporate` | Enterprise tools | `corporate_crm_api`, `corporate_hr_recruitment_api` |
-| `property_management` | Real estate | `property_management_house_calc_api`, `property_management_tenant_api` |
+| `logistics` | Transport & delivery | `logistics_fleet_tracking_api`, `logistics_delivery_tracking_api` |
+| `ecommerce` | Online commerce | `ecommerce_marketplace_api`, `ecommerce_dropship_api` |
+| `corporate` | Enterprise tools | `corporate_crm_api`, `corporate_hr_api` |
+| `property_management` | Real estate | `property_mgmt_house_api`, `property_mgmt_tenant_api` |
 | `communication` | Messaging & notifications | `communication_notification_worker`, `communication_telegram_bot` |
 | `analytics` | Data & reporting | `analytics_reporting_api`, `analytics_dashboard_api` |
-| `user_management` | Auth & profiles | `user_management_auth_api`, `user_management_profile_api` |
+| `user_management` | Auth & profiles | `user_mgmt_auth_api`, `user_mgmt_profile_api` |
 | `integration` | Third-party APIs | `integration_stripe_api`, `integration_google_api` |
-| `environment` | Ecology & monitoring | `environment_emission_tracking_api`, `environment_recycling_api` |
+| `environment` | Ecology & monitoring | `environment_emission_api`, `environment_recycling_api` |
 
 **Naming Strategy**:
-- ✅ Use FULL WORDS (not abbreviations) for clarity
-- ✅ New projects: always start with full context names
-- ⚠️ Abbreviations (fn, ht, log) allowed only if documented in project README
+- ✅ Use **3-part formula** by default (context + domain + type)
+- ✅ Add explicit function (4-part) only when domain is ambiguous
+- ✅ Average name length: 20-27 characters (no abbreviations needed)
+- ✅ For complete guide, see [Semantic Shortening Guide](../../guides/SEMANTIC_SHORTENING_GUIDE.md)
 
 ---
 
@@ -890,176 +987,6 @@ observability_logging_aggregator_api   # Observability logging
 
 ---
 
-## Section 6: Name Length Optimization with Abbreviations
-
-### Problem Statement
-
-Long service names can become unwieldy, especially in production environments:
-
-**Examples of excessive length:**
-```
-property_management_house_calculation_api       (45 chars)
-healthcare_telemedicine_consultation_api        (42 chars)
-construction_house_documentation_worker         (40 chars)
-communication_email_notification_worker         (39 chars)
-```
-
-**Issues:**
-- Hard to read in logs and monitoring dashboards
-- Exceed DNS label length recommendations
-- Difficult to type in CLI commands
-- Cluttered Kubernetes resource names
-
-### Solution: Standardized Abbreviations
-
-**Target**: Limit each part to **5-6 characters** maximum.
-
-**Formula**:
-```
-{context}_{domain}_{function}_{type}  →  {ctx}_{dom}_{func}_{type}
-```
-
-**Abbreviated examples:**
-```
-propman_house_calc_api                          (22 chars) ✅ -23 chars
-health_telem_conslt_api                         (23 chars) ✅ -21 chars
-constr_house_doc_worker                         (23 chars) ✅ -17 chars
-comm_email_notif_worker                         (23 chars) ✅ -16 chars
-```
-
-### Abbreviation Registry
-
-**📖 Complete catalog**: See **[Abbreviations Registry](../../reference/ABBREVIATIONS_REGISTRY.md)** for:
-- Full abbreviation dictionary (context, domain, function)
-- Usage rules and consistency guidelines
-- Conflict resolution strategies
-- Transformation examples
-- How to propose new abbreviations
-
-### Quick Abbreviation Reference
-
-**Most common abbreviations:**
-
-| Category | Full | Short | Length |
-|----------|------|-------|--------|
-| **Context** | finance | `fin` | 3 |
-| | healthcare | `health` | 6 |
-| | construction | `constr` | 6 |
-| | education | `edu` | 3 |
-| | logistics | `logist` | 6 |
-| | ecommerce | `ecom` | 4 |
-| **Domain** | lending | `lend` | 4 |
-| | payment | `pay` | 3 |
-| | telemedicine | `telem` | 5 |
-| | appointment | `appt` | 4 |
-| **Function** | management | `mgmt` | 4 |
-| | matching | `match` | 5 |
-| | notification | `notif` | 5 |
-| | calculation | `calc` | 4 |
-| | tracking | `track` | 5 |
-
-### When to Abbreviate
-
-**Abbreviate when:**
-- ✅ Full service name exceeds **30 characters**
-- ✅ Deploying to Kubernetes (production)
-- ✅ Service name appears in DNS (external URLs)
-- ✅ Team consensus prefers shorter names
-
-**Keep full names when:**
-- ❌ Total length < 30 characters (unnecessary optimization)
-- ❌ Development/local environment only
-- ❌ Code clarity is critical (onboarding new developers)
-- ❌ Domain-specific terms don't have standard abbreviations
-
-### Usage Example
-
-**Development environment** (full names for clarity):
-```yaml
-# docker-compose.yml
-services:
-  finance_lending_matching_api:
-    build: ./services/finance/lending_api
-    container_name: finance_lending_matching_api
-```
-
-**Production environment** (abbreviated for efficiency):
-```yaml
-# kubernetes/deployment.yml
-apiVersion: v1
-kind: Service
-metadata:
-  name: fin-lend-match-api
-  namespace: finance
-```
-
-### Transformation Rules
-
-**Automatic conversion** at deployment:
-```python
-def abbreviate_service_name(full_name: str, registry: dict) -> str:
-    """Convert full service name to abbreviated form using registry."""
-    parts = full_name.split('_')
-    abbreviated = [registry.get(part, part) for part in parts]
-    return '_'.join(abbreviated)
-
-# Example
-full = "finance_lending_matching_api"
-short = abbreviate_service_name(full, ABBREVIATION_REGISTRY)
-# Result: "fin_lend_match_api"
-
-# For Kubernetes (hyphen separator)
-k8s_name = short.replace('_', '-')
-# Result: "fin-lend-match-api"
-```
-
-### Validation Checklist
-
-- [ ] Service name > 30 chars → consider abbreviation
-- [ ] Check [Abbreviations Registry](../../reference/ABBREVIATIONS_REGISTRY.md) for approved abbreviations
-- [ ] Never invent ad-hoc abbreviations (must be documented)
-- [ ] Ensure consistency: same abbreviation for same word everywhere
-- [ ] Update registry if proposing new abbreviation
-- [ ] Test readability with team before committing
-
-### Common Pitfalls
-
-❌ **DON'T**:
-```python
-# Inconsistent abbreviations
-fin_lending_match_api      # "lending" not abbreviated
-fin_lnd_match_api          # Wrong abbreviation (use "lend")
-finance_lend_match_api     # "finance" not abbreviated
-
-# Ambiguous abbreviations
-pm_house_mgmt_api          # "pm" = property or project management?
-log_track_api              # "log" = logistics or logging?
-```
-
-✅ **DO**:
-```python
-# Consistent registry-based abbreviations
-fin_lend_match_api         # All parts abbreviated correctly
-propman_house_calc_api     # Unambiguous "propman" for property_management
-logist_deliv_track_api     # Clear "logist" for logistics
-```
-
-### Best Practices
-
-1. **Registry First**: Always check the registry before naming
-2. **Team Consensus**: Propose abbreviations in PR reviews
-3. **Document Everything**: Update registry when adding new abbreviations
-4. **Be Consistent**: One word → one abbreviation across entire project
-5. **Prioritize Clarity**: If abbreviation is confusing, keep full name
-
-### References
-
-- **[Abbreviations Registry](../../reference/ABBREVIATIONS_REGISTRY.md)** — Complete abbreviation catalog
-- **[Service Catalog](../../../README.md#services)** — Current service inventory
-- **[Deployment Guide](../../guides/deployment.md)** — Name transformation in CI/CD
-
----
-
 ## Summary
 
 **The Golden Rule**: Use the separator appropriate for your technical layer.
@@ -1081,6 +1008,8 @@ logist_deliv_track_api     # Clear "logist" for logistics
 
 All names refer to the **same logical service**, just using layer-appropriate separators.
 
-**Service Naming**: Follow `{context}_{domain}_{function}_{type}` pattern using full words for clarity.
+**Service Naming**: Follow `{context}_{domain}_{type}` pattern (3-part) by default. Add explicit function (4-part) only when domain is ambiguous. See [Semantic Shortening Guide](../../guides/SEMANTIC_SHORTENING_GUIDE.md) for decision tree.
 
 **Element Naming**: Use appropriate suffixes for classes (Service, Repository, DTO, Handler, Router), verbs for functions (get_, create_, validate_), and descriptive patterns for variables.
+
+**Name Length**: Average 20-27 characters with 3-part formula (no abbreviations needed). 95%+ compatibility with Kubernetes DNS limits.
