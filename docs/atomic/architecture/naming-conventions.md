@@ -4,20 +4,35 @@
 
 > **NAMING PHILOSOPHY**: Use **semantic shortening** — clear context + domain, omit redundant function words. Average length: 20-27 chars (no abbreviations needed).
 
-> ⚠️ **CRITICAL**: Maintain a Context Registry ([context-registry.md](context-registry.md)) to prevent context name conflicts across your project. Never reuse context names for different business domains.
+> ⚠️ **CRITICAL**: Maintain a Context Registry to prevent context name conflicts across your project. Never reuse context names for different business domains.
+>
+> **Location**: Create `docs/atomic/architecture/context-registry.md` in your project
+> **Structure**: List each context with its business domain and example services
+> **Example entry**: `finance` → Financial services (lending, payments, crypto)
+> **See**: [context-registry.md](context-registry.md) template for detailed format
 
 ### 3-Part vs 4-Part Service Naming Decision
 
-**DEFAULT**: Use 3-part `{context}_{domain}_{type}` — function is implied by domain+type combination.
+**DEFAULT**: Use 3-part `{context}_{domain}_{type}` — function is implied by domain.
 
-**USE 4-PART** `{context}_{domain}_{function}_{type}` **ONLY WHEN**:
-- Domain word is ambiguous (could mean 2+ unrelated functions)
-- Examples: `fleet` (tracking? management? maintenance?), `analytics` (reporting? querying? processing?)
+**OBJECTIVE DECISION RULE**:
 
-**DO NOT USE 4-PART WHEN**:
-- Service handles multiple functions as ONE cohesive workflow (use 3-part, function implied by scope)
-- Domain clearly implies primary function
-- Type already clarifies function (e.g., `worker` implies processing)
+Ask: **"Can this domain word refer to 3+ different operations in this context?"**
+
+- **YES** → Use 4-part: `{context}_{domain}_{function}_{type}`
+- **NO** → Use 3-part: `{context}_{domain}_{type}`
+
+**USE 4-PART ONLY WHEN domain is ambiguous**:
+- `fleet` → Could mean: tracking, management, maintenance, scheduling (4+ operations)
+- `analytics` → Could mean: reporting, querying, processing, visualization (4+ operations)
+- `communication` → Could mean: email, SMS, push, in-app notifications (4+ channels)
+
+**USE 3-PART WHEN domain is specific**:
+- `lending` → Clearly means loan matching/approval (1 primary operation)
+- `payment` → Clearly means payment processing (1 primary operation)
+- `telemedicine` → Clearly means online consultation (1 primary operation)
+
+**NOTE**: The `{type}` component (api, worker, bot) indicates technical implementation, NOT business function. Don't use 4-part just because a service has multiple code features—use it only when the DOMAIN word itself is ambiguous.
 
 | Element Type | Pattern | Example | Separator |
 |--------------|---------|---------|-----------|
@@ -219,7 +234,7 @@ These components **require underscores** due to language/platform restrictions:
 - Classes use `PascalCase`; data classes and Pydantic models follow the same rule.
 - Functions, methods, and variables use `snake_case`.
 - Constants use `UPPER_SNAKE_CASE` and live at module scope.
-- DTOs use action-based middle components: `{Noun}CreateDTO`, `{Noun}UpdateDTO`, `{Noun}PublicDTO`, `{Noun}Payload` (not `UserDTOCreate`). Avoid generic names like `DataDTO`.
+- DTOs use action suffix pattern: `{Noun}{Action}DTO` (e.g., `UserCreateDTO`, `OrderUpdateDTO`, `PaymentPublicDTO`). Never use `{Noun}DTO{Action}` (not `UserDTOCreate`). Avoid generic names like `DataDTO`.
 
 **PyPI Distribution Names Exception**:
 - PyPI package names can use hyphens: `scikit-learn`, `django-rest-framework`
@@ -230,25 +245,30 @@ These components **require underscores** due to language/platform restrictions:
 
 | Component | Convention | Pattern | Examples |
 |-----------|------------|---------|----------|
-| PostgreSQL tables | `snake_case` | `{plural_noun}[_{qualifier}]` | `user_accounts`, `order_items` |
+| PostgreSQL tables | `snake_case` | `{plural_noun}[_{qualifier}]` | `users`, `orders`, `order_items` *(item is qualifier)* |
 | PostgreSQL columns | `snake_case` | `{noun}[_{qualifier}]` | `created_at`, `user_id`, `is_active` |
-| PostgreSQL indexes | `snake_case` | `idx_{table}_{column}` | `idx_user_email`, `idx_order_created` |
-| PostgreSQL constraints | `snake_case` | `{type}_{table}_{column}` | `fk_order_customer`, `uk_user_email` |
+| PostgreSQL indexes | `snake_case` | `idx_{table}_{column}` | `idx_users_email`, `idx_orders_created` |
+| PostgreSQL constraints | `snake_case` | `{type}_{table}_{column}` | `fk_orders_users`, `uk_users_email` |
 | PostgreSQL schemas | `snake_case` | `{noun}[_{qualifier}]` | `public`, `analytics`, `audit_log` |
-| MongoDB collections | `snake_case` | `{plural_noun}[_{qualifier}]` | `analytics_events`, `user_sessions` |
+| MongoDB collections | `snake_case` | `{plural_noun}[_{qualifier}]` | `events`, `sessions`, `analytics_events` *(analytics is qualifier)* |
 | MongoDB fields | `snake_case` | `{noun}[_{qualifier}]` | `event_type`, `created_at` |
 | MongoDB databases | `snake_case` | `{service}_db` or `{noun}_db` | `user_service_db`, `analytics_db` |
+
+**Qualifier Usage Rule**: Add qualifier when:
+1. **Disambiguation needed**: `analytics_events` (distinguish from other event types), `user_sessions` (distinguish from other session types)
+2. **Subcategory**: `order_items` (items belonging to orders), `audit_log` (log type)
+3. **No qualifier needed**: `users`, `orders`, `payments` (unambiguous primary entities)
 
 **Rules**:
 - PostgreSQL **prohibits hyphens** in unquoted identifiers (interpreted as subtraction operator).
 - MongoDB **discourages hyphens** (requires special syntax: `db.getCollection("name-with-hyphen")`).
 - Use `snake_case` for all database identifiers to avoid quoting everywhere.
-- **Database migrations**: Follow tool-specific conventions:
-  - **Alembic** (recommended): Auto-generated revision hash + description: `a1b2c3d4e5f6_add_user_table.py`
-  - **Manual timestamps** (if needed): `YYYYMMDDHHmmss_{description}.py` in UTC timezone
-    - Example: `20250102143000_initial_schema.py`, `20250105093015_add_user_index.py`
-  - Always include descriptive suffix after timestamp/hash
-  - Use `snake_case` for description part
+- **Database migrations**: Use Alembic auto-generated format (recommended):
+  - **Pattern**: `{revision_hash}_{description}.py`
+  - **Example**: `a1b2c3d4e5f6_add_user_table.py`, `b2c3d4e5f6g7_create_index_users_email.py`
+  - **Alembic generates**: revision hash automatically (ensures ordering)
+  - **Description**: Use `snake_case`, start with verb (add, create, remove, alter)
+  - **Alternative (manual only)**: `YYYYMMDDHHmmss_{description}.py` (UTC) — only if not using Alembic
 
 #### Environment Variables
 
@@ -267,7 +287,12 @@ These components **require underscores** due to language/platform restrictions:
 | OpenAPI operation IDs | `snake_case` | `get_user_by_id`, `create_order` |
 
 **Rules**:
-- Maintain consistency with Python code layer.
+- **Use `snake_case`** for consistency with Python code layer (no case conversion needed in FastAPI/Pydantic models)
+- **Rationale**:
+  - Direct mapping to Python attributes (no camelCase ↔ snake_case conversion)
+  - Consistent with database column names
+  - Reduces cognitive load for backend developers
+- **Note**: Some REST APIs use camelCase (JavaScript convention). Choose one convention and document it in your API style guide.
 - Never expose internal IDs or enums with hyphens.
 - Response payloads use `snake_case` for all keys.
 
@@ -279,10 +304,13 @@ These components **require underscores** due to language/platform restrictions:
 
 | Component | Convention | Examples |
 |-----------|------------|----------|
-| Service names | `snake_case` | `finance_lending_api`, `db_postgres_service` |
-| Container names | `snake_case` | `finance_lending_api_1`, `redis_cache` |
+| Service names (in YAML) | `snake_case` | `finance_lending_api`, `db_postgres_service` |
+| Container names (auto-generated by Docker) | `{project}_{service}_{replica}` | `myproject_finance_lending_api_1` |
+| Container names (explicit via `container_name`) | `snake_case` | `finance_lending_api`, `redis_cache` |
 | Volume names | `snake_case` | `postgres_data`, `redis_cache_data` |
 | Network names | `snake_case` | `app_network`, `finance_network` |
+
+**Note**: Docker Compose auto-generates container names as `{project}_{service}_{replica}` (e.g., `myproject_finance_lending_api_1`). Use explicit `container_name` in YAML to override this behavior.
 
 **Example `docker-compose.yml`**:
 ```yaml
@@ -388,8 +416,9 @@ These components **require hyphens** due to DNS/network standards:
 | Component | Convention | Examples |
 |-----------|------------|----------|
 | `server_name` directive | `kebab-case` | `server_name api.example.com;` |
-| Upstream block names | `snake_case` | `upstream finance_lending_api { ... }` |
-| Upstream server hostnames | `kebab-case` | `server finance-lending-api:8000;` |
+| Upstream block name (internal identifier) | `snake_case` (always) | `upstream finance_lending_api { ... }` |
+| Upstream server address (dev/Docker Compose) | `snake_case` | `server finance_lending_api:8000;` |
+| Upstream server address (prod/Kubernetes) | `kebab-case` | `server finance-lending-api:8000;` |
 
 **Example nginx configuration**:
 ```nginx
@@ -418,11 +447,11 @@ server {
 ```
 
 **Rationale**:
-- Upstream names are internal identifiers (underscores allowed in both environments)
-- Server names and hostnames must be DNS-compliant (hyphens only)
-- Backend server addresses follow environment rules:
-  - Dev (Compose): `finance_lending_api` (underscore)
-  - Prod (K8s): `finance-lending-api` (hyphen required by DNS)
+- **Upstream block name**: Internal Nginx identifier, always use `snake_case` (same in dev and prod)
+- **Upstream server address**: Backend service address, environment-specific:
+  - **Dev (Docker Compose)**: `finance_lending_api` (underscore) — matches Docker Compose service name
+  - **Prod (Kubernetes)**: `finance-lending-api` (hyphen) — must be DNS-compliant
+- **server_name directive**: External DNS hostname, always `kebab-case` (RFC 1035 requirement)
 
 #### REST API Paths
 
@@ -431,34 +460,48 @@ server {
 | URL path segments | `kebab-case` | `/api/v1/lending`, `/api/v1/users/{id}` |
 | URL slugs | `kebab-case` | `/properties/house-123`, `/blog/my-post-title` |
 
+**Path-to-Service Mapping Rule**:
+- REST path uses the **domain** part of service name (context omitted for brevity)
+- Service `{context}_{domain}_{type}` → Path `/api/v1/{domain}`
+- Convert underscores to hyphens for multi-word domains
+
 **Example API endpoints**:
 ```
-GET  /api/v1/lending/{id}         # matches finance_lending_api
-POST /api/v1/users                 # matches user_auth_api
-GET  /api/v1/payments              # matches finance_payment_api
-PUT  /api/v1/appointments/{id}     # matches healthcare_appointment_api
+GET  /api/v1/lending/{id}         # matches finance_lending_api (domain: lending)
+POST /api/v1/users                 # matches user_auth_api (domain: auth → users)
+GET  /api/v1/payments              # matches finance_payment_api (domain: payment)
+PUT  /api/v1/appointments/{id}     # matches healthcare_appointment_api (domain: appointment)
+```
+
+**Optional**: Include context in path if multiple contexts share the same domain:
+```
+GET  /api/v1/finance/lending      # explicit context when needed
+GET  /api/v1/property/lending     # different context, same domain word
 ```
 
 **Rationale**:
 - SEO-friendly (search engines prefer hyphens over underscores)
 - URL standard convention (RFC 3986 allows hyphens, underscores less common)
 - Better readability in browser address bar
+- Shorter paths when context is implied by API subdomain/gateway
 
 #### Git Branches
 
-| Component | Convention | Examples |
-|-----------|------------|----------|
-| Feature branches | `kebab-case` | `feature/lending-api`, `feature/user-auth` |
-| Bugfix branches | `kebab-case` | `bugfix/fix-login`, `bugfix/calc-error` |
-| Hotfix branches | `kebab-case` | `hotfix/security-patch`, `hotfix/critical-bug` |
-| Release branches | `kebab-case` | `release/v1.2.0`, `release/v2.0.0-beta` |
-| Refactor branches | `kebab-case` | `refactor/simplify-auth`, `refactor/optimize-db` |
-| Chore branches | `kebab-case` | `chore/update-deps`, `chore/cleanup-logs` |
-| Docs branches | `kebab-case` | `docs/api-guide`, `docs/setup-instructions` |
-| Test branches | `kebab-case` | `test/add-integration-tests`, `test/e2e-coverage` |
-| Performance branches | `kebab-case` | `perf/optimize-queries`, `perf/reduce-memory` |
+> **Note**: Optional reference. Adapt to your team's git workflow.
 
-**Rationale**: Git convention, URL compatibility, readability. Follows conventional commit types.
+**Core Pattern**: `{type}/{description}` in `kebab-case`
+
+| Branch Type | Examples |
+|-------------|----------|
+| Feature | `feature/lending-api`, `feature/user-auth` |
+| Bugfix | `bugfix/fix-login`, `bugfix/calc-error` |
+| Hotfix | `hotfix/security-patch`, `hotfix/critical-bug` |
+| Release | `release/v1.2.0`, `release/v2.0.0-beta` |
+
+**Extended types** (if using conventional commits):
+- `refactor/`, `chore/`, `docs/`, `test/`, `perf/`
+
+**Rationale**: Git convention, URL compatibility, readability.
 
 ---
 
@@ -475,7 +518,7 @@ PUT  /api/v1/appointments/{id}     # matches healthcare_appointment_api
 | **Environment variables** | ✅ Required | ❌ Prohibited | - | `[A-Z_][A-Z0-9_]*` |
 | **RabbitMQ queues** | ✅ Allowed | ✅ Allowed | 255 chars | `[a-zA-Z0-9_.-]+` |
 | **RabbitMQ exchanges** | ✅ Allowed | ✅ Allowed | 255 chars | `[a-zA-Z0-9_.-]+` |
-| **Redis keys** | ✅ Allowed | ✅ Allowed | 512 MB | Any binary-safe string |
+| **Redis keys** | ✅ Allowed | ✅ Allowed | No limit *(512MB value size)* | Any binary-safe string |
 | **Nginx server_name** | ❌ Prohibited | ✅ Required | 253 chars | DNS hostname (RFC 1035) |
 | **Nginx upstream** | ✅ Allowed | ✅ Allowed | - | `[a-zA-Z0-9_-]+` |
 | **Git branches** | ✅ Allowed | ✅ Recommended | - | `[a-zA-Z0-9_/-]+` |
@@ -517,31 +560,24 @@ Use when domain has multiple possible functions (ambiguous):
 
 ### When to Use 3-Part vs 4-Part
 
-**Simple Decision Rule**:
+> **See Quick Reference at top of document** for the objective decision rule (line 14).
 
-```
-Ask: "If I remove the function word, is it obvious what this service does?"
+**TL;DR**: Ask "Can this domain word refer to 3+ different operations?" If yes, use 4-part. If no, use 3-part.
 
-YES → Use 3-part: {context}_{domain}_{type}
-NO  → Use 4-part: {context}_{domain}_{function}_{type}
-```
+**Common Patterns**:
 
-**Examples**:
+| Domain Example | Clear (3-part) | Ambiguous (4-part) |
+|----------------|----------------|---------------------|
+| `lending` | ✅ `finance_lending_api` | - |
+| `payment` | ✅ `finance_payment_worker` | - |
+| `telemedicine` | ✅ `healthcare_telemedicine_api` | - |
+| `fleet` | - | ❌ `logistics_fleet_tracking_api` (vs management, maintenance, scheduling) |
+| `analytics` | - | ❌ `analytics_reporting_api` (vs querying, processing, visualization) |
+| `communication` | - | ❌ `communication_notification_worker` (vs email, SMS, push) |
 
-| Domain | Ambiguous? | Reasoning | Correct Pattern |
-|--------|-----------|-----------|-----------------|
-| `finance_lending_api` | ✅ Clear | "Lending" obviously means matching/approval | 3-part ✓ |
-| `logistics_fleet_???` | ❌ Ambiguous | Fleet could be tracking, management, or maintenance | 4-part: `logistics_fleet_tracking_api` |
-| `construction_house_bot` | ✅ Clear | Bot for house = comprehensive management of house workflow | 3-part ✓ |
-| `analytics_???_api` | ❌ Ambiguous | Analytics could be reporting, querying, or processing | 4-part: `analytics_reporting_api` |
-| `finance_payment_worker` | ✅ Clear | Worker type implies payment processing | 3-part ✓ |
-| `communication_???_worker` | ❌ Ambiguous | Communication could be email, SMS, or notifications | 4-part: `communication_notification_worker` |
-
-**Key Principle**:
-- If your service handles **multiple related functions as ONE workflow** → still use 3-part (function implied by scope)
-  - Example: `construction_house_bot` handles calculations + uploads + tracking = one cohesive workflow
-- If your domain word has **multiple unrelated interpretations** → use 4-part (explicit function removes ambiguity)
-  - Example: `fleet` could mean tracking OR management OR maintenance (choose one with 4-part)
+**Important**: Don't confuse "multiple code features" with "ambiguous domain"
+- ✅ `construction_house_bot` (3-part) — Multiple features (calc, upload, track) serving ONE domain (house projects)
+- ❌ DON'T use 4-part just because service has many features
 
 ---
 
@@ -827,37 +863,16 @@ api_timeout: int = 30
 
 ### Python Private Members
 
-Python uses naming conventions to indicate member visibility:
+> **Note**: Standard Python convention, included for completeness.
 
-| Pattern | Visibility | Use Case | Example |
-|---------|------------|----------|---------|
-| `_single_leading` | Internal use | Not imported by `from module import *` | `_cache`, `_helper_func()`, `_internal_id` |
-| `__double_leading` | Name mangling | Prevent subclass conflicts (mangled to `_ClassName__attr`) | `__private_id`, `__secret_key` |
-| `_trailing_` | Avoid keyword conflicts | When name conflicts with Python keyword | `class_`, `type_`, `id_` |
-| `__dunder__` | Magic methods | Reserved for Python special methods | `__init__`, `__str__`, `__eq__` |
+| Pattern | Use Case | Example |
+|---------|----------|---------|
+| `_single_leading` | Internal/protected (convention) | `_cache`, `_helper_func()` |
+| `__double_leading` | Name mangling (avoid subclass conflicts) | `__private_key` |
+| `_trailing_` | Avoid keyword conflicts | `class_`, `type_`, `id_` |
+| `__dunder__` | Magic methods (reserved by Python) | `__init__`, `__str__` |
 
-**Examples**:
-```python
-class UserService:
-    def __init__(self):
-        self.public_id = 123              # Public attribute
-        self._internal_cache = {}         # Internal, not exported by *
-        self.__private_key = "secret"     # Name mangled to _UserService__private_key
-
-    def process_user(self):               # Public method
-        return self._validate_user()     # Internal helper
-
-    def _validate_user(self):            # Internal method (convention)
-        return self.__check_secret()     # Private method (mangled)
-
-    def __check_secret(self):            # Name mangled method
-        return True
-```
-
-**Rules**:
-- Single underscore `_`: Convention only, not enforced
-- Double underscore `__`: Name mangling enforced by Python interpreter
-- Never use `__dunder__` for custom names (reserved for Python magic methods)
+**Rule**: Use `_single_leading` for internal helpers. Avoid `__double` unless needed for name mangling. Never use `__dunder__` for custom names.
 
 ---
 
@@ -898,8 +913,14 @@ services/
     pyproject.toml
 ```
 
-**Use Option A** for internal microservices (most cases).
-**Use Option B** when creating distributable packages or needing test isolation.
+**Use Option A** (flat) for:
+- Internal microservices (deployed as Docker containers, not PyPI packages)
+- Simple project structure (most cases)
+
+**Use Option B** (src layout) for:
+- PyPI packages (libraries distributed via pip)
+- Projects with complex test isolation needs (prevents accidental imports of non-installed code)
+- Reusable components shared across multiple microservices
 
 ---
 
@@ -1102,79 +1123,88 @@ Some tools mandate specific naming formats. These are allowed and documented:
 - PyPI packages: `flask-sqlalchemy`, `django-rest-framework` (distribution names)
 - Import as: `import flask_sqlalchemy`, `import rest_framework` (Python modules)
 
-### Multi-Function Services
+### Multi-Feature Services vs Multi-Function Services
 
-When a service performs multiple unrelated functions, choose strategy:
+⚠️ **CRITICAL DISTINCTION FOR AI**:
 
-#### Strategy A: Generic Function Name (Recommended for Start)
+**Multi-Feature Service** (ALLOWED - use 3-part naming):
+- Single business domain with multiple code features implementing ONE workflow
+- Example: `construction_house_bot` (3-part)
+  - Features: material calculations, photo uploads, cost tracking
+  - Domain: `house` (residential construction projects)
+  - Workflow: End-to-end house project management
+  - Naming: 3-part because "house project management" is ONE business domain
 
-Use broad terms when service handles entire workflow:
+**Multi-Function Service** (ANTI-PATTERN - split into separate services):
+- Multiple unrelated business domains in one service
+- Example: ❌ DON'T create `construction_everything_api` that handles:
+  - House projects (separate domain)
+  - Commercial projects (separate domain)
+  - Employee payroll (separate domain)
+
+**Decision Rule**:
+
+```
+Ask: "Do these features serve ONE business domain or MULTIPLE domains?"
+
+ONE domain → Use 3-part naming, keep together
+MULTIPLE domains → Split into separate services
+```
+
+**When to Split a Service**:
+1. **Different business domains** (not just different features)
+2. **Different teams** need ownership
+3. **Independent scaling** required
+4. **Service exceeds 5000 lines** of code
+
+**Example - When to Use Generic Terms**:
+
+If you have a legitimate multi-feature service (ONE domain, multiple features), you may use:
 
 | Generic Term | Use When | Example |
 |--------------|----------|---------|
-| `management` | Full process control | `construction_house_bot` |
-| `assistant` | Helper/support tool | `finance_assistant_api` |
-| `platform` | Complete solution | `education_platform_api` |
-| `hub` | Central aggregator | `corporate_hub_api` |
+| `management` | Full process control for one domain | `construction_house_api` (not `construction_house_management_api`) |
+| `platform` | Complete solution for one domain | `education_lms_api` (not `education_platform_api`) |
 
-**Example**: Telegram bot doing calculations + uploads + cost tracking:
-```
-construction_house_bot  ✅  (management implied by bot handling full workflow)
-```
-
-#### Strategy B: Split into Microservices
-
-When functions are truly independent (different teams, scaling, deployment):
-
-```
-construction_calculation_api      # Team A (house context obvious in namespace)
-construction_documentation_api    # Team B
-construction_tracking_api         # Team C (cost tracking implied)
-```
-
-**Decision Rule**:
-- Start with Strategy A (single service)
-- Split (Strategy B) when:
-  - Service exceeds 5000 lines of code
-  - Different teams need ownership
-  - Independent scaling required
+**Prefer specific domain terms** over generic ones. Use generic terms only when no specific domain word exists.
 
 ---
 
 ### HTTP Headers
 
-> **Note**: HTTP headers are infrastructure/protocol-level naming, not application naming conventions. Included here for Nginx configuration awareness.
+> **Note**: HTTP headers use a different convention (not part of core naming strategy). Included only for Nginx configuration awareness when proxying custom headers.
 
-- Standard format: `X-Request-ID`, `Content-Type`, `Authorization`
-- Nginx drops underscore headers by default (security feature)
-- Custom headers should use hyphens (HTTP convention)
+- **Standard format**: `Title-Case-With-Hyphens` (e.g., `X-Request-ID`, `Content-Type`)
+- **Nginx behavior**: Drops underscore headers by default (security feature)
+- **Custom headers**: Always use hyphens (RFC 7230 standard)
 
 ### Name Length & Kubernetes Limits
 
 **Kubernetes Service Name Limit**: 253 characters (RFC 1035 DNS label standard)
 
-**Framework Compliance**:
-- 3-part pattern: Average 20-27 chars (95%+ services fit within limits)
-- 4-part pattern: Average 30-35 chars (still well within limits)
+**Framework Compliance**: Our naming patterns are well within limits
+- 3-part pattern: 20-27 chars (typical)
+- 4-part pattern: 30-35 chars (typical)
+- Longest realistic name: ~60 chars (still 193 chars under limit)
 
-**If name exceeds 253 chars** (rare edge case):
-1. **First**: Review if context/domain names are too verbose
-2. **Consider**: Using shorter but still clear synonyms
-3. **Last resort**: Abbreviate the longest component (document in Context Registry)
-
-**Example**:
-```python
-# Too long (hypothetical)
-enterprise_resource_planning_inventory_management_api  # 52 chars - still OK!
-
-# If somehow exceeding 253 chars, shorten context:
-erp_inventory_management_api  # Use abbreviation, document in registry
+**Example of longest realistic name**:
 ```
+enterprise_resource_planning_inventory_management_api  # 52 chars ✓
+```
+
+**Conclusion**: Length limits are not a practical concern. Focus on clarity over brevity.
 
 **Version Numbers in Service Names**:
 - ❌ **Avoid**: `finance_lending_api_v2` (versions belong in API paths, not service names)
 - ✅ **Use**: `/api/v2/lending` (version in URL path)
 - **Rationale**: Service name should be stable; API version can evolve independently
+
+**Exception for Blue-Green Deployments**:
+- When running v1 and v2 simultaneously during deployment:
+  - **Kubernetes labels**: Use `version: v1` and `version: v2` labels (not in service name)
+  - **Service names**: Keep stable (`finance-lending-api`)
+  - **Deployment names**: Can include version suffix for clarity (`finance-lending-api-v2-deployment`)
+  - **Traffic routing**: Use Ingress/Service Mesh to route by API version header/path
 
 ### Migration Guide: Old Naming → New Naming
 
