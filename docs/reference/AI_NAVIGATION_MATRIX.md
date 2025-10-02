@@ -14,40 +14,68 @@
 
 ## Complete Navigation Matrix
 
-| Stage | Phase | Documents to Read | AI Generates | Templates/Tools | Success Criteria |
-|-------|-------|-------------------|--------------|-----------------|------------------|
-| **0** | **Initialization** | • `CLAUDE.md`<br>• `docs/reference/AGENT_CONTEXT_SUMMARY.md`<br>• `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md` | Nothing (loading phase) | None | AI has complete framework context:<br>• Improved Hybrid Approach understood<br>• Mandatory constraints loaded<br>• Documentation structure mapped |
-| **1** | **Prompt Validation** | • `docs/guides/PROMPT_VALIDATION_GUIDE.md`<br>• `docs/reference/PROMPT_TEMPLATES.md` (if clarification needed) | • Validation confirmation note<br>OR<br>• Clarification request to user | • `PROMPT_TEMPLATES.md` (augmentation snippets) | All mandatory fields present:<br>✅ Business context<br>✅ Functional requirements<br>✅ Non-functional constraints<br>✅ Dependencies<br>✅ Scope boundaries<br>✅ Deliverables<br>✅ Acceptance criteria |
-| **2** | **Requirements Clarification & Intake** | • `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`<br>• `docs/guides/ARCHITECTURE_GUIDE.md`<br>• `docs/reference/tech_stack.md`<br>• `docs/atomic/architecture/improved-hybrid-overview.md`<br>• `docs/atomic/architecture/service-separation-principles.md`<br>• `docs/atomic/architecture/data-access-architecture.md` | • Completed Requirements Intake document<br>• Architecture compatibility analysis<br>• Service mapping (FastAPI/Aiogram/Workers/Data) | • `REQUIREMENTS_INTAKE_TEMPLATE.md`<br>• `PROMPT_TEMPLATES.md` (if follow-up questions) | • Requirements doc approved by user<br>• Architecture alignment confirmed<br>• Service types identified<br>• No architectural conflicts |
-| **3** | **Architecture Mapping & Planning** | • `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`<br>• `docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md`<br>• `docs/atomic/services/**/*` (based on services needed)<br>• `docs/atomic/integrations/**/*` (based on integrations needed)<br>• `docs/reference/AGENT_TOOLBOX.md` | • Detailed Implementation Plan<br>• Optional Architecture Decision Records (ADRs) | • `IMPLEMENTATION_PLAN_TEMPLATE.md`<br>• `ARCHITECTURE_DECISION_LOG_TEMPLATE.md` (if major decisions)<br>• `AGENT_TOOLBOX.md` | • Plan approved by user<br>• All phases defined with DoD<br>• Risks identified<br>• Atomic docs mapped to each phase |
-| **4.1** | **Code Generation: Infrastructure** | • `docs/atomic/infrastructure/containerization/docker-compose-setup.md`<br>• `docs/atomic/infrastructure/containerization/dockerfile-patterns.md`<br>• `docs/atomic/infrastructure/configuration/environment-variables.md`<br>• `docs/atomic/infrastructure/configuration/settings-patterns.md` | • `docker-compose.yml`<br>• `docker-compose.prod.yml`<br>• `.env.example`<br>• `Makefile`<br>• Service directories with Dockerfiles | • `AGENT_TOOLBOX.md` (Docker commands)<br>• `docs/reference/PROJECT_STRUCTURE.md` | • `docker-compose up -d` succeeds<br>• All services show "healthy" status<br>• Ports correctly mapped |
-| **4.2** | **Code Generation: Data Layer** | • `docs/atomic/services/data-services/postgres-service-setup.md`<br>• `docs/atomic/services/data-services/mongo-service-setup.md`<br>• `docs/atomic/services/data-services/repository-patterns.md`<br>• `docs/atomic/services/data-services/http-api-design.md`<br>• `docs/atomic/services/data-services/transaction-management.md`<br>• `docs/atomic/databases/postgresql/sqlalchemy-integration.md`<br>• `docs/atomic/databases/postgresql-advanced/*` (if complex models) | **PostgreSQL Service**:<br>• SQLAlchemy models<br>• Repositories (CRUD)<br>• HTTP API routers<br>• Alembic migrations<br><br>**MongoDB Service**:<br>• Motor models<br>• Repositories<br>• HTTP API routers | • `AGENT_TOOLBOX.md` (DB commands)<br>• `docs/atomic/architecture/naming-conventions.md` | • Data services respond to health checks<br>• HTTP APIs functional:<br>&nbsp;&nbsp;• `curl localhost:8001/health` → 200<br>&nbsp;&nbsp;• `curl localhost:8002/health` → 200<br>• Migrations apply successfully |
-| **4.3** | **Code Generation: Business Logic** | • `docs/atomic/services/fastapi/application-factory.md`<br>• `docs/atomic/services/fastapi/routing-patterns.md`<br>• `docs/atomic/services/fastapi/dependency-injection.md`<br>• `docs/atomic/services/fastapi/schema-validation.md`<br>• `docs/atomic/services/fastapi/error-handling.md`<br>• `docs/atomic/architecture/ddd-hexagonal-principles.md`<br>• `docs/atomic/integrations/http-communication/business-to-data-calls.md`<br>• `docs/atomic/integrations/http-communication/timeout-retry-patterns.md` | **Domain Layer**:<br>• Entities<br>• Value objects<br>• Domain services<br><br>**Application Layer**:<br>• Use cases<br>• DTOs<br>• Application services<br><br>**Infrastructure Layer**:<br>• HTTP clients (to data services)<br>• RabbitMQ publishers<br><br>**API Layer**:<br>• FastAPI routers<br>• Request/response schemas | • `AGENT_TOOLBOX.md` (quality commands)<br>• `docs/atomic/architecture/naming-conventions.md` | • API endpoints functional<br>• HTTP-only data access verified (no direct DB)<br>• DDD layers properly separated<br>• OpenAPI docs generated |
-| **4.4** | **Code Generation: Background Workers** | • `docs/atomic/services/asyncio-workers/basic-setup.md`<br>• `docs/atomic/services/asyncio-workers/main-function-patterns.md`<br>• `docs/atomic/services/asyncio-workers/signal-handling.md`<br>• `docs/atomic/services/asyncio-workers/task-management.md`<br>• `docs/atomic/services/asyncio-workers/error-handling.md`<br>• `docs/atomic/integrations/rabbitmq/message-consuming.md`<br>• `docs/atomic/integrations/rabbitmq/asyncio-integration.md` | • Worker implementations<br>• RabbitMQ consumers<br>• Task orchestration<br>• Main entrypoint with signal handling | • `AGENT_TOOLBOX.md`<br>• `docs/atomic/integrations/rabbitmq/dto-contracts.md` | • Workers start successfully<br>• Event consumption working<br>• Graceful shutdown functional<br>• Error handling tested |
-| **4.5** | **Code Generation: Telegram Bot** | • `docs/atomic/services/aiogram/basic-setup.md`<br>• `docs/atomic/services/aiogram/bot-initialization.md`<br>• `docs/atomic/services/aiogram/handler-patterns.md`<br>• `docs/atomic/services/aiogram/middleware-setup.md`<br>• `docs/atomic/services/aiogram/state-management.md`<br>• `docs/atomic/integrations/rabbitmq/aiogram-integration.md` | • Bot handlers (commands, messages)<br>• FSM states (if needed)<br>• Middleware<br>• RabbitMQ event listeners<br>• Main entrypoint | • `AGENT_TOOLBOX.md` | • Bot responds to commands<br>• Event-based notifications working<br>• State management functional (if used) |
-| **4.6** | **Code Generation: Testing** | • `docs/atomic/testing/unit-testing/pytest-setup.md`<br>• `docs/atomic/testing/unit-testing/fixture-patterns.md`<br>• `docs/atomic/testing/unit-testing/mocking-strategies.md`<br>• `docs/atomic/testing/integration-testing/testcontainers-setup.md`<br>• `docs/atomic/testing/service-testing/fastapi-testing-patterns.md`<br>• `docs/atomic/testing/service-testing/data-service-testing.md` | • `pytest.ini`<br>• `conftest.py`<br>• Unit tests (all layers)<br>• Integration tests (with testcontainers)<br>• Service tests<br>• Test fixtures | • `AGENT_TOOLBOX.md` (testing commands) | • All tests pass:<br>&nbsp;&nbsp;`uv run pytest`<br>• Coverage ≥ 80%:<br>&nbsp;&nbsp;`pytest --cov=services`<br>• No test errors |
-| **5** | **Quality Verification** | • `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`<br>• `docs/reference/AGENT_TOOLBOX.md`<br>• `docs/reference/troubleshooting.md` (if issues) | • Completed verification checklist<br>• Coverage reports (HTML + XML)<br>• Evidence logs/screenshots | • `AGENT_TOOLBOX.md` (quality commands):<br>&nbsp;&nbsp;• `uv run ruff check .`<br>&nbsp;&nbsp;• `uv run ruff format . --check`<br>&nbsp;&nbsp;• `uv run mypy .`<br>&nbsp;&nbsp;• `uv run bandit -r .`<br>&nbsp;&nbsp;• `uv run pytest --cov` | **ALL checks must pass**:<br>✅ Linting (Ruff): 0 errors<br>✅ Formatting: No drift<br>✅ Type checking (Mypy): 0 errors<br>✅ Security (Bandit): 0 high severity<br>✅ Tests: All pass<br>✅ Coverage: ≥ 80%<br>✅ Project structure: Compliant<br>✅ Naming: Follows conventions |
-| **6** | **QA Report & Handoff** | • `docs/quality/QA_REPORT_TEMPLATE.md`<br>• `docs/reference/DELIVERABLES_CATALOG.md` | • Final QA Report<br>• Deliverables summary<br>• Deployment guide<br>• Updated DELIVERABLES_CATALOG | • `QA_REPORT_TEMPLATE.md` | • QA report approved by stakeholder<br>• All deliverables documented<br>• Deployment instructions verified<br>• Sign-off obtained |
+> **NEW**: Each sub-stage now includes "Required At Level" to support adaptive generation based on maturity level selection. See `docs/reference/MATURITY_LEVELS.md` for level definitions.
+
+| Stage | Phase | Required At Level | Documents to Read | AI Generates | Success Criteria |
+|-------|-------|-------------------|-------------------|--------------|------------------|
+| **0** | **Initialization** | **ALL** | • `CLAUDE.md`<br>• `docs/reference/AGENT_CONTEXT_SUMMARY.md`<br>• `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md` | Nothing (loading phase) | AI has complete framework context |
+| **1** | **Prompt Validation** | **ALL** | • `docs/guides/PROMPT_VALIDATION_GUIDE.md`<br>• `docs/reference/PROMPT_TEMPLATES.md`<br>• `docs/reference/MATURITY_LEVELS.md` (for level selection) | • Validation confirmation<br>• **Selected maturity level (1-4)**<br>• **Selected optional modules** | All mandatory fields present:<br>✅ Business context<br>✅ **Target maturity level**<br>✅ Functional requirements<br>✅ Dependencies |
+| **2** | **Requirements Clarification & Intake** | **ALL** | • `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`<br>• `docs/guides/ARCHITECTURE_GUIDE.md`<br>• `docs/reference/tech_stack.md`<br>• `docs/atomic/architecture/improved-hybrid-overview.md` | • Completed Requirements Intake<br>• **Maturity level confirmed**<br>• Architecture compatibility analysis | • Requirements approved<br>• Maturity level documented<br>• Architecture aligned |
+| **3** | **Architecture Mapping & Planning** | **ALL** | • `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`<br>• `docs/reference/CONDITIONAL_STAGE_RULES.md`<br>• `docs/atomic/services/**/*` (based on level + modules)<br>• `docs/atomic/integrations/**/*` (if needed) | • Implementation Plan with:<br>&nbsp;&nbsp;• **Included features list**<br>&nbsp;&nbsp;• **Skipped features list**<br>&nbsp;&nbsp;• Conditional sub-stages | • Plan approved<br>• Features clearly marked<br>• Sub-stages identified |
+| **4.1** | **Infrastructure (Basic)** | **ALL** | • `docs/atomic/infrastructure/containerization/docker-compose-setup.md`<br>• `docs/atomic/infrastructure/containerization/dockerfile-patterns.md` | • `docker-compose.yml`<br>• `.env.example`<br>• `Makefile` | • Docker services healthy |
+| **4.1b** | **+ Dev Overrides** | **≥ Level 2** | • `docs/atomic/infrastructure/configuration/settings-patterns.md` | • `docker-compose.dev.yml`<br>• Docker healthchecks | • Dev environment working |
+| **4.1c** | **+ Nginx + SSL + Metrics** | **≥ Level 3** | • `docs/atomic/infrastructure/api-gateway/nginx-setup.md`<br>• `docs/atomic/infrastructure/api-gateway/ssl-configuration.md`<br>• `docs/atomic/observability/metrics/prometheus-setup.md` | • Nginx config<br>• SSL setup<br>• Prometheus + Grafana<br>• `docker-compose.prod.yml` | • Nginx reverse proxy working<br>• SSL functional<br>• Metrics exposed |
+| **4.1d** | **+ ELK + Replication** | **Level 4 only** | • `docs/atomic/observability/elk-stack/*`<br>• `docs/atomic/infrastructure/databases/postgresql-replication.md` | • ELK Stack config<br>• DB replication<br>• Backup scripts | • Centralized logging<br>• DB replication active |
+| **4.2** | **Data Layer (PostgreSQL)** | **ALL** | • `docs/atomic/services/data-services/postgres-service-setup.md`<br>• `docs/atomic/databases/postgresql/sqlalchemy-integration.md` | • PostgreSQL service<br>• Models, repositories<br>• HTTP API<br>• Migrations | • Data service health checks pass<br>• HTTP API functional |
+| **4.2b** | **+ MongoDB (optional)** | **IF user requested** | • `docs/atomic/services/data-services/mongo-service-setup.md` | • MongoDB service | • MongoDB API functional |
+| **4.3** | **Business Logic (Core)** | **ALL** | • `docs/atomic/services/fastapi/application-factory.md`<br>• `docs/atomic/services/fastapi/routing-patterns.md`<br>• `docs/atomic/services/fastapi/dependency-injection.md`<br>• `docs/atomic/services/fastapi/schema-validation.md`<br>• `docs/atomic/services/fastapi/error-handling.md`<br>• `docs/atomic/architecture/ddd-hexagonal-principles.md`<br>• `docs/atomic/integrations/http-communication/business-to-data-calls.md` | **Domain Layer**:<br>• Entities, Value objects<br><br>**Application Layer**:<br>• Use cases, DTOs<br><br>**Infrastructure Layer**:<br>• HTTP clients (to data services)<br><br>**API Layer**:<br>• FastAPI routers<br>• Request/response schemas | • API endpoints functional<br>• HTTP-only data access verified |
+| **4.3b** | **+ Structured Logging** | **≥ Level 2** | • `docs/atomic/observability/logging/structured-logging.md`<br>• `docs/atomic/observability/logging/context-propagation.md` | • Logger setup<br>• Request ID propagation<br>• Error logging | • Logs are structured JSON<br>• Correlation IDs present |
+| **4.3c** | **+ Prometheus Metrics** | **≥ Level 3** | • `docs/atomic/observability/metrics/prometheus-integration.md`<br>• `docs/atomic/observability/metrics/custom-metrics.md` | • Metrics endpoints<br>• Custom business metrics | • `/metrics` endpoint works<br>• Grafana dashboards |
+| **4.3d** | **+ OAuth/JWT + Tracing** | **Level 4 only** | • `docs/atomic/services/fastapi/oauth-jwt.md`<br>• `docs/atomic/observability/tracing/jaeger-integration.md` | • OAuth 2.0 / JWT auth<br>• RBAC middleware<br>• Distributed tracing | • Auth functional<br>• Traces visible in Jaeger |
+| **4.4** | **Background Workers (optional)** | **IF user requested** | • `docs/atomic/services/asyncio-workers/basic-setup.md`<br>• `docs/atomic/services/asyncio-workers/main-function-patterns.md`<br>• `docs/atomic/services/asyncio-workers/signal-handling.md`<br>• `docs/atomic/integrations/rabbitmq/message-consuming.md` | • Worker implementations<br>• RabbitMQ consumers<br>• Main entrypoint with signal handling | • Workers start successfully<br>• Event consumption working |
+| **4.4b** | **+ Structured Logging (Workers)** | **≥ Level 2 AND Workers requested** | • `docs/atomic/observability/logging/worker-logging.md` | • Worker logger setup | • Worker logs structured |
+| **4.5** | **Telegram Bot (optional)** | **IF user requested** | • `docs/atomic/services/aiogram/basic-setup.md`<br>• `docs/atomic/services/aiogram/bot-initialization.md`<br>• `docs/atomic/services/aiogram/handler-patterns.md`<br>• `docs/atomic/integrations/rabbitmq/aiogram-integration.md` | • Bot handlers (commands, messages)<br>• RabbitMQ event listeners<br>• Main entrypoint | • Bot responds to commands<br>• Event-based notifications working |
+| **4.5b** | **+ Structured Logging (Bot)** | **≥ Level 2 AND Bot requested** | • `docs/atomic/observability/logging/bot-logging.md` | • Bot logger setup | • Bot logs structured |
+| **4.6** | **Testing (Basic)** | **ALL** | • `docs/atomic/testing/unit-testing/pytest-setup.md`<br>• `docs/atomic/testing/unit-testing/fixture-patterns.md`<br>• `docs/atomic/testing/service-testing/fastapi-testing-patterns.md` | • `pytest.ini`<br>• `conftest.py`<br>• Unit tests (core layers)<br>• Service tests | • All tests pass<br>• Coverage ≥ 60% (Level 1) |
+| **4.6b** | **+ Integration Tests** | **≥ Level 2** | • `docs/atomic/testing/integration-testing/testcontainers-setup.md`<br>• `docs/atomic/testing/unit-testing/mocking-strategies.md` | • Integration tests (with testcontainers)<br>• Enhanced mocking | • Coverage ≥ 75% |
+| **4.6c** | **+ E2E Tests** | **≥ Level 3** | • `docs/atomic/testing/end-to-end/api-testing.md` | • End-to-end API tests | • Coverage ≥ 80% |
+| **4.6d** | **+ Security Tests** | **Level 4 only** | • `docs/atomic/testing/security/bandit-configuration.md`<br>• `docs/atomic/testing/security/penetration-testing.md` | • Security test suite<br>• Bandit config | • Coverage ≥ 85%<br>• Security tests pass |
+| **5** | **Quality Verification** | **ALL** (criteria vary by level) | • `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`<br>• `docs/reference/AGENT_TOOLBOX.md`<br>• `docs/reference/MATURITY_LEVELS.md` (for coverage targets)<br>• `docs/reference/troubleshooting.md` (if issues) | • Completed verification checklist<br>• Coverage reports (HTML + XML)<br>• Evidence logs/screenshots | **ALL checks must pass**:<br>✅ Linting (Ruff): 0 errors<br>✅ Formatting: No drift<br>✅ Type checking (Mypy): 0 errors<br>✅ Security (Bandit): 0 high severity<br>✅ Tests: All pass<br>✅ Coverage: **Level-dependent** (60%/75%/80%/85%)<br>✅ Project structure: Compliant<br>✅ Naming: Follows conventions |
+| **6** | **QA Report & Handoff** | **ALL** | • `docs/quality/QA_REPORT_TEMPLATE.md`<br>• `docs/reference/DELIVERABLES_CATALOG.md` | • Final QA Report<br>• Deliverables summary<br>• Deployment guide<br>• Updated DELIVERABLES_CATALOG | • QA report approved by stakeholder<br>• All deliverables documented<br>• Deployment instructions verified<br>• Sign-off obtained |
 
 ---
 
 ## Stage Transition Rules
+
+> **NEW**: Transition rules now account for conditional sub-stages. AI must check maturity level and optional modules before proceeding.
 
 ### When to Proceed to Next Stage
 
 | From Stage | To Stage | Transition Criteria |
 |------------|----------|---------------------|
 | 0 → 1 | Initialization → Validation | AI has loaded all framework context |
-| 1 → 2 | Validation → Intake | All mandatory prompt fields present |
+| 1 → 2 | Validation → Intake | All mandatory prompt fields present, **maturity level selected** |
 | 2 → 3 | Intake → Planning | Requirements document approved by user |
-| 3 → 4 | Planning → Generation | Implementation plan approved by user |
-| 4.1 → 4.2 | Infrastructure → Data | `docker-compose up -d` succeeds, all services healthy |
-| 4.2 → 4.3 | Data → Business | Data service health checks pass, HTTP APIs functional |
-| 4.3 → 4.4 | Business → Workers | API endpoints working, tests pass |
-| 4.4 → 4.5 | Workers → Bot | Workers processing events correctly |
-| 4.5 → 4.6 | Bot → Testing | Bot responding to commands |
-| 4.6 → 5 | Testing → Verification | All tests written and passing |
-| 5 → 6 | Verification → Handoff | All quality checks pass |
+| 3 → 4.1 | Planning → Generation | Implementation plan approved by user |
+| 4.1 → 4.1b | Infrastructure (Basic) → Dev Overrides | **IF maturity level ≥ 2** AND 4.1 complete |
+| 4.1b → 4.1c | Dev Overrides → Nginx+SSL | **IF maturity level ≥ 3** AND 4.1b complete |
+| 4.1c → 4.1d | Nginx+SSL → ELK+Replication | **IF maturity level = 4** AND 4.1c complete |
+| 4.1x → 4.2 | Infrastructure → Data | All applicable infrastructure sub-stages complete |
+| 4.2 → 4.2b | PostgreSQL → MongoDB | **IF user requested MongoDB** AND 4.2 complete |
+| 4.2x → 4.3 | Data → Business Logic | All applicable data sub-stages complete |
+| 4.3 → 4.3b | Core Business → Logging | **IF maturity level ≥ 2** AND 4.3 complete |
+| 4.3b → 4.3c | Logging → Metrics | **IF maturity level ≥ 3** AND 4.3b complete |
+| 4.3c → 4.3d | Metrics → Auth+Tracing | **IF maturity level = 4** AND 4.3c complete |
+| 4.3x → 4.4 | Business → Workers | **IF user requested Workers** OR proceed to 4.5 |
+| 4.4 → 4.4b | Workers Core → Workers Logging | **IF maturity level ≥ 2** AND 4.4 complete |
+| 4.4x → 4.5 | Workers → Bot | **IF user requested Bot** OR proceed to 4.6 |
+| 4.5 → 4.5b | Bot Core → Bot Logging | **IF maturity level ≥ 2** AND 4.5 complete |
+| 4.5x → 4.6 | Bot → Testing | All applicable service sub-stages complete |
+| 4.6 → 4.6b | Basic Tests → Integration Tests | **IF maturity level ≥ 2** AND 4.6 complete |
+| 4.6b → 4.6c | Integration → E2E Tests | **IF maturity level ≥ 3** AND 4.6b complete |
+| 4.6c → 4.6d | E2E → Security Tests | **IF maturity level = 4** AND 4.6c complete |
+| 4.6x → 5 | Testing → Verification | All applicable test sub-stages complete |
+| 5 → 6 | Verification → Handoff | All quality checks pass (level-specific criteria) |
 | 6 → END | Handoff → Complete | Stakeholder sign-off obtained |
 
 ### When to Go Back
@@ -59,6 +87,43 @@
 | Stage 4 | Stage 3 | Plan needs adjustment (e.g., missing services) |
 | Stage 5 | Stage 4 | Tests fail, type errors, security issues |
 | Stage 6 | Stage 5 | Verification criteria not met |
+
+### Sub-Stage Execution Logic
+
+**AI Decision Tree at Stage 4**:
+
+```
+FOR each sub-stage in [4.1, 4.1b, 4.1c, 4.1d, 4.2, 4.2b, 4.3, 4.3b, 4.3c, 4.3d, 4.4, 4.4b, 4.5, 4.5b, 4.6, 4.6b, 4.6c, 4.6d]:
+  READ "Required At Level" column
+
+  IF "Required At Level" = "ALL":
+    EXECUTE sub-stage (mandatory for all levels)
+
+  ELSE IF "Required At Level" = "≥ Level X":
+    IF user's maturity level >= X:
+      EXECUTE sub-stage
+    ELSE:
+      SKIP sub-stage
+
+  ELSE IF "Required At Level" = "Level X only":
+    IF user's maturity level == X:
+      EXECUTE sub-stage
+    ELSE:
+      SKIP sub-stage
+
+  ELSE IF "Required At Level" = "IF user requested [module]":
+    IF user selected [module] in optional modules:
+      EXECUTE sub-stage
+    ELSE:
+      SKIP sub-stage
+
+  ELSE IF "Required At Level" contains "AND":
+    PARSE compound condition (e.g., "≥ Level 2 AND Workers requested")
+    IF all conditions true:
+      EXECUTE sub-stage
+    ELSE:
+      SKIP sub-stage
+```
 
 ---
 

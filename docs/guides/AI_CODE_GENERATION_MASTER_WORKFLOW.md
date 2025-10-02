@@ -25,13 +25,15 @@ When an AI agent starts working with this framework, it **MUST** read documents 
 1. **CLAUDE.md** (root) — Entry point, framework overview, navigation guide
 2. **docs/reference/AGENT_CONTEXT_SUMMARY.md** — Critical rules snapshot, mandatory constraints
 3. **THIS DOCUMENT** (AI_CODE_GENERATION_MASTER_WORKFLOW.md) — Complete workflow process
+4. **docs/reference/MATURITY_LEVELS.md** — 4 maturity levels from PoC to Production
 
-**Purpose**: Load context about framework architecture, mandatory constraints, and available documentation.
+**Purpose**: Load context about framework architecture, mandatory constraints, available documentation, and maturity level options.
 
 **Expected outcome**: AI understands:
 - Framework-as-submodule model
 - Improved Hybrid Approach architecture
 - Mandatory constraints (HTTP-only data access, service separation, etc.)
+- **Maturity levels** (PoC ~5 min, Development ~10 min, Pre-Production ~15 min, Production ~30 min)
 - Where to find specific information during workflow
 
 ---
@@ -110,10 +112,11 @@ graph TB
 - `CLAUDE.md`
 - `docs/reference/AGENT_CONTEXT_SUMMARY.md`
 - `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md` (this file)
+- `docs/reference/MATURITY_LEVELS.md`
 
 **AI Generates**: Nothing yet (loading phase).
 
-**Exit Criteria**: AI has complete context about framework architecture and process.
+**Exit Criteria**: AI has complete context about framework architecture, process, and maturity level options.
 
 ---
 
@@ -127,18 +130,24 @@ graph TB
    - ✅ Business context (problem, users, success metrics)
    - ✅ Functional requirements (features, capabilities)
    - ✅ Non-functional constraints (performance, security, scale)
+   - ✅ **Target maturity level** (1-PoC, 2-Development, 3-Pre-Production, 4-Production)
+   - ✅ **Optional modules** (Workers, Bot, MongoDB, RabbitMQ, Redis, etc.)
    - ✅ Dependencies & integrations (external systems)
    - ✅ Scope boundaries (what's in/out of scope)
    - ✅ Expected deliverables
    - ✅ Acceptance criteria
 3. If ANY field is missing → ask clarification using `PROMPT_TEMPLATES.md`
+   - **IMPORTANT**: If maturity level is missing, ask user to choose level 1-4
 4. If ALL fields present → proceed to Stage 2
 
 **Documents Read**:
 - `docs/guides/PROMPT_VALIDATION_GUIDE.md`
 - `docs/reference/PROMPT_TEMPLATES.md` (if clarification needed)
+- `docs/reference/MATURITY_LEVELS.md` (for level explanation)
 
 **AI Generates**:
+- **Selected maturity level (1-4)**
+- **Selected optional modules** (list or "none")
 - Validation note (if complete)
 - OR clarification request (if incomplete)
 
@@ -149,14 +158,30 @@ graph TB
 Your business idea is interesting, but I need additional details:
 
 **Missing**:
-1. **Scale expectations**: How many users in first year? Expected daily transactions?
-2. **Authentication method**: JWT, OAuth2, magic links?
-3. **Payment gateway**: Stripe, PayPal, cryptocurrency?
+1. **Target maturity level**: Choose level (see MATURITY_LEVELS.md):
+   - **Level 1 - PoC** (~5 min): Core functionality only, no logging/metrics
+   - **Level 2 - Development** (~10 min): + Structured logging, health checks
+   - **Level 3 - Pre-Production** (~15 min): + Nginx, SSL, Prometheus metrics
+   - **Level 4 - Production** (~30 min): + OAuth/JWT, ELK, tracing, CI/CD
+
+   **Your choice (1-4)**: _____
+
+2. **Optional modules**: Which additional services do you need?
+   - [ ] Background Workers (AsyncIO)
+   - [ ] Telegram Bot (Aiogram)
+   - [ ] MongoDB (NoSQL database)
+   - [ ] RabbitMQ (event messaging)
+   - [ ] Redis (caching)
+
+   **Your selection (comma-separated or "none")**: _____
+
+3. **Scale expectations**: How many users in first year? Expected daily transactions?
+4. **Authentication method**: JWT, OAuth2, magic links?
 
 Please provide these details so I can ensure architecture alignment.
 ```
 
-**Exit Criteria**: All mandatory fields confirmed.
+**Exit Criteria**: All mandatory fields confirmed, **maturity level selected**.
 
 ---
 
@@ -180,6 +205,7 @@ Please provide these details so I can ensure architecture alignment.
 5. Identify potential architectural conflicts
 6. Fill `REQUIREMENTS_INTAKE_TEMPLATE.md`:
    - Business Context & Objectives
+   - **Target Configuration** (maturity level, optional modules, estimated time)
    - Functional Requirements (table format)
    - Non-Functional Constraints
    - Dependencies & Integrations
@@ -193,10 +219,11 @@ Please provide these details so I can ensure architecture alignment.
 - `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`
 - `docs/guides/ARCHITECTURE_GUIDE.md`
 - `docs/reference/tech_stack.md`
+- `docs/reference/MATURITY_LEVELS.md` (for level features)
 - `docs/atomic/architecture/*` (as needed)
 
 **AI Generates**:
-- Completed Requirements Intake document
+- Completed Requirements Intake document with **maturity level confirmed**
 
 **Example Output**:
 ```markdown
@@ -204,6 +231,12 @@ Please provide these details so I can ensure architecture alignment.
 
 **Generated**: 2025-10-01
 **Framework**: doc4microservices v1.0
+
+## Target Configuration
+- **Maturity Level**: 3 - Pre-Production
+- **Optional Modules**: Workers, Bot
+- **Estimated Generation Time**: ~15-20 minutes (base 15 min + 2 modules)
+- **Reference**: See `docs/reference/MATURITY_LEVELS.md` for level details
 
 ## Business Context & Objectives
 - **Problem**: Users need peer-to-peer lending with transparent terms
@@ -249,41 +282,55 @@ Please provide these details so I can ensure architecture alignment.
 
 **AI Actions**:
 1. Read `IMPLEMENTATION_PLAN_TEMPLATE.md`
-2. Read `USE_CASE_IMPLEMENTATION_GUIDE.md`
-3. Read service-specific atomic docs based on services needed:
+2. Read `MATURITY_LEVELS.md` and `CONDITIONAL_STAGE_RULES.md` to understand what features to include
+3. Read `USE_CASE_IMPLEMENTATION_GUIDE.md`
+4. Read service-specific atomic docs based on services needed AND maturity level:
    - If FastAPI → read `docs/atomic/services/fastapi/*`
    - If Aiogram → read `docs/atomic/services/aiogram/*`
    - If Workers → read `docs/atomic/services/asyncio-workers/*`
    - Always read `docs/atomic/services/data-services/*`
-4. Read integration atomic docs:
+   - **If Level ≥ 2** → read `docs/atomic/observability/logging/*`
+   - **If Level ≥ 3** → read `docs/atomic/infrastructure/api-gateway/*`, `docs/atomic/observability/metrics/*`
+   - **If Level = 4** → read `docs/atomic/observability/elk-stack/*`, `docs/atomic/observability/tracing/*`
+5. Read integration atomic docs:
    - `docs/atomic/integrations/redis/*`
    - `docs/atomic/integrations/rabbitmq/*`
    - `docs/atomic/integrations/http-communication/*`
-5. Create implementation plan with:
-   - **Phase 1**: Infrastructure setup (Docker, services scaffolding)
-   - **Phase 2**: Data layer (PostgreSQL/MongoDB services with repositories)
-   - **Phase 3**: Business logic (FastAPI endpoints, use cases)
-   - **Phase 4**: Background workers (credit scoring, payment processing)
-   - **Phase 5**: Telegram bot (notifications, commands)
-   - **Phase 6**: Testing & quality (unit, integration, e2e tests)
-6. Map each phase to:
+6. Create implementation plan with **CONDITIONAL phases** based on maturity level:
+   - **Phase 1**: Infrastructure setup (Docker, services scaffolding) — **ALL levels**
+   - **Phase 2**: Data layer (PostgreSQL/MongoDB services with repositories) — **ALL levels**
+   - **Phase 3**: Business logic (FastAPI endpoints, use cases) — **ALL levels**
+   - **Phase 4**: Background workers (credit scoring, payment processing) — **IF user requested**
+   - **Phase 5**: Telegram bot (notifications, commands) — **IF user requested**
+   - **Phase 6**: Testing & quality (unit, integration, e2e tests) — **ALL levels** (criteria vary by level)
+7. Map each phase to:
    - Specific tasks
    - Atomic documents to follow
    - Commands from `AGENT_TOOLBOX.md`
+   - **Required At Level** (which sub-stages to execute)
    - Definition of Done
-7. Identify risks and mitigations
-8. Create ADR if significant architectural decisions needed
+8. **Add "Maturity Level Features" section** showing:
+   - ✅ **Included features** at selected level
+   - ❌ **Skipped features** (available at higher levels)
+   - Upgrade path if user wants to add features later
+9. Identify risks and mitigations
+10. Create ADR if significant architectural decisions needed
 
 **Documents Read**:
 - `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`
+- `docs/reference/MATURITY_LEVELS.md` (for feature mapping)
+- `docs/reference/CONDITIONAL_STAGE_RULES.md` (for sub-stage logic)
 - `docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md`
-- `docs/atomic/services/**/*` (based on required services)
+- `docs/atomic/services/**/*` (based on required services AND level)
 - `docs/atomic/integrations/**/*` (based on integrations)
 - `docs/reference/AGENT_TOOLBOX.md`
 - `docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md` (if needed)
 
 **AI Generates**:
-- Implementation Plan (populated template)
+- Implementation Plan (populated template) with:
+  - **Maturity Level Features** section
+  - **Conditional phases** clearly marked
+  - **Estimated time** based on level and modules
 - Optional ADR documents
 
 **Example Plan Structure**:
@@ -326,15 +373,18 @@ Please provide these details so I can ensure architecture alignment.
 
 For EACH phase in the implementation plan:
 
-1. **Read relevant atomic documents** for current phase
-2. **Generate code** following patterns from atomic docs
-3. **Follow DDD/Hexagonal Architecture**:
+1. **Check maturity level** and read `CONDITIONAL_STAGE_RULES.md` to determine which sub-stages to execute
+2. **Read relevant atomic documents** for current phase AND maturity level
+3. **Generate code** following patterns from atomic docs
+4. **Follow DDD/Hexagonal Architecture**:
    - Domain layer (entities, value objects)
    - Application layer (use cases, DTOs)
    - Infrastructure layer (repositories, HTTP clients, message brokers)
-4. **Follow naming conventions** from `naming-conventions.md`
-5. **Use AGENT_TOOLBOX commands** to validate
-6. **Commit after each logical unit** with clear messages
+5. **Follow naming conventions** from `naming-conventions.md`
+6. **Use AGENT_TOOLBOX commands** to validate
+7. **Commit after each logical unit** with clear messages
+
+**IMPORTANT**: Stage 4 is now **CONDITIONAL**. AI must execute only the sub-stages required for the selected maturity level. See `AI_NAVIGATION_MATRIX.md` for complete sub-stage breakdown.
 
 #### Phase-by-Phase Breakdown
 
@@ -494,7 +544,11 @@ uv run bandit -r .
 uv run pytest --cov=services --cov-report=html --cov-report=xml
 ```
 
-**Exit Criteria**: All code generated, all tests pass, coverage ≥ 80%.
+**Exit Criteria**: All code generated, all tests pass, coverage ≥ **level-dependent threshold**:
+- **Level 1 (PoC)**: ≥ 60%
+- **Level 2 (Development)**: ≥ 75%
+- **Level 3 (Pre-Production)**: ≥ 80%
+- **Level 4 (Production)**: ≥ 85%
 
 ---
 
@@ -504,22 +558,24 @@ uv run pytest --cov=services --cov-report=html --cov-report=xml
 
 **AI Actions**:
 1. Read `AGENT_VERIFICATION_CHECKLIST.md`
-2. Execute ALL checks in order:
+2. Read `MATURITY_LEVELS.md` to understand **level-specific criteria** (coverage thresholds, security requirements, etc.)
+3. Execute ALL checks in order:
    - **Environment checks** (Python version, UV installed)
    - **Static analysis** (Ruff, Mypy, Bandit)
-   - **Testing** (pytest with coverage)
+   - **Testing** (pytest with coverage — **threshold varies by level**)
    - **Artifact validation** (project structure, naming conventions)
-3. Capture evidence for each check
-4. If ANY check fails:
+4. Capture evidence for each check
+5. If ANY check fails:
    - Fix the issue
    - Re-run failed check
    - Document fix in commit message
-5. Generate coverage reports:
+6. Generate coverage reports:
    - `htmlcov/index.html` (HTML report)
    - `coverage.xml` (CI/CD integration)
 
 **Documents Read**:
 - `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`
+- `docs/reference/MATURITY_LEVELS.md` (for level-specific criteria)
 - `docs/reference/AGENT_TOOLBOX.md` (quality commands)
 - `docs/reference/troubleshooting.md` (if issues found)
 
@@ -533,6 +589,7 @@ uv run pytest --cov=services --cov-report=html --cov-report=xml
 # Verification Checklist: P2P Lending Platform
 
 **Date**: 2025-10-01
+**Maturity Level**: 3 - Pre-Production
 **Status**: ✅ PASSED
 
 ## Static Analysis & Security
@@ -547,7 +604,8 @@ uv run pytest --cov=services --cov-report=html --cov-report=xml
 | Check | Command | Result | Evidence |
 |-------|---------|--------|----------|
 | Unit tests | `uv run pytest` | ✅ PASS | 287 passed, 0 failed |
-| Coverage | `pytest --cov=services` | ✅ 87% | htmlcov/index.html |
+| Coverage | `pytest --cov=services` | ✅ 82% | htmlcov/index.html |
+| **Coverage threshold** | **Level 3 requires ≥ 80%** | **✅ MET** | 82% ≥ 80% |
 
 ## Artifact Validation
 | Check | Result | Notes |
@@ -555,9 +613,10 @@ uv run pytest --cov=services --cov-report=html --cov-report=xml
 | Project structure | ✅ PASS | Follows PROJECT_STRUCTURE.md |
 | Naming conventions | ✅ PASS | All snake_case for code |
 | Documentation | ✅ PASS | README, API docs generated |
+| Maturity features | ✅ VERIFIED | Nginx ✅, SSL ✅, Metrics ✅ (Level 3) |
 ```
 
-**Exit Criteria**: ALL checks pass, coverage ≥ threshold.
+**Exit Criteria**: ALL checks pass, coverage ≥ **level-dependent threshold** (60%/75%/80%/85%).
 
 ---
 

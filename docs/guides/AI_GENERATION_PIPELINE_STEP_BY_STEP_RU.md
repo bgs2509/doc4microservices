@@ -163,17 +163,41 @@ AI загрузил полный контекст фреймворка и гот
 
 ### 🔍 Что проверяет AI
 
-AI проверяет наличие **7 обязательных полей**:
+AI проверяет наличие **9 обязательных полей**:
 
 | Поле | Пример | Обязательно |
 |------|--------|-------------|
 | **Бизнес-контекст** | "Проблема: пользователям нужен P2P lending" | ✅ ДА |
 | **Функциональные требования** | "Создание займов, оплата через Stripe" | ✅ ДА |
 | **Нефункциональные ограничения** | "< 200ms latency, 99.9% uptime" | ✅ ДА |
+| **🆕 Целевой уровень зрелости** | "Level 3 - Pre-Production (~15 min)" | ✅ ДА |
+| **🆕 Опциональные модули** | "Workers, Bot" или "None" | ✅ ДА |
 | **Зависимости и интеграции** | "Stripe, Twilio, Onfido KYC" | ✅ ДА |
 | **Границы scope** | "Без вторичного рынка займов (v1)" | ✅ ДА |
 | **Ожидаемые deliverables** | "Код, тесты, Docker configs, API docs" | ✅ ДА |
 | **Критерии приемки** | "Coverage ≥ 80%, все тесты OK" | ✅ ДА |
+
+### 🎚️ Выбор уровня зрелости (Maturity Level)
+
+**ВАЖНО**: AI спрашивает пользователя выбрать уровень зрелости, который определяет сложность и время генерации:
+
+| Уровень | Название | Время | Что включено | Кому подходит |
+|---------|----------|-------|--------------|---------------|
+| **1** | 🧪 PoC (Proof of Concept) | ~5 мин | Только core: FastAPI + PostgreSQL + Docker. Без логирования, метрик, Nginx, SSL. | MVP, demo, обучение |
+| **2** | 🛠️ Development Ready | ~10 мин | + Структурированное логирование, health checks, error tracking | Активная разработка, staging |
+| **3** | 🚀 Pre-Production | ~15 мин | + Nginx, SSL, Prometheus метрики, rate limiting | Публичная beta, малый production |
+| **4** | 🏢 Production | ~30 мин | + OAuth/JWT, RBAC, ELK Stack, tracing, CI/CD, HA, backups | Enterprise, compliance |
+
+**Опциональные модули** (доступны на любом уровне):
+- Background Workers (AsyncIO)
+- Telegram Bot (Aiogram)
+- MongoDB (NoSQL database)
+- RabbitMQ (event messaging)
+- Redis (caching)
+- File Storage (S3/MinIO)
+- Real-Time (WebSockets)
+
+📖 **Подробнее**: См. `docs/reference/MATURITY_LEVELS.md`
 
 ### 🤖 Действия AI
 
@@ -2089,6 +2113,409 @@ QA отчет одобрен пользователем, все deliverables п�
       All checks now passed! → Stage 6: QA Report
 
 🤖 AI: [Generates QA Report with note about fixes made]
+```
+
+---
+
+### Пример 3: Level 1 (PoC) — Минимальная генерация за ~5 минут
+
+```
+👤 USER: Хочу простой task manager API для командного проекта. Базовый CRUD для задач.
+
+🤖 AI: 🔍 Prompt Validation: INCOMPLETE
+
+      **Нужно выбрать уровень зрелости (Maturity Level)**:
+
+      1. 🧪 **PoC** (~5 мин) — Только core (FastAPI + PostgreSQL + Docker)
+      2. 🛠️ **Development** (~10 мин) — + Логирование, health checks
+      3. 🚀 **Pre-Production** (~15 мин) — + Nginx, SSL, метрики
+      4. 🏢 **Production** (~30 мин) — + OAuth, ELK, tracing, CI/CD
+
+      **Ваш выбор (1-4)**: _____
+
+👤 USER: Level 1 (PoC). Мне нужен только быстрый MVP для демо.
+
+🤖 AI: ✅ Maturity Level: 1 - PoC (~5 мин)
+      ✅ Validation Complete → Stage 2
+
+      [Generates Requirements Intake]
+      - Maturity Level: 1 - PoC
+      - Optional Modules: None
+      - Estimated Time: ~5 минут
+
+      Одобрите Requirements Intake?
+
+👤 USER: APPROVED
+
+🤖 AI: → Stage 3: Planning
+      [Generates Implementation Plan]
+
+      ## Что будет включено (Level 1):
+      ✅ FastAPI service (core endpoints)
+      ✅ PostgreSQL data service
+      ✅ Docker Compose (basic)
+      ✅ Basic tests (coverage ≥ 60%)
+
+      ## Что НЕ будет включено (доступно в Level 2+):
+      ❌ Структурированное логирование (Level 2)
+      ❌ Nginx API Gateway (Level 3)
+      ❌ SSL/TLS (Level 3)
+      ❌ Prometheus метрики (Level 3)
+      ❌ OAuth/JWT (Level 4)
+      ❌ ELK Stack (Level 4)
+
+      💡 **Upgrade Path**: Позже можно добавить эти features, см. MATURITY_LEVELS.md
+
+      Одобрить план?
+
+👤 USER: START
+
+🤖 AI: ✅ Stage 4: Code Generation (PoC mode)
+
+      [4.1] Infrastructure (basic) ✅ (~1 min)
+      - docker-compose.yml
+      - .env.example
+      - Makefile
+
+      [4.2] Data Layer ✅ (~1.5 min)
+      - PostgreSQL service: tasks model
+      - HTTP API for data access
+
+      [4.3] Business Logic (core only) ✅ (~1.5 min)
+      - FastAPI service
+      - CRUD endpoints для tasks
+      - NO logging, NO metrics (PoC mode)
+
+      [4.6] Testing (basic) ✅ (~1 min)
+      - pytest setup
+      - Unit tests для core
+      - Coverage: 63% (Level 1 target: ≥ 60%) ✅
+
+      ✅ Total time: ~5 минут
+
+      → Stage 5: Verification
+      [Runs checks]
+      ✅ Ruff: 0 errors
+      ✅ Mypy: 0 errors
+      ✅ Bandit: 0 high severity
+      ✅ Tests: 42 passed
+      ✅ Coverage: 63% (≥ 60% для Level 1) ✅
+
+      → Stage 6: QA Report
+
+🤖 AI: 🎉 PoC Ready! (5 минут)
+
+      **Что сделано**:
+      - Task Manager API (CRUD)
+      - 42 tests, 63% coverage
+      - Docker Compose ready
+
+      **Deployment (PoC)**:
+      ```bash
+      docker-compose up -d
+      curl http://localhost:8000/api/v1/tasks
+      ```
+
+      **Upgrade to Level 2** (if needed):
+      - + Structured logging
+      - + Health checks
+      - Time: ~5 доп. минут
+
+👤 USER: Отлично! Запускаю demo.
+```
+
+---
+
+### Пример 4: Level 2 (Development Ready) — С логированием за ~10 минут
+
+```
+👤 USER: Task manager API как в Примере 3, но с логированием для debugging в staging.
+
+🤖 AI: 🔍 Рекомендую **Level 2 (Development Ready)**:
+      - Включает всё из Level 1
+      - + Структурированное логирование (JSON)
+      - + Health checks
+      - + Error tracking
+      - Время: ~10 минут
+
+      Согласны с Level 2?
+
+👤 USER: Да, Level 2.
+
+🤖 AI: ✅ Maturity Level: 2 - Development Ready
+      → Stage 2-3: Requirements + Planning
+
+      ## Что включено (Level 2):
+      ✅ Всё из Level 1 (core)
+      ✅ Структурированное логирование (structlog)
+      ✅ Request ID propagation
+      ✅ Health check endpoints
+      ✅ Error tracking
+      ✅ docker-compose.dev.yml (dev overrides)
+      ✅ Coverage target: ≥ 75%
+
+      Одобрить?
+
+👤 USER: APPROVED
+
+🤖 AI: → Stage 4: Code Generation (Development mode)
+
+      [4.1] Infrastructure (basic) ✅
+      [4.1b] + Dev Overrides ✅ (Level 2)
+      - docker-compose.dev.yml
+      - Healthcheck setup
+
+      [4.2] Data Layer ✅
+
+      [4.3] Business Logic (core) ✅
+      [4.3b] + Structured Logging ✅ (Level 2)
+      - Logger setup (structlog)
+      - Request ID middleware
+      - Error logging
+
+      [4.6] Testing (basic) ✅
+      [4.6b] + Integration Tests ✅ (Level 2)
+      - Testcontainers
+      - Coverage: 78% (≥ 75% target)
+
+      ✅ Total time: ~10 минут
+
+      → Stage 5: Verification
+      ✅ All checks passed
+      ✅ Coverage: 78% (≥ 75%) ✅
+
+🤖 AI: 🎉 Development-Ready App! (10 минут)
+
+      **Что добавлено vs Level 1**:
+      - ✅ Структурированные логи (JSON)
+      - ✅ Request ID во всех логах
+      - ✅ Health checks: /health, /ready
+      - ✅ Integration tests
+
+      **Deployment (Dev)**:
+      ```bash
+      docker-compose -f docker-compose.dev.yml up -d
+      curl http://localhost:8000/health  # {"status":"ok"}
+      ```
+
+      **Upgrade to Level 3** (if needed):
+      - + Nginx API Gateway
+      - + SSL/TLS
+      - + Prometheus + Grafana
+      - Time: ~5 доп. минут
+```
+
+---
+
+### Пример 5: Level 3 (Pre-Production) — С Nginx и метриками за ~15 минут
+
+```
+👤 USER: Task manager для публичного запуска (beta). Нужен SSL и мониторинг.
+
+🤖 AI: 🔍 Рекомендую **Level 3 (Pre-Production)**:
+      - Всё из Level 2
+      - + Nginx API Gateway (reverse proxy)
+      - + SSL/TLS (Let's Encrypt ready)
+      - + Prometheus + Grafana
+      - + Rate limiting
+      - Время: ~15 минут
+
+      Level 3?
+
+👤 USER: Да.
+
+🤖 AI: ✅ Maturity Level: 3 - Pre-Production
+      → Stage 2-3: Requirements + Planning
+
+      ## Что включено (Level 3):
+      ✅ Всё из Level 1 + 2
+      ✅ Nginx (reverse proxy, load balancing)
+      ✅ SSL/TLS setup (certbot ready)
+      ✅ Prometheus metrics (/metrics)
+      ✅ Grafana dashboards
+      ✅ Rate limiting (Nginx)
+      ✅ docker-compose.prod.yml
+      ✅ Coverage target: ≥ 80%
+
+      Одобрить?
+
+👤 USER: START
+
+🤖 AI: → Stage 4: Code Generation (Pre-Production mode)
+
+      [4.1] Infrastructure (basic) ✅
+      [4.1b] + Dev Overrides ✅
+      [4.1c] + Nginx + SSL + Metrics ✅ (Level 3)
+      - Nginx config (reverse proxy)
+      - SSL setup (certbot-ready)
+      - Prometheus + Grafana
+      - docker-compose.prod.yml
+
+      [4.2] Data Layer ✅
+
+      [4.3] Business Logic (core) ✅
+      [4.3b] + Structured Logging ✅
+      [4.3c] + Prometheus Metrics ✅ (Level 3)
+      - /metrics endpoint
+      - Custom business metrics
+      - Grafana dashboard
+
+      [4.6] Testing (basic + integration) ✅
+      [4.6c] + E2E Tests ✅ (Level 3)
+      - End-to-end API tests
+      - Coverage: 83% (≥ 80%)
+
+      ✅ Total time: ~15 минут
+
+      → Stage 5: Verification
+      ✅ All checks passed
+      ✅ Coverage: 83%
+      ✅ Nginx config validated
+      ✅ SSL ready
+
+🤖 AI: 🎉 Pre-Production Ready! (15 минут)
+
+      **Что добавлено vs Level 2**:
+      - ✅ Nginx reverse proxy
+      - ✅ SSL/TLS (certbot integration)
+      - ✅ Prometheus metrics (/metrics)
+      - ✅ Grafana dashboards
+      - ✅ Rate limiting (100 req/min/IP)
+      - ✅ E2E tests
+
+      **Deployment (Production-like)**:
+      ```bash
+      docker-compose -f docker-compose.prod.yml up -d
+
+      # Setup SSL (manual step):
+      docker-compose exec nginx certbot --nginx -d yourdomain.com
+
+      # Access
+      https://yourdomain.com/api/v1/tasks  # via Nginx + SSL
+      http://localhost:9090                 # Prometheus
+      http://localhost:3000                 # Grafana
+      ```
+
+      **Upgrade to Level 4** (if needed):
+      - + OAuth 2.0 / JWT
+      - + ELK Stack (centralized logging)
+      - + Distributed tracing
+      - + CI/CD pipelines
+      - Time: ~15 доп. минут
+```
+
+---
+
+### Пример 6: Level 4 (Production) — Full Enterprise за ~30 минут
+
+```
+👤 USER: Task manager для enterprise клиента. Нужна аутентификация, compliance, CI/CD.
+
+🤖 AI: 🔍 Рекомендую **Level 4 (Production)**:
+      - Всё из Level 3
+      - + OAuth 2.0 / JWT + RBAC
+      - + ELK Stack (Elasticsearch + Logstash + Kibana)
+      - + Distributed tracing (Jaeger)
+      - + PostgreSQL replication + backups
+      - + CI/CD pipelines (GitHub Actions)
+      - Время: ~30 минут
+
+      Level 4?
+
+👤 USER: Да, нужен полный production.
+
+🤖 AI: ✅ Maturity Level: 4 - Production
+      → Stage 2-3: Requirements + Planning
+
+      ## Что включено (Level 4):
+      ✅ Всё из Level 1 + 2 + 3
+      ✅ OAuth 2.0 / JWT authentication
+      ✅ RBAC (Role-Based Access Control)
+      ✅ ELK Stack (centralized logging)
+      ✅ Distributed tracing (Jaeger)
+      ✅ PostgreSQL replication (master-replica)
+      ✅ Automated backups
+      ✅ CI/CD pipelines (GitHub Actions)
+      ✅ Security tests
+      ✅ Coverage target: ≥ 85%
+
+      Одобрить?
+
+👤 USER: APPROVED
+
+🤖 AI: → Stage 4: Code Generation (Production mode)
+
+      [4.1] Infrastructure ✅
+      [4.1b] + Dev Overrides ✅
+      [4.1c] + Nginx + SSL + Metrics ✅
+      [4.1d] + ELK + Replication ✅ (Level 4)
+      - ELK Stack config
+      - PostgreSQL replication
+      - Backup scripts
+
+      [4.2] Data Layer ✅
+
+      [4.3] Business Logic (core) ✅
+      [4.3b] + Structured Logging ✅
+      [4.3c] + Prometheus Metrics ✅
+      [4.3d] + OAuth/JWT + Tracing ✅ (Level 4)
+      - OAuth 2.0 / JWT setup
+      - RBAC middleware
+      - Distributed tracing (Jaeger)
+
+      [4.6] Testing ✅
+      [4.6b] + Integration Tests ✅
+      [4.6c] + E2E Tests ✅
+      [4.6d] + Security Tests ✅ (Level 4)
+      - Security test suite
+      - Bandit config (strict)
+      - Coverage: 87% (≥ 85%)
+
+      [CI/CD] GitHub Actions pipelines ✅
+      - Lint, test, build, deploy
+      - Automated security scans
+
+      ✅ Total time: ~30 минут
+
+      → Stage 5: Verification
+      ✅ All checks passed
+      ✅ Coverage: 87%
+      ✅ Security tests: passed
+      ✅ OAuth functional
+
+🤖 AI: 🎉 Production-Ready Enterprise App! (30 минут)
+
+      **Что добавлено vs Level 3**:
+      - ✅ OAuth 2.0 / JWT authentication
+      - ✅ RBAC (admin, user roles)
+      - ✅ ELK Stack (centralized logs)
+      - ✅ Distributed tracing (Jaeger)
+      - ✅ PostgreSQL replication
+      - ✅ Automated backups (daily)
+      - ✅ CI/CD pipelines
+      - ✅ Security test suite
+
+      **Deployment (Production)**:
+      ```bash
+      # Production deployment
+      docker-compose -f docker-compose.prod.yml up -d
+
+      # Verify all services
+      docker-compose ps  # All healthy
+
+      # Access
+      https://api.yourdomain.com/auth/login    # OAuth login
+      https://api.yourdomain.com/api/v1/tasks  # Authenticated API
+      http://localhost:5601                     # Kibana (logs)
+      http://localhost:16686                    # Jaeger (traces)
+      ```
+
+      **Compliance Ready**:
+      - ✅ GDPR (audit logs in ELK)
+      - ✅ SOC 2 (authentication, encryption, backups)
+      - ✅ Security scans (automated in CI/CD)
+
+👤 USER: Perfect! Запускаю в production.
 ```
 
 ---
