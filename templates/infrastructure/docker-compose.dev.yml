@@ -9,7 +9,7 @@ services:
   # ══════════════════════════════════════════════════════════════════════════════
   # BUSINESS SERVICES - Development mode with hot reload
   # ══════════════════════════════════════════════════════════════════════════════
-  api_service:
+  template_business_api:
     build:
       target: development
     environment:
@@ -18,11 +18,11 @@ services:
       - LOG_LEVEL=debug
       - API_RELOAD=true
     volumes:
-      - ./services/api_service/src:/app/src:ro
+      - ./services/template_business_api/src:/app/src:ro
     ports:
       - "8000:8000"  # Expose directly for development
 
-  bot_service:
+  template_business_bot:
     build:
       target: development
     environment:
@@ -30,9 +30,9 @@ services:
       - DEBUG=true
       - LOG_LEVEL=debug
     volumes:
-      - ./services/bot_service/src:/app/src:ro
+      - ./services/template_business_bot/src:/app/src:ro
 
-  worker_service:
+  template_business_worker:
     build:
       target: development
     environment:
@@ -40,9 +40,9 @@ services:
       - DEBUG=true
       - LOG_LEVEL=debug
     volumes:
-      - ./services/worker_service/src:/app/src:ro
+      - ./services/template_business_worker/src:/app/src:ro
 
-  db_postgres_service:
+  template_data_postgres_api:
     build:
       target: development
     environment:
@@ -50,11 +50,11 @@ services:
       - DEBUG=true
       - LOG_LEVEL=debug
     volumes:
-      - ./services/db_postgres_service/src:/app/src:ro
+      - ./services/template_data_postgres_api/src:/app/src:ro
     ports:
       - "8001:8000"  # Expose directly for development
 
-  db_mongo_service:
+  template_data_mongo_api:
     build:
       target: development
     environment:
@@ -62,7 +62,7 @@ services:
       - DEBUG=true
       - LOG_LEVEL=debug
     volumes:
-      - ./services/db_mongo_service/src:/app/src:ro
+      - ./services/template_data_mongo_api/src:/app/src:ro
     ports:
       - "8002:8000"  # Expose directly for development
 

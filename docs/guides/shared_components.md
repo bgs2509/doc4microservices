@@ -47,7 +47,7 @@ This package is intended for small, reusable helper functions that can be used i
 
 - **What should NOT be in `utils/`**:
     - Business logic specific to a single service.
-    - Functions that import anything from a specific service (e.g., from `api_service`).
+    - Functions that import anything from a specific service (e.g., from `template_business_api`).
     - Any code that performs I/O operations.
 
 ## Usage and Import in Services
@@ -60,7 +60,7 @@ If a service needs an extended or modified version of a shared component, it mus
 
 ### Example of Import and Usage
 
-Suppose `worker_service` needs to process a user and use a shared utility for it.
+Suppose `template_business_worker` needs to process a user and use a shared utility for it.
 
 **`src/shared/dtos/user_dtos.py`**
 ```python
@@ -81,7 +81,7 @@ def generate_processing_id(user_id: int, task_name: str) -> str:
     return f"{task_name}_{user_id}_{uuid.uuid4()}"
 ```
 
-**`src/worker_service/tasks.py`**
+**`src/template_business_worker/tasks.py`**
 ```python
 # Import shared components from packages
 from shared.dtos.user_dtos import UserPublic

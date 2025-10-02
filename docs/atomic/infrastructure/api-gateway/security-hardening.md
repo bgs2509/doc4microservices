@@ -79,7 +79,7 @@ http {
         location /api/ {
             limit_req zone=api_limit burst=20 nodelay;
             limit_req_status 429;
-            proxy_pass http://api_service;
+            proxy_pass http://template_business_api;
         }
 
         # Stricter limit for authentication
@@ -112,7 +112,7 @@ server {
         # Fallback to IP-based limit if no auth token
         limit_req zone=api_limit burst=20 nodelay;
 
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -134,7 +134,7 @@ server {
     limit_conn conn_limit_per_server 1000;
 
     location /api/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -154,7 +154,7 @@ server {
     # Endpoints with larger uploads
     location /api/v1/upload {
         client_max_body_size 50M;
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -177,7 +177,7 @@ server {
     deny all;
 
     location /api/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -188,7 +188,7 @@ server {
 server {
     # Public endpoints
     location /api/v1/public/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 
     # Admin endpoints - restrict to internal IPs
@@ -204,7 +204,7 @@ server {
         # Deny everyone else
         deny all;
 
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -228,7 +228,7 @@ http {
             if ($allowed_country = no) {
                 return 403 '{"error": "Access denied from your country"}';
             }
-            proxy_pass http://api_service;
+            proxy_pass http://template_business_api;
         }
     }
 }
@@ -251,7 +251,7 @@ location /api/v1/public/ {
         return 204;
     }
 
-    proxy_pass http://api_service;
+    proxy_pass http://template_business_api;
 }
 ```
 
@@ -284,7 +284,7 @@ server {
             return 204;
         }
 
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -307,7 +307,7 @@ http {
         limit_req zone=ddos_limit burst=50 nodelay;
 
         location / {
-            proxy_pass http://api_service;
+            proxy_pass http://template_business_api;
         }
     }
 }
@@ -327,7 +327,7 @@ server {
     keepalive_requests 100;
 
     location /api/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -352,7 +352,7 @@ server {
     ssl_stapling_verify on;
 
     location / {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -384,7 +384,7 @@ location / {
         return 403;
     }
 
-    proxy_pass http://api_service;
+    proxy_pass http://template_business_api;
 }
 ```
 
@@ -408,7 +408,7 @@ location /api/ {
         }
     }
 
-    proxy_pass http://api_service;
+    proxy_pass http://template_business_api;
 }
 ```
 
@@ -458,7 +458,7 @@ http {
             modsecurity_rules '
                 SecRule ARGS "@rx select.*from" "id:1,deny,status:403,msg:SQL Injection Detected"
             ';
-            proxy_pass http://api_service;
+            proxy_pass http://template_business_api;
         }
     }
 }
@@ -522,7 +522,7 @@ location /api/ {
     if ($http_user_agent ~* bot) {
         return 403;
     }
-    proxy_pass http://api_service;
+    proxy_pass http://template_business_api;
 }
 ```
 
@@ -539,7 +539,7 @@ server {
         if ($is_bot) {
             return 403;
         }
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```

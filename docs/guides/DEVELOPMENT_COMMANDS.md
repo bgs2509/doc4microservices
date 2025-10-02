@@ -122,9 +122,9 @@ open http://localhost:8000/docs      # Business API Service API
 ```
 
 ### Inter-Service Communication (inside Docker network)
-- **PostgreSQL Data Service**: `http://db_postgres_service:8000`
-- **MongoDB Data Service**: `http://db_mongo_service:8000`
-- **Business API Service**: `http://api_service:8000`
+- **PostgreSQL Data Service**: `http://template_data_postgres_api:8000`
+- **MongoDB Data Service**: `http://template_data_mongo_api:8000`
+- **Business API Service**: `http://template_business_api:8000`
 
 > **Port Mapping Strategy**: All services run on port 8000 inside containers. Docker Compose maps them to different host ports (8000, 8001, 8002) to avoid conflicts.
 
@@ -151,7 +151,7 @@ docker-compose exec redis redis-cli ping
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
 # Scale services for production
-docker-compose up --scale api_service=3 --scale worker_service=2 -d
+docker-compose up --scale template_business_api=3 --scale template_business_worker=2 -d
 
 # Production build with optimizations
 docker-compose -f docker-compose.prod.yml build --no-cache
@@ -384,7 +384,7 @@ open http://localhost:15672  # Management UI
 docker-compose exec rabbitmq rabbitmqctl list_queues
 
 # Test HTTP communication between services
-docker-compose exec api_service curl http://db_postgres_service:8000/health
+docker-compose exec template_business_api curl http://template_data_postgres_api:8000/health
 ```
 
 ### Performance Diagnostics

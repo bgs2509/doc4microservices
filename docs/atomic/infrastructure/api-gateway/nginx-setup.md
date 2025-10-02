@@ -20,7 +20,7 @@ External Traffic (Internet)
          ↓
     ┌────┴─────┬─────────┬───────────┐
     ↓          ↓         ↓           ↓
-api_service  bot_service  db-*-services
+template_business_api  template_business_bot  db-*-services
 (internal)   (internal)   (internal)
 ```
 
@@ -103,29 +103,29 @@ http {
 # Define upstream services
 # Use Docker service names for internal DNS resolution
 
-upstream api_service {
-    # api_service is the Docker Compose service name
-    server api_service:8000;
+upstream template_business_api {
+    # template_business_api is the Docker Compose service name
+    server template_business_api:8000;
     # For multiple instances (load balancing):
-    # server api_service-1:8000;
-    # server api_service-2:8000;
+    # server template_business_api-1:8000;
+    # server template_business_api-2:8000;
     keepalive 32;
 }
 
 upstream bot_webhook_service {
-    server bot_service:8002;
+    server template_business_bot:8002;
     keepalive 16;
 }
 
-upstream db_postgres_service {
+upstream template_data_postgres_api {
     # Data services should NOT be exposed externally
     # Only include if you need admin/debug access (not recommended for production)
-    server db_postgres_service:8001;
+    server template_data_postgres_api:8001;
     keepalive 16;
 }
 
-upstream db_mongo_service {
-    server db_mongo_service:8002;
+upstream template_data_mongo_api {
+    server template_data_mongo_api:8002;
     keepalive 16;
 }
 ```
@@ -146,7 +146,7 @@ server {
 
     # Route to FastAPI service
     location /api/v1/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -185,7 +185,7 @@ server {
     #     allow 172.16.0.0/12;
     #     deny all;
     #
-    #     proxy_pass http://api_service/admin/;
+    #     proxy_pass http://template_business_api/admin/;
     #     proxy_set_header Host $host;
     #     proxy_set_header X-Real-IP $remote_addr;
     # }
@@ -245,8 +245,8 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      - api_service
-      - bot_service
+      - template_business_api
+      - template_business_bot
     networks:
       - app_network
     volumes:
@@ -257,15 +257,15 @@ services:
       - nginx-logs:/var/log/nginx
     restart: unless-stopped
 
-  api_service:
-    build: ./services/api_service
+  template_business_api:
+    build: ./services/template_business_api
     # NO ports exposed - internal only
     networks:
       - app_network
     restart: unless-stopped
 
-  bot_service:
-    build: ./services/bot_service
+  template_business_bot:
+    build: ./services/template_business_bot
     # NO ports exposed - internal only
     networks:
       - app_network
@@ -326,13 +326,13 @@ curl http://localhost/api/v1/health
 **Solution**:
 ```bash
 # Check if service is running
-docker-compose ps api_service
+docker-compose ps template_business_api
 
 # Check service logs
-docker-compose logs api_service
+docker-compose logs template_business_api
 
 # Verify Docker network connectivity
-docker-compose exec nginx ping api_service
+docker-compose exec nginx ping template_business_api
 ```
 
 ### Issue: 504 Gateway Timeout

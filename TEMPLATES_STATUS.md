@@ -65,19 +65,19 @@
 14. **infrastructure/monitoring/grafana/provisioning/datasources/prometheus.yml** ✅
     - Auto-provisioned datasource
 
-15. **services/api_service/Dockerfile** ✅
+15. **services/template_business_api/Dockerfile** ✅
     - Multi-stage build
     - Dev + production targets
 
-16. **services/api_service/requirements.txt** ✅
+16. **services/template_business_api/requirements.txt** ✅
     - Complete dependencies
     - FastAPI, httpx, Redis, RabbitMQ
 
-17. **services/api_service/src/main.py** ✅
+17. **services/template_business_api/src/main.py** ✅
     - Application factory
     - Lifespan management
 
-18. **services/api_service/src/core/config.py** ✅
+18. **services/template_business_api/src/core/config.py** ✅
     - Comprehensive Pydantic Settings
     - All configuration options
 

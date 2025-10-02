@@ -50,13 +50,13 @@ server {
 Route based on domain/subdomain:
 
 ```nginx
-# api.example.com -> api_service
+# api.example.com -> template_business_api
 server {
     listen 80;
     server_name api.example.com;
 
     location / {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 
@@ -161,7 +161,7 @@ server {
     }
 
     location @backend {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
         include /etc/nginx/proxy_params.conf;
     }
 
@@ -207,7 +207,7 @@ location /api/ {
 
 ```nginx
 location /api/ {
-    proxy_pass http://api_service;
+    proxy_pass http://template_business_api;
 
     # Add custom headers
     proxy_set_header X-Gateway "nginx";
@@ -225,13 +225,13 @@ location /api/ {
 # Remove /api prefix before forwarding
 location /api/ {
     rewrite ^/api/(.*)$ /$1 break;
-    proxy_pass http://api_service;
+    proxy_pass http://template_business_api;
 }
 
 # Add prefix
 location /external/ {
     rewrite ^/external/(.*)$ /api/v1/$1 break;
-    proxy_pass http://api_service;
+    proxy_pass http://template_business_api;
 }
 ```
 
@@ -241,7 +241,7 @@ location /external/ {
 # Add query parameter
 location /api/ {
     set $args "${args}&source=gateway";
-    proxy_pass http://api_service;
+    proxy_pass http://template_business_api;
 }
 ```
 
@@ -309,13 +309,13 @@ server {
     location /api/v1/public/ {
         # 10 requests per second per IP
         limit_req zone=api_limit burst=20 nodelay;
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 
     location /api/v1/user/ {
         # 100 requests per second per user (by auth token)
         limit_req zone=user_limit burst=50 nodelay;
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -329,7 +329,7 @@ limit_conn_zone $binary_remote_addr zone=addr:10m;
 server {
     location /api/ {
         limit_conn addr 10;  # Max 10 concurrent connections per IP
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -339,14 +339,14 @@ server {
 ### Circuit Breaker Pattern
 
 ```nginx
-upstream api_service {
-    server api_service:8000 max_fails=3 fail_timeout=30s;
+upstream template_business_api {
+    server template_business_api:8000 max_fails=3 fail_timeout=30s;
     server api_service_backup:8000 backup;
 }
 
 server {
     location /api/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
         proxy_next_upstream error timeout http_502;
         proxy_connect_timeout 5s;
         proxy_send_timeout 10s;
@@ -402,7 +402,7 @@ map $http_x_request_id $request_id_to_use {
 
 server {
     location /api/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
         proxy_set_header X-Request-ID $request_id_to_use;
 
         # Log request ID
@@ -455,7 +455,7 @@ proxy_set_header Connection "";
 # Use in locations
 location /api/ {
     include /etc/nginx/proxy_params.conf;
-    proxy_pass http://api_service;
+    proxy_pass http://template_business_api;
 }
 ```
 

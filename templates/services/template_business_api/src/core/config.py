@@ -80,11 +80,11 @@ class Settings(BaseSettings):
     # Data Service URLs (HTTP-only access)
     # ═══════════════════════════════════════════════════════════════════════════
     POSTGRES_SERVICE_URL: str = Field(
-        default="http://db_postgres_service:8000",
+        default="http://template_data_postgres_api:8000",
         description="PostgreSQL service URL",
     )
     MONGO_SERVICE_URL: str = Field(
-        default="http://db_mongo_service:8000",
+        default="http://template_data_mongo_api:8000",
         description="MongoDB service URL",
     )
 

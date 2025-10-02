@@ -39,11 +39,11 @@ jobs:
     strategy:
       matrix:
         service:
-          - api_service
-          - bot_service
-          - worker_service
-          - db_postgres_service
-          - db_mongo_service
+          - template_business_api
+          - template_business_bot
+          - template_business_worker
+          - template_data_postgres_api
+          - template_data_mongo_api
 
     steps:
       - name: Checkout code

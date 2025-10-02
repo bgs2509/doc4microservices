@@ -190,14 +190,14 @@ This section provides technology-specific implementation details for the **Impro
 ### Relational Database
 - **Technology**: PostgreSQL
 - **Image**: postgres:16
-- **Comment**: Primary relational database for structured data, transactions, and business entities. Accessed ONLY via db_postgres_service in the Improved Hybrid Approach. Supports complex queries, joins, and ACID transactions.
-- **Integration**: Business services access PostgreSQL data via HTTP calls to db_postgres_service (Port: 8001).
+- **Comment**: Primary relational database for structured data, transactions, and business entities. Accessed ONLY via template_data_postgres_api in the Improved Hybrid Approach. Supports complex queries, joins, and ACID transactions.
+- **Integration**: Business services access PostgreSQL data via HTTP calls to template_data_postgres_api (Port: 8001).
 - **Use Cases**: Users, products, orders, payments, structured business data requiring transactions.
 
 ### PostgreSQL Driver
 - **Technology**: asyncpg
 - **Libraries**: asyncpg>=0.30.0
-- **Comment**: Used ONLY in db_postgres_service for direct database access. Native asyncio driver with superior performance. Fully compatible with SQLAlchemy 2.x, Python 3.12+. Business services MUST NOT use asyncpg directly - use HTTP client instead.
+- **Comment**: Used ONLY in template_data_postgres_api for direct database access. Native asyncio driver with superior performance. Fully compatible with SQLAlchemy 2.x, Python 3.12+. Business services MUST NOT use asyncpg directly - use HTTP client instead.
 
 ### Message Broker
 - **Technology**: RabbitMQ
@@ -219,14 +219,14 @@ This section provides technology-specific implementation details for the **Impro
 ### NoSQL Database
 - **Technology**: MongoDB
 - **Image**: mongo:7.0.9
-- **Comment**: Document-oriented storage for analytics, user behavior, and flexible schemas. Accessed ONLY via db_mongo_service in the Improved Hybrid Approach. Supports aggregation pipelines and real-time analytics.
-- **Integration**: Business services access MongoDB data via HTTP calls to db_mongo_service (Port: 8002).
+- **Comment**: Document-oriented storage for analytics, user behavior, and flexible schemas. Accessed ONLY via template_data_mongo_api in the Improved Hybrid Approach. Supports aggregation pipelines and real-time analytics.
+- **Integration**: Business services access MongoDB data via HTTP calls to template_data_mongo_api (Port: 8002).
 - **Use Cases**: Analytics events, user behavior tracking, application logs, flexible document storage.
 
 ### MongoDB Driver
 - **Technology**: Motor
 - **Libraries**: motor==3.5.0 (async library)
-- **Comment**: Used ONLY in db_mongo_service for direct database access. Fully async driver over pymongo, compatible with Python 3.12+. Business services MUST NOT use Motor directly - use HTTP client instead.
+- **Comment**: Used ONLY in template_data_mongo_api for direct database access. Fully async driver over pymongo, compatible with Python 3.12+. Business services MUST NOT use Motor directly - use HTTP client instead.
 
 ### Cache and Idempotency
 - **Technology**: Redis

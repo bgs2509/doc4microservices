@@ -10,7 +10,7 @@ Comprehensive guide for Nginx load balancing strategies, health checks, session 
 # /etc/nginx/conf.d/upstream.conf
 
 # API Service load balancing
-upstream api_service {
+upstream template_business_api {
     # Load balancing method (default: round-robin)
     least_conn;
 
@@ -29,7 +29,7 @@ upstream api_service {
 }
 
 # Data Service (PostgreSQL) - Internal only
-upstream db_postgres_service {
+upstream template_data_postgres_api {
     least_conn;
     server db_postgres_service_1:8001 max_fails=2 fail_timeout=10s;
     server db_postgres_service_2:8001 max_fails=2 fail_timeout=10s;
@@ -37,7 +37,7 @@ upstream db_postgres_service {
 }
 
 # Data Service (MongoDB) - Internal only
-upstream db_mongo_service {
+upstream template_data_mongo_api {
     least_conn;
     server db_mongo_service_1:8002 max_fails=2 fail_timeout=10s;
     server db_mongo_service_2:8002 max_fails=2 fail_timeout=10s;
@@ -45,7 +45,7 @@ upstream db_mongo_service {
 }
 
 # Worker Service (AsyncIO)
-upstream worker_service {
+upstream template_business_worker {
     least_conn;
     server worker_service_1:8003 max_fails=3 fail_timeout=20s;
     server worker_service_2:8003 max_fails=3 fail_timeout=20s;
@@ -58,7 +58,7 @@ upstream worker_service {
 
 ```nginx
 # Distribute requests sequentially across servers
-upstream api_service {
+upstream template_business_api {
     server api-1:8000;
     server api-2:8000;
     server api-3:8000;
@@ -71,7 +71,7 @@ upstream api_service {
 
 ```nginx
 # Send requests to server with fewest active connections
-upstream api_service {
+upstream template_business_api {
     least_conn;
     server api-1:8000;
     server api-2:8000;
@@ -85,7 +85,7 @@ upstream api_service {
 
 ```nginx
 # Same client always goes to same server
-upstream api_service {
+upstream template_business_api {
     ip_hash;
     server api-1:8000;
     server api-2:8000;
@@ -99,7 +99,7 @@ upstream api_service {
 
 ```nginx
 # Hash based on custom key (e.g., user ID)
-upstream api_service {
+upstream template_business_api {
     hash $request_uri consistent;
     server api-1:8000;
     server api-2:8000;
@@ -113,7 +113,7 @@ upstream api_service {
 
 ```nginx
 # Distribute based on server capacity
-upstream api_service {
+upstream template_business_api {
     server api-1:8000 weight=5;  # Gets 5/10 of traffic
     server api-2:8000 weight=3;  # Gets 3/10 of traffic
     server api-3:8000 weight=2;  # Gets 2/10 of traffic
@@ -128,7 +128,7 @@ upstream api_service {
 
 ```nginx
 # Built-in passive health monitoring
-upstream api_service {
+upstream template_business_api {
     server api-1:8000 max_fails=3 fail_timeout=30s;
     server api-2:8000 max_fails=3 fail_timeout=30s;
     server api-3:8000 max_fails=3 fail_timeout=30s;
@@ -143,8 +143,8 @@ upstream api_service {
 
 ```nginx
 # Nginx Plus only - active health checks
-upstream api_service {
-    zone api_service 64k;
+upstream template_business_api {
+    zone template_business_api 64k;
 
     server api-1:8000;
     server api-2:8000;
@@ -210,7 +210,7 @@ async def health_check(
 ### 1. Cookie-based Sticky Sessions
 
 ```nginx
-upstream api_service {
+upstream template_business_api {
     # Use cookie for session persistence
     sticky cookie srv_id expires=1h domain=.example.com path=/;
 
@@ -223,7 +223,7 @@ upstream api_service {
 ### 2. Client IP-based Persistence
 
 ```nginx
-upstream api_service {
+upstream template_business_api {
     ip_hash;
     server api-1:8000;
     server api-2:8000;
@@ -241,7 +241,7 @@ map $cookie_jwt_token $backend_server {
     default        api-3:8000;
 }
 
-upstream api_service {
+upstream template_business_api {
     server $backend_server;
 }
 ```
@@ -251,7 +251,7 @@ upstream api_service {
 ### Keepalive Connections
 
 ```nginx
-upstream api_service {
+upstream template_business_api {
     server api-1:8000;
     server api-2:8000;
 
@@ -263,7 +263,7 @@ upstream api_service {
 
 server {
     location /api/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
 
         # Required for keepalive to work
         proxy_http_version 1.1;
@@ -276,7 +276,7 @@ server {
 
 ```nginx
 # Limit connections per upstream server
-upstream api_service {
+upstream template_business_api {
     server api-1:8000 max_conns=100;
     server api-2:8000 max_conns=100;
     server api-3:8000 max_conns=50;  # Lower capacity server
@@ -290,7 +290,7 @@ server {
     limit_conn addr 10;
 
     location /api/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```
@@ -316,7 +316,7 @@ upstream api_secondary {
 }
 
 # Combined upstream with failover
-upstream api_service {
+upstream template_business_api {
     server api_primary;
     server api_secondary backup;
 }
@@ -326,8 +326,8 @@ upstream api_service {
 
 ```nginx
 # Gradually increase traffic to newly added server
-upstream api_service {
-    zone api_service 64k;
+upstream template_business_api {
+    zone template_business_api 64k;
 
     server api-1:8000;
     server api-2:8000;
@@ -342,7 +342,7 @@ upstream api_service {
 ```nginx
 server {
     location /api/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
 
         # Buffer settings for better performance
         proxy_buffering on;
@@ -352,7 +352,7 @@ server {
 
         # Disable buffering for streaming endpoints
         location /api/stream {
-            proxy_pass http://api_service;
+            proxy_pass http://template_business_api;
             proxy_buffering off;
         }
     }
@@ -362,7 +362,7 @@ server {
 ### Timeout Configuration
 
 ```nginx
-upstream api_service {
+upstream template_business_api {
     server api-1:8000;
     server api-2:8000;
 
@@ -371,7 +371,7 @@ upstream api_service {
 
 server {
     location /api/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
 
         # Timeout settings
         proxy_connect_timeout 5s;      # Time to connect to upstream
@@ -380,7 +380,7 @@ server {
 
         # Long-running endpoints
         location /api/reports {
-            proxy_pass http://api_service;
+            proxy_pass http://template_business_api;
             proxy_read_timeout 300s;   # 5 minutes for reports
         }
     }
@@ -445,7 +445,7 @@ server {
     access_log /var/log/nginx/upstream_access.log upstreamlog;
 
     location /api/ {
-        proxy_pass http://api_service;
+        proxy_pass http://template_business_api;
     }
 }
 ```

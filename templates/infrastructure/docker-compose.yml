@@ -18,9 +18,9 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      api_service:
+      template_business_api:
         condition: service_healthy
-      bot_service:
+      template_business_bot:
         condition: service_started
     networks:
       - app_network
@@ -37,13 +37,13 @@ services:
   # ══════════════════════════════════════════════════════════════════════════════
   # BUSINESS SERVICES (internal only, no exposed ports)
   # ══════════════════════════════════════════════════════════════════════════════
-  api_service:
+  template_business_api:
     build:
-      context: ./services/api_service
+      context: ./services/template_business_api
       dockerfile: Dockerfile
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-3.12}
-    container_name: ${PROJECT_NAME:-myapp}_api_service
+    container_name: ${PROJECT_NAME:-myapp}_template_business_api
     environment:
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-info}
@@ -51,8 +51,8 @@ services:
       - DEBUG=${DEBUG:-false}
 
       # Data service URLs
-      - POSTGRES_SERVICE_URL=http://db_postgres_service:8000
-      - MONGO_SERVICE_URL=http://db_mongo_service:8000
+      - POSTGRES_SERVICE_URL=http://template_data_postgres_api:8000
+      - MONGO_SERVICE_URL=http://template_data_mongo_api:8000
 
       # Infrastructure
       - RABBITMQ_URL=amqp://${RABBITMQ_USER:-admin}:${RABBITMQ_PASSWORD:-admin}@rabbitmq:5672/
@@ -74,9 +74,9 @@ services:
       - JAEGER_PORT=${JAEGER_PORT:-6831}
 
     depends_on:
-      db_postgres_service:
+      template_data_postgres_api:
         condition: service_healthy
-      db_mongo_service:
+      template_data_mongo_api:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
@@ -85,7 +85,7 @@ services:
     networks:
       - app_network
     volumes:
-      - api_logs:/var/log/app
+      - template_business_api_logs:/var/log/app
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
@@ -94,13 +94,13 @@ services:
       retries: 3
       start_period: 40s
 
-  bot_service:
+  template_business_bot:
     build:
-      context: ./services/bot_service
+      context: ./services/template_business_bot
       dockerfile: Dockerfile
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-3.12}
-    container_name: ${PROJECT_NAME:-myapp}_bot_service
+    container_name: ${PROJECT_NAME:-myapp}_template_business_bot
     environment:
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-info}
@@ -113,8 +113,8 @@ services:
       - BOT_WEBHOOK_SECRET=${BOT_WEBHOOK_SECRET:-}
 
       # Data service URLs
-      - POSTGRES_SERVICE_URL=http://db_postgres_service:8000
-      - MONGO_SERVICE_URL=http://db_mongo_service:8000
+      - POSTGRES_SERVICE_URL=http://template_data_postgres_api:8000
+      - MONGO_SERVICE_URL=http://template_data_mongo_api:8000
 
       # Infrastructure
       - RABBITMQ_URL=amqp://${RABBITMQ_USER:-admin}:${RABBITMQ_PASSWORD:-admin}@rabbitmq:5672/
@@ -124,9 +124,9 @@ services:
       - SENTRY_DSN=${SENTRY_DSN:-}
 
     depends_on:
-      db_postgres_service:
+      template_data_postgres_api:
         condition: service_healthy
-      db_mongo_service:
+      template_data_mongo_api:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
@@ -135,24 +135,24 @@ services:
     networks:
       - app_network
     volumes:
-      - bot_logs:/var/log/app
+      - template_business_bot_logs:/var/log/app
     restart: unless-stopped
 
-  worker_service:
+  template_business_worker:
     build:
-      context: ./services/worker_service
+      context: ./services/template_business_worker
       dockerfile: Dockerfile
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-3.12}
-    container_name: ${PROJECT_NAME:-myapp}_worker_service
+    container_name: ${PROJECT_NAME:-myapp}_template_business_worker
     environment:
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - LOG_FORMAT=${LOG_FORMAT:-json}
 
       # Data service URLs
-      - POSTGRES_SERVICE_URL=http://db_postgres_service:8000
-      - MONGO_SERVICE_URL=http://db_mongo_service:8000
+      - POSTGRES_SERVICE_URL=http://template_data_postgres_api:8000
+      - MONGO_SERVICE_URL=http://template_data_mongo_api:8000
 
       # Infrastructure
       - RABBITMQ_URL=amqp://${RABBITMQ_USER:-admin}:${RABBITMQ_PASSWORD:-admin}@rabbitmq:5672/
@@ -166,9 +166,9 @@ services:
       - SENTRY_DSN=${SENTRY_DSN:-}
 
     depends_on:
-      db_postgres_service:
+      template_data_postgres_api:
         condition: service_healthy
-      db_mongo_service:
+      template_data_mongo_api:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
@@ -177,20 +177,20 @@ services:
     networks:
       - app_network
     volumes:
-      - worker_logs:/var/log/app
+      - template_business_worker_logs:/var/log/app
     restart: unless-stopped
-    # Scale workers: docker-compose up --scale worker_service=3
+    # Scale workers: docker-compose up --scale template_business_worker=3
 
   # ══════════════════════════════════════════════════════════════════════════════
   # DATA SERVICES (internal ports only)
   # ══════════════════════════════════════════════════════════════════════════════
-  db_postgres_service:
+  template_data_postgres_api:
     build:
-      context: ./services/db_postgres_service
+      context: ./services/template_data_postgres_api
       dockerfile: Dockerfile
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-3.12}
-    container_name: ${PROJECT_NAME:-myapp}_db_postgres_service
+    container_name: ${PROJECT_NAME:-myapp}_template_data_postgres_api
     environment:
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-info}
@@ -210,7 +210,7 @@ services:
     networks:
       - app_network
     volumes:
-      - postgres_service_logs:/var/log/app
+      - template_data_postgres_api_logs:/var/log/app
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
@@ -219,13 +219,13 @@ services:
       retries: 3
       start_period: 40s
 
-  db_mongo_service:
+  template_data_mongo_api:
     build:
-      context: ./services/db_mongo_service
+      context: ./services/template_data_mongo_api
       dockerfile: Dockerfile
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-3.12}
-    container_name: ${PROJECT_NAME:-myapp}_db_mongo_service
+    container_name: ${PROJECT_NAME:-myapp}_template_data_mongo_api
     environment:
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-info}
@@ -245,7 +245,7 @@ services:
     networks:
       - app_network
     volumes:
-      - mongo_service_logs:/var/log/app
+      - template_data_mongo_api_logs:/var/log/app
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
@@ -448,15 +448,15 @@ volumes:
   # Logs volumes
   nginx_logs:
     driver: local
-  api_logs:
+  template_business_api_logs:
     driver: local
-  bot_logs:
+  template_business_bot_logs:
     driver: local
-  worker_logs:
+  template_business_worker_logs:
     driver: local
-  postgres_service_logs:
+  template_data_postgres_api_logs:
     driver: local
-  mongo_service_logs:
+  template_data_mongo_api_logs:
     driver: local
   rabbitmq_logs:
     driver: local
