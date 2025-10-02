@@ -4,10 +4,25 @@
 
 > **NAMING PHILOSOPHY**: Use **semantic shortening** — clear context + domain, omit redundant function words. Average length: 20-27 chars (no abbreviations needed).
 
+> ⚠️ **CRITICAL**: Maintain a Context Registry ([context-registry.md](context-registry.md)) to prevent context name conflicts across your project. Never reuse context names for different business domains.
+
+### 3-Part vs 4-Part Service Naming Decision
+
+**DEFAULT**: Use 3-part `{context}_{domain}_{type}` — function is implied by domain+type combination.
+
+**USE 4-PART** `{context}_{domain}_{function}_{type}` **ONLY WHEN**:
+- Domain word is ambiguous (could mean 2+ unrelated functions)
+- Examples: `fleet` (tracking? management? maintenance?), `analytics` (reporting? querying? processing?)
+
+**DO NOT USE 4-PART WHEN**:
+- Service handles multiple functions as ONE cohesive workflow (use 3-part, function implied by scope)
+- Domain clearly implies primary function
+- Type already clarifies function (e.g., `worker` implies processing)
+
 | Element Type | Pattern | Example | Separator |
 |--------------|---------|---------|-----------|
-| **Microservice/Application** | `{context}_{domain}_{type}` | `finance_lending_api` | `_` |
-| **Microservice (4-part)** | `{context}_{domain}_{function}_{type}` | `logistics_fleet_tracking_api` | `_` |
+| **Microservice (default)** | `{context}_{domain}_{type}` | `finance_lending_api` | `_` |
+| **Microservice (ambiguous domain)** | `{context}_{domain}_{function}_{type}` | `logistics_fleet_tracking_api` | `_` |
 | **Python Class** | `{Noun}{Suffix}` | `UserService`, `OrderRepository` | None (PascalCase) |
 | **Python Function** | `{verb}_{noun}[_qualifier]` | `get_user_by_id`, `create_order` | `_` |
 | **Python Variable** | `{noun}[_qualifier]` | `user_id`, `max_attempts` | `_` |
@@ -29,19 +44,21 @@
 
 ## AI Decision Tree: How to Name Any Element
 
-### Step 1: Identify Element Type
+### Quick Navigation by Element Type
 
 ```
-Is it a SERVICE?          → Step 2 (Service Formula)
-Is it a PYTHON CLASS?     → Step 3 (Class Rules)
-Is it a PYTHON FUNCTION?  → Step 4 (Function Rules)
-Is it a PYTHON VARIABLE?  → Step 5 (Variable Rules)
-Is it a FILE/FOLDER?      → Step 6 (File Rules)
-Is it a DATABASE object?  → Step 7 (Database Rules)
-Is it INFRASTRUCTURE?     → Step 8 (Infrastructure Rules)
+SERVICE (microservice/app)     → Section 2: Microservice Naming Patterns (line 485+)
+PYTHON CLASS                   → Section 3: Python Classes (line 683+)
+PYTHON FUNCTION                → Section 3: Python Functions (line 741+)
+PYTHON VARIABLE/PARAMETER      → Section 3: Variables & Parameters (line 782+)
+FILE/FOLDER                    → Section 3: Files & Folders (line 864+)
+DATABASE (table/column)        → Section 3: Database Elements (line 906+)
+INFRASTRUCTURE (K8s/Docker)    → Section 1: Technical Rules (line 168+)
 ```
 
-### Step 2: Service Formula
+**Most Common: Naming a Service**
+
+### Step 2: Service Formula (Quick Reference)
 
 **Default Pattern (3-part)**: `{context}_{domain}_{type}`
 
@@ -67,69 +84,84 @@ Use 4-part only when function is NOT implied by domain:
 - If domain clearly implies ONE function → use 3-part
 - If domain has MULTIPLE possible functions → use 4-part with explicit function
 
-### Step 3: Python Class Rules
+### Step 3: Python Class Rules (Quick Reference)
 
-**Pattern**: `{Noun}{Suffix}`
+**Pattern**: `{Noun}{Suffix}` in PascalCase
 
-Choose suffix by purpose:
-- Business logic → `Service` (UserService, PaymentService)
-- Data access → `Repository` (UserRepository, OrderRepository)
-- Data transfer → `DTO` (UserCreateDTO, OrderUpdateDTO)
-- Request handling → `Handler` (MessageHandler, WebhookHandler)
-- API routing → `Router` (UserRouter, PaymentRouter)
-- Domain model → No suffix (User, Order, Payment)
+| Purpose | Suffix | Example |
+|---------|--------|---------|
+| Business logic | `Service` | `UserService`, `PaymentService` |
+| Data access | `Repository` | `UserRepository`, `OrderRepository` |
+| Data transfer | `DTO` | `UserCreateDTO`, `OrderUpdateDTO` |
+| Request handling | `Handler` | `MessageHandler`, `WebhookHandler` |
+| API routing | `Router` | `UserRouter`, `PaymentRouter` |
+| Domain model | No suffix | `User`, `Order`, `Payment` |
 
-### Step 4: Python Function Rules
+**Note**: DTOs use action-based pattern: `{Noun}{Action}DTO` (not `{Noun}DTO{Action}`)
 
-**Common Patterns**:
+→ **Full details**: Section 3: Python Classes (line 683+)
 
-| Pattern | Use Case | Example |
-|---------|----------|---------|
-| `{verb}_{noun}` | Simple action | `create_order`, `delete_user` |
-| `{verb}_{noun}_by_{field}` | Retrieval with criteria | `get_user_by_id`, `find_order_by_status` |
-| `{verb}_{noun}_to_{target}` | Action with destination | `send_email_to_user`, `export_data_to_csv` |
-| `{verb}_{noun}_from_{source}` | Action with source | `fetch_data_from_api`, `import_users_from_csv` |
-| `{verb}_{adjective}_{noun}` | Modified action | `create_new_user`, `update_existing_order` |
+### Step 4: Python Function Rules (Quick Reference)
 
-**Common verbs**:
-- `get_`, `find_`, `fetch_` (retrieval)
-- `create_`, `add_` (creation)
-- `update_`, `modify_` (modification)
-- `delete_`, `remove_` (deletion)
-- `validate_`, `check_` (validation)
-- `calculate_`, `compute_` (computation)
-- `send_`, `notify_` (communication)
+**Pattern**: `{verb}_{noun}[_qualifier]` in snake_case
 
-### Step 5: Python Variable/Parameter Rules
+| Verb Category | Verbs | Example |
+|--------------|-------|---------|
+| Retrieval | `get_`, `find_`, `fetch_` | `get_user_by_id`, `find_orders_by_status` |
+| Creation | `create_`, `add_` | `create_order`, `add_user` |
+| Modification | `update_`, `modify_` | `update_user`, `modify_order_status` |
+| Deletion | `delete_`, `remove_` | `delete_user`, `remove_order` |
+| Validation | `validate_`, `check_`, `verify_` | `validate_email`, `check_password_strength` |
+| Calculation | `calculate_`, `compute_` | `calculate_total_price`, `compute_discount` |
+| Communication | `send_`, `notify_`, `publish_` | `send_email_to_user`, `notify_admin` |
 
-**Pattern**: `{noun}[_qualifier]`
+→ **Full details**: Section 3: Python Functions (line 741+)
 
-Examples:
-- `user_id` (ID reference)
-- `order_total` (computed value)
-- `is_active` (boolean flag)
-- `created_at` (timestamp)
-- `max_retry_count` (configuration)
+### Step 5: Python Variable/Parameter Rules (Quick Reference)
 
-### Step 6: File/Folder Rules
+**Pattern**: `{noun}[_qualifier]` in snake_case
 
-- **File**: Match class/module name in snake_case
-  - Class `UserService` → file `user_service.py`
-- **Folder**: Match service/package name
-  - Service `finance_lending_api` → folder `finance_lending_api/`
+| Type | Pattern | Example |
+|------|---------|---------|
+| ID reference | `{noun}_id` | `user_id`, `order_id` |
+| Boolean flag | `is_{adj}`, `has_{noun}`, `can_{verb}` | `is_active`, `has_permission`, `can_edit` |
+| Timestamp | `{action}_at` | `created_at`, `updated_at`, `deleted_at` |
+| Count | `{noun}_count` or `num_{noun}` | `retry_count`, `num_attempts` |
+| Limits | `max_{noun}`, `min_{noun}` | `max_retries`, `min_password_length` |
 
-### Step 7: Database Rules
+→ **Full details**: Section 3: Variables & Parameters (line 782+)
 
-- **Table**: plural noun in snake_case (`users`, `order_items`)
-- **Column**: noun with qualifier (`user_id`, `created_at`)
-- **Index**: `idx_{table}_{column}` (`idx_users_email`)
-- **Constraint**: `{type}_{table}_{column}` (`fk_orders_user_id`)
+### Step 6: File/Folder Rules (Quick Reference)
 
-### Step 8: Infrastructure Rules
+| Element | Pattern | Example |
+|---------|---------|---------|
+| Python module | `{class_name}.py` (snake_case) | `user_service.py`, `order_repository.py` |
+| Package folder | `{package_name}/` (snake_case) | `finance_lending_api/` |
+| Test file | `test_{module_name}.py` | `test_user_service.py` |
 
-- **Docker Compose**: snake_case with underscores
-- **Kubernetes**: kebab-case with hyphens
-- **DNS**: kebab-case with hyphens
+→ **Full details**: Section 3: Files & Folders (line 864+)
+
+### Step 7: Database Rules (Quick Reference)
+
+| Element | Pattern | Example |
+|---------|---------|---------|
+| Table | `{plural_noun}` (snake_case) | `users`, `order_items` |
+| Column | `{noun}[_qualifier]` | `user_id`, `created_at`, `is_active` |
+| Index | `idx_{table}_{column}` | `idx_users_email` |
+| Foreign key | `fk_{table}_{ref_table}` | `fk_orders_users` |
+
+→ **Full details**: Section 3: Database Elements (line 906+)
+
+### Step 8: Infrastructure Rules (Quick Reference)
+
+| Layer | Separator | Example |
+|-------|-----------|---------|
+| **Docker Compose** (dev) | Underscore `_` | `finance_lending_api` |
+| **Kubernetes** (prod) | Hyphen `-` | `finance-lending-api` |
+| **DNS hostnames** | Hyphen `-` | `api.example.com` |
+| **Environment variables** | Underscore `_` | `DATABASE_URL` |
+
+→ **Full details**: Section 1: Technical Rules (line 168+)
 
 ---
 
@@ -485,38 +517,31 @@ Use when domain has multiple possible functions (ambiguous):
 
 ### When to Use 3-Part vs 4-Part
 
-| Scenario | Use 3-Part | Use 4-Part | Example |
-|----------|------------|------------|---------|
-| **Domain implies single function** | ✅ | ❌ | `finance_lending_api` (lending = matching) |
-| **Multiple functions possible** | ❌ | ✅ | `logistics_fleet_tracking_api` (tracking vs management) |
-| **Type implies function** | ✅ | ❌ | `finance_payment_worker` (worker = processing) |
-| **Function is unique/specific** | ❌ | ✅ | `analytics_reporting_api` (vs querying) |
-| **Domain + type = clear action** | ✅ | ❌ | `healthcare_telemedicine_api` (consultation obvious) |
-| **Context is ambiguous** | ❌ | ✅ | `communication_notification_worker` (vs email/SMS) |
+**Simple Decision Rule**:
 
-**Decision Algorithm**:
 ```
-1. Can team understand service purpose from {context}_{domain}_{type}?
-   YES → Use 3-part
-   NO → Go to step 2
+Ask: "If I remove the function word, is it obvious what this service does?"
 
-2. Would removing function word create ambiguity?
-   YES → Use 4-part with explicit function
-   NO → Use 3-part
+YES → Use 3-part: {context}_{domain}_{type}
+NO  → Use 4-part: {context}_{domain}_{function}_{type}
 ```
 
-**Important Distinction**:
-- **Ambiguous domain** (needs 4-part): Domain could mean MULTIPLE DIFFERENT functions
-  - Example: `logistics_fleet` → could be tracking OR management OR maintenance (unrelated functions)
-  - Solution: `logistics_fleet_tracking_api` (explicit function clarifies)
+**Examples**:
 
-- **Comprehensive domain** (use 3-part): Domain/type combination implies handling COMPLETE workflow
-  - Example: `construction_house_bot` → bot manages entire house workflow (calculations + uploads + tracking)
-  - Function is implied by scope: "bot for house construction" = comprehensive management
-  - NO ambiguity: team knows bot handles all house-related tasks
+| Domain | Ambiguous? | Reasoning | Correct Pattern |
+|--------|-----------|-----------|-----------------|
+| `finance_lending_api` | ✅ Clear | "Lending" obviously means matching/approval | 3-part ✓ |
+| `logistics_fleet_???` | ❌ Ambiguous | Fleet could be tracking, management, or maintenance | 4-part: `logistics_fleet_tracking_api` |
+| `construction_house_bot` | ✅ Clear | Bot for house = comprehensive management of house workflow | 3-part ✓ |
+| `analytics_???_api` | ❌ Ambiguous | Analytics could be reporting, querying, or processing | 4-part: `analytics_reporting_api` |
+| `finance_payment_worker` | ✅ Clear | Worker type implies payment processing | 3-part ✓ |
+| `communication_???_worker` | ❌ Ambiguous | Communication could be email, SMS, or notifications | 4-part: `communication_notification_worker` |
 
-**Rule**: If service handles MULTIPLE functions as part of ONE cohesive workflow → 3-part.
-If domain could mean DIFFERENT unrelated workflows → 4-part with explicit function.
+**Key Principle**:
+- If your service handles **multiple related functions as ONE workflow** → still use 3-part (function implied by scope)
+  - Example: `construction_house_bot` handles calculations + uploads + tracking = one cohesive workflow
+- If your domain word has **multiple unrelated interpretations** → use 4-part (explicit function removes ambiguity)
+  - Example: `fleet` could mean tracking OR management OR maintenance (choose one with 4-part)
 
 ---
 
@@ -1124,33 +1149,78 @@ construction_tracking_api         # Team C (cost tracking implied)
 - Nginx drops underscore headers by default (security feature)
 - Custom headers should use hyphens (HTTP convention)
 
-### Context Code Conflicts Warning
+### Name Length & Kubernetes Limits
 
-⚠️ **CRITICAL**: Never reuse context names for different meanings across your project.
+**Kubernetes Service Name Limit**: 253 characters (RFC 1035 DNS label standard)
 
-**❌ BAD Examples (Conflicting Contexts)**:
+**Framework Compliance**:
+- 3-part pattern: Average 20-27 chars (95%+ services fit within limits)
+- 4-part pattern: Average 30-35 chars (still well within limits)
+
+**If name exceeds 253 chars** (rare edge case):
+1. **First**: Review if context/domain names are too verbose
+2. **Consider**: Using shorter but still clear synonyms
+3. **Last resort**: Abbreviate the longest component (document in Context Registry)
+
+**Example**:
 ```python
-# DON'T DO THIS!
-property_house_api                     # property = Property Management
-project_house_api                      # property = Project Management  ⚠️ CONFLICT!
+# Too long (hypothetical)
+enterprise_resource_planning_inventory_management_api  # 52 chars - still OK!
 
-logistics_delivery_api                 # log = Logistics
-observability_logging_api              # log = Logging  ⚠️ CONFLICT!
+# If somehow exceeding 253 chars, shorten context:
+erp_inventory_management_api  # Use abbreviation, document in registry
 ```
 
-**✅ GOOD Examples (Unique Contexts)**:
-```python
-# Use distinct full context names
-property_house_api                     # Property Management
-project_task_api                       # Project Management (different domain: task vs house)
+**Version Numbers in Service Names**:
+- ❌ **Avoid**: `finance_lending_api_v2` (versions belong in API paths, not service names)
+- ✅ **Use**: `/api/v2/lending` (version in URL path)
+- **Rationale**: Service name should be stable; API version can evolve independently
 
-logistics_delivery_api                 # Logistics
-observability_logging_api              # Observability (different context entirely)
-```
+### Migration Guide: Old Naming → New Naming
 
-**Best Practice**: Maintain a **Context Registry** to track all context names and prevent conflicts.
+**Scenario**: You have existing services with non-compliant names and want to adopt this convention.
 
-→ **See**: [Context Registry](context-registry.md) for the authoritative list of all contexts, their purposes, and ownership.
+**Approach**:
+
+1. **Create Context Registry First** ([context-registry.md](context-registry.md))
+   - Document all existing service contexts
+   - Identify conflicts before renaming
+
+2. **Plan Migration**:
+   ```python
+   # Old naming (before)
+   lending_platform_api        # No context, unclear domain
+   user_api                    # Too generic
+   payment-service             # Hyphen in code layer
+
+   # New naming (after)
+   finance_lending_api         # Clear context + domain + type
+   user_auth_api               # Specific domain
+   finance_payment_api         # Underscore in code layer
+   ```
+
+3. **Gradual Migration Strategy**:
+   - **Phase 1**: New services use new convention
+   - **Phase 2**: Rename services during major version bumps
+   - **Phase 3**: Update all references (imports, configs, DNS)
+
+4. **Conversion Script** (for Docker Compose → Kubernetes):
+   ```python
+   # Use the service_to_k8s function from Section 4
+   # Example: finance_lending_api → finance-lending-api
+   k8s_name = service_to_k8s("finance_lending_api")
+   ```
+
+5. **Update Checklist**:
+   - [ ] Python imports (`from old_name import` → `from new_name import`)
+   - [ ] Docker Compose service names
+   - [ ] Kubernetes manifests (hyphen variant)
+   - [ ] Environment variable references
+   - [ ] Documentation
+   - [ ] CI/CD pipelines
+   - [ ] DNS entries (hyphen variant)
+
+**Tip**: Use git grep and IDE refactoring tools to find all references to old service names.
 
 ---
 
