@@ -32,7 +32,7 @@ The documentation is organised into atomic knowledge modules. Use this index as 
 - [Deliverables Catalog](reference/DELIVERABLES_CATALOG.md) — artefact ownership and storage rules
 - [Prompt Templates](reference/PROMPT_TEMPLATES.md) — reusable communication templates
 - [Architecture Decision Log Template](reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md) — ADR format and conventions
-- [Abbreviations Registry](reference/ABBREVIATIONS_REGISTRY.md) — standardized abbreviations for service naming (length optimization)
+- [Semantic Shortening Guide](guides/SEMANTIC_SHORTENING_GUIDE.md) — 3-part service naming formula and decision tree
 
 ### Agent Templates & Checklists
 - [Prompt Validation Guide](guides/PROMPT_VALIDATION_GUIDE.md) — pre-work validation checklist

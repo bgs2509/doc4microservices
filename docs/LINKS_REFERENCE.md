@@ -40,7 +40,7 @@
 | **Deliverables Catalog** | [reference/DELIVERABLES_CATALOG.md](reference/DELIVERABLES_CATALOG.md) | `.framework/docs/reference/DELIVERABLES_CATALOG.md` | Required artefacts and storage rules |
 | **Prompt Templates** | [reference/PROMPT_TEMPLATES.md](reference/PROMPT_TEMPLATES.md) | `.framework/docs/reference/PROMPT_TEMPLATES.md` | Reusable prompts for clarification and reporting |
 | **Architecture Decision Log Template** | [reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md](reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md) | `.framework/docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md` | Standardised ADR format |
-| **Abbreviations Registry** | [reference/ABBREVIATIONS_REGISTRY.md](reference/ABBREVIATIONS_REGISTRY.md) | `.framework/docs/reference/ABBREVIATIONS_REGISTRY.md` | Standardized abbreviations for service naming (length optimization) |
+| **Semantic Shortening Guide** | [guides/SEMANTIC_SHORTENING_GUIDE.md](guides/SEMANTIC_SHORTENING_GUIDE.md) | `.framework/docs/guides/SEMANTIC_SHORTENING_GUIDE.md` | 3-part service naming formula and decision tree |
 
 <a id="ide-rules-and-patterns"></a>
 ## Atomic Knowledge Base
