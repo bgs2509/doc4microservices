@@ -1,0 +1,48 @@
+scripts/__pycache__/validate_docs.cpython-312.pyc
+# Environment variables
+.env
+.env.local
+.env.production
+
+# SSL private keys (certificates can be committed, keys should not)
+*.key
+!**/ssl/*.crt
+
+# Node modules
+node_modules/
+npm-debug.log*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Docker
+.dockerignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# IMPORTANT: Image files (PNG, WebP) in frontend/public/init_images MUST be committed!
+# Do NOT add *.png or *.webp to gitignore - both formats are required for browser compatibility.
+# WebP = modern browsers, PNG = fallback for iOS < 14 and IE11
+# See frontend/public/init_images/README.md for details
+
+#failure_images/
+20250715_zemdozor.dump
