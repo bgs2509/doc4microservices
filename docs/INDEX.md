@@ -41,6 +41,7 @@ The documentation is organised into atomic knowledge modules. Use this index as 
 - [Implementation Plan Template](guides/IMPLEMENTATION_PLAN_TEMPLATE.md) — planning artefact for approvals
 - [Agent Verification Checklist](quality/AGENT_VERIFICATION_CHECKLIST.md) — release quality gates
 - [QA Report Template](quality/QA_REPORT_TEMPLATE.md) — final QA handoff format
+- [Service Naming Checklist](checklists/SERVICE_NAMING_CHECKLIST.md) — 3-part vs 4-part decision tool
 
 ## Atomic Knowledge Base
 

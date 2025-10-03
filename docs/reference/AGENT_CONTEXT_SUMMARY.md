@@ -44,7 +44,7 @@
 2. **Data Access**: Business services must call data services over HTTP; direct database access is prohibited (`docs/atomic/architecture/data-access-architecture.md`).
 3. **API Gateway**: Nginx is MANDATORY for production deployments (TLS, load balancing, rate limiting) (`docs/atomic/infrastructure/api-gateway/`).
 4. **Eventing**: RabbitMQ is the mandatory broker for asynchronous communication (`docs/atomic/integrations/rabbitmq/`).
-5. **Naming**: Follow semantic 3-part naming (`{context}_{domain}_{type}`) from `docs/atomic/architecture/naming-conventions.md` and `docs/guides/SEMANTIC_SHORTENING_GUIDE.md`. Add explicit function (4-part) only when domain is ambiguous.
+5. **Naming**: **DEFAULT TO 3-PART** naming (`{context}_{domain}_{type}`). Use 4-part ONLY when domain is ambiguous (burden of proof required). See `docs/atomic/architecture/naming-conventions.md` Section 2.3 for 10 serious reasons. Use `docs/checklists/SERVICE_NAMING_CHECKLIST.md` for quick decision.
 6. **Quality Gates**: Ruff, mypy, bandit, pytest, and coverage thresholds are non-negotiable (`docs/guides/DEVELOPMENT_COMMANDS.md`).
 
 ## Workflow Overview

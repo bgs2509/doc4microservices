@@ -73,8 +73,11 @@ Identify your business context and specific domain:
 - **Fleet Tracking**: context=`logistics`, domain=`fleet_tracking` → `logistics_fleet_tracking_api`
 
 **Decision Guide**:
-- Use 3-part naming when domain clearly implies function (most cases)
-- Use 4-part `{context}_{domain}_{function}_{type}` only when domain is ambiguous
+- **DEFAULT (80-90%)**: Use 3-part naming when domain clearly implies function
+- **EXCEPTION (10-20%)**: Use 4-part `{context}_{domain}_{function}_{type}` ONLY when domain is ambiguous
+- **BURDEN OF PROOF**: Always start with 3-part, justify 4-part with one of 10 reasons
+- See [Service Naming Checklist](../checklists/SERVICE_NAMING_CHECKLIST.md) for quick decision
+- See [Naming Conventions Section 2.3](../atomic/architecture/naming-conventions.md#23-serious-reasons-for-4-part-naming-detailed) for complete list of 10 reasons
 - See [Semantic Shortening Guide](SEMANTIC_SHORTENING_GUIDE.md) for detailed decision tree
 
 ### Step 2: Global Search-and-Replace

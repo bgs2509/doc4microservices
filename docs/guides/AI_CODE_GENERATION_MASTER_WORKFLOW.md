@@ -380,7 +380,7 @@ For EACH phase in the implementation plan:
    - Domain layer (entities, value objects)
    - Application layer (use cases, DTOs)
    - Infrastructure layer (repositories, HTTP clients, message brokers)
-5. **Follow semantic 3-part naming** from `naming-conventions.md` and `SEMANTIC_SHORTENING_GUIDE.md`
+5. **Follow DEFAULT TO 3-PART naming philosophy** — Use `{context}_{domain}_{type}`. Add `{function}` ONLY when domain is ambiguous (burden of proof). Check `SERVICE_NAMING_CHECKLIST.md` or `naming-conventions.md` Section 2.3 for 10 reasons
 6. **Use AGENT_TOOLBOX commands** to validate
 7. **Commit after each logical unit** with clear messages
 
@@ -563,7 +563,7 @@ uv run pytest --cov=services --cov-report=html --cov-report=xml
    - **Environment checks** (Python version, UV installed)
    - **Static analysis** (Ruff, Mypy, Bandit)
    - **Testing** (pytest with coverage — **threshold varies by level**)
-   - **Artifact validation** (project structure, semantic 3-part naming)
+   - **Artifact validation** (project structure, 3-part naming by default)
 4. Capture evidence for each check
 5. If ANY check fails:
    - Fix the issue
