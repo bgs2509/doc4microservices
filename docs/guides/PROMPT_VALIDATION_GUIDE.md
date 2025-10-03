@@ -43,7 +43,7 @@ Run prompt validation immediately after receiving a new user request and before 
 |---------------------|-----------------|----------|
 | Business context or overall goal | Ask the requester to restate the problem, target users, and success metrics. | Yes |
 | Target maturity level | Ask: "Choose maturity level: 1=PoC (~5 min), 2=Development (~10 min), 3=Pre-Production (~15 min), 4=Production (~30 min)". See `PROMPT_TEMPLATES.md` for full prompt. | Yes |
-| Optional modules | If applicable, clarify: "Need Telegram Bot? Background Workers? MongoDB? RabbitMQ? Redis?" | No (defaults to core only) |
+| Optional modules | If not mentioned, ask explicitly: "Do you need any optional modules (Workers, Bot, MongoDB, RabbitMQ, Redis) or just core (FastAPI + PostgreSQL)?" **MUST be explicitly stated** (default: "none" if user confirms core-only). | No (defaults to "none" if user confirms, but must ask) |
 | Functional requirements | Request a prioritized feature list or user stories. | Yes |
 | Architecture and quality constraints | Ask for performance/security expectations or confirm adherence to framework defaults. | Yes |
 | Dependencies or integrations | Clarify external systems, message queues, and data sources. | Yes |
