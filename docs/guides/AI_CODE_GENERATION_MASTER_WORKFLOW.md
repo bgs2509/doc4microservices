@@ -138,6 +138,8 @@ graph TB
    - ✅ Acceptance criteria
 3. If ANY field is missing → ask clarification using `PROMPT_TEMPLATES.md`
    - **IMPORTANT**: If maturity level is missing, ask user to choose level 1-4
+   - **IMPORTANT**: If optional modules not mentioned, ask explicitly: "Do you need any optional modules (Workers, Bot, MongoDB, RabbitMQ, Redis) or just core (FastAPI + PostgreSQL)?"
+   - Default to "none" (core only) if user confirms, but **must ask explicitly**
 4. If ALL fields present → proceed to Stage 2
 
 **Documents Read**:
@@ -284,7 +286,10 @@ Please provide these details so I can ensure architecture alignment.
 1. Read `IMPLEMENTATION_PLAN_TEMPLATE.md`
 2. Read `MATURITY_LEVELS.md` and `CONDITIONAL_STAGE_RULES.md` to understand what features to include
 3. Read `USE_CASE_IMPLEMENTATION_GUIDE.md`
-4. Read service-specific atomic docs based on services needed AND maturity level:
+4. **Read naming convention documents** (MANDATORY for all service naming decisions):
+   - `docs/checklists/SERVICE_NAMING_CHECKLIST.md` — quick decision guide
+   - `docs/atomic/architecture/naming-conventions.md` Section 2.3 — 10 serious reasons for 4-part naming
+5. Read service-specific atomic docs based on services needed AND maturity level:
    - If FastAPI → read `docs/atomic/services/fastapi/*`
    - If Aiogram → read `docs/atomic/services/aiogram/*`
    - If Workers → read `docs/atomic/services/asyncio-workers/*`
@@ -292,35 +297,48 @@ Please provide these details so I can ensure architecture alignment.
    - **If Level ≥ 2** → read `docs/atomic/observability/logging/*`
    - **If Level ≥ 3** → read `docs/atomic/infrastructure/api-gateway/*`, `docs/atomic/observability/metrics/*`
    - **If Level = 4** → read `docs/atomic/observability/elk-stack/*`, `docs/atomic/observability/tracing/*`
-5. Read integration atomic docs:
+6. Read integration atomic docs:
    - `docs/atomic/integrations/redis/*`
    - `docs/atomic/integrations/rabbitmq/*`
    - `docs/atomic/integrations/http-communication/*`
-6. Create implementation plan with **CONDITIONAL phases** based on maturity level:
+7. Create implementation plan with **CONDITIONAL phases** based on maturity level:
    - **Phase 1**: Infrastructure setup (Docker, services scaffolding) — **ALL levels**
    - **Phase 2**: Data layer (PostgreSQL/MongoDB services with repositories) — **ALL levels**
    - **Phase 3**: Business logic (FastAPI endpoints, use cases) — **ALL levels**
    - **Phase 4**: Background workers (credit scoring, payment processing) — **IF user requested**
    - **Phase 5**: Telegram bot (notifications, commands) — **IF user requested**
    - **Phase 6**: Testing & quality (unit, integration, e2e tests) — **ALL levels** (criteria vary by level)
-7. Map each phase to:
+8. Map each phase to:
    - Specific tasks
    - Atomic documents to follow
    - Commands from `AGENT_TOOLBOX.md`
    - **Required At Level** (which sub-stages to execute)
    - Definition of Done
-8. **Add "Maturity Level Features" section** showing:
+9. **Add "Maturity Level Features" section** showing:
    - ✅ **Included features** at selected level
    - ❌ **Skipped features** (available at higher levels)
    - Upgrade path if user wants to add features later
-9. Identify risks and mitigations
-10. Create ADR if significant architectural decisions needed
+10. Identify risks and mitigations
+11. Create ADR if significant architectural decisions needed:
+    **Create ADR when:**
+    - Technology choice deviates from framework defaults (e.g., using Redis Streams instead of RabbitMQ)
+    - Multiple implementation approaches exist (e.g., sync vs async, REST vs GraphQL)
+    - User requires custom integration pattern not covered by atomic docs
+    - Security/compliance requirements mandate specific approach
+    - Database choice differs from PostgreSQL (e.g., using MySQL, CockroachDB)
+
+    **Skip ADR when:**
+    - Following standard framework patterns (FastAPI + PostgreSQL + HTTP-only)
+    - All decisions align with `ARCHITECTURE_GUIDE.md`
+    - Using template services with standard naming (`{context}_{domain}_{type}`)
 
 **Documents Read**:
 - `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`
 - `docs/reference/MATURITY_LEVELS.md` (for feature mapping)
 - `docs/reference/CONDITIONAL_STAGE_RULES.md` (for sub-stage logic)
 - `docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md`
+- `docs/checklists/SERVICE_NAMING_CHECKLIST.md` (MANDATORY)
+- `docs/atomic/architecture/naming-conventions.md` Section 2.3 (MANDATORY)
 - `docs/atomic/services/**/*` (based on required services AND level)
 - `docs/atomic/integrations/**/*` (based on integrations)
 - `docs/reference/AGENT_TOOLBOX.md`
