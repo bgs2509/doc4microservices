@@ -25,6 +25,52 @@ The ONLY difference between levels is Stage 4 sub-phases.
 
 ---
 
+## Architecture Decision Records (ADR) by Maturity Level
+
+> **Purpose**: Define when AI should create ADR documents based on project maturity level and decision significance.
+
+### ADR Creation Policy
+
+| Maturity Level | ADR Requirement | When to Create |
+|----------------|-----------------|----------------|
+| **Level 1-2** (PoC/Development) | **OPTIONAL** | Create ADR only for **MAJOR** architectural deviations:<br>• Switching database paradigm (SQL → NoSQL)<br>• Using different programming language<br>• Replacing core framework component (e.g., FastAPI → Flask)<br>• Deviating from Improved Hybrid Approach<br><br>**SKIP** for minor changes:<br>• Configuration tweaks<br>• Library version selection<br>• Standard pattern variations |
+| **Level 3-4** (Pre-Production/Production) | **MANDATORY** | Create ADR for **ANY** deviation from framework defaults:<br>• Technology choice differs from `tech_stack.md`<br>• Multiple implementation approaches exist<br>• Custom integration pattern required<br>• Security/compliance mandates specific approach<br>• Performance optimization requires non-standard solution<br><br>**REQUIRED** for audit/compliance in regulated industries |
+
+### ADR Document Location
+
+- **Path**: `docs/adr/XXX-brief-title.md` (where XXX = sequential number starting 001)
+- **Template**: Use `docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md`
+- **Index**: Update `docs/adr/README.md` with ADR list
+
+### When NOT to Create ADR (Any Level)
+
+- Following framework defaults (e.g., PostgreSQL 16 as specified in `tech_stack.md`)
+- Using standard patterns from atomic documentation (e.g., HTTP-only data access)
+- Implementation details that don't affect architecture (e.g., variable naming)
+- Trivial decisions easily reversible (e.g., log format JSON vs plaintext)
+
+### Examples
+
+**Level 1 (PoC) — ADR Required:**
+```
+User: "Use CockroachDB instead of PostgreSQL for geo-distribution"
+AI: Major deviation from framework → Create ADR-001-use-cockroachdb.md
+```
+
+**Level 1 (PoC) — ADR Not Required:**
+```
+User: "Use Redis for session storage"
+AI: Standard caching pattern, no ADR needed (documented in atomic/integrations/redis/)
+```
+
+**Level 4 (Production) — ADR Required:**
+```
+User: "Use GraphQL instead of REST for public API"
+AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
+```
+
+---
+
 ## Stage 4 Breakdown by Maturity Level
 
 ### Level 1: Proof of Concept (PoC)
@@ -541,26 +587,296 @@ User wants password reset emails, order confirmations, 2FA SMS, or transactional
 
 ---
 
-## Module Execution Order
+## Module Dependency Graph & Execution Order
 
-When multiple optional modules are requested, AI should execute them in this order during Stage 4:
+> **Purpose**: Define dependencies between optional modules and compute correct execution order to prevent broken integrations.
+
+### Module Dependencies
+
+Optional modules may depend on each other or on infrastructure components. AI must analyze requested modules and resolve dependencies before execution.
+
+#### Dependency Matrix
+
+| Module | Depends On | Rationale |
+|--------|------------|-----------|
+| **File Storage** | None | Independent module, only needs FastAPI core |
+| **Communication APIs** | • Workers (recommended)<br>• RabbitMQ (if async sending) | Email/SMS sending should be async to avoid blocking API requests |
+| **Payment Gateway** | • Workers (required)<br>• Communication APIs (recommended)<br>• RabbitMQ | Payment processing is async, email receipts improve UX |
+| **Real-Time Communication** | • Workers (required)<br>• Redis (required for scaling) | WebSocket event broadcasting needs Workers, Redis for multi-instance |
+| **Background Workers** | • RabbitMQ (required) | Workers consume events from RabbitMQ queues |
+| **Telegram Bot** | • RabbitMQ (recommended) | Bot listens to events for notifications |
+
+#### Dependency Graph Visualization
 
 ```
-4.1: Infrastructure
-4.2: Data Layer (PostgreSQL/MongoDB)
-4.3: Business Logic (FastAPI core)
-4.4: Background Workers (if requested)
-4.5: Telegram Bot (if requested)
-4.X: File Storage (if requested)
-4.Y: Real-Time Communication (if requested)
-4.Z: Payment Gateway Integration (if requested)
-4.A: Communication APIs (if requested)
-4.6: Testing (include tests for all active modules)
-4.7: CI/CD (Level 4 only)
-4.8: Documentation (Level 4 only)
+┌─────────────────────────────────────────────────────────────┐
+│ CORE (Always Present)                                       │
+│ ├─ Infrastructure (4.1)                                     │
+│ ├─ Data Layer (4.2): PostgreSQL / MongoDB                  │
+│ └─ Business Logic (4.3): FastAPI                           │
+└─────────────────────────────────────────────────────────────┘
+                          │
+        ┌─────────────────┼─────────────────┬──────────────────┐
+        │                 │                 │                  │
+    ┌───▼────┐      ┌────▼─────┐     ┌────▼─────┐      ┌────▼─────┐
+    │ File   │      │ Workers  │     │ Telegram │      │  Redis   │
+    │Storage │      │   (4.4)  │     │Bot (4.5) │      │(infra 4.2)│
+    │ (4.X)  │      └────┬─────┘     └────┬─────┘      └────┬─────┘
+    │        │           │                │                 │
+    │(indep) │           │                │                 │
+    └────────┘           │                │                 │
+                         │                │                 │
+              ┌──────────┼────────────────┘                 │
+              │          │                                  │
+              │      ┌───▼──────────┐                       │
+              │      │Communication │                       │
+              │      │   APIs (4.A) │                       │
+              │      └───┬──────────┘                       │
+              │          │                                  │
+         ┌────▼──────────▼──────┐      ┌──────────────────▼┐
+         │   Payment Gateway    │      │   Real-Time       │
+         │       (4.Z)          │      │ Communication(4.Y)│
+         └──────────────────────┘      └───────────────────┘
 ```
 
-**Rationale**: Core infrastructure and data layer must be ready before any optional modules can be implemented. Business logic comes before optional modules because modules often depend on core entities and use cases.
+### Dependency Resolution Algorithm
+
+When user requests multiple modules, AI must:
+
+1. **Parse Requested Modules**
+   ```
+   Example: User requests ["Payment Gateway", "Real-Time Communication", "File Storage"]
+   ```
+
+2. **Build Dependency List**
+   ```
+   Payment Gateway → requires Workers, Communication APIs
+   Real-Time Communication → requires Workers, Redis
+   File Storage → no dependencies
+   ```
+
+3. **Resolve Transitive Dependencies**
+   ```
+   Communication APIs → requires Workers
+   Workers → requires RabbitMQ
+
+   Final dependency chain:
+   - RabbitMQ (infrastructure)
+   - Workers (consumes from RabbitMQ)
+   - Communication APIs (uses Workers for async sending)
+   - Payment Gateway (uses Workers + Communication APIs)
+   - Real-Time Communication (uses Workers + Redis)
+   - File Storage (independent)
+   ```
+
+4. **Topological Sort** (execution order)
+   ```
+   Result:
+   1. Infrastructure (Core) → includes Redis setup
+   2. Data Layer (Core)
+   3. Business Logic (Core)
+   4. Workers (dependency for Payment, Real-Time, Communication)
+   5. Communication APIs (dependency for Payment)
+   6. File Storage (independent, can run anytime after Core)
+   7. Payment Gateway (all dependencies met)
+   8. Real-Time Communication (all dependencies met)
+   9. Testing (all modules)
+   ```
+
+### Automatic Dependency Injection
+
+If user requests a module that has dependencies, AI must **automatically include** the dependencies:
+
+| User Requests | AI Auto-Includes | User Notification |
+|---------------|------------------|-------------------|
+| "Payment Gateway" | Workers, Communication APIs, RabbitMQ | ⚠️ "Payment Gateway requires Workers and Communication APIs. Auto-including these modules." |
+| "Real-Time Communication" | Workers, Redis, RabbitMQ | ⚠️ "Real-Time Communication requires Workers and Redis. Auto-including these modules." |
+| "Communication APIs" | Workers (recommended), RabbitMQ | ⚠️ "Communication APIs work best with async Workers. Auto-including Workers module." |
+
+**User Override**: User can explicitly say "no Workers" → AI warns about synchronous limitations:
+```
+⚠️ Warning: Communication APIs without Workers will send emails/SMS synchronously,
+   blocking API requests. This may cause timeouts for slow email providers.
+
+   Recommendation: Include Workers for production use.
+
+   Proceed without Workers? (yes/no)
+```
+
+### Execution Order (Computed)
+
+AI follows this algorithm for Stage 4 execution:
+
+```python
+def compute_execution_order(user_modules: list, maturity_level: int) -> list:
+    """
+    Compute correct execution order for Stage 4 sub-stages.
+
+    Returns ordered list of sub-stages to execute.
+    """
+    # Core modules (always present)
+    stages = [
+        "4.1: Infrastructure (Basic)",
+        "4.1b: Dev Overrides" if maturity_level >= 2 else None,
+        "4.1c: Nginx + SSL + Metrics" if maturity_level >= 3 else None,
+        "4.1d: ELK + Replication" if maturity_level == 4 else None,
+        "4.2: Data Layer (PostgreSQL)",
+        "4.2b: MongoDB" if "MongoDB" in user_modules else None,
+        "4.3: Business Logic (Core)",
+        "4.3b: Structured Logging" if maturity_level >= 2 else None,
+        "4.3c: Prometheus Metrics" if maturity_level >= 3 else None,
+        "4.3d: OAuth/JWT + Tracing" if maturity_level == 4 else None,
+    ]
+
+    # Resolve dependencies
+    required_modules = set(user_modules)
+
+    if "Payment Gateway" in required_modules:
+        required_modules.add("Workers")
+        required_modules.add("Communication APIs")
+        required_modules.add("RabbitMQ")
+
+    if "Real-Time Communication" in required_modules:
+        required_modules.add("Workers")
+        required_modules.add("Redis")
+        required_modules.add("RabbitMQ")
+
+    if "Communication APIs" in required_modules:
+        required_modules.add("Workers")  # Recommended
+        required_modules.add("RabbitMQ")
+
+    if "Workers" in required_modules or "Telegram Bot" in required_modules:
+        required_modules.add("RabbitMQ")
+
+    # Add optional modules in dependency order
+    if "Workers" in required_modules:
+        stages.append("4.4: Background Workers")
+        if maturity_level >= 2:
+            stages.append("4.4b: Worker Logging")
+
+    if "Telegram Bot" in required_modules:
+        stages.append("4.5: Telegram Bot")
+        if maturity_level >= 2:
+            stages.append("4.5b: Bot Logging")
+
+    # Independent modules (can run anytime after core)
+    if "File Storage" in required_modules:
+        stages.append("4.X: File Storage")
+
+    # Dependent modules (after Workers)
+    if "Communication APIs" in required_modules:
+        stages.append("4.A: Communication APIs")
+
+    if "Payment Gateway" in required_modules:
+        stages.append("4.Z: Payment Gateway Integration")
+
+    if "Real-Time Communication" in required_modules:
+        stages.append("4.Y: Real-Time Communication")
+
+    # Testing (always last in Stage 4)
+    stages.append("4.6: Testing (Basic)")
+    if maturity_level >= 2:
+        stages.append("4.6b: Integration Tests")
+    if maturity_level >= 3:
+        stages.append("4.6c: E2E Tests")
+    if maturity_level == 4:
+        stages.append("4.6d: Security Tests")
+
+    # Level 4 only
+    if maturity_level == 4:
+        stages.append("4.7: CI/CD")
+        stages.append("4.8: Documentation")
+
+    # Filter out None values
+    return [s for s in stages if s is not None]
+```
+
+### Example Execution Sequences
+
+#### Example 1: User Requests "Payment Gateway" (Level 3)
+
+**User Input**:
+- Maturity Level: 3 (Pre-Production)
+- Optional Modules: Payment Gateway
+
+**AI Dependency Resolution**:
+```
+Payment Gateway → requires Workers, Communication APIs
+Communication APIs → requires Workers (already resolved)
+Workers → requires RabbitMQ
+```
+
+**Auto-Included Modules**: Workers, Communication APIs, RabbitMQ
+
+**User Notification**:
+```
+ℹ️ Dependency Resolution:
+   • You requested: Payment Gateway
+   • Auto-including: Workers, Communication APIs, RabbitMQ
+   • Reason: Payment processing requires async workers and email receipts
+   • Total modules: 4
+```
+
+**Execution Order**:
+```
+✅ 4.1: Infrastructure (+ Nginx, SSL, Metrics, RabbitMQ)
+✅ 4.2: PostgreSQL
+✅ 4.3: Business Logic (+ Logging, Metrics)
+✅ 4.4: Background Workers (payment processor)
+✅ 4.A: Communication APIs (email receipts)
+✅ 4.Z: Payment Gateway Integration
+✅ 4.6: Testing (unit, integration, e2e)
+```
+
+#### Example 2: User Requests "Real-Time + File Storage" (Level 4)
+
+**User Input**:
+- Maturity Level: 4 (Production)
+- Optional Modules: Real-Time Communication, File Storage
+
+**AI Dependency Resolution**:
+```
+Real-Time Communication → requires Workers, Redis
+File Storage → no dependencies
+```
+
+**Auto-Included Modules**: Workers, Redis, RabbitMQ
+
+**Execution Order**:
+```
+✅ 4.1: Infrastructure (+ Nginx, SSL, ELK, Replication, Redis)
+✅ 4.2: PostgreSQL (with replication)
+✅ 4.3: Business Logic (+ Logging, Metrics, OAuth, Tracing)
+✅ 4.4: Background Workers (WebSocket event broadcasters)
+✅ 4.X: File Storage (independent)
+✅ 4.Y: Real-Time Communication (WebSockets + Redis pub/sub)
+✅ 4.6: Testing (unit, integration, e2e, security)
+✅ 4.7: CI/CD
+✅ 4.8: Documentation (ADRs, Runbooks)
+```
+
+### Conflict Detection
+
+If user requests conflicting modules or configurations:
+
+| Conflict | Detection | AI Action |
+|----------|-----------|-----------|
+| "No Workers" but requests "Payment Gateway" | Payment requires Workers | **ERROR**: "Payment Gateway requires Workers. Cannot proceed without Workers. Please either: (1) Include Workers, or (2) Remove Payment Gateway." |
+| "No RabbitMQ" but requests "Workers" | Workers require RabbitMQ | **ERROR**: "Workers require RabbitMQ for event consumption. Auto-including RabbitMQ." |
+| Multiple payment gateways requested | E.g., "Stripe" and "PayPal" | **OK**: Generate adapters for both, document in ADR |
+
+### Benefits of Dependency Resolution
+
+✅ **Correctness**: Modules always have their dependencies available
+✅ **User Experience**: AI explains what it's including and why
+✅ **Flexibility**: User can override if they understand implications
+✅ **Scalability**: Easy to add new modules with dependencies
+
+---
+
+**Previous Simple Ordering (Deprecated)**:
+
+The original simple ordering (4.1 → 4.2 → 4.3 → 4.4 → 4.5 → 4.X → 4.Y → 4.Z → 4.A → 4.6) is **replaced** by the dependency resolution algorithm above. The new approach ensures correct ordering regardless of which modules user requests.
 
 ---
 
