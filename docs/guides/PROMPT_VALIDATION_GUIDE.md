@@ -51,6 +51,86 @@ Run prompt validation immediately after receiving a new user request and before 
 | Deliverables or acceptance criteria | Confirm which artefacts and checks are expected (tests, coverage, reports). | Yes |
 | Open questions/risks | Capture known unknowns; recommend a follow-up session if unresolved. | No, but must be tracked |
 
+## Retry Policy for Unresponsive Users
+
+> **Purpose**: Define how AI handles cases where users don't provide required clarifications, preventing indefinite workflow suspension.
+
+### Retry Sequence
+
+When AI requests clarification for missing mandatory fields:
+
+1. **First Attempt** (immediate)
+   - Send clarification request using templates from `PROMPT_TEMPLATES.md`
+   - Clearly list all missing fields
+   - Provide examples for each field
+   - Set expectations: "Please provide this information to proceed with Stage 2"
+
+2. **Wait Period**
+   - Monitor for user response
+   - If no valid response received, proceed to second attempt
+
+3. **Second Attempt** (after first timeout)
+   - Resend clarification with simplified format
+   - Highlight most critical missing fields (e.g., Maturity Level, Business Context)
+   - Offer options/defaults where applicable:
+     ```
+     Quick Decision Guide:
+     • Maturity Level: Choose 1 (PoC) if unsure - can upgrade later
+     • Optional Modules: Choose "none" if uncertain - can add later
+     ```
+   - Final warning: "Without this information, workflow cannot proceed"
+
+4. **Third Attempt Decision**
+   - If still no valid response after second attempt:
+     - **TERMINATE** workflow gracefully
+     - Log termination reason: "Workflow terminated: User did not provide required information after 2 clarification attempts"
+     - Send termination summary to user:
+       ```
+       ## ⚠️ Workflow Terminated
+
+       **Reason**: Missing mandatory information after multiple clarification requests
+
+       **Missing Fields**:
+       • Target Maturity Level (1-4)
+       • Business Context (problem, users, metrics)
+       [... list all still-missing fields ...]
+
+       **Next Steps**:
+       To restart the workflow, please provide a complete prompt including all mandatory fields.
+       See docs/guides/PROMPT_VALIDATION_GUIDE.md for requirements.
+       ```
+
+### Handling Ambiguous Responses
+
+If user provides **partial** or **ambiguous** information:
+
+| Scenario | AI Action | Example |
+|----------|-----------|---------|
+| User says "I don't know" for non-critical field | Use framework default, document assumption in Requirements Intake | User: "I don't know auth method"<br>AI: "Defaulting to JWT (framework standard), can change later" |
+| User says "I don't know" for **critical** field (Maturity Level, Business Context) | Cannot proceed → retry with more guidance | User: "I don't know which level"<br>AI: "Cannot proceed without level. For quick prototype, choose Level 1 (PoC). For production, choose Level 4." |
+| User provides invalid value | Reject, ask for correction with valid options | User: "Maturity Level = 7"<br>AI: "Invalid level. Valid options: 1, 2, 3, or 4" |
+
+### DO NOT Assume Defaults for Critical Fields
+
+**NEVER** auto-select these without explicit user confirmation:
+- ❌ Target Maturity Level (1-4)
+- ❌ Business Context
+- ❌ Functional Requirements
+
+**MAY** auto-select these with user notification:
+- ✅ Optional Modules (default: "none" if user confirms core-only is sufficient)
+- ✅ Authentication method (default: JWT if user approves)
+- ✅ Coverage threshold (use level-appropriate default from `MATURITY_LEVELS.md`)
+
+### Timeout Configuration
+
+| Attempt | Wait Time | Notes |
+|---------|-----------|-------|
+| After 1st request | Implementation-dependent | In interactive CLI: wait for user input<br>In async environments: configurable timeout |
+| After 2nd request | Implementation-dependent | Shorter than first timeout<br>Signal urgency to user |
+
+**Note**: Exact timeout values are implementation-specific (CLI vs web UI vs API). The principle is: 2 clarification attempts maximum, then terminate gracefully.
+
 ## Integration With Agent Workflow
 
 - This guide is executed at **Stage 1** in `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md`.
