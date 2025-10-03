@@ -18,10 +18,10 @@
 
 | Stage | Phase | Required At Level | Documents to Read | AI Generates | Success Criteria |
 |-------|-------|-------------------|-------------------|--------------|------------------|
-| **0** | **Initialization** | **ALL** | • `CLAUDE.md`<br>• `docs/reference/AGENT_CONTEXT_SUMMARY.md`<br>• `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md` | Nothing (loading phase) | AI has complete framework context |
+| **0** | **Initialization** | **ALL** | • `CLAUDE.md`<br>• `docs/reference/AGENT_CONTEXT_SUMMARY.md`<br>• `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md`<br>• `docs/reference/MATURITY_LEVELS.md` | Nothing (loading phase) | AI has complete framework context |
 | **1** | **Prompt Validation** | **ALL** | • `docs/guides/PROMPT_VALIDATION_GUIDE.md`<br>• `docs/reference/PROMPT_TEMPLATES.md`<br>• `docs/reference/MATURITY_LEVELS.md` (for level selection) | • Validation confirmation<br>• **Selected maturity level (1-4)**<br>• **Selected optional modules** | All mandatory fields present:<br>✅ Business context<br>✅ **Target maturity level**<br>✅ Functional requirements<br>✅ Dependencies |
 | **2** | **Requirements Clarification & Intake** | **ALL** | • `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`<br>• `docs/guides/ARCHITECTURE_GUIDE.md`<br>• `docs/reference/tech_stack.md`<br>• `docs/atomic/architecture/improved-hybrid-overview.md` | • Completed Requirements Intake<br>• **Maturity level confirmed**<br>• Architecture compatibility analysis | • Requirements approved<br>• Maturity level documented<br>• Architecture aligned |
-| **3** | **Architecture Mapping & Planning** | **ALL** | • `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`<br>• `docs/reference/CONDITIONAL_STAGE_RULES.md`<br>• `docs/atomic/services/**/*` (based on level + modules)<br>• `docs/atomic/integrations/**/*` (if needed) | • Implementation Plan with:<br>&nbsp;&nbsp;• **Included features list**<br>&nbsp;&nbsp;• **Skipped features list**<br>&nbsp;&nbsp;• Conditional sub-stages | • Plan approved<br>• Features clearly marked<br>• Sub-stages identified |
+| **3** | **Architecture Mapping & Planning** | **ALL** | • `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`<br>• `docs/reference/CONDITIONAL_STAGE_RULES.md`<br>• `docs/checklists/SERVICE_NAMING_CHECKLIST.md`<br>• `docs/atomic/architecture/naming-conventions.md` (Section 2.3)<br>• `docs/atomic/services/**/*` (based on level + modules)<br>• `docs/atomic/integrations/**/*` (if needed) | • Implementation Plan with:<br>&nbsp;&nbsp;• **Included features list**<br>&nbsp;&nbsp;• **Skipped features list**<br>&nbsp;&nbsp;• Conditional sub-stages<br>• Service names (DEFAULT TO 3-PART) | • Plan approved<br>• Features clearly marked<br>• Sub-stages identified<br>• Naming follows conventions |
 | **4.1** | **Infrastructure (Basic)** | **ALL** | • `docs/atomic/infrastructure/containerization/docker-compose-setup.md`<br>• `docs/atomic/infrastructure/containerization/dockerfile-patterns.md` | • `docker-compose.yml`<br>• `.env.example`<br>• `Makefile` | • Docker services healthy |
 | **4.1b** | **+ Dev Overrides** | **≥ Level 2** | • `docs/atomic/infrastructure/configuration/settings-patterns.md` | • `docker-compose.dev.yml`<br>• Docker healthchecks | • Dev environment working |
 | **4.1c** | **+ Nginx + SSL + Metrics** | **≥ Level 3** | • `docs/atomic/infrastructure/api-gateway/nginx-setup.md`<br>• `docs/atomic/infrastructure/api-gateway/ssl-configuration.md`<br>• `docs/atomic/observability/metrics/prometheus-setup.md` | • Nginx config<br>• SSL setup<br>• Prometheus + Grafana<br>• `docker-compose.prod.yml` | • Nginx reverse proxy working<br>• SSL functional<br>• Metrics exposed |
@@ -212,6 +212,47 @@ Use this decision tree:
 │
 ... and so on for each technology
 ```
+
+### Reading Order Within Phase
+
+When multiple atomic documents are listed for a single phase, read them in this recommended order:
+
+**1. Architecture principles first** (understand constraints before implementation)
+   - `ddd-hexagonal-principles.md`
+   - `service-separation-principles.md`
+   - `data-access-architecture.md`
+   - `naming-conventions.md`
+
+**2. Setup/scaffolding documents** (project structure)
+   - `basic-setup.md`
+   - `application-factory.md`
+   - `bot-initialization.md`
+   - `main-function-patterns.md`
+
+**3. Core implementation patterns** (business logic)
+   - `routing-patterns.md`
+   - `handler-patterns.md`
+   - `dependency-injection.md`
+   - `schema-validation.md`
+   - `repository-patterns.md`
+
+**4. Integration patterns** (external communication)
+   - `http-communication/business-to-data-calls.md`
+   - `rabbitmq/message-publishing.md`
+   - `rabbitmq/message-consuming.md`
+   - `redis/caching-patterns.md`
+
+**5. Advanced features** (observability, security, error handling)
+   - `middleware-setup.md`
+   - `error-handling.md`
+   - `structured-logging.md`
+   - `metrics-integration.md`
+   - `oauth-jwt.md`
+
+**Rationale**: This order ensures AI understands:
+- **Why** before **how** (architecture → implementation)
+- **Structure** before **details** (setup → patterns)
+- **Core** before **advanced** (basic logic → integrations → observability)
 
 ---
 

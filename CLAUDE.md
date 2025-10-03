@@ -17,10 +17,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 1. **CLAUDE.md** (this file) — Entry point, navigation, framework overview
 2. **docs/reference/AGENT_CONTEXT_SUMMARY.md** — Critical rules snapshot, mandatory constraints
 3. **docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md** — Complete 7-stage process with detailed instructions
+4. **docs/reference/MATURITY_LEVELS.md** — 4 maturity levels from PoC to Production
 
-**Purpose**: Load context about framework architecture (Improved Hybrid Approach), mandatory constraints (HTTP-only data access, service separation), and available documentation.
+**Purpose**: Load context about framework architecture (Improved Hybrid Approach), mandatory constraints (HTTP-only data access, service separation), available documentation, and maturity level options.
 
-**Expected outcome**: AI understands where to find specific information during workflow execution.
+**Expected outcome**: AI understands:
+- Framework-as-submodule model
+- Improved Hybrid Approach architecture
+- Mandatory constraints (HTTP-only data access, service separation, etc.)
+- **Maturity levels** (PoC ~5 min, Development ~10 min, Pre-Production ~15 min, Production ~30 min)
+- Where to find specific information during workflow execution
 
 ### **Stage 1-6: Dynamic Reading** (During workflow execution)
 
