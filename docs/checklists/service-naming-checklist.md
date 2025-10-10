@@ -2,7 +2,7 @@
 
 **Purpose**: Machine-readable checklist for AI agents and developers to decide between 3-part and 4-part service naming.
 
-**Related**: [Naming Conventions](../atomic/architecture/naming-conventions.md) | [Semantic Shortening Guide](../guides/SEMANTIC_SHORTENING_GUIDE.md)
+**Related**: [Naming Conventions](../atomic/architecture/naming-conventions.md) | [Semantic Shortening Guide](../guides/semantic-shortening-guide.md)
 
 ---
 
@@ -249,8 +249,8 @@ After naming, verify:
 ## References
 
 - **Complete guide**: [Naming Conventions](../atomic/architecture/naming-conventions.md)
-- **10 Reasons detailed**: [Section 2.3](../atomic/architecture/naming-conventions.md#23-serious-reasons-for-4-part-naming-detailed)
-- **Decision tree**: [Semantic Shortening Guide](../guides/SEMANTIC_SHORTENING_GUIDE.md)
+- **10 Reasons detailed**: [10 Serious Reasons for 4-Part Naming](../atomic/architecture/naming/naming-4part-reasons.md)
+- **Decision tree**: [Semantic Shortening Guide](../guides/semantic-shortening-guide.md)
 - **Context tracking**: [Context Registry](../atomic/architecture/context-registry.md)
 
 ---

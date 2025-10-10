@@ -581,9 +581,9 @@ echo "✅ Rollback complete"
 ## Related Documentation
 
 - **[Naming Conventions](../atomic/architecture/naming-conventions.md)** — Complete naming standards
-- **[Service Catalog](../README.md#services)** — Current service inventory
-- **[Architecture Guide](../guides/ARCHITECTURE_GUIDE.md)** — Service design principles
-- **[Migration Guide](./MIGRATION_4PART_TO_3PART.md)** — Step-by-step migration from 4-part
+- **[Service Catalog](../../README.md#project-structure)** — Current service inventory
+- **[Architecture Guide](architecture-guide.md)** — Service design principles
+- **Migration Steps** — See Section 5 above for step-by-step migration from 4-part
 
 ---
 

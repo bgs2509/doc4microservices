@@ -2,7 +2,7 @@
 
 **Status**: ✅ Active Reference
 **Last Updated**: 2025-10-02
-**Related**: [Naming Conventions](../atomic/architecture/naming-conventions.md) | [Semantic Shortening Guide](SEMANTIC_SHORTENING_GUIDE.md)
+**Related**: [Naming Conventions](../atomic/architecture/naming-conventions.md) | [Semantic Shortening Guide](semantic-shortening-guide.md)
 
 ---
 
@@ -76,9 +76,9 @@ Identify your business context and specific domain:
 - **DEFAULT (80-90%)**: Use 3-part naming when domain clearly implies function
 - **EXCEPTION (10-20%)**: Use 4-part `{context}_{domain}_{function}_{type}` ONLY when domain is ambiguous
 - **BURDEN OF PROOF**: Always start with 3-part, justify 4-part with one of 10 reasons
-- See [Service Naming Checklist](../checklists/SERVICE_NAMING_CHECKLIST.md) for quick decision
-- See [Naming Conventions Section 2.3](../atomic/architecture/naming-conventions.md#23-serious-reasons-for-4-part-naming-detailed) for complete list of 10 reasons
-- See [Semantic Shortening Guide](SEMANTIC_SHORTENING_GUIDE.md) for detailed decision tree
+- See [Service Naming Checklist](../checklists/service-naming-checklist.md) for quick decision
+- See [10 Serious Reasons for 4-Part Naming](../atomic/architecture/naming/naming-4part-reasons.md) for complete list of 10 reasons
+- See [Semantic Shortening Guide](semantic-shortening-guide.md) for detailed decision tree
 
 ### Step 2: Global Search-and-Replace
 
@@ -430,10 +430,10 @@ git checkout backup/before-rename-20251002
 ## See Also
 
 - **[Naming Conventions](../atomic/architecture/naming-conventions.md)** - Complete naming rules reference
-- **[Semantic Shortening Guide](SEMANTIC_SHORTENING_GUIDE.md)** - Decision tree for 3-part vs 4-part naming
+- **[Semantic Shortening Guide](semantic-shortening-guide.md)** - Decision tree for 3-part vs 4-part naming
 - **[Context Registry](../atomic/architecture/context-registry.md)** - Prevent context name conflicts
-- **[Project Structure](../reference/PROJECT_STRUCTURE.md)** - Canonical repository layout
-- **[Architecture Guide](ARCHITECTURE_GUIDE.md)** - HTTP-only data access patterns
+- **[Project Structure](../reference/project-structure.md)** - Canonical repository layout
+- **[Architecture Guide](architecture-guide.md)** - HTTP-only data access patterns
 
 ---
 

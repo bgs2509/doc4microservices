@@ -79,7 +79,7 @@ docker-compose up -d
 
 AI agents generate projects following this standardized structure:
 
-> **AUTHORITATIVE PROJECT STRUCTURE**: See [../reference/PROJECT_STRUCTURE.md](../reference/PROJECT_STRUCTURE.md) for the complete, detailed project structure guide with explanations and setup instructions.
+> **AUTHORITATIVE PROJECT STRUCTURE**: See [../reference/project-structure.md](../reference/project-structure.md) for the complete, detailed project structure guide with explanations and setup instructions.
 
 ### Key Structure Principles
 
