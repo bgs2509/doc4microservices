@@ -14,7 +14,7 @@
 |------|-----------------|
 | Full documentation map | `docs/LINKS_REFERENCE.md`, `docs/INDEX.md` |
 | Maturity level selection | `docs/reference/MATURITY_LEVELS.md`, `docs/reference/CONDITIONAL_STAGE_RULES.md` |
-| Architecture constraints | `docs/guides/ARCHITECTURE_GUIDE.md`, `docs/atomic/architecture/improved-hybrid-overview.md`, `docs/atomic/architecture/data-access-architecture.md`, `docs/atomic/architecture/naming-conventions.md` |
+| Architecture constraints | `docs/guides/ARCHITECTURE_GUIDE.md`, `docs/atomic/architecture/improved-hybrid-overview.md`, `docs/atomic/architecture/data-access-architecture.md`, `docs/atomic/architecture/naming/README.md` |
 | Service implementation patterns | `docs/atomic/services/fastapi/`, `docs/atomic/services/aiogram/`, `docs/atomic/services/asyncio-workers/`, `docs/atomic/services/data-services/` |
 | Infrastructure integration rules | `docs/atomic/integrations/redis/`, `docs/atomic/integrations/rabbitmq/`, `docs/atomic/integrations/http-communication/` |
 | Database patterns | `docs/atomic/databases/postgresql/`, `docs/atomic/databases/postgresql-advanced/`, `docs/atomic/infrastructure/databases/` |
@@ -44,7 +44,7 @@
 2. **Data Access**: Business services must call data services over HTTP; direct database access is prohibited (`docs/atomic/architecture/data-access-architecture.md`).
 3. **API Gateway**: Nginx is MANDATORY for production deployments (TLS, load balancing, rate limiting) (`docs/atomic/infrastructure/api-gateway/`).
 4. **Eventing**: RabbitMQ is the mandatory broker for asynchronous communication (`docs/atomic/integrations/rabbitmq/`).
-5. **Naming**: **DEFAULT TO 3-PART** naming (`{context}_{domain}_{type}`). Use 4-part ONLY when domain is ambiguous (burden of proof required). See `docs/atomic/architecture/naming-conventions.md` Section 2.3 for 10 serious reasons. Use `docs/checklists/SERVICE_NAMING_CHECKLIST.md` for quick decision.
+5. **Naming**: **DEFAULT TO 3-PART** naming (`{context}_{domain}_{type}`). Use 4-part ONLY when domain is ambiguous (burden of proof required). See `docs/atomic/architecture/naming/naming-4part-reasons.md` for 10 serious reasons. Use `docs/checklists/SERVICE_NAMING_CHECKLIST.md` for quick decision.
 6. **Quality Gates**: Ruff, mypy, bandit, pytest, and coverage thresholds are non-negotiable (`docs/guides/DEVELOPMENT_COMMANDS.md`).
 
 ## Workflow Overview

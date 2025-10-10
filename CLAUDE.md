@@ -113,14 +113,14 @@ This framework implements the **Improved Hybrid Approach** with FastAPI, Aiogram
 
 **Why `template_` prefix?**:
 - Clearly signals these are placeholders, not production service names
-- Follows mandatory `{context}_{domain}_{type}` naming pattern ([Naming Conventions](docs/atomic/architecture/naming-conventions.md))
+- Follows mandatory `{context}_{domain}_{type}` naming pattern ([Naming Conventions](docs/atomic/architecture/naming/README.md))
 - Prevents confusion about whether templates represent real business services
 
 **Service Naming Philosophy**:
 - **DEFAULT TO 3-PART** (`{context}_{domain}_{type}`) — 80-90% of services
 - Use 4-part ONLY when domain is ambiguous (burden of proof required)
 - See [Service Naming Checklist](docs/checklists/SERVICE_NAMING_CHECKLIST.md) for quick decision
-- See [Naming Conventions Section 2.3](docs/atomic/architecture/naming-conventions.md#23-serious-reasons-for-4-part-naming-detailed) for 10 serious reasons
+- See [10 Serious Reasons for 4-Part Naming](docs/atomic/architecture/naming/naming-4part-reasons.md) for detailed criteria
 
 ## Agent Workflow (High-Level)
 

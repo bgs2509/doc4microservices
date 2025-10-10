@@ -54,7 +54,7 @@ See [Atomic Documentation Hub](atomic/README.md) for contribution rules.
 - [Event Loop Management](atomic/architecture/event-loop-management.md) — Ownership, lifecycle, and orchestration rules for event loops.
 - [Data Access Architecture](atomic/architecture/data-access-architecture.md) — Patterns for safe data access and service boundaries.
 - [DDD and Hexagonal Principles](atomic/architecture/ddd-hexagonal-principles.md) — DDD layering and hexagonal architecture applications.
-- [Naming Conventions](atomic/architecture/naming-conventions.md) — Mandatory naming standards for code and infrastructure.
+- [Naming Conventions](atomic/architecture/naming/README.md) — Complete naming guide with Quick Reference Table and decision trees.
 - [Quality Standards](atomic/architecture/quality-standards.md) — Quality bar, verification steps, and acceptance criteria.
 - [Project Structure Patterns](atomic/architecture/project-structure-patterns.md) — Reference microservice and repository structures.
 
