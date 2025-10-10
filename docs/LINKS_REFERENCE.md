@@ -9,7 +9,7 @@
 |----------|-------------|----------------|---------|
 | **Main Entry Point** | [CLAUDE.md](../CLAUDE.md) | `.framework/CLAUDE.md` | Complete developer guide |
 | **Project Overview** | [README.md](../README.md) | `.framework/README.md` | Project introduction and quick start |
-| **Architecture Guide** | [guides/ARCHITECTURE_GUIDE.md](guides/ARCHITECTURE_GUIDE.md) | `.framework/docs/guides/ARCHITECTURE_GUIDE.md` | Canonical source of architectural principles |
+| **Architecture Guide** | [guides/architecture-guide.md](guides/architecture-guide.md) | `.framework/docs/guides/architecture-guide.md` | Canonical source of architectural principles |
 | **Technical Specifications** | [reference/tech_stack.md](reference/tech_stack.md) | `.framework/docs/reference/tech_stack.md` | Technology versions and configurations |
 
 <a id="developer-guides"></a>
@@ -18,12 +18,12 @@
 | Document | Direct Path | Submodule Path | Purpose |
 |----------|-------------|----------------|---------|
 | **AI Code Generation Master Workflow** | [guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md](guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md) | `.framework/docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md` | Complete 7-stage AI process (unified workflow) |
-| **Development Commands** | [guides/DEVELOPMENT_COMMANDS.md](guides/DEVELOPMENT_COMMANDS.md) | `.framework/docs/guides/DEVELOPMENT_COMMANDS.md` | All development commands |
-| **Use Case Implementation** | [guides/USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md) | `.framework/docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md` | Step-by-step creation of new use cases |
+| **Development Commands** | [guides/development-commands.md](guides/development-commands.md) | `.framework/docs/guides/development-commands.md` | All development commands |
+| **Use Case Implementation** | [guides/use-case-implementation-guide.md](guides/use-case-implementation-guide.md) | `.framework/docs/guides/use-case-implementation-guide.md` | Step-by-step creation of new use cases |
 | **Prompt Validation Guide** | [guides/PROMPT_VALIDATION_GUIDE.md](guides/PROMPT_VALIDATION_GUIDE.md) | `.framework/docs/guides/PROMPT_VALIDATION_GUIDE.md` | Mandatory intake checklist before work starts |
 | **Requirements Intake Template** | [guides/REQUIREMENTS_INTAKE_TEMPLATE.md](guides/REQUIREMENTS_INTAKE_TEMPLATE.md) | `.framework/docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md` | Structured capture of inputs |
 | **Implementation Plan Template** | [guides/IMPLEMENTATION_PLAN_TEMPLATE.md](guides/IMPLEMENTATION_PLAN_TEMPLATE.md) | `.framework/docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md` | Planning artefact for approval |
-| **Project Structure** | [reference/PROJECT_STRUCTURE.md](reference/PROJECT_STRUCTURE.md) | `.framework/docs/reference/PROJECT_STRUCTURE.md` | Directory and file organization |
+| **Project Structure** | [reference/project-structure.md](reference/project-structure.md) | `.framework/docs/reference/project-structure.md` | Directory and file organization |
 | **Troubleshooting** | [reference/troubleshooting.md](reference/troubleshooting.md) | `.framework/docs/reference/troubleshooting.md` | Diagnostics and problem solving |
 | **Style Guide** | [STYLE_GUIDE.md](STYLE_GUIDE.md) | `.framework/docs/STYLE_GUIDE.md` | Documentation formatting standards |
 
@@ -70,9 +70,9 @@ Centralised atomic documentation for domain-specific rules. See [INDEX.md](INDEX
 | Task | Documents |
 |------|-----------|
 | **Quick start** | [README.md](../README.md) → [CLAUDE.md](../CLAUDE.md) |
-| **Understand architecture** | [ARCHITECTURE_GUIDE.md](guides/ARCHITECTURE_GUIDE.md) |
-| **Run commands** | [DEVELOPMENT_COMMANDS.md](guides/DEVELOPMENT_COMMANDS.md) |
-| **Create new use case** | [USE_CASE_IMPLEMENTATION_GUIDE.md](guides/USE_CASE_IMPLEMENTATION_GUIDE.md) |
+| **Understand architecture** | [architecture-guide.md](guides/architecture-guide.md) |
+| **Run commands** | [development-commands.md](guides/development-commands.md) |
+| **Create new use case** | [use-case-implementation-guide.md](guides/use-case-implementation-guide.md) |
 | **AI-led code generation** | [AI_CODE_GENERATION_MASTER_WORKFLOW.md](guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md) → [AI_NAVIGATION_MATRIX.md](reference/AI_NAVIGATION_MATRIX.md) |
 | **Check versions** | [tech_stack.md](reference/tech_stack.md) |
 | **Solve problems** | [troubleshooting.md](reference/troubleshooting.md) |

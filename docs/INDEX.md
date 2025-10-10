@@ -17,31 +17,31 @@ The documentation is organised into atomic knowledge modules. Use this index as 
 
 ### Core Guides
 - [Architecture Guide](LINKS_REFERENCE.md#core-documentation) — canonical architectural principles
-- [AI Code Generation Master Workflow](guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md) — complete 7-stage AI process (unified workflow)
+- [AI Code Generation Master Workflow](guides/ai-code-generation-master-workflow.md) — complete 7-stage AI process (unified workflow)
 - [Development Commands](LINKS_REFERENCE.md#developer-guides) — command reference for local workflows
 - [Use Case Implementation Guide](LINKS_REFERENCE.md#developer-guides) — step-by-step delivery process
 
 ### Reference Materials
 - [Technical Specifications](LINKS_REFERENCE.md#core-documentation) — platform versions and runtime constraints
 - [Troubleshooting Guide](LINKS_REFERENCE.md#developer-guides) — diagnostics and recovery procedures
-- [Agent Context Summary](reference/AGENT_CONTEXT_SUMMARY.md) — onboarding context for AI agents
-- [Maturity Levels](reference/MATURITY_LEVELS.md) — 4 incremental levels from PoC to Production
-- [Conditional Stage Rules](reference/CONDITIONAL_STAGE_RULES.md) — stage skipping rules per maturity level
-- [AI Navigation Matrix](reference/AI_NAVIGATION_MATRIX.md) — exact document mapping per workflow stage
-- [Agent Toolbox](reference/AGENT_TOOLBOX.md) — machine-friendly command catalogue
-- [Deliverables Catalog](reference/DELIVERABLES_CATALOG.md) — artefact ownership and storage rules
-- [Prompt Templates](reference/PROMPT_TEMPLATES.md) — reusable communication templates
-- [Failure Scenarios & Recovery Guide](reference/FAILURE_SCENARIOS.md) — edge cases handling and recovery procedures
-- [Architecture Decision Log Template](reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md) — ADR format and conventions
-- [Semantic Shortening Guide](guides/SEMANTIC_SHORTENING_GUIDE.md) — 3-part service naming formula and decision tree
+- [Agent Context Summary](reference/agent-context-summary.md) — onboarding context for AI agents
+- [Maturity Levels](reference/maturity-levels.md) — 4 incremental levels from PoC to Production
+- [Conditional Stage Rules](reference/conditional-stage-rules.md) — stage skipping rules per maturity level
+- [AI Navigation Matrix](reference/ai-navigation-matrix.md) — exact document mapping per workflow stage
+- [Agent Toolbox](reference/agent-toolbox.md) — machine-friendly command catalogue
+- [Deliverables Catalog](reference/deliverables-catalog.md) — artefact ownership and storage rules
+- [Prompt Templates](reference/prompt-templates.md) — reusable communication templates
+- [Failure Scenarios & Recovery Guide](reference/failure-scenarios.md) — edge cases handling and recovery procedures
+- [Architecture Decision Log Template](reference/architecture-decision-log-template.md) — ADR format and conventions
+- [Semantic Shortening Guide](guides/semantic-shortening-guide.md) — 3-part service naming formula and decision tree
 
 ### Agent Templates & Checklists
-- [Prompt Validation Guide](guides/PROMPT_VALIDATION_GUIDE.md) — pre-work validation checklist
-- [Requirements Intake Template](guides/REQUIREMENTS_INTAKE_TEMPLATE.md) — capturing functional and non-functional needs
-- [Implementation Plan Template](guides/IMPLEMENTATION_PLAN_TEMPLATE.md) — planning artefact for approvals
-- [Agent Verification Checklist](quality/AGENT_VERIFICATION_CHECKLIST.md) — release quality gates
-- [QA Report Template](quality/QA_REPORT_TEMPLATE.md) — final QA handoff format
-- [Service Naming Checklist](checklists/SERVICE_NAMING_CHECKLIST.md) — 3-part vs 4-part decision tool
+- [Prompt Validation Guide](guides/prompt-validation-guide.md) — pre-work validation checklist
+- [Requirements Intake Template](guides/requirements-intake-template.md) — capturing functional and non-functional needs
+- [Implementation Plan Template](guides/implementation-plan-template.md) — planning artefact for approvals
+- [Agent Verification Checklist](quality/agent-verification-checklist.md) — release quality gates
+- [QA Report Template](quality/qa-report-template.md) — final QA handoff format
+- [Service Naming Checklist](checklists/service-naming-checklist.md) — 3-part vs 4-part decision tool
 
 ## Atomic Knowledge Base
 

@@ -15,9 +15,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 ### **Stage 0: Initialization** (Before receiving user prompt)
 
 1. **CLAUDE.md** (this file) — Entry point, navigation, framework overview
-2. **docs/reference/AGENT_CONTEXT_SUMMARY.md** — Critical rules snapshot, mandatory constraints
-3. **docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md** — Complete 7-stage process with detailed instructions
-4. **docs/reference/MATURITY_LEVELS.md** — 4 maturity levels from PoC to Production
+2. **docs/reference/agent-context-summary.md** — Critical rules snapshot, mandatory constraints
+3. **docs/guides/ai-code-generation-master-workflow.md** — Complete 7-stage process with detailed instructions
+4. **docs/reference/maturity-levels.md** — 4 maturity levels from PoC to Production
 
 **Purpose**: Load context about framework architecture (Improved Hybrid Approach), mandatory constraints (HTTP-only data access, service separation), available documentation, and maturity level options.
 
@@ -32,7 +32,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 After initialization, AI reads documents **on-demand** based on the current workflow stage.
 
-**Navigation Guide**: See [AI Navigation Matrix](docs/reference/AI_NAVIGATION_MATRIX.md) for exact document mapping per stage. This matrix shows:
+**Navigation Guide**: See [AI Navigation Matrix](docs/reference/ai-navigation-matrix.md) for exact document mapping per stage. This matrix shows:
 - Which documents to read at each stage
 - What outputs AI should generate
 - Which tools/templates to use
@@ -109,7 +109,7 @@ This framework implements the **Improved Hybrid Approach** with FastAPI, Aiogram
 - Telemedicine: `template_business_api` → `healthcare_telemedicine_api`
 - Construction Bot: `template_business_bot` → `construction_house_bot`
 
-**See**: [Template Naming Guide](docs/guides/TEMPLATE_NAMING_GUIDE.md) for complete renaming instructions and examples.
+**See**: [Template Naming Guide](docs/guides/template-naming-guide.md) for complete renaming instructions and examples.
 
 **Why `template_` prefix?**:
 - Clearly signals these are placeholders, not production service names
@@ -119,14 +119,14 @@ This framework implements the **Improved Hybrid Approach** with FastAPI, Aiogram
 **Service Naming Philosophy**:
 - **DEFAULT TO 3-PART** (`{context}_{domain}_{type}`) — 80-90% of services
 - Use 4-part ONLY when domain is ambiguous (burden of proof required)
-- See [Service Naming Checklist](docs/checklists/SERVICE_NAMING_CHECKLIST.md) for quick decision
+- See [Service Naming Checklist](docs/checklists/service-naming-checklist.md) for quick decision
 - See [10 Serious Reasons for 4-Part Naming](docs/atomic/architecture/naming/naming-4part-reasons.md) for detailed criteria
 
 ## Agent Workflow (High-Level)
 
 For the **complete 7-stage AI code generation process** with detailed instructions, examples, and navigation matrix, see:
 
-**→ [AI Code Generation Master Workflow](docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md)**
+**→ [AI Code Generation Master Workflow](docs/guides/ai-code-generation-master-workflow.md)**
 
 This unified workflow document includes:
 - **Part 1**: AI Reading Order (what to read when)
@@ -147,7 +147,7 @@ This unified workflow document includes:
 ## Important Notes
 
 - Never modify framework files when used as submodule; generate application code under the host project ([README.md](README.md)).
-- Maintain `.env` files, Docker configurations, and shared components per [Shared Components Guide](docs/guides/shared_components.md).
+- Maintain `.env` files, Docker configurations, and shared components per [Shared Components Guide](docs/guides/shared-components.md).
 - Use ADR template for significant decisions impacting architecture or infrastructure.
 - Reference [Technical Specifications](docs/reference/tech_stack.md) when selecting technologies or versions.
 - Update documentation and changelog (when available) in tandem with code changes.
@@ -155,5 +155,5 @@ This unified workflow document includes:
 ## Framework Management
 
 - See [Project Structure Guide](docs/LINKS_REFERENCE.md#developer-guides) for complete submodule operations and development workflow.
-- Keep documentation synchronized: update `docs/INDEX.md` and `docs/reference/AGENT_CONTEXT_SUMMARY.md` when new files are added.
+- Keep documentation synchronized: update `docs/INDEX.md` and `docs/reference/agent-context-summary.md` when new files are added.
 - Follow [Style Guide](docs/STYLE_GUIDE.md) for formatting and wording.
