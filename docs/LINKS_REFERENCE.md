@@ -93,7 +93,7 @@ For simplified linking in other documents, use these templates:
 ### Usage Examples
 ```markdown
 <!-- Instead of long construction -->
-  - Ссылка OK: reference/tech_stack.md
+  - Link OK: reference/tech_stack.md
 <!-- Use -->
 See [technical specifications](LINKS_REFERENCE.md#core-documentation)
 ```

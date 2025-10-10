@@ -16,56 +16,56 @@ For each created template, we analyze:
 #### ✅ docker-compose.yml (100% Universal)
 **Analysis for each category:**
 
-**Корпоративные B2B (7 идей):**
-- CRM система ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
-- HR платформа ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
-- Система учёта времени ✅ (needs: PostgreSQL, Redis)
-- Управление проектами ✅ (needs: PostgreSQL, MongoDB, RabbitMQ)
-- Инвентаризация ✅ (needs: PostgreSQL, Redis)
-- Видеоконференции ✅ (needs: PostgreSQL, MongoDB, RabbitMQ, Redis)
-- Электронные тендеры ✅ (needs: PostgreSQL, MongoDB, RabbitMQ)
+**Corporate B2B (7 ideas):**
+- CRM system ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
+- HR platform ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
+- Time tracking system ✅ (needs: PostgreSQL, Redis)
+- Project management ✅ (needs: PostgreSQL, MongoDB, RabbitMQ)
+- Inventory management ✅ (needs: PostgreSQL, Redis)
+- Video conferencing ✅ (needs: PostgreSQL, MongoDB, RabbitMQ, Redis)
+- Electronic tenders ✅ (needs: PostgreSQL, MongoDB, RabbitMQ)
 
-**Финтех (6 идей):**
-- Финансовый помощник ✅ (needs: PostgreSQL, MongoDB, Redis)
-- P2P кредитование ✅ (needs: PostgreSQL, RabbitMQ, Redis)
-- Крипто-трекер ✅ (needs: MongoDB, Redis, RabbitMQ)
-- Роботрейдинг ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
-- Управление подписками ✅ (needs: PostgreSQL, Redis, RabbitMQ)
-- Микрокредиты ✅ (needs: PostgreSQL, RabbitMQ, Redis)
+**Fintech (6 ideas):**
+- Financial assistant ✅ (needs: PostgreSQL, MongoDB, Redis)
+- P2P lending ✅ (needs: PostgreSQL, RabbitMQ, Redis)
+- Crypto tracker ✅ (needs: MongoDB, Redis, RabbitMQ)
+- Algorithmic trading ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
+- Subscription management ✅ (needs: PostgreSQL, Redis, RabbitMQ)
+- Microloans ✅ (needs: PostgreSQL, RabbitMQ, Redis)
 
-**E-commerce (6 идей):**
-- B2B маркетплейс ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
-- Омниканальные продажи ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
-- Дропшиппинг ✅ (needs: PostgreSQL, RabbitMQ, Redis)
-- Динамическое ценообразование ✅ (needs: PostgreSQL, Redis, RabbitMQ)
-- Подписочная коммерция ✅ (needs: PostgreSQL, Redis, RabbitMQ)
-- Цифровые товары ✅ (needs: PostgreSQL, MongoDB, Redis)
+**E-commerce (6 ideas):**
+- B2B marketplace ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
+- Omnichannel sales ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
+- Dropshipping ✅ (needs: PostgreSQL, RabbitMQ, Redis)
+- Dynamic pricing ✅ (needs: PostgreSQL, Redis, RabbitMQ)
+- Subscription commerce ✅ (needs: PostgreSQL, Redis, RabbitMQ)
+- Digital goods ✅ (needs: PostgreSQL, MongoDB, Redis)
 
-**EdTech (5 идей):**
-- LMS корпоративный ✅ (needs: PostgreSQL, MongoDB, Redis)
-- Онлайн-курсы ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
-- AI-тьютор языков ✅ (needs: PostgreSQL, MongoDB, Redis)
-- Платформа вебинаров ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
-- Изучение программирования ✅ (needs: PostgreSQL, MongoDB, Redis)
+**EdTech (5 ideas):**
+- Corporate LMS ✅ (needs: PostgreSQL, MongoDB, Redis)
+- Online courses ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
+- AI language tutor ✅ (needs: PostgreSQL, MongoDB, Redis)
+- Webinar platform ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
+- Programming education ✅ (needs: PostgreSQL, MongoDB, Redis)
 
-**HealthTech (4 идеи):**
-- Телемедицина ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
-- Запись к врачам ✅ (needs: PostgreSQL, Redis)
-- Ментальное здоровье ✅ (needs: PostgreSQL, MongoDB, Redis)
-- Напоминания о лекарствах ✅ (needs: PostgreSQL, Redis, RabbitMQ)
+**HealthTech (4 ideas):**
+- Telemedicine ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
+- Doctor appointments ✅ (needs: PostgreSQL, Redis)
+- Mental health ✅ (needs: PostgreSQL, MongoDB, Redis)
+- Medication reminders ✅ (needs: PostgreSQL, Redis, RabbitMQ)
 
-**Транспорт (5 идей):**
-- Управление автопарком ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
-- Карпулинг ✅ (needs: PostgreSQL, Redis, RabbitMQ)
-- Доставка последней мили ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
-- Приложение парковки ✅ (needs: PostgreSQL, Redis)
-- Грузоперевозки ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
+**Transport (5 ideas):**
+- Fleet management ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
+- Carpooling ✅ (needs: PostgreSQL, Redis, RabbitMQ)
+- Last-mile delivery ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
+- Parking app ✅ (needs: PostgreSQL, Redis)
+- Freight transportation ✅ (needs: PostgreSQL, MongoDB, Redis, RabbitMQ)
 
-**Аналитика (4 идеи):**
-- Мониторинг выбросов ✅ (needs: MongoDB, PostgreSQL, RabbitMQ, Redis)
-- Переработка отходов ✅ (needs: PostgreSQL, MongoDB, RabbitMQ)
-- Качество воздуха ✅ (needs: MongoDB, PostgreSQL, RabbitMQ, Redis)
-- Возобновляемая энергия ✅ (needs: PostgreSQL, MongoDB, RabbitMQ, Redis)
+**Analytics (4 ideas):**
+- Emissions monitoring ✅ (needs: MongoDB, PostgreSQL, RabbitMQ, Redis)
+- Waste recycling ✅ (needs: PostgreSQL, MongoDB, RabbitMQ)
+- Air quality ✅ (needs: MongoDB, PostgreSQL, RabbitMQ, Redis)
+- Renewable energy ✅ (needs: PostgreSQL, MongoDB, RabbitMQ, Redis)
 
 **VERDICT**: ✅ 100% UNIVERSAL (35/35)
 **Reason**: All ideas need databases, caching, messaging → docker-compose works for all
@@ -181,7 +181,7 @@ For each created template, we analyze:
 ## ❌ SCENARIOS WHERE TEMPLATES MIGHT CONFUSE AI
 
 ### Scenario 1: Pure Analytics Platform (no user-facing API)
-**Example**: "Система мониторинга качества воздуха" (IoT sensors only)
+**Example**: "Air quality monitoring system" (IoT sensors only)
 **Issue**: Template includes API service, but project might only need workers
 **Solution**: ✅ Templates are optional - AI can omit template_business_api if not needed
 **Confusion risk**: LOW (AI understands to omit unused services)
@@ -193,20 +193,20 @@ For each created template, we analyze:
 **Confusion risk**: LOW (AI selects relevant templates)
 
 ### Scenario 3: Real-time Only (WebSocket-heavy)
-**Example**: "Платформа видеоконференций" (WebSocket primary protocol)
+**Example**: "Video conferencing platform" (WebSocket primary protocol)
 **Issue**: Template focuses on REST API
 **Solution**: ✅ Template provides scaffolding, AI adds WebSocket routes
 **Confusion risk**: MEDIUM (AI needs to understand WebSocket ≠ REST)
 **Mitigation**: Documentation explicitly covers WebSocket patterns
 
 ### Scenario 4: Event-Sourcing Architecture
-**Example**: "Роботрейдинг платформа" (event-sourcing for audit)
+**Example**: "Algorithmic trading platform" (event-sourcing for audit)
 **Issue**: Template uses standard CRUD, not event sourcing
 **Solution**: ✅ Template provides infrastructure, AI adds event sourcing on top
 **Confusion risk**: LOW (event sourcing is application pattern, not infrastructure)
 
 ### Scenario 5: Blockchain Integration
-**Example**: "Криптовалютный портфель-трекер" (blockchain interaction)
+**Example**: "Cryptocurrency portfolio tracker" (blockchain interaction)
 **Issue**: Template doesn't include blockchain node connections
 **Solution**: ✅ Template provides HTTP clients pattern, AI adds blockchain client
 **Confusion risk**: LOW (blockchain client = just another HTTP client)

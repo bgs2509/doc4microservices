@@ -184,7 +184,7 @@ This is **by design** - scaffolding provides framework, AI adds business logic.
 
 ## ✅ FINAL ANSWER TO YOUR QUESTION
 
-### "Какие шаблоны применимы ко ВСЕМ 35 идеям БЕЗ ИСКЛЮЧЕНИЯ?"
+### "Which templates apply to ALL 35 ideas WITHOUT EXCEPTION?"
 
 **Answer**: Exactly **14 templates** listed above.
 
@@ -239,14 +239,14 @@ Do NOT modify infrastructure templates - they are universal.
 
 Tested against all 35 business ideas:
 
-✅ **Корпоративные B2B** (7/7) - CRM, HR, учёт времени, проекты, инвентаризация, видеоконференции, тендеры
-✅ **Финтех** (6/6) - финансовый помощник, P2P кредиты, крипто-трекер, роботрейдинг, подписки, микрокредиты
-✅ **E-commerce** (6/6) - B2B маркетплейс, омниканальность, дропшиппинг, ценообразование, подписки, цифровые товары
-✅ **EdTech** (5/5) - LMS, онлайн-курсы, AI-тьютор, вебинары, программирование
-✅ **HealthTech** (4/4) - телемедицина, запись к врачам, ментальное здоровье, напоминания
-✅ **Транспорт** (5/5) - автопарк, карпулинг, доставка, парковка, грузоперевозки
-✅ **Аналитика** (4/4) - выбросы, отходы, воздух, энергия
+✅ **Corporate B2B** (7/7) - CRM, HR, time tracking, projects, inventory, video conferencing, tenders
+✅ **Fintech** (6/6) - financial assistant, P2P lending, crypto tracker, algorithmic trading, subscriptions, microloans
+✅ **E-commerce** (6/6) - B2B marketplace, omnichannel, dropshipping, pricing, subscriptions, digital goods
+✅ **EdTech** (5/5) - LMS, online courses, AI tutor, webinars, programming education
+✅ **HealthTech** (4/4) - telemedicine, doctor appointments, mental health, medication reminders
+✅ **Transport** (5/5) - fleet management, carpooling, delivery, parking, freight
+✅ **Analytics** (4/4) - emissions, waste, air quality, energy
 
 **Total**: 35/35 ✅
 
-**Conclusion**: Все 14 шаблонов работают для ВСЕХ идей без исключений.
+**Conclusion**: All 14 templates work for ALL ideas without exceptions.

@@ -990,7 +990,7 @@ communication_webhook_api           ← clear: receives webhooks
 
 ```yaml
 # WRONG
-construction_house_management_bot  ← избыточно
+construction_house_management_bot  ← redundant
 ```
 
 **Correct**:
@@ -1009,7 +1009,7 @@ construction_house_bot  ← management implied by context
 
 ```yaml
 # WRONG
-finance_lending_operations_api  ← избыточно
+finance_lending_operations_api  ← redundant
 ```
 
 **Correct**:
@@ -1028,7 +1028,7 @@ finance_lending_api  ← CRUD operations implied for API
 
 ```yaml
 # WRONG
-finance_lending_platform_api  ← добавление "platform" для длины
+finance_lending_platform_api  ← adding "platform" for length
 ```
 
 **Correct**:
