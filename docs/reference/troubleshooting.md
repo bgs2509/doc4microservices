@@ -471,7 +471,7 @@ async def make_request():
 
 ## Quick Diagnostic Commands
 
-> **FULL COMMAND REFERENCE**: For complete development and troubleshooting commands, see [Development Commands](../guides/DEVELOPMENT_COMMANDS.md).
+> **FULL COMMAND REFERENCE**: For complete development and troubleshooting commands, see [Development Commands](../guides/development-commands.md).
 
 **Essential diagnostic commands:**
 ```bash
@@ -479,7 +479,7 @@ async def make_request():
 docker-compose ps
 docker-compose logs -f [service_name]
 
-# Test connectivity (full commands in DEVELOPMENT_COMMANDS.md)
+# Test connectivity (full commands in development-commands.md)
 curl http://localhost:8000/health  # API service
 curl http://localhost:8001/health  # PostgreSQL data service
 curl http://localhost:8002/health  # MongoDB data service

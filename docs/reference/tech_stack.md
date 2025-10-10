@@ -450,7 +450,7 @@ This technology stack must be implemented according to detailed guides in docs r
 
 ### Development Commands Reference
 
-> **COMMANDS**: For all development commands, see the [Development Commands](../guides/DEVELOPMENT_COMMANDS.md). This includes Docker, testing, linting, and deployment commands.
+> **COMMANDS**: For all development commands, see the [Development Commands](../guides/development-commands.md). This includes Docker, testing, linting, and deployment commands.
 
 ### Working Examples Reference
 

@@ -276,7 +276,7 @@ See `docs/INDEX.md` for complete alphabetical index of all atomic documents.
 - **[../INDEX.md](../INDEX.md)** — Complete documentation catalog
 - **[../LINKS_REFERENCE.md](../LINKS_REFERENCE.md)** — Central link reference table
 - **[../STYLE_GUIDE.md](../STYLE_GUIDE.md)** — Formatting standards
-- **[../guides/ARCHITECTURE_GUIDE.md](../guides/ARCHITECTURE_GUIDE.md)** — Architecture overview
+- **[../guides/architecture-guide.md](../guides/architecture-guide.md)** — Architecture overview
 
 ---
 
