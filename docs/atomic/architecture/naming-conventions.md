@@ -72,6 +72,8 @@ Ask: **"Can this domain word refer to 3+ different operations in this context?"*
 | **Python Constant** | `{NOUN}_{QUALIFIER}` | `DATABASE_URL`, `MAX_RETRIES` | `_` |
 | **Python Module/File** | `{class_name}.py` | `user_service.py`, `order_dto.py` | `_` |
 | **Folder/Package** | `{service_name}/` | `finance_lending_api/` | `_` |
+| **Documentation (entry points)** | `SCREAMING_SNAKE_CASE` | `README.md`, `CLAUDE.md` | None |
+| **Documentation (content)** | `kebab-case` | `naming-conventions.md`, `architecture-guide.md` | `-` |
 | **Docker Compose Service** | `{service_name}` | `finance_lending_api` | `_` |
 | **Kubernetes Service** | `{service-name}` | `finance-lending-api` | `-` |
 | **Database Table** | `{plural_noun}[_{qualifier}]` | `users`, `order_items` | `_` |
@@ -94,6 +96,7 @@ PYTHON CLASS                   → Section 3: Python Classes (line 683+)
 PYTHON FUNCTION                → Section 3: Python Functions (line 741+)
 PYTHON VARIABLE/PARAMETER      → Section 3: Variables & Parameters (line 782+)
 FILE/FOLDER                    → Section 3: Files & Folders (line 864+)
+DOCUMENTATION FILES (.md)      → Section 3: Documentation Files (line 1261+)
 DATABASE (table/column)        → Section 3: Database Elements (line 906+)
 INFRASTRUCTURE (K8s/Docker)    → Section 1: Technical Rules (line 168+)
 ```
@@ -182,6 +185,41 @@ Use 4-part only when function is NOT implied by domain:
 | Test file | `test_{module_name}.py` | `test_user_service.py` |
 
 → **Full details**: Section 3: Files & Folders (line 864+)
+
+### Step 6a: Documentation Files Rules (Quick Reference)
+
+| Element | Pattern | Example | Rationale |
+|---------|---------|---------|-----------|
+| **Entry point docs** | `SCREAMING_SNAKE_CASE` | `README.md`, `CLAUDE.md`, `LICENSE` | Project visibility, industry convention for entry points |
+| **Documentation files** | `kebab-case` | `naming-conventions.md`, `architecture-guide.md`, `tech-stack.md` | URL-friendly, web publishing standard, SEO-optimized |
+| **Config files** | Tool-specific | `docker-compose.yml`, `.env.example`, `pyproject.toml` | Mandated by tools |
+
+**Rules**:
+- Use `SCREAMING_SNAKE_CASE` **ONLY** for project entry points (README.md, CLAUDE.md, LICENSE, CONTRIBUTING.md, CHANGELOG.md)
+- Use `kebab-case` for **ALL** other documentation files (guides, references, atomic docs, checklists)
+- **Rationale**:
+  - **Entry points**: SCREAMING emphasizes importance, industry convention (all major OSS projects)
+  - **Documentation**: kebab-case is web-friendly, SEO-optimized, static site generator standard (Jekyll, Hugo, MkDocs)
+  - **Consistency**: All 163 atomic docs already use kebab-case
+  - **Industry standard**: FastAPI docs, Next.js docs, Rust Book, Kubernetes docs use kebab-case
+
+**Examples**:
+```bash
+# Entry points (SCREAMING)
+README.md                           ✅ Entry point for humans
+CLAUDE.md                           ✅ Entry point for AI agents
+LICENSE                             ✅ Legal entry point
+CONTRIBUTING.md                     ✅ Contributor entry point (if exists)
+CHANGELOG.md                        ✅ Version history entry point (if exists)
+
+# Documentation (kebab-case)
+docs/atomic/architecture/naming-conventions.md       ✅ Atomic doc
+docs/guides/architecture-guide.md                    ✅ Guide document
+docs/reference/tech-stack.md                         ✅ Reference document
+docs/quality/agent-verification-checklist.md         ✅ Quality checklist
+```
+
+→ **Full details**: Section 3: Documentation Files (line 1261+)
 
 ### Step 7: Database Rules (Quick Reference)
 
@@ -1294,6 +1332,139 @@ services/
 - PyPI packages (libraries distributed via pip)
 - Projects with complex test isolation needs (prevents accidental imports of non-installed code)
 - Reusable components shared across multiple microservices
+
+---
+
+### Documentation Files
+
+**Documentation files** (.md) follow a two-tier naming strategy based on their role:
+
+| Element | Pattern | Example | Rationale |
+|---------|---------|---------|-----------|
+| **Entry point docs** | `SCREAMING_SNAKE_CASE` | `README.md`, `CLAUDE.md`, `LICENSE` | Visibility, industry convention, instant recognition as project entry point |
+| **Documentation content** | `kebab-case` | `naming-conventions.md`, `architecture-guide.md`, `tech-stack.md` | URL-friendly, SEO-optimized, web publishing standard |
+| **Config files** | Tool-specific | `docker-compose.yml`, `.env.example`, `pyproject.toml` | Mandated by tool conventions |
+
+#### Entry Point Documents (SCREAMING_SNAKE_CASE)
+
+Use `SCREAMING_SNAKE_CASE` **ONLY** for project-level entry points:
+
+- **README.md** — Primary entry point for humans (project overview, setup instructions)
+- **CLAUDE.md** — Entry point for AI agents (agent instructions, workflow guidance)
+- **LICENSE** — Legal entry point (licensing terms)
+- **CONTRIBUTING.md** — Contributor entry point (contribution guidelines) *(optional)*
+- **CHANGELOG.md** — Version history entry point (release notes) *(optional)*
+- **CODE_OF_CONDUCT.md** — Community entry point (code of conduct) *(optional)*
+
+**Rationale**:
+- **Visibility**: SCREAMING emphasizes importance and draws attention in file listings
+- **Industry convention**: All major OSS projects use this pattern (Linux kernel, Python, Node.js, Kubernetes, Rust)
+- **Instant recognition**: Developers immediately recognize these as project entry points
+
+#### Documentation Content Files (kebab-case)
+
+Use `kebab-case` for **ALL** other documentation files:
+
+```bash
+# Guides
+docs/guides/
+├── architecture-guide.md                ✅ kebab-case
+├── development-commands.md              ✅ kebab-case
+├── ai-code-generation-workflow.md       ✅ kebab-case
+└── template-naming-guide.md             ✅ kebab-case
+
+# References
+docs/reference/
+├── agent-context-summary.md             ✅ kebab-case
+├── maturity-levels.md                   ✅ kebab-case
+├── tech-stack.md                        ✅ kebab-case
+└── troubleshooting-guide.md             ✅ kebab-case
+
+# Atomic documentation
+docs/atomic/architecture/
+├── naming-conventions.md                ✅ kebab-case
+├── service-communication-patterns.md    ✅ kebab-case
+└── context-registry.md                  ✅ kebab-case
+
+# Quality documents
+docs/quality/
+├── agent-verification-checklist.md      ✅ kebab-case
+└── qa-report-template.md                ✅ kebab-case
+```
+
+**Rationale**:
+- **URL-friendly**: Hyphens work seamlessly in URLs (`/docs/naming-conventions` vs `/docs/naming_conventions`)
+- **SEO-optimized**: Search engines treat hyphens as word separators (Google recommendation)
+- **Web publishing standard**: Static site generators (Jekyll, Hugo, MkDocs, VitePress) expect kebab-case
+- **Industry standard**: FastAPI docs, Next.js docs, Rust Book, Vue.js docs, Kubernetes docs all use kebab-case
+- **Consistency**: All 163 atomic docs in this framework already use kebab-case
+
+#### Mixed Naming Anti-Patterns
+
+❌ **DO NOT** mix naming conventions within documentation:
+
+```bash
+# BAD (inconsistent)
+docs/
+├── README.md                    ✅ Entry point (correct)
+├── ARCHITECTURE_GUIDE.md        ❌ Not an entry point (should be kebab-case)
+├── tech_stack.md                ❌ Underscore in docs (should be kebab-case)
+├── TroubleShooting.md           ❌ PascalCase (should be kebab-case)
+└── api-reference.MD             ❌ Uppercase extension (should be .md)
+```
+
+✅ **DO** use appropriate naming per document type:
+
+```bash
+# GOOD (consistent)
+docs/
+├── README.md                    ✅ Entry point (SCREAMING)
+├── architecture-guide.md        ✅ Content (kebab-case)
+├── tech-stack.md                ✅ Content (kebab-case)
+├── troubleshooting-guide.md     ✅ Content (kebab-case)
+└── api-reference.md             ✅ Content (kebab-case)
+```
+
+#### Decision Tree: Entry Point vs Content
+
+Ask: **"Is this the FIRST file a human or AI would read when discovering this project/section?"**
+
+- **YES** → Entry Point → Use `SCREAMING_SNAKE_CASE`
+  - Examples: `README.md` (project), `CLAUDE.md` (AI agents)
+- **NO** → Content → Use `kebab-case`
+  - Examples: `architecture-guide.md`, `tech-stack.md`, `naming-conventions.md`
+
+**Edge case: Per-directory README files**:
+- `/docs/guides/README.md` — ✅ `SCREAMING` (entry point for guides directory)
+- `/docs/reference/README.md` — ✅ `SCREAMING` (entry point for reference directory)
+
+#### Web Publishing Considerations
+
+When publishing documentation as a website (GitHub Pages, Read the Docs, Docusaurus, VitePress):
+
+**kebab-case files**:
+- `naming-conventions.md` → URL: `/naming-conventions`
+- `architecture-guide.md` → URL: `/architecture-guide`
+
+**Why kebab-case wins for web**:
+1. **Readable URLs**: `/tech-stack` vs `/tech_stack` (hyphens more visible in address bar)
+2. **SEO**: Google treats hyphens as word separators for indexing
+3. **No encoding needed**: Hyphens work in URLs without percent-encoding
+4. **Cross-platform**: Works on all file systems (Windows, macOS, Linux)
+
+#### Tool-Specific Configuration Files
+
+Some tools mandate specific naming formats (not documentation, but included for completeness):
+
+| Tool | Pattern | Examples |
+|------|---------|----------|
+| Docker | `kebab-case` | `docker-compose.yml`, `docker-compose.prod.yml` |
+| Git | Dotfiles | `.gitignore`, `.gitattributes` |
+| Python | lowercase | `pyproject.toml`, `requirements.txt`, `setup.py` |
+| CI/CD | `kebab-case` | `.github/workflows/deploy.yml` |
+| Linters | Dotfiles or lowercase | `.pre-commit-config.yaml`, `.ruff.toml` |
+
+**Rule**: Accept tool-mandated naming as exceptions — these are not documentation files.
 
 ---
 
