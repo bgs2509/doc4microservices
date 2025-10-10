@@ -580,7 +580,7 @@ echo "✅ Rollback complete"
 
 ## Related Documentation
 
-- **[Naming Conventions](../atomic/architecture/naming-conventions.md)** — Complete naming standards
+- **[Naming Conventions](../atomic/architecture/naming/README.md)** — Complete naming standards
 - **[Service Catalog](../../README.md#project-structure)** — Current service inventory
 - **[Architecture Guide](architecture-guide.md)** — Service design principles
 - **Migration Steps** — See Section 5 above for step-by-step migration from 4-part

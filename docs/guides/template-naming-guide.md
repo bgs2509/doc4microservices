@@ -2,7 +2,7 @@
 
 **Status**: ✅ Active Reference
 **Last Updated**: 2025-10-02
-**Related**: [Naming Conventions](../atomic/architecture/naming-conventions.md) | [Semantic Shortening Guide](semantic-shortening-guide.md)
+**Related**: [Naming Conventions](../atomic/architecture/naming/README.md) | [Semantic Shortening Guide](semantic-shortening-guide.md)
 
 ---
 
@@ -429,7 +429,7 @@ git checkout backup/before-rename-20251002
 
 ## See Also
 
-- **[Naming Conventions](../atomic/architecture/naming-conventions.md)** - Complete naming rules reference
+- **[Naming Conventions](../atomic/architecture/naming/README.md)** - Complete naming rules reference
 - **[Semantic Shortening Guide](semantic-shortening-guide.md)** - Decision tree for 3-part vs 4-part naming
 - **[Context Registry](../atomic/architecture/context-registry.md)** - Prevent context name conflicts
 - **[Project Structure](../reference/project-structure.md)** - Canonical repository layout

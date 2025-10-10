@@ -248,7 +248,7 @@ After naming, verify:
 
 ## References
 
-- **Complete guide**: [Naming Conventions](../atomic/architecture/naming-conventions.md)
+- **Complete guide**: [Naming Conventions](../atomic/architecture/naming/README.md)
 - **10 Reasons detailed**: [10 Serious Reasons for 4-Part Naming](../atomic/architecture/naming/naming-4part-reasons.md)
 - **Decision tree**: [Semantic Shortening Guide](../guides/semantic-shortening-guide.md)
 - **Context tracking**: [Context Registry](../atomic/architecture/context-registry.md)
