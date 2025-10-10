@@ -128,7 +128,7 @@ This document covers **edge cases** and **failure scenarios** that can occur at 
 > **Do you approve this approach?**"
 
 ### References
-- `docs/guides/ARCHITECTURE_GUIDE.md`
+- `docs/guides/architecture-guide.md`
 - `docs/atomic/architecture/improved-hybrid-overview.md`
 - `docs/atomic/architecture/data-access-architecture.md`
 

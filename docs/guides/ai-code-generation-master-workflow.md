@@ -54,7 +54,7 @@ After initialization, AI reads documents **on-demand** based on the current work
 - `AGENT_VERIFICATION_CHECKLIST.md`
 
 #### **Architecture & Rules** (what constraints to follow)
-- `ARCHITECTURE_GUIDE.md` ← MANDATORY, canonical architecture source
+- `architecture-guide.md` ← MANDATORY, canonical architecture source
 - `docs/atomic/architecture/*` ← atomic architecture rules
 - `docs/atomic/services/*` ← service implementation patterns
 - `docs/atomic/integrations/*` ← integration patterns
@@ -193,7 +193,7 @@ Please provide these details so I can ensure architecture alignment.
 
 **AI Actions**:
 1. Read architecture documents:
-   - `ARCHITECTURE_GUIDE.md` ← verify compatibility
+   - `architecture-guide.md` ← verify compatibility
    - `docs/atomic/architecture/improved-hybrid-overview.md`
    - `docs/atomic/architecture/service-separation-principles.md`
    - `docs/atomic/architecture/data-access-architecture.md`
@@ -219,7 +219,7 @@ Please provide these details so I can ensure architecture alignment.
 
 **Documents Read**:
 - `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`
-- `docs/guides/ARCHITECTURE_GUIDE.md`
+- `docs/guides/architecture-guide.md`
 - `docs/reference/tech_stack.md`
 - `docs/reference/MATURITY_LEVELS.md` (for level features)
 - `docs/atomic/architecture/*` (as needed)
@@ -329,7 +329,7 @@ Please provide these details so I can ensure architecture alignment.
 
     **Skip ADR when:**
     - Following standard framework patterns (FastAPI + PostgreSQL + HTTP-only)
-    - All decisions align with `ARCHITECTURE_GUIDE.md`
+    - All decisions align with `architecture-guide.md`
     - Using template services with standard naming (`{context}_{domain}_{type}`)
 
 **Documents Read**:
@@ -718,7 +718,7 @@ This matrix shows **exactly what AI should read at each stage** and what it shou
 |-------|-------|-------------------|--------------|-----------------|------------------|
 | **0** | Initialization | `CLAUDE.md`<br>`AGENT_CONTEXT_SUMMARY.md`<br>`AI_CODE_GENERATION_MASTER_WORKFLOW.md` | - | - | Context loaded |
 | **1** | Prompt Validation | `PROMPT_VALIDATION_GUIDE.md`<br>`PROMPT_TEMPLATES.md` (if needed) | Validation note OR clarification request | `PROMPT_TEMPLATES.md` | All mandatory fields present |
-| **2** | Requirements Intake | `REQUIREMENTS_INTAKE_TEMPLATE.md`<br>`ARCHITECTURE_GUIDE.md`<br>`tech_stack.md`<br>`atomic/architecture/*` | Requirements Intake document | `PROMPT_TEMPLATES.md` | Requirements approved |
+| **2** | Requirements Intake | `REQUIREMENTS_INTAKE_TEMPLATE.md`<br>`architecture-guide.md`<br>`tech_stack.md`<br>`atomic/architecture/*` | Requirements Intake document | `PROMPT_TEMPLATES.md` | Requirements approved |
 | **3** | Planning | `IMPLEMENTATION_PLAN_TEMPLATE.md`<br>`USE_CASE_IMPLEMENTATION_GUIDE.md`<br>`atomic/services/**/*` (relevant)<br>`atomic/integrations/**/*` (relevant) | Implementation Plan<br>Optional ADR | `ARCHITECTURE_DECISION_LOG_TEMPLATE.md`<br>`AGENT_TOOLBOX.md` | Plan approved |
 | **4.1** | Infrastructure | `atomic/infrastructure/containerization/*`<br>`atomic/infrastructure/configuration/*` | Docker Compose files<br>Dockerfiles<br>Makefiles | `AGENT_TOOLBOX.md` | `docker-compose up` succeeds |
 | **4.2** | Data Layer | `atomic/services/data-services/*`<br>`atomic/databases/postgresql/*`<br>`atomic/databases/postgresql-advanced/*` | SQLAlchemy models<br>Repositories<br>HTTP APIs<br>Migrations | `AGENT_TOOLBOX.md` | Data services healthy |
@@ -795,7 +795,7 @@ Please provide these details to proceed.
 ### Stage 2: Requirements Intake
 
 **AI reads**:
-- `ARCHITECTURE_GUIDE.md` → verify P2P lending fits Improved Hybrid
+- `architecture-guide.md` → verify P2P lending fits Improved Hybrid
 - `tech_stack.md` → check Stripe SDK available
 
 **AI analyzes**:
@@ -1150,7 +1150,7 @@ curl https://api.p2p-lending.com/health
 3. Get user approval
 4. Proceed with corrected approach
 
-**Prevention**: Read `ARCHITECTURE_GUIDE.md` during Stage 2.
+**Prevention**: Read `architecture-guide.md` during Stage 2.
 
 ---
 

@@ -131,7 +131,7 @@ def parse_user_id(value: Union[str, int]) -> str:
     return str(value)
 
 
-# Python 3.10+ syntax (preferred)
+# Python 3.12+ syntax (preferred)
 def get_user_new(user_id: str) -> User | None:
     """Return user or None if not found."""
     return repository.find_by_id(user_id)

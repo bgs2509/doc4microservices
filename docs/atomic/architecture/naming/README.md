@@ -272,4 +272,4 @@ All names refer to the **same logical service**, just using layer-appropriate se
 - `../context-registry.md` — Context name registry (prevent conflicts)
 - `../../../guides/SEMANTIC_SHORTENING_GUIDE.md` — 3-part vs 4-part decision guide
 - `../../../checklists/SERVICE_NAMING_CHECKLIST.md` — Quick naming decision checklist
-- `../../../guides/ARCHITECTURE_GUIDE.md` — Framework architecture overview
+- `../../../guides/architecture-guide.md` — Framework architecture overview

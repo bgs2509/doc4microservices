@@ -16,7 +16,7 @@ This guide covers common issues and solutions when working with the microservice
 ### Python Version Conflicts
 **Problem**: Services fail to start due to Python version mismatch
 ```
-Error: Python 3.11 found, but 3.12+ required
+Error: Python 3.12 found, but 3.12+ required
 ```
 
 **Solution**:

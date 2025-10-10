@@ -34,7 +34,7 @@ async def stop_tasks(tasks: Iterable[asyncio.Task[None]]) -> None:
 
 ## Supervising Loops
 
-- Use `asyncio.TaskGroup` (Python 3.11+) to supervise multiple consumers.
+- Use `asyncio.TaskGroup` (Python 3.12+) to supervise multiple consumers.
 - Ensure tasks periodically check `asyncio.current_task().cancelled()` or a shared `stop_event`.
 - Log task lifecycle events (`task_started`, `task_cancelled`, `task_failed`).
 

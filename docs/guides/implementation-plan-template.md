@@ -42,7 +42,7 @@
 
 | Area | Description | Relevant Rules / Docs |
 |------|-------------|-----------------------|
-| Services | | `docs/atomic/services/`, `docs/guides/ARCHITECTURE_GUIDE.md` |
+| Services | | `docs/atomic/services/`, `docs/guides/architecture-guide.md` |
 | Data access | | `docs/atomic/architecture/data-access-architecture.md`, `docs/atomic/infrastructure/` |
 | Observability | | `docs/atomic/observability/` |
 | Security / compliance | | `docs/atomic/testing/`, policy docs |

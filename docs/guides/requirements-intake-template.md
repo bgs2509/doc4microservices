@@ -34,7 +34,7 @@
 - Performance / SLA expectations:
 - Security / compliance requirements:
 - Reliability & availability targets:
-- Architecture alignment confirmation (Improved Hybrid Approach, HTTP-only data access, service separation; see `docs/guides/ARCHITECTURE_GUIDE.md` and `docs/atomic/architecture/`):
+- Architecture alignment confirmation (Improved Hybrid Approach, HTTP-only data access, service separation; see `docs/guides/architecture-guide.md` and `docs/atomic/architecture/`):
 - Observability expectations (logging, metrics, tracing; see `docs/atomic/observability/`):
 
 ## Dependencies & Integrations

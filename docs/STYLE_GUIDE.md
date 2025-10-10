@@ -20,7 +20,7 @@
 See [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
 
 <!-- AVOID: Direct links with submodule variants -->
-[Architecture Guide](guides/ARCHITECTURE_GUIDE.md) *(or `.framework/docs/...` in submodule mode)*
+[Architecture Guide](guides/architecture-guide.md) *(or `.framework/docs/...` in submodule mode)*
 ```
 
 ### External Links
@@ -60,8 +60,8 @@ See [Architecture Guide](LINKS_REFERENCE.md#core-documentation)
 ```markdown
 | Task | Document |
 |------|----------|
-| **Quick start** | [Example Link](guides/ARCHITECTURE_GUIDE.md) |
-| **Understand architecture** | [Example Link](guides/ARCHITECTURE_GUIDE.md) |
+| **Quick start** | [Example Link](guides/architecture-guide.md) |
+| **Understand architecture** | [Example Link](guides/architecture-guide.md) |
 ```
 
 ### Technical Specifications

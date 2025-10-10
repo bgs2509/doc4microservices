@@ -26,7 +26,7 @@ All services in the platform rely on Python's asynchronous runtimes. Mismanaging
 ### AsyncIO Workers
 
 - Wrap `asyncio.run(main())` in `if __name__ == "__main__"` blocks.
-- Use `asyncio.TaskGroup` (Python 3.11+) or `asyncio.gather` with graceful cancellation to coordinate jobs.
+- Use `asyncio.TaskGroup` (Python 3.12+) or `asyncio.gather` with graceful cancellation to coordinate jobs.
 - Ensure signal handlers (`SIGTERM`, `SIGINT`) set shutdown flags and await task completion before closing.
 
 ## Patterns and Anti-Patterns

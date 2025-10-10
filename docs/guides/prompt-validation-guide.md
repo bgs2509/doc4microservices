@@ -14,7 +14,7 @@ Run prompt validation immediately after receiving a new user request and before 
 | **Target Maturity Level** | Determines infrastructure complexity, observability, security, and generation time. Prevents over-engineering for MVPs and ensures production readiness for enterprise deployments. | `docs/reference/MATURITY_LEVELS.md`, `docs/reference/CONDITIONAL_STAGE_RULES.md` |
 | **Functional Requirements** | Defines the capabilities the generated services must expose. | `docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md`, `docs/reference/PROJECT_STRUCTURE.md` |
 | **Optional Modules** | Identifies additional services beyond core (Workers, Bot, MongoDB, Redis, etc.). Available at any maturity level. | `docs/reference/MATURITY_LEVELS.md` (modules section) |
-| **Non-Functional Constraints** | Ensures compliance with architecture, performance, and security requirements. | `docs/guides/ARCHITECTURE_GUIDE.md`, `docs/atomic/architecture/`, `docs/atomic/observability/` |
+| **Non-Functional Constraints** | Ensures compliance with architecture, performance, and security requirements. | `docs/guides/architecture-guide.md`, `docs/atomic/architecture/`, `docs/atomic/observability/` |
 | **Dependencies & Integrations** | Identifies external systems, queues, or data flows that must be modeled. | `docs/atomic/infrastructure/`, `docs/atomic/services/`, `docs/reference/DELIVERABLES_CATALOG.md` |
 | **Scope Boundaries** | Prevents unplanned features from entering the delivery plan. | `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md` |
 | **Expected Deliverables** | Aligns produced artefacts with framework expectations. | `docs/reference/DELIVERABLES_CATALOG.md`, `docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md` |

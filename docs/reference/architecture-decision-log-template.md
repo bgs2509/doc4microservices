@@ -13,7 +13,7 @@
 ## Context
 
 - Business drivers and functional requirements (link to `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`).
-- Non-functional constraints impacting the decision (refer to `docs/guides/ARCHITECTURE_GUIDE.md` and `docs/atomic/architecture/`).
+- Non-functional constraints impacting the decision (refer to `docs/guides/architecture-guide.md` and `docs/atomic/architecture/`).
 - Existing system assumptions or limitations.
 
 ## Decision
@@ -42,7 +42,7 @@
 
 ## References
 
-- `docs/guides/ARCHITECTURE_GUIDE.md`
+- `docs/guides/architecture-guide.md`
 - `docs/atomic/architecture/improved-hybrid-overview.md`
 - `docs/atomic/architecture/data-access-architecture.md`
 - `docs/atomic/architecture/naming-conventions.md`

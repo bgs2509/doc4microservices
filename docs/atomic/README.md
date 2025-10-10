@@ -377,7 +377,7 @@ def create(data):
 
 - **Questions about template usage**: See `TEMPLATE.md` instructions and examples
 - **Questions about specific categories**: See existing documents in that category
-- **Questions about architecture**: See `docs/guides/ARCHITECTURE_GUIDE.md`
+- **Questions about architecture**: See `docs/guides/architecture-guide.md`
 - **Questions about framework**: See `README.md` at project root
 
 ---
