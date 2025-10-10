@@ -563,3 +563,10 @@ async def delete_user(
    - Log all authentication attempts
    - Monitor for brute force attacks
    - Track session anomalies
+
+## Related Documents
+
+- `docs/atomic/security/session-management-patterns.md` — Session handling
+- `docs/atomic/services/fastapi/security-patterns.md` — FastAPI security
+- `docs/atomic/infrastructure/secrets-management.md` — Secret storage
+- `docs/atomic/security/security-testing-guide.md` — Security testing

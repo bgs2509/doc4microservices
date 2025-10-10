@@ -1162,3 +1162,10 @@ class TestCloudStorage:
 6. **Monitoring**: Track metrics and set up alerts for issues
 7. **CDN Integration**: Leverage CDNs for global content delivery
 8. **Testing**: Comprehensive testing with mocked cloud services
+
+## Related Documents
+
+- `docs/atomic/file-storage/backup-strategies.md` — Backup to cloud
+- `docs/atomic/file-storage/cdn-integration.md` — CDN distribution
+- `docs/atomic/file-storage/upload-patterns.md` — Cloud upload patterns
+- `docs/atomic/infrastructure/secrets-management.md` — Cloud credentials

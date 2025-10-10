@@ -1578,3 +1578,10 @@ async def test_user_preference_filtering(notification_tester):
    - Use background processing
    - Implement rate limiting
    - Monitor provider quotas and limits
+
+## Related Documents
+
+- `docs/atomic/real-time/websocket-patterns.md` — WebSocket notifications
+- `docs/atomic/services/aiogram/bot-api-features.md` — Telegram notifications
+- `docs/atomic/rabbitmq/message-consuming.md` — Notification queues
+- `docs/atomic/services/asyncio/task-scheduling.md` — Notification scheduling

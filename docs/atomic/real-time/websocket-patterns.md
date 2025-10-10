@@ -967,3 +967,10 @@ async def test_concurrent_connections(websocket_tester):
    - Optimize message serialization
    - Use efficient data structures
    - Implement proper error handling
+
+## Related Documents
+
+- `docs/atomic/real-time/real-time-sync-patterns.md` — Sync patterns
+- `docs/atomic/real-time/sse-implementation.md` — SSE alternative
+- `docs/atomic/services/fastapi/websocket-support.md` — FastAPI WebSocket
+- `docs/atomic/infrastructure/nginx.md` — WebSocket proxy

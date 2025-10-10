@@ -345,7 +345,6 @@ status VARCHAR(20) NOT NULL DEFAULT 'pending'
 
 ## Related Documents
 
-- `../README.md` — Main naming conventions hub
+- `./README.md` — Main naming conventions hub
 - `naming-python.md` — Python model naming
 - `naming-services.md` — Service naming patterns
-- `../../guides/DATABASE_DESIGN_GUIDE.md` — Database design patterns

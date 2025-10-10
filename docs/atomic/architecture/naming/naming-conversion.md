@@ -306,7 +306,6 @@ PAYMENT_API_URL=http://finance-payment-worker.finance.svc:80
 
 ## Related Documents
 
-- `../README.md` — Main naming conventions hub
+- `./README.md` — Main naming conventions hub
 - `naming-infrastructure.md` — Infrastructure naming patterns
 - `naming-services.md` — Service naming patterns
-- `../../guides/KUBERNETES_MIGRATION_GUIDE.md` — Full migration guide

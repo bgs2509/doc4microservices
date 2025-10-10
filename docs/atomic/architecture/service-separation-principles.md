@@ -48,9 +48,13 @@ This guide defines the boundaries between business, data, and platform services 
 - CI runs static checks (import blocks, architecture tests) to detect illegal module dependencies.
 - Deployment manifests isolate data services behind internal networks so only platform-approved clients can reach them.
 
-## Related Materials
+## Related Documents
 
-- `docs/atomic/architecture/improved-hybrid-overview.md`
-- `docs/atomic/architecture/event-loop-management.md`
-- `docs/atomic/services/fastapi/dependency-injection.md`
+- `docs/atomic/architecture/improved-hybrid-overview.md` — Overall architecture approach
+- `docs/atomic/architecture/event-loop-management.md` — Async event loop patterns
+- `docs/atomic/architecture/data-access-architecture.md` — HTTP-only data access patterns
+- `docs/atomic/architecture/naming-conventions.md` — Service naming standards
+- `docs/atomic/architecture/context-registry.md` — Authorized context names
+- `docs/atomic/services/fastapi/dependency-injection.md` — DI patterns for FastAPI
+- `docs/atomic/data-flow/http-communication.md` — Inter-service HTTP patterns
 - Legacy reference: `docs/legacy/architecture/ms_best_practices_rules.mdc`

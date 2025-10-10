@@ -697,3 +697,10 @@ async def test_rate_limited_client_retries_on_429():
 4. **Header Integration**: Respects API-provided rate limit headers
 5. **Testing**: Comprehensive test coverage for all algorithms and edge cases
 6. **Monitoring**: Log rate limit violations for capacity planning
+
+## Related Documents
+
+- `docs/atomic/services/fastapi/basic-setup.md` — FastAPI service configuration
+- `docs/atomic/infrastructure/redis.md` — Redis for rate limit counters
+- `docs/atomic/services/fastapi/middleware-configuration.md` — Middleware setup
+- `docs/atomic/observability/metrics/service-metrics.md` — Rate limit metrics

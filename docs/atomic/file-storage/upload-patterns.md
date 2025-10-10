@@ -853,3 +853,10 @@ class TestFileUpload:
 4. **Deduplication**: Use file hashes to prevent storing duplicate files
 5. **Storage Abstraction**: Support multiple storage backends through common interface
 6. **Monitoring**: Log upload patterns and failures for security analysis
+
+## Related Documents
+
+- `docs/atomic/file-storage/media-processing.md` — File processing
+- `docs/atomic/file-storage/cloud-integration.md` — Cloud storage
+- `docs/atomic/services/fastapi/request-validation.md` — Upload validation
+- `docs/atomic/security/authentication-authorization-guide.md` — Upload authorization

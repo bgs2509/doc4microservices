@@ -146,3 +146,10 @@ export default {
 - [ ] Multi-region failover via secondary origins.
 - [ ] Synthetic monitoring from customer regions.
 - [ ] Runbooks for purge failures and degradation triage.
+
+## Related Documents
+
+- `docs/atomic/file-storage/cloud-integration.md` — Cloud storage providers
+- `docs/atomic/file-storage/media-processing.md` — Media optimization
+- `docs/atomic/infrastructure/nginx.md` — Nginx CDN configuration
+- `docs/atomic/file-storage/upload-patterns.md` — File upload handling

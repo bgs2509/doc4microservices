@@ -53,9 +53,13 @@ Client → Business Service → HTTP → Data Service → Database
 4. Update CI/CD to run the mandatory verification steps described in `docs/atomic/architecture/quality-standards.md`.
 5. Communicate the new documentation baseline to every squad and deprecate direct references to `.mdc` files.
 
-## Related Materials
+## Related Documents
 
-- `docs/atomic/architecture/service-separation-principles.md`
-- `docs/atomic/architecture/project-structure-patterns.md`
-- `docs/atomic/services/fastapi/basic-setup.md`
+- `docs/atomic/architecture/service-separation-principles.md` — Service boundary definitions and separation rules
+- `docs/atomic/architecture/project-structure-patterns.md` — Repository and module organization
+- `docs/atomic/architecture/naming-conventions.md` — Service and component naming standards
+- `docs/atomic/architecture/context-registry.md` — Authorized context names for services
+- `docs/atomic/architecture/data-access-architecture.md` — HTTP-only data access patterns
+- `docs/atomic/services/fastapi/basic-setup.md` — FastAPI service implementation
+- `docs/atomic/infrastructure/docker-compose.md` — Container orchestration setup
 - Legacy context: `docs/legacy/architecture/ms_best_practices_rules.mdc`

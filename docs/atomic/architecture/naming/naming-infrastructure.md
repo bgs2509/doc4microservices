@@ -379,7 +379,6 @@ resource "aws_rds_instance" "postgres_lending" {
 
 ## Related Documents
 
-- `../README.md` — Main naming conventions hub
+- `./README.md` — Main naming conventions hub
 - `naming-conversion.md` — Dev→Prod conversion utilities
 - `naming-services.md` — Service naming patterns
-- `../../guides/KUBERNETES_MIGRATION_GUIDE.md` — K8s deployment guide

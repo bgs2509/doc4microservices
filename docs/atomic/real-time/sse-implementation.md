@@ -1175,3 +1175,10 @@ async def test_sse_event_replay(sse_tester):
    - Authenticate connections when needed
    - Validate event permissions
    - Implement rate limiting
+
+## Related Documents
+
+- `docs/atomic/real-time/websocket-patterns.md` — WebSocket alternative
+- `docs/atomic/real-time/real-time-sync-patterns.md` — Sync strategies
+- `docs/atomic/services/fastapi/streaming-responses.md` — SSE with FastAPI
+- `docs/atomic/infrastructure/nginx.md` — SSE proxy configuration

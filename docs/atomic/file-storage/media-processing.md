@@ -815,3 +815,10 @@ class TestMediaProcessing:
 6. **Error Handling**: Robust error handling with detailed error messages
 7. **Security**: Validate input files and sanitize metadata
 8. **Monitoring**: Track processing times and resource usage for optimization
+
+## Related Documents
+
+- `docs/atomic/file-storage/upload-patterns.md` — File upload handling
+- `docs/atomic/file-storage/cdn-integration.md` — CDN distribution
+- `docs/atomic/services/asyncio/task-scheduling.md` — Background processing
+- `docs/atomic/rabbitmq/message-publishing.md` — Processing queues

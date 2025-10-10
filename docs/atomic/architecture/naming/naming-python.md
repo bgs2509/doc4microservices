@@ -269,7 +269,6 @@ class UserService:
 
 ## Related Documents
 
-- `../README.md` — Main naming conventions hub
+- `./README.md` — Main naming conventions hub
 - `naming-services.md` — Service naming patterns
 - `naming-databases.md` — Database naming conventions
-- `../../guides/PYTHON_STYLE_GUIDE.md` — Complete Python style guide

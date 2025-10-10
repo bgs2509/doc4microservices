@@ -355,6 +355,6 @@ finance_payment_api               ← processing implied
 ## Related Documents
 
 - `naming-services.md` — Service naming patterns guide
-- `../../guides/SEMANTIC_SHORTENING_GUIDE.md` — Decision tree for 3-part vs 4-part
-- `../../checklists/SERVICE_NAMING_CHECKLIST.md` — Quick checklist for naming decisions
+- `../../../guides/SEMANTIC_SHORTENING_GUIDE.md` — Decision tree for 3-part vs 4-part
+- `../../../checklists/SERVICE_NAMING_CHECKLIST.md` — Quick checklist for naming decisions
 - `../context-registry.md` — Context name registry to prevent conflicts

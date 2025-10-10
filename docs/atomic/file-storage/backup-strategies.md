@@ -1225,3 +1225,10 @@ class TestBackupService:
 6. **Documentation**: Document recovery procedures and test results
 7. **Compliance**: Ensure backup retention meets regulatory requirements
 8. **Performance**: Optimize backup performance with compression and parallelization
+
+## Related Documents
+
+- `docs/atomic/file-storage/cloud-integration.md` — Cloud storage integration
+- `docs/atomic/infrastructure/docker-volumes.md` — Volume management
+- `docs/atomic/file-storage/media-processing.md` — Media file handling
+- `docs/atomic/infrastructure/backup-restore.md` — Backup procedures

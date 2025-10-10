@@ -272,6 +272,5 @@ README.es.md        # Spanish
 
 ## Related Documents
 
-- `../README.md` — Main naming conventions hub
-- `../../STYLE_GUIDE.md` — Documentation writing style
-- `../../guides/DOCUMENTATION_GUIDE.md` — Documentation structure patterns
+- `./README.md` — Main naming conventions hub
+- `../../../STYLE_GUIDE.md` — Documentation writing style

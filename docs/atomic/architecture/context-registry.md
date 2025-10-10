@@ -130,6 +130,15 @@ Before adding a context, verify:
 
 ---
 
+## Related Documents
+
+- `docs/atomic/architecture/naming-conventions.md` — Comprehensive naming patterns for services
+- `docs/atomic/architecture/service-separation-principles.md` — Service boundary definitions
+- `docs/atomic/architecture/improved-hybrid-overview.md` — Overall architecture approach
+- `docs/guides/TEMPLATE_NAMING_GUIDE.md` — Template service renaming instructions
+
+---
+
 **Maintained by**: Platform Team (@platform-team)
 **Last Updated**: 2025-10-02
 **Review Frequency**: Quarterly

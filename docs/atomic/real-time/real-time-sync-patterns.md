@@ -158,3 +158,10 @@ async def reconcile_changes(request: SyncRequest):
 - [ ] Maintain idempotent mutation handlers with dedupe keys.
 - [ ] Backup event logs for rehydration and auditing.
 - [ ] Synthetic monitoring covering cold start and reconnect scenarios.
+
+## Related Documents
+
+- `docs/atomic/real-time/websocket-patterns.md` — WebSocket transport
+- `docs/atomic/real-time/sse-implementation.md` — SSE alternative
+- `docs/atomic/infrastructure/redis.md` — Redis pub/sub
+- `docs/atomic/rabbitmq/message-consuming.md` — Event streaming

@@ -564,3 +564,10 @@ async def get_user_sessions(session: Dict = Depends(require_session)):
    - Track session creation and invalidation
    - Monitor for suspicious patterns
    - Log security-related events
+
+## Related Documents
+
+- `docs/atomic/security/authentication-authorization-guide.md` — Auth patterns
+- `docs/atomic/infrastructure/redis.md` — Redis session storage
+- `docs/atomic/services/fastapi/security-patterns.md` — FastAPI sessions
+- `docs/atomic/security/security-testing-guide.md` — Session testing

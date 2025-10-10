@@ -881,3 +881,10 @@ if __name__ == "__main__":
    - Test with real Redis instances
    - Test cross-service authentication
    - Test security middleware
+
+## Related Documents
+
+- `docs/atomic/security/authentication-authorization-guide.md` — Auth testing
+- `docs/atomic/testing/security-testing.md` — Security test patterns
+- `docs/atomic/testing/integration-testing.md` — Integration security tests
+- `docs/atomic/infrastructure/ci-cd-pipeline.md` — Security scans in CI
