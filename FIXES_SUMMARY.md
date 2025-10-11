@@ -28,8 +28,8 @@
 
 #### 2. Fixed Broken Internal Link ✅
 - **File**: `docs/atomic/architecture/event-loop-management.md:16`
-- **Before**: `` (see `docs/atomic/services/fastapi/lifespan-management.md`) ``
-- **After**: `(see [lifespan-management.md](../services/fastapi/lifespan-management.md))`
+- **Before**: (see `docs/atomic/services/fastapi/lifespan-management.md`)
+- **After**: (see [lifespan-management.md](../services/fastapi/lifespan-management.md))
 - **Impact**: Navigation now works correctly, parsers handle link properly
 
 #### 3. Verified Template Availability ✅

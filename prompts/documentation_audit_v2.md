@@ -94,6 +94,23 @@ for doc in CLAUDE.md \
 done
 ```
 
+# ===================================================================
+# SMOKE TEST 6: Check pyproject.toml completeness
+# ===================================================================
+```bash
+# If docs mention `uv run <tool>` commands, check pyproject.toml has configs
+grep -rh "uv run" docs/ --include="*.md" 2>/dev/null | grep -q "uv run" && \
+test -f pyproject.toml && \
+grep -q "\[tool.ruff\]" pyproject.toml && \
+grep -q "\[tool.mypy\]" pyproject.toml && \
+grep -q "\[tool.pytest" pyproject.toml && \
+echo "✅ pyproject.toml configured" || echo "⚠️ pyproject.toml missing tool configs"
+
+# Expected: ✅ (if docs mention quality commands)
+# If ⚠️ → MEDIUM PRIORITY: Commands documented but tools not configured
+# This creates broken developer experience - commands fail despite being documented
+```
+
 **DECISION POINT based on smoke test results:**
 
 | Smoke Test | Result | Action |
@@ -101,7 +118,8 @@ done
 | Test 3 (Legacy refs) | > 0 | **STOP. CRITICAL ISSUE FOUND.** Report immediately, must fix before proceeding. |
 | Test 4 (Broken links sample) | > 0 | **HIGH PRIORITY.** Note in report, proceed with full link validation. |
 | Test 5 (Stage 0 docs) | Any missing | **CRITICAL.** AI agents cannot work. Report immediately. |
-| All tests pass | ✅ | Proceed with full 14-objective audit. |
+| Test 6 (pyproject.toml) | ⚠️ | **MEDIUM PRIORITY.** Note config gap, proceed with audit. |
+| All tests pass | ✅ | Proceed with full 16-objective audit. |
 
 ### ⚠️ Anti-Patterns to Avoid
 
@@ -114,6 +132,9 @@ done
 | Skip Automation Script Template section | Read entire template including script examples |
 | Report health score without showing calculation | Show exact formula: `100 - (CRITICAL×3) - (HIGH×1.5) - (MEDIUM×0.5)` |
 | Say "several files have issues" (vague) | Provide exact `file:line` locations for EVERY issue |
+| **Assume configs are correct if they exist** | **Cross-validate config values against actual usage in docs (Objective 16)** |
+| **Only check docs/ directory for issues** | **Also check root-level configs (pyproject.toml, .env.example, docker-compose.yml, CONTRIBUTING.md)** |
+| **Trust that "template exists" means it works** | **Check template files have README, correct naming, and match documentation claims** |
 
 ---
 
@@ -317,6 +338,83 @@ grep -rn "docs/legacy" docs/ | wc -l  # Should be 0
    - Detect temporary files (.tmp, ~, .swp, .DS_Store)
    - Check for duplicate scripts with same functionality
    - Report files that should be removed or archived
+
+### 16. Config Consistency Validation ⚡ MANDATORY COMMANDS (NEW - Cross-file integrity)
+
+**CRITICAL**: Configs and documentation must stay synchronized. Check:
+
+```bash
+# ========================================
+# STEP 1: Docker Compose profile validation
+# ========================================
+# Extract profile names from docker-compose.yml
+grep -E "^\s+profiles:" docker-compose.yml 2>/dev/null | awk '{print $2}' | tr -d '[]"' | sort -u
+
+# Check docs use correct profile names
+grep -rh "profile" docs/ --include="*.md" | grep -E "docker-compose.*--profile" | grep -oE "\-\-profile [a-z_-]+" | awk '{print $2}' | sort -u
+
+# VALIDATION: Compare both outputs - must match exactly
+# COMMON ERROR: Docs say `--profile monitoring` but compose file has `observability`
+
+# ========================================
+# STEP 2: Database name consistency
+# ========================================
+# Extract from .env.example (or templates/infrastructure/.env.example if framework-as-submodule)
+grep "POSTGRES_DB\|MONGO_DATABASE" .env.example templates/infrastructure/.env.example 2>/dev/null | grep -v "^#"
+
+# Check database names in documentation examples
+grep -rh "POSTGRES_DB\|DATABASE_URL\|MONGO_DATABASE" docs/ --include="*.md" | grep -E "(POSTGRES_DB|DATABASE_URL|MONGO_DATABASE)=" | sort -u
+
+# VALIDATION: DB names must match across configs and all doc examples
+# COMMON ERROR: .env.example has `myapp_db` but docs show `microservices_db`
+
+# ========================================
+# STEP 3: Credentials consistency
+# ========================================
+# Extract default credentials from .env.example
+grep -E "GRAFANA_PASSWORD|RABBITMQ_DEFAULT_PASS" .env.example templates/infrastructure/.env.example 2>/dev/null | grep -v "^#"
+
+# Check credentials in documentation
+grep -rh "admin123\|changeme\|password123" docs/ --include="*.md"
+
+# VALIDATION: If found weak/mismatched passwords → HIGH PRIORITY
+# EXPECTED: Docs should use same secure defaults as .env.example
+
+# ========================================
+# STEP 4: pyproject.toml completeness
+# ========================================
+# Check if docs instruct `uv run <tool>` commands
+grep -rh "uv run" docs/ --include="*.md" | grep -oE "uv run [a-z]+" | awk '{print $3}' | sort -u
+
+# Check if pyproject.toml configures those tools
+test -f pyproject.toml && for tool in ruff mypy pytest bandit; do
+  grep -q "tool.$tool" pyproject.toml && echo "✅ $tool" || echo "❌ $tool MISSING"
+done
+
+# VALIDATION: Every tool mentioned in docs MUST be configured in pyproject.toml
+# COMMON ERROR: Docs say `uv run ruff` but pyproject.toml is empty
+
+# ========================================
+# STEP 5: Script references in CONTRIBUTING.md
+# ========================================
+# Extract all script paths from CONTRIBUTING.md
+grep -oE "\./scripts/[a-z_-]+\.sh" CONTRIBUTING.md 2>/dev/null | sort -u
+
+# Check each script exists
+grep -oE "\./scripts/[a-z_-]+\.sh" CONTRIBUTING.md 2>/dev/null | sort -u | while read script; do
+  test -f "$script" && echo "✅ $script" || echo "❌ $script MISSING"
+done
+
+# VALIDATION: All referenced scripts must exist
+# COMMON ERROR: CONTRIBUTING.md references validate_docs.sh but only audit_docs.sh exists
+```
+
+**Report Format:**
+- **Profile Mismatch**: List any docker-compose profile names that don't match documentation
+- **Database Name Mismatch**: List config vs documentation discrepancies
+- **Credential Issues**: List any weak/mismatched credentials
+- **Tool Config Gaps**: List tools documented but not configured in pyproject.toml
+- **Missing Scripts**: List scripts referenced in CONTRIBUTING.md but not found on disk
 
 
 ## DELIVERABLES (ENHANCED)
@@ -1637,6 +1735,8 @@ This audit template prevents systemic documentation failures by:
 
 ### Lessons from Previous Failures
 
+**Failure Mode 1: Link Validation Bypass (v1.0)**
+
 The original template allowed an AI agent to miss 64+ critical broken legacy links because:
 - Delegation was permitted → Task agent used sample-based checking
 - No explicit validation commands → Agent estimated instead of executing
@@ -1644,7 +1744,36 @@ The original template allowed an AI agent to miss 64+ critical broken legacy lin
 - No spot check requirements → No verification that issues were real
 - Health score calculation not enforced → Agent estimated 72/100 (actual: ~0/100)
 
-This V2 template fixes ALL of these failure modes.
+**Fix**: V2 template added mandatory Bash execution, explicit validation commands, and smoke tests.
+
+---
+
+**Failure Mode 2: Config Mismatch Detection Failure (October 2025)**
+
+An audit using V2 template missed 5 critical config consistency issues affecting 40% of critical files:
+- **Issue**: Docker Compose profile `monitoring` vs documentation `observability` (2 files)
+- **Issue**: Database names `myapp_db` vs `microservices_db` (4 files)
+- **Issue**: Empty pyproject.toml despite docs requiring `uv run ruff/mypy/pytest` commands
+- **Issue**: CONTRIBUTING.md referenced non-existent `validate_docs.sh` (19 occurrences)
+- **Issue**: Weak credentials `admin123` vs secure defaults `admin` (3 files)
+
+**Root cause**:
+- Template focused on docs/ directory only → Missed root-level config files
+- No cross-validation between config files and documentation
+- Assumed configs were correct if they existed
+- No validation that documented commands actually work
+
+**Impact**: Users following documentation would encounter immediate failures:
+- `docker-compose up --profile monitoring` fails (profile doesn't exist)
+- Database connection examples fail (wrong DB names)
+- Quality commands fail (`uv run ruff` → pyproject.toml not configured)
+- Contributors run wrong scripts (validate_docs.sh doesn't exist)
+
+**Fix**: Added Objective 16 (Config Consistency Validation), Smoke Test 6 (pyproject.toml check), and anti-patterns for config cross-validation.
+
+---
+
+This V2.1 template fixes ALL known failure modes.
 
 ### When to Update This Template
 
@@ -1681,9 +1810,10 @@ If an audit using this template still misses critical issues:
 
 ## END OF TEMPLATE
 
-**Version**: 2.0  
-**Last Updated**: 2025-10-11  
+**Version**: 2.1
+**Last Updated**: 2025-10-11
 **Changelog**:
+- v2.1 (2025-10-11): Added Objective 16 (Config Consistency Validation), Smoke Test 6 (pyproject.toml), anti-patterns for config validation, Failure Mode 2 case study
 - v2.0 (2025-10-11): Complete rewrite with mandatory execution protocol, explicit validation commands, smoke tests, verification protocol
 - v1.0 (2025-10-10): Original template (proved insufficient - missed 64+ critical issues)
 
@@ -2835,6 +2965,8 @@ This audit template prevents systemic documentation failures by:
 
 ### Lessons from Previous Failures
 
+**Failure Mode 1: Link Validation Bypass (v1.0)**
+
 The original template allowed an AI agent to miss 64+ critical broken legacy links because:
 - Delegation was permitted → Task agent used sample-based checking
 - No explicit validation commands → Agent estimated instead of executing
@@ -2842,7 +2974,36 @@ The original template allowed an AI agent to miss 64+ critical broken legacy lin
 - No spot check requirements → No verification that issues were real
 - Health score calculation not enforced → Agent estimated 72/100 (actual: ~0/100)
 
-This V2 template fixes ALL of these failure modes.
+**Fix**: V2 template added mandatory Bash execution, explicit validation commands, and smoke tests.
+
+---
+
+**Failure Mode 2: Config Mismatch Detection Failure (October 2025)**
+
+An audit using V2 template missed 5 critical config consistency issues affecting 40% of critical files:
+- **Issue**: Docker Compose profile `monitoring` vs documentation `observability` (2 files)
+- **Issue**: Database names `myapp_db` vs `microservices_db` (4 files)
+- **Issue**: Empty pyproject.toml despite docs requiring `uv run ruff/mypy/pytest` commands
+- **Issue**: CONTRIBUTING.md referenced non-existent `validate_docs.sh` (19 occurrences)
+- **Issue**: Weak credentials `admin123` vs secure defaults `admin` (3 files)
+
+**Root cause**:
+- Template focused on docs/ directory only → Missed root-level config files
+- No cross-validation between config files and documentation
+- Assumed configs were correct if they existed
+- No validation that documented commands actually work
+
+**Impact**: Users following documentation would encounter immediate failures:
+- `docker-compose up --profile monitoring` fails (profile doesn't exist)
+- Database connection examples fail (wrong DB names)
+- Quality commands fail (`uv run ruff` → pyproject.toml not configured)
+- Contributors run wrong scripts (validate_docs.sh doesn't exist)
+
+**Fix**: Added Objective 16 (Config Consistency Validation), Smoke Test 6 (pyproject.toml check), and anti-patterns for config cross-validation.
+
+---
+
+This V2.1 template fixes ALL known failure modes.
 
 ### When to Update This Template
 
@@ -2879,9 +3040,10 @@ If an audit using this template still misses critical issues:
 
 ## END OF TEMPLATE
 
-**Version**: 2.0  
-**Last Updated**: 2025-10-11  
+**Version**: 2.1
+**Last Updated**: 2025-10-11
 **Changelog**:
+- v2.1 (2025-10-11): Added Objective 16 (Config Consistency Validation), Smoke Test 6 (pyproject.toml), anti-patterns for config validation, Failure Mode 2 case study
 - v2.0 (2025-10-11): Complete rewrite with mandatory execution protocol, explicit validation commands, smoke tests, verification protocol
 - v1.0 (2025-10-10): Original template (proved insufficient - missed 64+ critical issues)
 

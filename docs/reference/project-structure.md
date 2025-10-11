@@ -95,6 +95,8 @@ my_awesome_app/                      # Your project repository
 - **`Makefile`**: Development automation commands (build, test, deploy)
 - **`.gitignore`**: Version control exclusions
 - **`.env.example`**: Environment configuration template with all variables
+  - **Framework template**: `.framework/templates/infrastructure/.env.example` (203 lines with all variables)
+  - **Usage**: Copy to project root and customize for your environment
 
 ### Services Directory (`services/`)
 - **Purpose**: All microservices as independent deployable units

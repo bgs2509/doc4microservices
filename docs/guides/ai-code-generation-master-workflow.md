@@ -22,19 +22,15 @@ When an AI agent starts working with this framework, it **MUST** read documents 
 
 #### **Stage 0: Initialization** (Before receiving user prompt)
 
-1. **CLAUDE.md** (root) — Entry point, framework overview, navigation guide
-2. **docs/reference/agent-context-summary.md** — Critical rules snapshot, mandatory constraints
-3. **THIS DOCUMENT** (ai-code-generation-master-workflow.md) — Complete workflow process
-4. **docs/reference/maturity-levels.md** — 4 maturity levels from PoC to Production
+Read these 4 documents in order:
+1. **CLAUDE.md** — Entry point, framework overview
+2. **docs/reference/agent-context-summary.md** — Critical rules snapshot
+3. **THIS DOCUMENT** — Complete workflow process
+4. **docs/reference/maturity-levels.md** — 4 maturity levels (PoC to Production)
 
-**Purpose**: Load context about framework architecture, mandatory constraints, available documentation, and maturity level options.
+**Purpose**: Load framework context before starting work.
 
-**Expected outcome**: AI understands:
-- Framework-as-submodule model
-- Improved Hybrid Approach architecture
-- Mandatory constraints (HTTP-only data access, service separation, etc.)
-- **Maturity levels** (PoC ~5 min, Development ~10 min, Pre-Production ~15 min, Production ~30 min)
-- Where to find specific information during workflow
+**Details**: See [Stage 0: AI Initialization](#stage-0-ai-initialization) in Part 2 for complete description.
 
 ---
 
