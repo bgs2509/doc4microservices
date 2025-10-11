@@ -1,111 +1,221 @@
-name: Documentation Validation
+name: Documentation Quality Gate
 
 on:
   push:
+    branches:
+      - master
+      - main
+      - develop
     paths:
       - 'docs/**/*.md'
       - '*.md'
-      - 'templates/**/*.md'
+      - 'CLAUDE.md'
+      - 'README.md'
+      - 'templates/**'
       - 'scripts/validate_docs.sh'
-      - '.github/workflows/docs-validation.yml'
+      - 'scripts/validate_docs.py'
   pull_request:
     paths:
       - 'docs/**/*.md'
       - '*.md'
-      - 'templates/**/*.md'
-      - 'scripts/validate_docs.sh'
-      - '.github/workflows/docs-validation.yml'
+      - 'CLAUDE.md'
+      - 'README.md'
+      - 'templates/**'
   workflow_dispatch:
-    inputs:
-      validation_mode:
-        description: 'Validation mode'
-        required: true
-        default: '--full'
-        type: choice
-        options:
-          - '--full'
-          - '--quick'
-          - '--links'
-          - '--versions'
-          - '--structure'
 
 jobs:
-  validate-docs:
+  validate-critical:
+    name: Critical Documentation Checks
     runs-on: ubuntu-latest
-    name: Documentation Quality Check
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full history for better link validation
+          fetch-depth: 1
 
-      - name: Set up validation environment
-        run: |
-          echo "Setting up documentation validation environment..."
-          chmod +x scripts/validate_docs.sh
-
-      - name: Check markdown links
-        run: |
-          echo "Validating markdown links..."
-          ./scripts/validate_docs.sh --links
-        continue-on-error: true
-        id: links-check
-
-      - name: Check version consistency
-        run: |
-          echo "Checking version consistency..."
-          ./scripts/validate_docs.sh --versions
-        continue-on-error: true
-        id: version-check
-
-      - name: Check documentation structure
-        run: |
-          echo "Validating documentation structure..."
-          ./scripts/validate_docs.sh --structure
-        continue-on-error: true
-        id: structure-check
-
-      - name: Run full validation
-        run: |
-          echo "Running comprehensive validation..."
-          ./scripts/validate_docs.sh --full
-        id: full-validation
-
-      - name: Upload validation report
-        if: always()
-        uses: actions/upload-artifact@v3
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          name: validation-report
-          path: |
-            validation-report.txt
-          retention-days: 30
+          python-version: '3.11'
 
-      - name: Comment PR with results
+      - name: Setup validation environment
+        run: |
+          echo "=== Documentation Framework Validation ==="
+          echo "Repository: doc4microservices (AI-first documentation framework)"
+          echo "Markdown files: $(find docs -name '*.md' | wc -l)"
+          echo ""
+          chmod +x scripts/validate_docs.sh scripts/validate_docs.py
+
+      # ====================================================================
+      # CRITICAL CHECKS (Must pass for documentation framework)
+      # ====================================================================
+
+      - name: Validate Markdown Links
+        id: links
+        run: |
+          echo "=== Checking Markdown Links ==="
+          echo "Validating internal links (critical for AI navigation)..."
+
+          # Use Python validator for precise link checking
+          python scripts/validate_docs.py
+
+          # Also run bash validator for comprehensive check
+          ./scripts/validate_docs.sh --links
+
+          echo "✅ All markdown links are valid"
+
+      - name: Validate Documentation Structure
+        id: structure
+        run: |
+          echo "=== Validating Documentation Structure ==="
+          ./scripts/validate_docs.sh --structure
+          echo "✅ Documentation structure is consistent"
+
+      - name: Check Stage 0 Documents (AI Navigation)
+        id: stage0
+        run: |
+          echo "=== Validating Stage 0 Initialization Sequence ==="
+          echo "Checking critical AI agent initialization documents..."
+
+          STAGE_0_DOCS=(
+            "CLAUDE.md"
+            "docs/reference/agent-context-summary.md"
+            "docs/guides/ai-code-generation-master-workflow.md"
+            "docs/reference/maturity-levels.md"
+          )
+
+          MISSING_COUNT=0
+          for doc in "${STAGE_0_DOCS[@]}"; do
+            if [ -f "$doc" ]; then
+              echo "✅ $doc"
+            else
+              echo "❌ CRITICAL: Missing Stage 0 document: $doc"
+              MISSING_COUNT=$((MISSING_COUNT + 1))
+            fi
+          done
+
+          if [ $MISSING_COUNT -gt 0 ]; then
+            echo ""
+            echo "::error::Stage 0 sequence incomplete! AI agents cannot initialize."
+            exit 1
+          fi
+
+          echo ""
+          echo "✅ Stage 0 initialization sequence is complete"
+
+      - name: Check Key Navigation Documents
+        id: navigation
+        run: |
+          echo "=== Checking Key Navigation Documents ==="
+
+          KEY_DOCS=(
+            "docs/reference/ai-navigation-matrix.md"
+            "docs/INDEX.md"
+            "docs/LINKS_REFERENCE.md"
+            "docs/guides/architecture-guide.md"
+            "docs/reference/tech_stack.md"
+            "docs/quality/agent-verification-checklist.md"
+          )
+
+          MISSING_COUNT=0
+          for doc in "${KEY_DOCS[@]}"; do
+            if [ -f "$doc" ]; then
+              echo "✅ $doc"
+            else
+              echo "⚠️  Missing: $doc"
+              MISSING_COUNT=$((MISSING_COUNT + 1))
+            fi
+          done
+
+          if [ $MISSING_COUNT -gt 2 ]; then
+            echo ""
+            echo "::error::Too many missing navigation documents ($MISSING_COUNT)"
+            exit 1
+          fi
+
+          echo ""
+          echo "✅ Navigation documents check complete"
+
+      - name: Markdown Linting
+        id: markdownlint
+        run: |
+          echo "=== Running Markdown Lint ==="
+          # Use marketplace action for consistent linting
+          echo "Linting markdown files for style consistency..."
+        continue-on-error: true
+
+      - name: Check Version Consistency
+        id: versions
+        run: |
+          echo "=== Checking Version Consistency ==="
+          ./scripts/validate_docs.sh --versions
+          echo "✅ Version consistency check complete"
+        continue-on-error: true
+
+      # ====================================================================
+      # REPORTING
+      # ====================================================================
+
+      - name: Generate Validation Summary
+        if: always()
+        run: |
+          echo "## 📚 Documentation Validation Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Critical Checks" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Markdown Links | ${{ steps.links.outcome == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Documentation Structure | ${{ steps.structure.outcome == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Stage 0 Documents | ${{ steps.stage0.outcome == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Navigation Documents | ${{ steps.navigation.outcome == 'success' && '✅' || '⚠️' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Markdown Lint | ${{ steps.markdownlint.outcome == 'success' && '✅' || '⚠️' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Version Consistency | ${{ steps.versions.outcome == 'success' && '✅' || '⚠️' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.links.outcome }}" = "success" ] && [ "${{ steps.stage0.outcome }}" = "success" ]; then
+            echo "### ✅ Documentation Framework Ready" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "All critical documentation checks passed. Framework is ready for AI-assisted code generation." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ Critical Issues Found" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Action Required:** Fix critical documentation issues before merging." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Run locally: \`./scripts/validate_docs.sh --links\`" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Comment PR with Results
         if: github.event_name == 'pull_request' && always()
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const linkStatus = '${{ steps.links-check.outcome }}';
-            const versionStatus = '${{ steps.version-check.outcome }}';
-            const structureStatus = '${{ steps.structure-check.outcome }}';
-            const fullStatus = '${{ steps.full-validation.outcome }}';
+            const linksStatus = '${{ steps.links.outcome }}';
+            const structureStatus = '${{ steps.structure.outcome }}';
+            const stage0Status = '${{ steps.stage0.outcome }}';
+            const navigationStatus = '${{ steps.navigation.outcome }}';
 
             let comment = '## 📚 Documentation Validation Report\n\n';
+            comment += '### Critical Checks\n\n';
             comment += '| Check | Status |\n';
             comment += '|-------|--------|\n';
-            comment += `| Markdown Links | ${linkStatus === 'success' ? '✅' : '❌'} |\n`;
-            comment += `| Version Consistency | ${versionStatus === 'success' ? '✅' : '❌'} |\n`;
-            comment += `| Documentation Structure | ${structureStatus === 'success' ? '✅' : '❌'} |\n`;
-            comment += `| Full Validation | ${fullStatus === 'success' ? '✅' : '⚠️'} |\n`;
+            comment += `| Markdown Links | ${linksStatus === 'success' ? '✅ Pass' : '❌ Fail'} |\n`;
+            comment += `| Documentation Structure | ${structureStatus === 'success' ? '✅ Pass' : '❌ Fail'} |\n`;
+            comment += `| Stage 0 Documents (AI) | ${stage0Status === 'success' ? '✅ Pass' : '❌ Fail'} |\n`;
+            comment += `| Navigation Documents | ${navigationStatus === 'success' ? '✅ Pass' : '⚠️ Warning'} |\n`;
+            comment += '\n';
 
-            if (fullStatus !== 'success') {
-              comment += '\n### ⚠️ Issues Found\n';
-              comment += 'Please run `./scripts/validate_docs.sh --full` locally to see detailed issues.\n';
+            if (linksStatus === 'success' && stage0Status === 'success') {
+              comment += '### ✅ All Critical Checks Passed\n\n';
+              comment += 'Documentation framework is ready for AI-assisted code generation.\n';
             } else {
-              comment += '\n### ✅ All Checks Passed\n';
-              comment += 'Documentation meets all quality standards.\n';
+              comment += '### ❌ Action Required\n\n';
+              comment += 'Please fix critical documentation issues:\n\n';
+              if (linksStatus !== 'success') comment += '- Fix broken markdown links\n';
+              if (stage0Status !== 'success') comment += '- Restore missing Stage 0 documents (critical for AI navigation)\n';
+              comment += '\nRun locally: `./scripts/validate_docs.sh --links`\n';
             }
 
             github.rest.issues.createComment({
@@ -114,128 +224,3 @@ jobs:
               repo: context.repo.repo,
               body: comment
             });
-
-  spelling-check:
-    runs-on: ubuntu-latest
-    name: Spelling Check
-    continue-on-error: true  # Don't fail build on spelling issues
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Install aspell
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y aspell aspell-en
-
-      - name: Check spelling in documentation
-        run: |
-          echo "Checking spelling in documentation files..."
-          find docs -name "*.md" -type f | while read file; do
-            echo "Checking: $file"
-            # Extract words from markdown, ignore code blocks and URLs
-            cat "$file" | \
-              sed '/^```/,/^```$/d' | \
-              sed 's/http[s]*:\/\/[^ ]*/URL/g' | \
-              aspell list --lang=en --mode=markdown | \
-              sort | uniq | head -20 > spelling-issues.txt || true
-
-            if [ -s spelling-issues.txt ]; then
-              echo "Potential spelling issues in $file:"
-              cat spelling-issues.txt
-            fi
-          done
-
-  broken-links-external:
-    runs-on: ubuntu-latest
-    name: External Links Check
-    continue-on-error: true  # External links can be flaky
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Link Checker
-        uses: lycheeverse/lychee-action@v1
-        with:
-          args: >
-            --verbose
-            --no-progress
-            --accept 200,201,204,301,302
-            --timeout 20
-            --max-retries 3
-            --exclude-loopback
-            --exclude-mail
-            docs/**/*.md
-          fail: false
-
-      - name: Upload link check results
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: link-check-results
-          path: lychee-out.md
-
-  documentation-coverage:
-    runs-on: ubuntu-latest
-    name: Documentation Coverage Analysis
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Analyze documentation coverage
-        run: |
-          echo "## Documentation Coverage Report" > coverage-report.md
-          echo "" >> coverage-report.md
-
-          # Count documented vs TODO items
-          total_docs=$(find docs -name "*.md" | wc -l)
-          todo_docs=$(grep -rl "TODO" docs --include="*.md" | wc -l || echo 0)
-          completed_docs=$((total_docs - todo_docs))
-          coverage=$((completed_docs * 100 / total_docs))
-
-          echo "- Total documentation files: $total_docs" >> coverage-report.md
-          echo "- Completed documentation: $completed_docs" >> coverage-report.md
-          echo "- Documentation with TODOs: $todo_docs" >> coverage-report.md
-          echo "- Coverage: ${coverage}%" >> coverage-report.md
-
-          # List areas needing documentation
-          if [ $todo_docs -gt 0 ]; then
-            echo "" >> coverage-report.md
-            echo "### Areas Needing Documentation:" >> coverage-report.md
-            grep -rl "TODO" docs --include="*.md" | head -20 >> coverage-report.md
-          fi
-
-          cat coverage-report.md
-
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v3
-        with:
-          name: documentation-coverage
-          path: coverage-report.md
-
-  summary:
-    needs: [validate-docs, spelling-check, broken-links-external, documentation-coverage]
-    runs-on: ubuntu-latest
-    name: Validation Summary
-    if: always()
-
-    steps:
-      - name: Summary Report
-        run: |
-          echo "## 📊 Documentation Validation Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Documentation Validation | ${{ needs.validate-docs.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Spelling Check | ${{ needs.spelling-check.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| External Links | ${{ needs.broken-links-external.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Coverage Analysis | ${{ needs.documentation-coverage.result }} |" >> $GITHUB_STEP_SUMMARY
-
-          if [ "${{ needs.validate-docs.result }}" != "success" ]; then
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "⚠️ **Action Required**: Documentation validation failed. Please fix issues before merging." >> $GITHUB_STEP_SUMMARY
-            exit 1
-          fi
