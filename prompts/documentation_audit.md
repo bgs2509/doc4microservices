@@ -49,6 +49,7 @@ Conduct a comprehensive documentation audit of this project:
    - Test sample code blocks where applicable
    - Run shellcheck on all bash examples
    - Validate Python code examples with pylint/flake8
+   - If a required tool is unavailable, record the skipped check and suggest a manual alternative.
 
 7. **Language & Readability**
    - Check spelling with aspell/hunspell
@@ -70,6 +71,7 @@ Conduct a comprehensive documentation audit of this project:
    - Check workflow coherence (entry/exit criteria alignment)
    - Detect circular dependencies in reading order
    - Ensure maturity levels integrated into workflow stages
+   - Update the Stage 0 sequence to match the current repository structure before flagging inconsistencies.
 
 10. **Submodule Path Validation** (NEW - Framework-as-submodule model)
    - Ensure documentation works in standalone and submodule modes
@@ -250,7 +252,7 @@ Quick documentation health check:
 3. Check for contradictions in key docs:
    - README.md
    - CLAUDE.md
-   - docs/guides/ARCHITECTURE_GUIDE.md
+   - docs/guides/architecture-guide.md
    - docs/INDEX.md
 
 Provide:
@@ -449,7 +451,7 @@ Report:
 
 ## Automation Script Template
 
-Create this as `scripts/audit_docs.sh`:
+Use the following reference when preparing `scripts/audit_docs.sh`. Adapt it to the current repository tooling and treat it as optional guidance rather than an instruction to run during manual audits.
 
 ```bash
 #!/bin/bash
