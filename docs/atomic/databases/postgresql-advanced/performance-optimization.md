@@ -174,7 +174,7 @@ CREATE INDEX idx_product_tags ON products USING gin(tags);
 -- Full-text search indexes
 CREATE INDEX idx_product_search ON products USING gin(to_tsvector('english', name || ' ' || description));
 
--- Hash indexes for equality comparisons (PostgreSQL 10+)
+-- Hash indexes for equality comparisons (PostgreSQL 10+, framework uses 16)
 CREATE INDEX idx_orders_status_hash ON orders USING hash(status);
 ```
 
