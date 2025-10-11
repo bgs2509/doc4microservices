@@ -99,7 +99,7 @@ services:
 
   # Infrastructure services
   postgres_db:
-    image: postgres:15
+    image: postgres:16
     container_name: postgres_db
     volumes:
       - postgres_data:/var/lib/postgresql/data

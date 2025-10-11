@@ -16,14 +16,17 @@ The documentation is organised into atomic knowledge modules. Use this index as 
 ## Documentation Pillars
 
 ### Core Guides
-- [Architecture Guide](LINKS_REFERENCE.md#core-documentation) — canonical architectural principles
+- [Architecture Guide](guides/architecture-guide.md) — canonical architectural principles
 - [AI Code Generation Master Workflow](guides/ai-code-generation-master-workflow.md) — complete 7-stage AI process (unified workflow)
-- [Development Commands](LINKS_REFERENCE.md#developer-guides) — command reference for local workflows
-- [Use Case Implementation Guide](LINKS_REFERENCE.md#developer-guides) — step-by-step delivery process
+- [Development Commands](guides/development-commands.md) — command reference for local workflows
+- [Use Case Implementation Guide](guides/use-case-implementation-guide.md) — step-by-step delivery process
+- [Shared Components Guide](guides/shared-components.md) — shared infrastructure components
+- [Template Naming Guide](guides/template-naming-guide.md) — template service naming conventions
 
 ### Reference Materials
-- [Technical Specifications](LINKS_REFERENCE.md#core-documentation) — platform versions and runtime constraints
-- [Troubleshooting Guide](LINKS_REFERENCE.md#developer-guides) — diagnostics and recovery procedures
+- [Technical Specifications](reference/tech_stack.md) — platform versions and runtime constraints
+- [Project Structure](reference/project-structure.md) — directory and file organization
+- [Troubleshooting Guide](reference/troubleshooting.md) — diagnostics and recovery procedures
 - [Agent Context Summary](reference/agent-context-summary.md) — onboarding context for AI agents
 - [Maturity Levels](reference/maturity-levels.md) — 4 incremental levels from PoC to Production
 - [Conditional Stage Rules](reference/conditional-stage-rules.md) — stage skipping rules per maturity level
@@ -43,6 +46,11 @@ The documentation is organised into atomic knowledge modules. Use this index as 
 - [QA Report Template](quality/qa-report-template.md) — final QA handoff format
 - [Service Naming Checklist](checklists/service-naming-checklist.md) — 3-part vs 4-part decision tool
 
+### Style & Contribution
+- [STYLE_GUIDE.md](STYLE_GUIDE.md) — documentation formatting standards and conventions
+- [Atomic Documentation Template](atomic/TEMPLATE.md) — template for creating atomic modules
+- [Atomic Documentation Changelog](atomic/CHANGELOG.md) — atomic documentation change history
+
 ## Atomic Knowledge Base
 
 See [Atomic Documentation Hub](atomic/README.md) for contribution rules.
@@ -54,7 +62,15 @@ See [Atomic Documentation Hub](atomic/README.md) for contribution rules.
 - [Event Loop Management](atomic/architecture/event-loop-management.md) — Ownership, lifecycle, and orchestration rules for event loops.
 - [Data Access Architecture](atomic/architecture/data-access-architecture.md) — Patterns for safe data access and service boundaries.
 - [DDD and Hexagonal Principles](atomic/architecture/ddd-hexagonal-principles.md) — DDD layering and hexagonal architecture applications.
+- [Context Registry](atomic/architecture/context-registry.md) — service context definitions and domain boundaries.
 - [Naming Conventions](atomic/architecture/naming/README.md) — Complete naming guide with Quick Reference Table and decision trees.
+  - [4-Part Naming Reasons](atomic/architecture/naming/naming-4part-reasons.md) — Serious reasons for 4-part naming convention.
+  - [Naming Conversion Guide](atomic/architecture/naming/naming-conversion.md) — Converting between naming conventions.
+  - [Database Naming](atomic/architecture/naming/naming-databases.md) — Database-specific naming conventions.
+  - [Documentation Naming](atomic/architecture/naming/naming-documentation.md) — Documentation file naming standards.
+  - [Infrastructure Naming](atomic/architecture/naming/naming-infrastructure.md) — Infrastructure resource naming.
+  - [Python Naming](atomic/architecture/naming/naming-python.md) — Python code naming conventions.
+  - [Service Naming](atomic/architecture/naming/naming-services.md) — Service and component naming patterns.
 - [Quality Standards](atomic/architecture/quality-standards.md) — Quality bar, verification steps, and acceptance criteria.
 - [Project Structure Patterns](atomic/architecture/project-structure-patterns.md) — Reference microservice and repository structures.
 

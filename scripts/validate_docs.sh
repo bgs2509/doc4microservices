@@ -79,7 +79,7 @@ check_code_in_file() {
 
     # Extract and check bash code blocks
     if command -v shellcheck &> /dev/null; then
-        awk '/^```bash/,/^```/' "$file" | sed '1d;$d' > "$temp_bash"
+        awk '/^```bash$/,/^```$/ {if (!/^```/) print}' "$file" > "$temp_bash"
         if [ -s "$temp_bash" ]; then
             shellcheck "$temp_bash" 2>&1 | while read -r issue; do
                 echo "SHELLCHECK: $file - $issue"
@@ -90,7 +90,7 @@ check_code_in_file() {
 
     # Extract and check Python code blocks
     if command -v python3 &> /dev/null; then
-        awk '/^```python/,/^```/' "$file" | sed '1d;$d' > "$temp_python"
+        awk '/^```python$/,/^```$/ {if (!/^```/) print}' "$file" > "$temp_python"
         if [ -s "$temp_python" ]; then
             python3 -m py_compile "$temp_python" 2>&1 | while read -r issue; do
                 echo "PYTHON: $file - $issue"
