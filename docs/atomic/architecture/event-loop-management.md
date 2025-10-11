@@ -13,7 +13,7 @@ All services in the platform rely on Python's asynchronous runtimes. Mismanaging
 
 ### FastAPI Services
 
-- Use the [lifespan protocol](https://fastapi.tiangolo.com/advanced/events/) (see `docs/atomic/services/fastapi/lifespan-management.md`).
+- Use the [lifespan protocol](https://fastapi.tiangolo.com/advanced/events/) (see [lifespan-management.md](../services/fastapi/lifespan-management.md)).
 - Register background tasks through dependency injection rather than `asyncio.create_task` in route handlers.
 - Shield startup tasks with timeouts to prevent hanging containers (`asyncio.wait_for(init(), timeout=30)`).
 
