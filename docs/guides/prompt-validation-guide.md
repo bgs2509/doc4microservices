@@ -4,22 +4,22 @@
 
 ## When to Run This Checklist
 
-Run prompt validation immediately after receiving a new user request and before starting the Requirements Intake step (Stage 2 in `AI_CODE_GENERATION_MASTER_WORKFLOW.md`). If any mandatory field is missing, pause all further actions and ask the requester for clarification using the prompt augmentation templates.
+Run prompt validation immediately after receiving a new user request and before starting the Requirements Intake step (Stage 2 in `ai-code-generation-master-workflow.md`). If any mandatory field is missing, pause all further actions and ask the requester for clarification using the prompt augmentation templates.
 
 ## Critical Input Checklist
 
 | Field | Why It Matters | Primary References |
 |-------|----------------|--------------------|
-| **Business Context** | Anchors the solution in a clear problem statement, target users, and success metrics. | `README.md`, `docs/reference/tech_stack.md`, `docs/reference/AGENT_CONTEXT_SUMMARY.md` |
-| **Target Maturity Level** | Determines infrastructure complexity, observability, security, and generation time. Prevents over-engineering for MVPs and ensures production readiness for enterprise deployments. | `docs/reference/MATURITY_LEVELS.md`, `docs/reference/CONDITIONAL_STAGE_RULES.md` |
-| **Functional Requirements** | Defines the capabilities the generated services must expose. | `docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md`, `docs/reference/PROJECT_STRUCTURE.md` |
-| **Optional Modules** | Identifies additional services beyond core (Workers, Bot, MongoDB, Redis, etc.). Available at any maturity level. | `docs/reference/MATURITY_LEVELS.md` (modules section) |
+| **Business Context** | Anchors the solution in a clear problem statement, target users, and success metrics. | `README.md`, `docs/reference/tech_stack.md`, `docs/reference/agent-context-summary.md` |
+| **Target Maturity Level** | Determines infrastructure complexity, observability, security, and generation time. Prevents over-engineering for MVPs and ensures production readiness for enterprise deployments. | `docs/reference/maturity-levels.md`, `docs/reference/conditional-stage-rules.md` |
+| **Functional Requirements** | Defines the capabilities the generated services must expose. | `docs/guides/use-case-implementation-guide.md`, `docs/reference/project-structure.md` |
+| **Optional Modules** | Identifies additional services beyond core (Workers, Bot, MongoDB, Redis, etc.). Available at any maturity level. | `docs/reference/maturity-levels.md` (modules section) |
 | **Non-Functional Constraints** | Ensures compliance with architecture, performance, and security requirements. | `docs/guides/architecture-guide.md`, `docs/atomic/architecture/`, `docs/atomic/observability/` |
-| **Dependencies & Integrations** | Identifies external systems, queues, or data flows that must be modeled. | `docs/atomic/infrastructure/`, `docs/atomic/services/`, `docs/reference/DELIVERABLES_CATALOG.md` |
-| **Scope Boundaries** | Prevents unplanned features from entering the delivery plan. | `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md` |
-| **Expected Deliverables** | Aligns produced artefacts with framework expectations. | `docs/reference/DELIVERABLES_CATALOG.md`, `docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md` |
-| **Acceptance Criteria** | Adds measurable success checks that feed the verification stage. | `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`, `docs/atomic/testing/` |
-| **Open Questions & Risks** | Triggers early clarification to avoid rework. | `docs/reference/troubleshooting.md`, `docs/reference/PROMPT_TEMPLATES.md` |
+| **Dependencies & Integrations** | Identifies external systems, queues, or data flows that must be modeled. | `docs/atomic/infrastructure/`, `docs/atomic/services/`, `docs/reference/deliverables-catalog.md` |
+| **Scope Boundaries** | Prevents unplanned features from entering the delivery plan. | `docs/guides/implementation-plan-template.md` |
+| **Expected Deliverables** | Aligns produced artefacts with framework expectations. | `docs/reference/deliverables-catalog.md`, `docs/reference/architecture-decision-log-template.md` |
+| **Acceptance Criteria** | Adds measurable success checks that feed the verification stage. | `docs/quality/agent-verification-checklist.md`, `docs/atomic/testing/` |
+| **Open Questions & Risks** | Triggers early clarification to avoid rework. | `docs/reference/troubleshooting.md`, `docs/reference/prompt-templates.md` |
 
 ## Validation Procedure
 
@@ -30,7 +30,7 @@ Run prompt validation immediately after receiving a new user request and before 
    - For every row in the checklist above, verify the prompt contains explicit information.
    - If a field is partially filled, treat it as missing.
 3. **Request Clarifications When Needed**
-   - Use the relevant prompt augmentation snippet from `docs/reference/PROMPT_TEMPLATES.md`.
+   - Use the relevant prompt augmentation snippet from `docs/reference/prompt-templates.md`.
    - Clearly state which field is missing and why it is required.
    - Do not continue until the requester provides the missing context.
 4. **Record Validation Outcome**
@@ -42,7 +42,7 @@ Run prompt validation immediately after receiving a new user request and before 
 | Missing Information | Required Action | Blocker? |
 |---------------------|-----------------|----------|
 | Business context or overall goal | Ask the requester to restate the problem, target users, and success metrics. | Yes |
-| Target maturity level | Ask: "Choose maturity level: 1=PoC (~5 min), 2=Development (~10 min), 3=Pre-Production (~15 min), 4=Production (~30 min)". See `PROMPT_TEMPLATES.md` for full prompt. | Yes |
+| Target maturity level | Ask: "Choose maturity level: 1=PoC (~5 min), 2=Development (~10 min), 3=Pre-Production (~15 min), 4=Production (~30 min)". See `prompt-templates.md` for full prompt. | Yes |
 | Optional modules | If not mentioned, ask explicitly: "Do you need any optional modules (Workers, Bot, MongoDB, RabbitMQ, Redis) or just core (FastAPI + PostgreSQL)?" **MUST be explicitly stated** (default: "none" if user confirms core-only). | No (defaults to "none" if user confirms, but must ask) |
 | Functional requirements | Request a prioritized feature list or user stories. | Yes |
 | Architecture and quality constraints | Ask for performance/security expectations or confirm adherence to framework defaults. | Yes |
@@ -60,7 +60,7 @@ Run prompt validation immediately after receiving a new user request and before 
 When AI requests clarification for missing mandatory fields:
 
 1. **First Attempt** (immediate)
-   - Send clarification request using templates from `PROMPT_TEMPLATES.md`
+   - Send clarification request using templates from `prompt-templates.md`
    - Clearly list all missing fields
    - Provide examples for each field
    - Set expectations: "Please provide this information to proceed with Stage 2"
@@ -97,7 +97,7 @@ When AI requests clarification for missing mandatory fields:
 
        **Next Steps**:
        To restart the workflow, please provide a complete prompt including all mandatory fields.
-       See docs/guides/PROMPT_VALIDATION_GUIDE.md for requirements.
+       See docs/guides/prompt-validation-guide.md for requirements.
        ```
 
 ### Handling Ambiguous Responses
@@ -120,7 +120,7 @@ If user provides **partial** or **ambiguous** information:
 **MAY** auto-select these with user notification:
 - ✅ Optional Modules (default: "none" if user confirms core-only is sufficient)
 - ✅ Authentication method (default: JWT if user approves)
-- ✅ Coverage threshold (use level-appropriate default from `MATURITY_LEVELS.md`)
+- ✅ Coverage threshold (use level-appropriate default from `maturity-levels.md`)
 
 ### Timeout Configuration
 
@@ -133,12 +133,12 @@ If user provides **partial** or **ambiguous** information:
 
 ## Integration With Agent Workflow
 
-- This guide is executed at **Stage 1** in `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md`.
-- Only after successful validation should the agent proceed to Stage 2 (Requirements Intake) and populate `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`.
-- The validated prompt becomes part of the project artefacts referenced in `docs/reference/DELIVERABLES_CATALOG.md`.
+- This guide is executed at **Stage 1** in `docs/guides/ai-code-generation-master-workflow.md`.
+- Only after successful validation should the agent proceed to Stage 2 (Requirements Intake) and populate `docs/guides/requirements-intake-template.md`.
+- The validated prompt becomes part of the project artefacts referenced in `docs/reference/deliverables-catalog.md`.
 
 ## Maintenance
 
 - Update this checklist whenever new artefacts are added or requirements change.
-- Ensure references stay aligned with `docs/INDEX.md` and `docs/reference/AGENT_CONTEXT_SUMMARY.md`.
+- Ensure references stay aligned with `docs/INDEX.md` and `docs/reference/agent-context-summary.md`.
 - Follow `docs/STYLE_GUIDE.md` when editing this guide.

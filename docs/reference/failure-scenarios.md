@@ -45,8 +45,8 @@ This document covers **edge cases** and **failure scenarios** that can occur at 
 
 ```
 1. STOP immediately — do NOT proceed to Stage 2
-2. Identify ALL missing fields using PROMPT_VALIDATION_GUIDE.md
-3. Use PROMPT_TEMPLATES.md to formulate clarification questions
+2. Identify ALL missing fields using prompt-validation-guide.md
+3. Use prompt-templates.md to formulate clarification questions
 4. Send clarification request to user with:
    - List of missing fields
    - Why each field is needed
@@ -74,8 +74,8 @@ This document covers **edge cases** and **failure scenarios** that can occur at 
 > Please provide these details to continue."
 
 ### References
-- `docs/guides/PROMPT_VALIDATION_GUIDE.md`
-- `docs/reference/PROMPT_TEMPLATES.md`
+- `docs/guides/prompt-validation-guide.md`
+- `docs/reference/prompt-templates.md`
 
 ---
 
@@ -205,7 +205,7 @@ This document covers **edge cases** and **failure scenarios** that can occur at 
 ### Recovery Procedure
 
 ```
-1. Review AGENT_VERIFICATION_CHECKLIST.md
+1. Review agent-verification-checklist.md
 2. Identify which quality gate(s) failed
 3. For EACH failed gate:
    a. Capture evidence (logs, reports)
@@ -242,8 +242,8 @@ This document covers **edge cases** and **failure scenarios** that can occur at 
 > **Your decision**: _____"
 
 ### References
-- `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`
-- `docs/reference/MATURITY_LEVELS.md` (for thresholds)
+- `docs/quality/agent-verification-checklist.md`
+- `docs/reference/maturity-levels.md` (for thresholds)
 
 ---
 
@@ -625,8 +625,8 @@ Use this flowchart when any failure occurs:
 ## Maintenance
 
 - Update this document when new failure patterns are identified
-- Keep aligned with `AI_CODE_GENERATION_MASTER_WORKFLOW.md`
-- Reference from `AGENT_CONTEXT_SUMMARY.md`
+- Keep aligned with `ai-code-generation-master-workflow.md`
+- Reference from `agent-context-summary.md`
 - Follow `STYLE_GUIDE.md` for formatting
 
 ---

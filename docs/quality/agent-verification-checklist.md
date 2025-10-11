@@ -7,7 +7,7 @@
 - Run these checks in the order listed.
 - Capture command outputs or links to reports in the Evidence column.
 - If a check fails, resolve the issue or document the blocker before proceeding.
-- Refer back to `docs/guides/DEVELOPMENT_COMMANDS.md` for detailed command descriptions.
+- Refer back to `docs/guides/development-commands.md` for detailed command descriptions.
 
 ## Pre-Flight Environment Checks
 
@@ -31,26 +31,26 @@
 | Check | Command | Expected Result | Evidence | Status |
 |-------|---------|-----------------|----------|--------|
 | Full test suite | `uv run pytest` or plan-specific command | Tests pass |  |  |
-| Coverage threshold | `uv run pytest --cov=app --cov-report=html --cov-report=xml` | Coverage meets **level-specific threshold**:<br>• Level 1: ≥ 60%<br>• Level 2: ≥ 75%<br>• Level 3: ≥ 80%<br>• Level 4: ≥ 85%<br><br>**Reference**: See `docs/reference/MATURITY_LEVELS.md` (SSOT) |  |  |
+| Coverage threshold | `uv run pytest --cov=app --cov-report=html --cov-report=xml` | Coverage meets **level-specific threshold**:<br>• Level 1: ≥ 60%<br>• Level 2: ≥ 75%<br>• Level 3: ≥ 80%<br>• Level 4: ≥ 85%<br><br>**Reference**: See `docs/reference/maturity-levels.md` (SSOT) |  |  |
 | Coverage artefacts | Inspect `htmlcov/`, `coverage.xml` | Reports generated |  |  |
 
-**Note**: Coverage thresholds are defined in `docs/reference/MATURITY_LEVELS.md` (Single Source of Truth). If thresholds change, update only MATURITY_LEVELS.md; this document references it.
+**Note**: Coverage thresholds are defined in `docs/reference/maturity-levels.md` (Single Source of Truth). If thresholds change, update only maturity-levels.md; this document references it.
 
 ## Artefact Validation
 
 | Check | Action | Expected Result | Evidence | Status |
 |-------|--------|-----------------|----------|--------|
-| Project structure compliance | Review against `docs/reference/PROJECT_STRUCTURE.md` | Files placed correctly |  |  |
+| Project structure compliance | Review against `docs/reference/project-structure.md` | Files placed correctly |  |  |
 | Shared components usage | Confirm adherence to `docs/guides/shared_components.md` | No duplication or rule violations |  |  |
 | Naming conventions | Spot-check against `docs/atomic/architecture/naming-conventions.md` | No prohibited names |  |  |
-| Documentation updates | Ensure relevant docs updated (plans, ADRs, etc.) | Artefacts listed in `docs/reference/DELIVERABLES_CATALOG.md` |  |  |
+| Documentation updates | Ensure relevant docs updated (plans, ADRs, etc.) | Artefacts listed in `docs/reference/deliverables-catalog.md` |  |  |
 
 ## Release Gate
 
 | Check | Action | Expected Result | Evidence | Status |
 |-------|--------|-----------------|----------|--------|
-| QA report | Draft using `docs/quality/QA_REPORT_TEMPLATE.md` | Report ready for sign-off |  |  |
-| Deliverables summary | Update per `docs/reference/DELIVERABLES_CATALOG.md` | Complete deliverable list |  |  |
+| QA report | Draft using `docs/quality/qa-report-template.md` | Report ready for sign-off |  |  |
+| Deliverables summary | Update per `docs/reference/deliverables-catalog.md` | Complete deliverable list |  |  |
 | Outstanding issues | Record unresolved risks or follow-ups | Stakeholder notified |  |  |
 
 ## Failure Handling & Retry Policy
@@ -228,7 +228,7 @@ Action: Continue with remaining checks, but escalate if total reaches 10
 Stage 5 verification is considered **COMPLETE** when:
 - ✅ **ALL** checks pass (preferred outcome)
 - ✅ **OR** User explicitly approves deviations for failed checks (documented exception)
-- ✅ Coverage meets level-specific threshold (60%/75%/80%/85% per `docs/reference/MATURITY_LEVELS.md`)
+- ✅ Coverage meets level-specific threshold (60%/75%/80%/85% per `docs/reference/maturity-levels.md`)
 
 ### Escalation Output Template
 
@@ -301,6 +301,6 @@ Please choose an action above, or provide alternative guidance.
 
 ## Maintenance
 
-- Align commands with `docs/guides/DEVELOPMENT_COMMANDS.md` if they change.
+- Align commands with `docs/guides/development-commands.md` if they change.
 - Keep coverage targets synchronized with `docs/atomic/testing/`.
-- Update link references in `docs/reference/AGENT_CONTEXT_SUMMARY.md` and `docs/INDEX.md` when modifying this checklist.
+- Update link references in `docs/reference/agent-context-summary.md` and `docs/INDEX.md` when modifying this checklist.

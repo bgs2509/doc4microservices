@@ -23,9 +23,9 @@ When an AI agent starts working with this framework, it **MUST** read documents 
 #### **Stage 0: Initialization** (Before receiving user prompt)
 
 1. **CLAUDE.md** (root) — Entry point, framework overview, navigation guide
-2. **docs/reference/AGENT_CONTEXT_SUMMARY.md** — Critical rules snapshot, mandatory constraints
-3. **THIS DOCUMENT** (AI_CODE_GENERATION_MASTER_WORKFLOW.md) — Complete workflow process
-4. **docs/reference/MATURITY_LEVELS.md** — 4 maturity levels from PoC to Production
+2. **docs/reference/agent-context-summary.md** — Critical rules snapshot, mandatory constraints
+3. **THIS DOCUMENT** (ai-code-generation-master-workflow.md) — Complete workflow process
+4. **docs/reference/maturity-levels.md** — 4 maturity levels from PoC to Production
 
 **Purpose**: Load context about framework architecture, mandatory constraints, available documentation, and maturity level options.
 
@@ -49,9 +49,9 @@ After initialization, AI reads documents **on-demand** based on the current work
 ### Core Document Categories
 
 #### **Workflow & Process** (when to do what)
-- `AI_CODE_GENERATION_MASTER_WORKFLOW.md` ← you are here
-- `PROMPT_VALIDATION_GUIDE.md`
-- `AGENT_VERIFICATION_CHECKLIST.md`
+- `ai-code-generation-master-workflow.md` ← you are here
+- `prompt-validation-guide.md`
+- `agent-verification-checklist.md`
 
 #### **Architecture & Rules** (what constraints to follow)
 - `architecture-guide.md` ← MANDATORY, canonical architecture source
@@ -60,17 +60,17 @@ After initialization, AI reads documents **on-demand** based on the current work
 - `docs/atomic/integrations/*` ← integration patterns
 
 #### **Templates & Tools** (how to structure outputs)
-- `REQUIREMENTS_INTAKE_TEMPLATE.md`
-- `IMPLEMENTATION_PLAN_TEMPLATE.md`
-- `QA_REPORT_TEMPLATE.md`
-- `AGENT_TOOLBOX.md`
-- `PROMPT_TEMPLATES.md`
+- `requirements-intake-template.md`
+- `implementation-plan-template.md`
+- `qa-report-template.md`
+- `agent-toolbox.md`
+- `prompt-templates.md`
 
 #### **Reference** (lookup information)
 - `tech_stack.md` ← technology versions
-- `PROJECT_STRUCTURE.md` ← directory layout
+- `project-structure.md` ← directory layout
 - `troubleshooting.md` ← diagnostics
-- `DELIVERABLES_CATALOG.md` ← expected artifacts
+- `deliverables-catalog.md` ← expected artifacts
 
 ---
 
@@ -101,7 +101,7 @@ graph TB
 
 **AI Actions**:
 1. Read `CLAUDE.md` → understand framework model
-2. Read `AGENT_CONTEXT_SUMMARY.md` → load critical rules
+2. Read `agent-context-summary.md` → load critical rules
 3. Read this document → understand workflow
 4. Load context about:
    - Improved Hybrid Approach (centralized data services)
@@ -110,9 +110,9 @@ graph TB
 
 **Documents Read**:
 - `CLAUDE.md`
-- `docs/reference/AGENT_CONTEXT_SUMMARY.md`
-- `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md` (this file)
-- `docs/reference/MATURITY_LEVELS.md`
+- `docs/reference/agent-context-summary.md`
+- `docs/guides/ai-code-generation-master-workflow.md` (this file)
+- `docs/reference/maturity-levels.md`
 
 **AI Generates**: Nothing yet (loading phase).
 
@@ -125,7 +125,7 @@ graph TB
 **Entry Criteria**: User provides initial business idea/requirement.
 
 **AI Actions**:
-1. Read `PROMPT_VALIDATION_GUIDE.md`
+1. Read `prompt-validation-guide.md`
 2. Check user prompt against mandatory fields:
    - ✅ Business context (problem, users, success metrics)
    - ✅ Functional requirements (features, capabilities)
@@ -136,16 +136,16 @@ graph TB
    - ✅ Scope boundaries (what's in/out of scope)
    - ✅ Expected deliverables
    - ✅ Acceptance criteria
-3. If ANY field is missing → ask clarification using `PROMPT_TEMPLATES.md`
+3. If ANY field is missing → ask clarification using `prompt-templates.md`
    - **IMPORTANT**: If maturity level is missing, ask user to choose level 1-4
    - **IMPORTANT**: If optional modules not mentioned, ask explicitly: "Do you need any optional modules (Workers, Bot, MongoDB, RabbitMQ, Redis) or just core (FastAPI + PostgreSQL)?"
    - Default to "none" (core only) if user confirms, but **must ask explicitly**
 4. If ALL fields present → proceed to Stage 2
 
 **Documents Read**:
-- `docs/guides/PROMPT_VALIDATION_GUIDE.md`
-- `docs/reference/PROMPT_TEMPLATES.md` (if clarification needed)
-- `docs/reference/MATURITY_LEVELS.md` (for level explanation)
+- `docs/guides/prompt-validation-guide.md`
+- `docs/reference/prompt-templates.md` (if clarification needed)
+- `docs/reference/maturity-levels.md` (for level explanation)
 
 **AI Generates**:
 - **Selected maturity level (1-4)**
@@ -160,7 +160,7 @@ graph TB
 Your business idea is interesting, but I need additional details:
 
 **Missing**:
-1. **Target maturity level**: Choose level (see MATURITY_LEVELS.md):
+1. **Target maturity level**: Choose level (see maturity-levels.md):
    - **Level 1 - PoC** (~5 min): Core functionality only, no logging/metrics
    - **Level 2 - Development** (~10 min): + Structured logging, health checks
    - **Level 3 - Pre-Production** (~15 min): + Nginx, SSL, Prometheus metrics
@@ -205,7 +205,7 @@ Please provide these details so I can ensure architecture alignment.
    - AsyncIO workers? (background jobs)
    - Data services? (PostgreSQL/MongoDB)
 5. Identify potential architectural conflicts
-6. Fill `REQUIREMENTS_INTAKE_TEMPLATE.md`:
+6. Fill `requirements-intake-template.md`:
    - Business Context & Objectives
    - **Target Configuration** (maturity level, optional modules, estimated time)
    - Functional Requirements (table format)
@@ -218,10 +218,10 @@ Please provide these details so I can ensure architecture alignment.
    - Risks & Open Questions
 
 **Documents Read**:
-- `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`
+- `docs/guides/requirements-intake-template.md`
 - `docs/guides/architecture-guide.md`
 - `docs/reference/tech_stack.md`
-- `docs/reference/MATURITY_LEVELS.md` (for level features)
+- `docs/reference/maturity-levels.md` (for level features)
 - `docs/atomic/architecture/*` (as needed)
 
 **AI Generates**:
@@ -238,7 +238,7 @@ Please provide these details so I can ensure architecture alignment.
 - **Maturity Level**: 3 - Pre-Production
 - **Optional Modules**: Workers, Bot
 - **Estimated Generation Time**: ~15-20 minutes (base 15 min + 2 modules)
-- **Reference**: See `docs/reference/MATURITY_LEVELS.md` for level details
+- **Reference**: See `docs/reference/maturity-levels.md` for level details
 
 ## Business Context & Objectives
 - **Problem**: Users need peer-to-peer lending with transparent terms
@@ -283,11 +283,11 @@ Please provide these details so I can ensure architecture alignment.
 **Entry Criteria**: Requirements Intake approved.
 
 **AI Actions**:
-1. Read `IMPLEMENTATION_PLAN_TEMPLATE.md`
-2. Read `MATURITY_LEVELS.md` and `CONDITIONAL_STAGE_RULES.md` to understand what features to include
-3. Read `USE_CASE_IMPLEMENTATION_GUIDE.md`
+1. Read `implementation-plan-template.md`
+2. Read `maturity-levels.md` and `conditional-stage-rules.md` to understand what features to include
+3. Read `use-case-implementation-guide.md`
 4. **Read naming convention documents** (MANDATORY for all service naming decisions):
-   - `docs/checklists/SERVICE_NAMING_CHECKLIST.md` — quick decision guide
+   - `docs/checklists/service-naming-checklist.md` — quick decision guide
    - `docs/atomic/architecture/naming-conventions.md` Section 2.3 — 10 serious reasons for 4-part naming
 5. Read service-specific atomic docs based on services needed AND maturity level:
    - If FastAPI → read `docs/atomic/services/fastapi/*`
@@ -311,7 +311,7 @@ Please provide these details so I can ensure architecture alignment.
 8. Map each phase to:
    - Specific tasks
    - Atomic documents to follow
-   - Commands from `AGENT_TOOLBOX.md`
+   - Commands from `agent-toolbox.md`
    - **Required At Level** (which sub-stages to execute)
    - Definition of Done
 9. **Add "Maturity Level Features" section** showing:
@@ -333,16 +333,16 @@ Please provide these details so I can ensure architecture alignment.
     - Using template services with standard naming (`{context}_{domain}_{type}`)
 
 **Documents Read**:
-- `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`
-- `docs/reference/MATURITY_LEVELS.md` (for feature mapping)
-- `docs/reference/CONDITIONAL_STAGE_RULES.md` (for sub-stage logic)
-- `docs/guides/USE_CASE_IMPLEMENTATION_GUIDE.md`
-- `docs/checklists/SERVICE_NAMING_CHECKLIST.md` (MANDATORY)
+- `docs/guides/implementation-plan-template.md`
+- `docs/reference/maturity-levels.md` (for feature mapping)
+- `docs/reference/conditional-stage-rules.md` (for sub-stage logic)
+- `docs/guides/use-case-implementation-guide.md`
+- `docs/checklists/service-naming-checklist.md` (MANDATORY)
 - `docs/atomic/architecture/naming-conventions.md` Section 2.3 (MANDATORY)
 - `docs/atomic/services/**/*` (based on required services AND level)
 - `docs/atomic/integrations/**/*` (based on integrations)
-- `docs/reference/AGENT_TOOLBOX.md`
-- `docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md` (if needed)
+- `docs/reference/agent-toolbox.md`
+- `docs/reference/architecture-decision-log-template.md` (if needed)
 
 **AI Generates**:
 - Implementation Plan (populated template) with:
@@ -360,7 +360,7 @@ Please provide these details so I can ensure architecture alignment.
 
 **Tasks**:
 1. Project initialization
-   - Create repository structure per `PROJECT_STRUCTURE.md`
+   - Create repository structure per `project-structure.md`
    - Copy Docker Compose from templates
    - Configure .env
    - **DoD**: `docker-compose up` succeeds, all containers healthy
@@ -391,18 +391,18 @@ Please provide these details so I can ensure architecture alignment.
 
 For EACH phase in the implementation plan:
 
-1. **Check maturity level** and read `CONDITIONAL_STAGE_RULES.md` to determine which sub-stages to execute
+1. **Check maturity level** and read `conditional-stage-rules.md` to determine which sub-stages to execute
 2. **Read relevant atomic documents** for current phase AND maturity level
 3. **Generate code** following patterns from atomic docs
 4. **Follow DDD/Hexagonal Architecture**:
    - Domain layer (entities, value objects)
    - Application layer (use cases, DTOs)
    - Infrastructure layer (repositories, HTTP clients, message brokers)
-5. **Follow DEFAULT TO 3-PART naming philosophy** — Use `{context}_{domain}_{type}`. Add `{function}` ONLY when domain is ambiguous (burden of proof). Check `SERVICE_NAMING_CHECKLIST.md` or `naming-conventions.md` Section 2.3 for 10 reasons
+5. **Follow DEFAULT TO 3-PART naming philosophy** — Use `{context}_{domain}_{type}`. Add `{function}` ONLY when domain is ambiguous (burden of proof). Check `service-naming-checklist.md` or `naming-conventions.md` Section 2.3 for 10 reasons
 6. **Use AGENT_TOOLBOX commands** to validate
 7. **Commit after each logical unit** with clear messages
 
-**IMPORTANT**: Stage 4 is now **CONDITIONAL**. AI must execute only the sub-stages required for the selected maturity level. See `AI_NAVIGATION_MATRIX.md` for complete sub-stage breakdown.
+**IMPORTANT**: Stage 4 is now **CONDITIONAL**. AI must execute only the sub-stages required for the selected maturity level. See `ai-navigation-matrix.md` for complete sub-stage breakdown.
 
 #### Phase-by-Phase Breakdown
 
@@ -575,8 +575,8 @@ uv run pytest --cov=services --cov-report=html --cov-report=xml
 **Entry Criteria**: Code generation complete.
 
 **AI Actions**:
-1. Read `AGENT_VERIFICATION_CHECKLIST.md`
-2. Read `MATURITY_LEVELS.md` to understand **level-specific criteria** (coverage thresholds, security requirements, etc.)
+1. Read `agent-verification-checklist.md`
+2. Read `maturity-levels.md` to understand **level-specific criteria** (coverage thresholds, security requirements, etc.)
 3. Execute ALL checks in order:
    - **Environment checks** (Python version, UV installed)
    - **Static analysis** (Ruff, Mypy, Bandit)
@@ -592,9 +592,9 @@ uv run pytest --cov=services --cov-report=html --cov-report=xml
    - `coverage.xml` (CI/CD integration)
 
 **Documents Read**:
-- `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`
-- `docs/reference/MATURITY_LEVELS.md` (for level-specific criteria)
-- `docs/reference/AGENT_TOOLBOX.md` (quality commands)
+- `docs/quality/agent-verification-checklist.md`
+- `docs/reference/maturity-levels.md` (for level-specific criteria)
+- `docs/reference/agent-toolbox.md` (quality commands)
 - `docs/reference/troubleshooting.md` (if issues found)
 
 **AI Generates**:
@@ -628,7 +628,7 @@ uv run pytest --cov=services --cov-report=html --cov-report=xml
 ## Artifact Validation
 | Check | Result | Notes |
 |-------|--------|-------|
-| Project structure | ✅ PASS | Follows PROJECT_STRUCTURE.md |
+| Project structure | ✅ PASS | Follows project-structure.md |
 | Naming conventions | ✅ PASS | All snake_case for code |
 | Documentation | ✅ PASS | README, API docs generated |
 | Maturity features | ✅ VERIFIED | Nginx ✅, SSL ✅, Metrics ✅ (Level 3) |
@@ -643,14 +643,14 @@ uv run pytest --cov=services --cov-report=html --cov-report=xml
 **Entry Criteria**: Verification complete, all checks passed.
 
 **AI Actions**:
-1. Read `QA_REPORT_TEMPLATE.md`
+1. Read `qa-report-template.md`
 2. Compile final QA report:
    - Executive summary (status, accomplishments, issues)
    - Verification checklist summary
    - Test & coverage details
    - Defects & risks (if any)
    - Deliverables summary
-3. Update `DELIVERABLES_CATALOG.md` with artifact locations
+3. Update `deliverables-catalog.md` with artifact locations
 4. Create handoff package:
    - Source code (GitHub repo)
    - Requirements Intake document
@@ -660,8 +660,8 @@ uv run pytest --cov=services --cov-report=html --cov-report=xml
    - Deployment guide
 
 **Documents Read**:
-- `docs/quality/QA_REPORT_TEMPLATE.md`
-- `docs/reference/DELIVERABLES_CATALOG.md`
+- `docs/quality/qa-report-template.md`
+- `docs/reference/deliverables-catalog.md`
 
 **AI Generates**:
 - QA Report (markdown)
@@ -716,18 +716,18 @@ This matrix shows **exactly what AI should read at each stage** and what it shou
 
 | Stage | Phase | Documents to Read | AI Generates | Templates/Tools | Success Criteria |
 |-------|-------|-------------------|--------------|-----------------|------------------|
-| **0** | Initialization | `CLAUDE.md`<br>`AGENT_CONTEXT_SUMMARY.md`<br>`AI_CODE_GENERATION_MASTER_WORKFLOW.md` | - | - | Context loaded |
-| **1** | Prompt Validation | `PROMPT_VALIDATION_GUIDE.md`<br>`PROMPT_TEMPLATES.md` (if needed) | Validation note OR clarification request | `PROMPT_TEMPLATES.md` | All mandatory fields present |
-| **2** | Requirements Intake | `REQUIREMENTS_INTAKE_TEMPLATE.md`<br>`architecture-guide.md`<br>`tech_stack.md`<br>`atomic/architecture/*` | Requirements Intake document | `PROMPT_TEMPLATES.md` | Requirements approved |
-| **3** | Planning | `IMPLEMENTATION_PLAN_TEMPLATE.md`<br>`USE_CASE_IMPLEMENTATION_GUIDE.md`<br>`atomic/services/**/*` (relevant)<br>`atomic/integrations/**/*` (relevant) | Implementation Plan<br>Optional ADR | `ARCHITECTURE_DECISION_LOG_TEMPLATE.md`<br>`AGENT_TOOLBOX.md` | Plan approved |
-| **4.1** | Infrastructure | `atomic/infrastructure/containerization/*`<br>`atomic/infrastructure/configuration/*` | Docker Compose files<br>Dockerfiles<br>Makefiles | `AGENT_TOOLBOX.md` | `docker-compose up` succeeds |
-| **4.2** | Data Layer | `atomic/services/data-services/*`<br>`atomic/databases/postgresql/*`<br>`atomic/databases/postgresql-advanced/*` | SQLAlchemy models<br>Repositories<br>HTTP APIs<br>Migrations | `AGENT_TOOLBOX.md` | Data services healthy |
-| **4.3** | Business Logic | `atomic/services/fastapi/*`<br>`atomic/architecture/ddd-hexagonal-principles.md`<br>`atomic/integrations/http-communication/*` | Domain entities<br>Use cases<br>API routers<br>HTTP clients | `AGENT_TOOLBOX.md` | API endpoints working |
-| **4.4** | Workers | `atomic/services/asyncio-workers/*`<br>`atomic/integrations/rabbitmq/*` | Worker implementations<br>Event consumers | `AGENT_TOOLBOX.md` | Workers processing events |
-| **4.5** | Telegram Bot | `atomic/services/aiogram/*`<br>`atomic/integrations/rabbitmq/aiogram-integration.md` | Bot handlers<br>Commands<br>Notifications | `AGENT_TOOLBOX.md` | Bot responding to commands |
-| **4.6** | Testing | `atomic/testing/unit-testing/*`<br>`atomic/testing/integration-testing/*`<br>`atomic/testing/service-testing/*` | Unit tests<br>Integration tests<br>`pytest.ini`<br>`conftest.py` | `AGENT_TOOLBOX.md` | Tests pass, coverage ≥80% |
-| **5** | Verification | `AGENT_VERIFICATION_CHECKLIST.md`<br>`troubleshooting.md` (if needed) | Completed checklist<br>Coverage reports<br>Evidence logs | `AGENT_TOOLBOX.md` | All checks pass |
-| **6** | Handoff | `QA_REPORT_TEMPLATE.md`<br>`DELIVERABLES_CATALOG.md` | QA Report<br>Deliverables summary<br>Deployment guide | - | Stakeholder sign-off |
+| **0** | Initialization | `CLAUDE.md`<br>`agent-context-summary.md`<br>`ai-code-generation-master-workflow.md` | - | - | Context loaded |
+| **1** | Prompt Validation | `prompt-validation-guide.md`<br>`prompt-templates.md` (if needed) | Validation note OR clarification request | `prompt-templates.md` | All mandatory fields present |
+| **2** | Requirements Intake | `requirements-intake-template.md`<br>`architecture-guide.md`<br>`tech_stack.md`<br>`atomic/architecture/*` | Requirements Intake document | `prompt-templates.md` | Requirements approved |
+| **3** | Planning | `implementation-plan-template.md`<br>`use-case-implementation-guide.md`<br>`atomic/services/**/*` (relevant)<br>`atomic/integrations/**/*` (relevant) | Implementation Plan<br>Optional ADR | `architecture-decision-log-template.md`<br>`agent-toolbox.md` | Plan approved |
+| **4.1** | Infrastructure | `atomic/infrastructure/containerization/*`<br>`atomic/infrastructure/configuration/*` | Docker Compose files<br>Dockerfiles<br>Makefiles | `agent-toolbox.md` | `docker-compose up` succeeds |
+| **4.2** | Data Layer | `atomic/services/data-services/*`<br>`atomic/databases/postgresql/*`<br>`atomic/databases/postgresql-advanced/*` | SQLAlchemy models<br>Repositories<br>HTTP APIs<br>Migrations | `agent-toolbox.md` | Data services healthy |
+| **4.3** | Business Logic | `atomic/services/fastapi/*`<br>`atomic/architecture/ddd-hexagonal-principles.md`<br>`atomic/integrations/http-communication/*` | Domain entities<br>Use cases<br>API routers<br>HTTP clients | `agent-toolbox.md` | API endpoints working |
+| **4.4** | Workers | `atomic/services/asyncio-workers/*`<br>`atomic/integrations/rabbitmq/*` | Worker implementations<br>Event consumers | `agent-toolbox.md` | Workers processing events |
+| **4.5** | Telegram Bot | `atomic/services/aiogram/*`<br>`atomic/integrations/rabbitmq/aiogram-integration.md` | Bot handlers<br>Commands<br>Notifications | `agent-toolbox.md` | Bot responding to commands |
+| **4.6** | Testing | `atomic/testing/unit-testing/*`<br>`atomic/testing/integration-testing/*`<br>`atomic/testing/service-testing/*` | Unit tests<br>Integration tests<br>`pytest.ini`<br>`conftest.py` | `agent-toolbox.md` | Tests pass, coverage ≥80% |
+| **5** | Verification | `agent-verification-checklist.md`<br>`troubleshooting.md` (if needed) | Completed checklist<br>Coverage reports<br>Evidence logs | `agent-toolbox.md` | All checks pass |
+| **6** | Handoff | `qa-report-template.md`<br>`deliverables-catalog.md` | QA Report<br>Deliverables summary<br>Deployment guide | - | Stakeholder sign-off |
 
 **Usage**: At each stage, AI looks up this row and reads ONLY the listed documents.
 
@@ -739,7 +739,7 @@ This section shows a **condensed example** of the complete workflow for a P2P le
 
 ### Stage 0: Initialization
 
-**AI reads**: CLAUDE.md → AGENT_CONTEXT_SUMMARY.md → AI_CODE_GENERATION_MASTER_WORKFLOW.md
+**AI reads**: CLAUDE.md → agent-context-summary.md → ai-code-generation-master-workflow.md
 
 **AI learns**:
 - Framework uses Improved Hybrid Approach
@@ -843,7 +843,7 @@ Please provide these details to proceed.
 ## Phase 1: Infrastructure (Week 1)
 **Tasks**:
 1. Project initialization
-   - Generate structure per PROJECT_STRUCTURE.md
+   - Generate structure per project-structure.md
    - Configure docker-compose.yml (5 services)
    - Setup .env with Stripe/Twilio/Onfido keys
 
@@ -1021,7 +1021,7 @@ uv run mypy services/template_business_api/
 
 ### Stage 5: Quality Verification
 
-**AI reads**: `AGENT_VERIFICATION_CHECKLIST.md`
+**AI reads**: `agent-verification-checklist.md`
 
 **AI executes**:
 ```bash
@@ -1061,7 +1061,7 @@ uv run pytest --cov=services --cov-report=html
 
 ### Stage 6: QA Report & Handoff
 
-**AI reads**: `QA_REPORT_TEMPLATE.md`
+**AI reads**: `qa-report-template.md`
 
 **AI generates**:
 ```markdown
@@ -1115,8 +1115,8 @@ curl https://api.p2p-lending.com/health
 **Detection**: Stage 1 (Prompt Validation)
 
 **Recovery**:
-1. Identify missing fields using `PROMPT_VALIDATION_GUIDE.md` checklist
-2. Use clarification templates from `PROMPT_TEMPLATES.md`
+1. Identify missing fields using `prompt-validation-guide.md` checklist
+2. Use clarification templates from `prompt-templates.md`
 3. Wait for user response
 4. Re-validate prompt
 5. Proceed to Stage 2 only when complete
@@ -1257,7 +1257,7 @@ When framework documentation changes:
 ### Cross-References
 
 Keep aligned with:
-- `AGENT_CONTEXT_SUMMARY.md` (critical rules)
+- `agent-context-summary.md` (critical rules)
 - `INDEX.md` (full documentation map)
 - `LINKS_REFERENCE.md` (canonical link table)
 - All atomic documentation (patterns source)
@@ -1274,15 +1274,15 @@ Keep aligned with:
 
 | Question | Answer |
 |----------|--------|
-| Where do I start? | Read CLAUDE.md → AGENT_CONTEXT_SUMMARY.md → this document |
+| Where do I start? | Read CLAUDE.md → agent-context-summary.md → this document |
 | What's the high-level process? | 7 stages: Init → Validation → Intake → Planning → Generation → Verification → Handoff |
 | What do I read at each stage? | See [Part 3: Navigation Matrix](#part-3-navigation-matrix) |
-| How do I validate prompts? | `PROMPT_VALIDATION_GUIDE.md` + `PROMPT_TEMPLATES.md` |
-| How do I structure requirements? | Fill `REQUIREMENTS_INTAKE_TEMPLATE.md` |
-| How do I plan implementation? | Fill `IMPLEMENTATION_PLAN_TEMPLATE.md` |
+| How do I validate prompts? | `prompt-validation-guide.md` + `prompt-templates.md` |
+| How do I structure requirements? | Fill `requirements-intake-template.md` |
+| How do I plan implementation? | Fill `implementation-plan-template.md` |
 | How do I generate code? | Read atomic docs per Navigation Matrix, follow DDD/Hexagonal patterns |
-| How do I verify quality? | Execute `AGENT_VERIFICATION_CHECKLIST.md` |
-| How do I hand off? | Complete `QA_REPORT_TEMPLATE.md` |
+| How do I verify quality? | Execute `agent-verification-checklist.md` |
+| How do I hand off? | Complete `qa-report-template.md` |
 | What if I'm stuck? | Consult [Part 5: Common Issues](#part-5-common-issues--recovery) |
 
 ---

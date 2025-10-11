@@ -172,4 +172,4 @@ When adding new atomic documentation:
 For questions about atomic documentation versions:
 - Check this CHANGELOG for recent changes
 - Review `INDEX.md` for current structure
-- See `AGENT_CONTEXT_SUMMARY.md` for quick orientation
+- See `agent-context-summary.md` for quick orientation

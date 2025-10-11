@@ -12,7 +12,7 @@
 
 ## Summary
 
-- Problem & objective recap (link to `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md` artefact):
+- Problem & objective recap (link to `docs/guides/requirements-intake-template.md` artefact):
 - High-level solution concept:
 - **Maturity Level**: [1-PoC / 2-Development / 3-Pre-Production / 4-Production]
 - **Optional Modules**: [List selected modules: Workers, Bot, MongoDB, etc.]
@@ -29,7 +29,7 @@
 | Example | Nginx API Gateway | Level ≥ 3 requirement |
 | Example | OAuth/JWT | Level 4 requirement |
 
-> **Reference**: See `docs/reference/MATURITY_LEVELS.md` for complete feature matrix.
+> **Reference**: See `docs/reference/maturity-levels.md` for complete feature matrix.
 
 ### ❌ Skipped Features (Available at Higher Levels)
 
@@ -62,14 +62,14 @@
 
 ## Verification Strategy
 
-- Linting & formatting commands (`docs/guides/DEVELOPMENT_COMMANDS.md`):
+- Linting & formatting commands (`docs/guides/development-commands.md`):
 - Type checking & security tools:
 - Test suites and coverage targets (`docs/atomic/testing/`):
 - Observability validation (if applicable):
 
 ## Deliverables & Acceptance
 
-- Expected artefacts (`docs/reference/DELIVERABLES_CATALOG.md`):
+- Expected artefacts (`docs/reference/deliverables-catalog.md`):
 - Acceptance criteria alignment:
 - Additional documentation requirements (ADR, diagrams, etc.):
 

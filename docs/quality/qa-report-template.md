@@ -28,7 +28,7 @@
 | Artefact validation |  |  |  |
 | Release gate |  |  |  |
 
-> Reference: Completed `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`.
+> Reference: Completed `docs/quality/agent-verification-checklist.md`.
 
 ## Test & Coverage Details
 
@@ -44,8 +44,8 @@
 
 ## Deliverables Summary
 
-- Updated deliverables list reference (`docs/reference/DELIVERABLES_CATALOG.md`):
-- ADRs created or updated (`docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md`):
+- Updated deliverables list reference (`docs/reference/deliverables-catalog.md`):
+- ADRs created or updated (`docs/reference/architecture-decision-log-template.md`):
 - Documentation updates (requirements, plans, guides):
 
 ## Sign-Off

@@ -1,6 +1,6 @@
 # Requirements Intake Template
 
-> **Instructions**: Copy this template when documenting user requirements. Provide explicit answers for each section. Reference `docs/guides/PROMPT_VALIDATION_GUIDE.md` for mandatory content.
+> **Instructions**: Copy this template when documenting user requirements. Provide explicit answers for each section. Reference `docs/guides/prompt-validation-guide.md` for mandatory content.
 
 ## Request Metadata
 
@@ -14,7 +14,7 @@
 - **Maturity Level**: [1-PoC / 2-Development / 3-Pre-Production / 4-Production]
 - **Optional Modules**: [None / Workers / Bot / MongoDB / RabbitMQ / Redis / File Storage / Real-Time]
 - **Estimated Generation Time**: [~5 min / ~10 min / ~15 min / ~30 min based on level]
-- **Reference**: See `docs/reference/MATURITY_LEVELS.md` for level details
+- **Reference**: See `docs/reference/maturity-levels.md` for level details
 
 ## Business Context & Objectives
 
@@ -48,7 +48,7 @@
 - Primary data sources:
 - Expected data volume / growth:
 - Data retention or compliance rules:
-- Mapping to data services (`docs/reference/PROJECT_STRUCTURE.md`, `docs/atomic/infrastructure/`):
+- Mapping to data services (`docs/reference/project-structure.md`, `docs/atomic/infrastructure/`):
 
 ## Scope Boundaries
 
@@ -59,12 +59,12 @@
 
 - Code / services:
 - Configuration / infrastructure artefacts:
-- Documentation (ADR, QA report, others per `docs/reference/DELIVERABLES_CATALOG.md`):
+- Documentation (ADR, QA report, others per `docs/reference/deliverables-catalog.md`):
 
 ## Acceptance Criteria
 
 - Functional validation steps:
-- Quality gates (linting, typing, security, tests, coverage per `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`):
+- Quality gates (linting, typing, security, tests, coverage per `docs/quality/agent-verification-checklist.md`):
 - Deployment / release expectations:
 
 ## Risks & Open Questions

@@ -388,7 +388,7 @@ ModuleNotFoundError: No module named 'services.template_business_api'
 ```bash
 # Search for remaining template_ prefixes
 grep -r "template_" --include="*.yml" --include="*.py" --include="*.conf" \
-  --exclude-dir=".git" --exclude="TEMPLATE_NAMING_GUIDE.md"
+  --exclude-dir=".git" --exclude="template-naming-guide.md"
 ```
 
 ### Validate Docker Compose syntax

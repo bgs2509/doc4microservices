@@ -12,7 +12,7 @@
 
 ## Context
 
-- Business drivers and functional requirements (link to `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`).
+- Business drivers and functional requirements (link to `docs/guides/requirements-intake-template.md`).
 - Non-functional constraints impacting the decision (refer to `docs/guides/architecture-guide.md` and `docs/atomic/architecture/`).
 - Existing system assumptions or limitations.
 
@@ -20,7 +20,7 @@
 
 - Detailed description of the selected approach.
 - How the decision aligns with the Improved Hybrid Approach and mandatory rules.
-- References to any implementation plan stages (`docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`).
+- References to any implementation plan stages (`docs/guides/implementation-plan-template.md`).
 
 ## Alternatives Considered
 
@@ -32,7 +32,7 @@
 
 - Positive impacts (e.g., scalability, maintainability).
 - Negative trade-offs or mitigations required.
-- Required updates to documentation or deliverables (e.g., `docs/reference/DELIVERABLES_CATALOG.md`).
+- Required updates to documentation or deliverables (e.g., `docs/reference/deliverables-catalog.md`).
 
 ## Follow-Up Actions
 
@@ -46,10 +46,10 @@
 - `docs/atomic/architecture/improved-hybrid-overview.md`
 - `docs/atomic/architecture/data-access-architecture.md`
 - `docs/atomic/architecture/naming-conventions.md`
-- `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`
+- `docs/guides/implementation-plan-template.md`
 
 ## Maintenance
 
 - Store ADRs in a dedicated directory (e.g., `artifacts/adr/`).
 - Update status when decisions evolve or are superseded.
-- Keep the index aligned with `docs/INDEX.md` and `docs/reference/AGENT_CONTEXT_SUMMARY.md`.
+- Keep the index aligned with `docs/INDEX.md` and `docs/reference/agent-context-summary.md`.

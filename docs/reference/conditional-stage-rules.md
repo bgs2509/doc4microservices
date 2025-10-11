@@ -39,7 +39,7 @@ The ONLY difference between levels is Stage 4 sub-phases.
 ### ADR Document Location
 
 - **Path**: `docs/adr/XXX-brief-title.md` (where XXX = sequential number starting 001)
-- **Template**: Use `docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md`
+- **Template**: Use `docs/reference/architecture-decision-log-template.md`
 - **Index**: Update `docs/adr/README.md` with ADR list
 
 ### When NOT to Create ADR (Any Level)
@@ -402,7 +402,7 @@ AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
 #### 4.8: Documentation (NEW)
 
 **Documents to Read:**
-- `docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md`
+- `docs/reference/architecture-decision-log-template.md`
 
 **Generate:**
 - ADRs (for major decisions made during generation)
@@ -886,8 +886,8 @@ The original simple ordering (4.1 → 4.2 → 4.3 → 4.4 → 4.5 → 4.X → 4.
 1. User selects Maturity Level → Store in Requirements Intake
 
 2. At Stage 3 (Planning):
-   - Read MATURITY_LEVELS.md
-   - Read this document (CONDITIONAL_STAGE_RULES.md)
+   - Read maturity-levels.md
+   - Read this document (conditional-stage-rules.md)
    - Generate Implementation Plan with ONLY relevant phases
 
 3. At Stage 4 (Code Generation):
@@ -1052,6 +1052,6 @@ The original simple ordering (4.1 → 4.2 → 4.3 → 4.4 → 4.5 → 4.X → 4.
 ## Maintenance
 
 - Update this document when new sub-stages are added to Stage 4.
-- Keep synchronized with `MATURITY_LEVELS.md` feature matrix.
+- Keep synchronized with `maturity-levels.md` feature matrix.
 - Ensure atomic documentation paths are accurate.
 - Follow `STYLE_GUIDE.md` for formatting.

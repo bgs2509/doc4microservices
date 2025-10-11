@@ -100,7 +100,7 @@ my_awesome_app/
 ## Documentation Expectations
 
 - Each service ships a README with run/test/build instructions and links back to the relevant atomic files.
-- Architecture decisions are captured via ADRs (see `docs/reference/ARCHITECTURE_DECISION_LOG_TEMPLATE.md`).
+- Architecture decisions are captured via ADRs (see `docs/reference/architecture-decision-log-template.md`).
 - When the framework is used as a submodule, treat `.framework/docs/atomic/` as read-only source material.
 
 ## Environment and Configuration
@@ -125,5 +125,5 @@ my_awesome_app/
 ## Related Documents
 
 - `docs/atomic/architecture/naming-conventions.md`
-- `docs/reference/PROJECT_STRUCTURE.md`
+- `docs/reference/project-structure.md`
 - Legacy reference: `docs/legacy/architecture/ms_best_practices_rules.mdc`

@@ -459,5 +459,5 @@ Projects naturally evolve from one level to the next. The framework supports inc
 
 - Update this matrix when new features are added to atomic documentation.
 - Keep generation time estimates accurate based on testing.
-- Cross-reference with `CONDITIONAL_STAGE_RULES.md` for implementation details.
+- Cross-reference with `conditional-stage-rules.md` for implementation details.
 - Follow `STYLE_GUIDE.md` for formatting consistency.

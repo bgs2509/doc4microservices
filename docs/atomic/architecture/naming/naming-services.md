@@ -213,5 +213,5 @@ Use explicit function words **only** when domain is ambiguous. Most services use
 
 - `naming-4part-reasons.md` — 10 serious reasons for 4-part naming
 - `../context-registry.md` — Context name registry (prevent conflicts)
-- `../../../guides/SEMANTIC_SHORTENING_GUIDE.md` — Complete shortening guide
-- `../../../checklists/SERVICE_NAMING_CHECKLIST.md` — Quick naming decision checklist
+- `../../../guides/semantic-shortening-guide.md` — Complete shortening guide
+- `../../../checklists/service-naming-checklist.md` — Quick naming decision checklist

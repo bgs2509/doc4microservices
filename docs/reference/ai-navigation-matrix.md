@@ -14,14 +14,14 @@
 
 ## Complete Navigation Matrix
 
-> **NEW**: Each sub-stage now includes "Required At Level" to support adaptive generation based on maturity level selection. See `docs/reference/MATURITY_LEVELS.md` for level definitions.
+> **NEW**: Each sub-stage now includes "Required At Level" to support adaptive generation based on maturity level selection. See `docs/reference/maturity-levels.md` for level definitions.
 
 | Stage | Phase | Required At Level | Documents to Read | AI Generates | Success Criteria |
 |-------|-------|-------------------|-------------------|--------------|------------------|
-| **0** | **Initialization** | **ALL** | • `CLAUDE.md`<br>• `docs/reference/AGENT_CONTEXT_SUMMARY.md`<br>• `docs/guides/AI_CODE_GENERATION_MASTER_WORKFLOW.md`<br>• `docs/reference/MATURITY_LEVELS.md` | Nothing (loading phase) | AI has complete framework context |
-| **1** | **Prompt Validation** | **ALL** | • `docs/guides/PROMPT_VALIDATION_GUIDE.md`<br>• `docs/reference/PROMPT_TEMPLATES.md`<br>• `docs/reference/MATURITY_LEVELS.md` (for level selection) | • Validation confirmation<br>• **Selected maturity level (1-4)**<br>• **Selected optional modules** | All mandatory fields present:<br>✅ Business context<br>✅ **Target maturity level**<br>✅ Functional requirements<br>✅ Dependencies |
-| **2** | **Requirements Clarification & Intake** | **ALL** | • `docs/guides/REQUIREMENTS_INTAKE_TEMPLATE.md`<br>• `docs/guides/architecture-guide.md`<br>• `docs/reference/tech_stack.md`<br>• `docs/atomic/architecture/improved-hybrid-overview.md` | • Completed Requirements Intake<br>• **Maturity level confirmed**<br>• Architecture compatibility analysis | • Requirements approved<br>• Maturity level documented<br>• Architecture aligned |
-| **3** | **Architecture Mapping & Planning** | **ALL** | • `docs/guides/IMPLEMENTATION_PLAN_TEMPLATE.md`<br>• `docs/reference/CONDITIONAL_STAGE_RULES.md`<br>• `docs/checklists/SERVICE_NAMING_CHECKLIST.md`<br>• `docs/atomic/architecture/naming-conventions.md` (Section 2.3)<br>• `docs/atomic/services/**/*` (based on level + modules)<br>• `docs/atomic/integrations/**/*` (if needed) | • Implementation Plan with:<br>&nbsp;&nbsp;• **Included features list**<br>&nbsp;&nbsp;• **Skipped features list**<br>&nbsp;&nbsp;• Conditional sub-stages<br>• Service names (DEFAULT TO 3-PART) | • Plan approved<br>• Features clearly marked<br>• Sub-stages identified<br>• Naming follows conventions |
+| **0** | **Initialization** | **ALL** | • `CLAUDE.md`<br>• `docs/reference/agent-context-summary.md`<br>• `docs/guides/ai-code-generation-master-workflow.md`<br>• `docs/reference/maturity-levels.md` | Nothing (loading phase) | AI has complete framework context |
+| **1** | **Prompt Validation** | **ALL** | • `docs/guides/prompt-validation-guide.md`<br>• `docs/reference/prompt-templates.md`<br>• `docs/reference/maturity-levels.md` (for level selection) | • Validation confirmation<br>• **Selected maturity level (1-4)**<br>• **Selected optional modules** | All mandatory fields present:<br>✅ Business context<br>✅ **Target maturity level**<br>✅ Functional requirements<br>✅ Dependencies |
+| **2** | **Requirements Clarification & Intake** | **ALL** | • `docs/guides/requirements-intake-template.md`<br>• `docs/guides/architecture-guide.md`<br>• `docs/reference/tech_stack.md`<br>• `docs/atomic/architecture/improved-hybrid-overview.md` | • Completed Requirements Intake<br>• **Maturity level confirmed**<br>• Architecture compatibility analysis | • Requirements approved<br>• Maturity level documented<br>• Architecture aligned |
+| **3** | **Architecture Mapping & Planning** | **ALL** | • `docs/guides/implementation-plan-template.md`<br>• `docs/reference/conditional-stage-rules.md`<br>• `docs/checklists/service-naming-checklist.md`<br>• `docs/atomic/architecture/naming-conventions.md` (Section 2.3)<br>• `docs/atomic/services/**/*` (based on level + modules)<br>• `docs/atomic/integrations/**/*` (if needed) | • Implementation Plan with:<br>&nbsp;&nbsp;• **Included features list**<br>&nbsp;&nbsp;• **Skipped features list**<br>&nbsp;&nbsp;• Conditional sub-stages<br>• Service names (DEFAULT TO 3-PART) | • Plan approved<br>• Features clearly marked<br>• Sub-stages identified<br>• Naming follows conventions |
 | **4.1** | **Infrastructure (Basic)** | **ALL** | • `docs/atomic/infrastructure/containerization/docker-compose-setup.md`<br>• `docs/atomic/infrastructure/containerization/dockerfile-patterns.md` | • `docker-compose.yml`<br>• `.env.example`<br>• `Makefile` | • Docker services healthy |
 | **4.1b** | **+ Dev Overrides** | **≥ Level 2** | • `docs/atomic/infrastructure/configuration/settings-patterns.md` | • `docker-compose.dev.yml`<br>• Docker healthchecks | • Dev environment working |
 | **4.1c** | **+ Nginx + SSL + Metrics** | **≥ Level 3** | • `docs/atomic/infrastructure/api-gateway/nginx-setup.md`<br>• `docs/atomic/infrastructure/api-gateway/ssl-configuration.md`<br>• `docs/atomic/observability/metrics/prometheus-setup.md` | • Nginx config<br>• SSL setup<br>• Prometheus + Grafana<br>• `docker-compose.prod.yml` | • Nginx reverse proxy working<br>• SSL functional<br>• Metrics exposed |
@@ -40,8 +40,8 @@
 | **4.6b** | **+ Integration Tests** | **≥ Level 2** | • `docs/atomic/testing/integration-testing/testcontainers-setup.md`<br>• `docs/atomic/testing/unit-testing/mocking-strategies.md` | • Integration tests (with testcontainers)<br>• Enhanced mocking | • Coverage ≥ 75% |
 | **4.6c** | **+ E2E Tests** | **≥ Level 3** | • `docs/atomic/testing/end-to-end/api-testing.md` | • End-to-end API tests | • Coverage ≥ 80% |
 | **4.6d** | **+ Security Tests** | **Level 4 only** | • `docs/atomic/testing/security/bandit-configuration.md`<br>• `docs/atomic/testing/security/penetration-testing.md` | • Security test suite<br>• Bandit config | • Coverage ≥ 85%<br>• Security tests pass |
-| **5** | **Quality Verification** | **ALL** (criteria vary by level) | • `docs/quality/AGENT_VERIFICATION_CHECKLIST.md`<br>• `docs/reference/AGENT_TOOLBOX.md`<br>• `docs/reference/MATURITY_LEVELS.md` (for coverage targets)<br>• `docs/reference/troubleshooting.md` (if issues) | • Completed verification checklist<br>• Coverage reports (HTML + XML)<br>• Evidence logs/screenshots | **ALL checks must pass**:<br>✅ Linting (Ruff): 0 errors<br>✅ Formatting: No drift<br>✅ Type checking (Mypy): 0 errors<br>✅ Security (Bandit): 0 high severity<br>✅ Tests: All pass<br>✅ Coverage: **Level-dependent** (60%/75%/80%/85%)<br>✅ Project structure: Compliant<br>✅ Naming: Follows conventions |
-| **6** | **QA Report & Handoff** | **ALL** | • `docs/quality/QA_REPORT_TEMPLATE.md`<br>• `docs/reference/DELIVERABLES_CATALOG.md` | • Final QA Report<br>• Deliverables summary<br>• Deployment guide<br>• Updated DELIVERABLES_CATALOG | • QA report approved by stakeholder<br>• All deliverables documented<br>• Deployment instructions verified<br>• Sign-off obtained |
+| **5** | **Quality Verification** | **ALL** (criteria vary by level) | • `docs/quality/agent-verification-checklist.md`<br>• `docs/reference/agent-toolbox.md`<br>• `docs/reference/maturity-levels.md` (for coverage targets)<br>• `docs/reference/troubleshooting.md` (if issues) | • Completed verification checklist<br>• Coverage reports (HTML + XML)<br>• Evidence logs/screenshots | **ALL checks must pass**:<br>✅ Linting (Ruff): 0 errors<br>✅ Formatting: No drift<br>✅ Type checking (Mypy): 0 errors<br>✅ Security (Bandit): 0 high severity<br>✅ Tests: All pass<br>✅ Coverage: **Level-dependent** (60%/75%/80%/85%)<br>✅ Project structure: Compliant<br>✅ Naming: Follows conventions |
+| **6** | **QA Report & Handoff** | **ALL** | • `docs/quality/qa-report-template.md`<br>• `docs/reference/deliverables-catalog.md` | • Final QA Report<br>• Deliverables summary<br>• Deployment guide<br>• Updated DELIVERABLES_CATALOG | • QA report approved by stakeholder<br>• All deliverables documented<br>• Deployment instructions verified<br>• Sign-off obtained |
 
 ---
 
@@ -151,22 +151,22 @@ FOR each sub-stage in [4.1, 4.1b, 4.1c, 4.1d, 4.2, 4.2b, 4.3, 4.3b, 4.3c, 4.3d, 
 
 | Task | Read These Documents | Generate This | Use This Tool |
 |------|---------------------|---------------|---------------|
-| **Validate a user prompt** | `PROMPT_VALIDATION_GUIDE.md` | Validation note or clarification | `PROMPT_TEMPLATES.md` |
+| **Validate a user prompt** | `prompt-validation-guide.md` | Validation note or clarification | `prompt-templates.md` |
 | **Understand architecture** | `architecture-guide.md`<br>`atomic/architecture/improved-hybrid-overview.md` | Nothing (learning) | None |
-| **Structure requirements** | `REQUIREMENTS_INTAKE_TEMPLATE.md` | Completed intake doc | `PROMPT_TEMPLATES.md` |
-| **Plan implementation** | `IMPLEMENTATION_PLAN_TEMPLATE.md`<br>`USE_CASE_IMPLEMENTATION_GUIDE.md` | Implementation plan | `AGENT_TOOLBOX.md` |
-| **Setup Docker** | `atomic/infrastructure/containerization/docker-compose-setup.md` | docker-compose.yml | `AGENT_TOOLBOX.md` |
-| **Create PostgreSQL service** | `atomic/services/data-services/postgres-service-setup.md`<br>`atomic/databases/postgresql/sqlalchemy-integration.md` | Models, repositories, API | `AGENT_TOOLBOX.md` |
-| **Create FastAPI endpoint** | `atomic/services/fastapi/routing-patterns.md`<br>`atomic/services/fastapi/dependency-injection.md` | Router + use case | `AGENT_TOOLBOX.md` |
+| **Structure requirements** | `requirements-intake-template.md` | Completed intake doc | `prompt-templates.md` |
+| **Plan implementation** | `implementation-plan-template.md`<br>`use-case-implementation-guide.md` | Implementation plan | `agent-toolbox.md` |
+| **Setup Docker** | `atomic/infrastructure/containerization/docker-compose-setup.md` | docker-compose.yml | `agent-toolbox.md` |
+| **Create PostgreSQL service** | `atomic/services/data-services/postgres-service-setup.md`<br>`atomic/databases/postgresql/sqlalchemy-integration.md` | Models, repositories, API | `agent-toolbox.md` |
+| **Create FastAPI endpoint** | `atomic/services/fastapi/routing-patterns.md`<br>`atomic/services/fastapi/dependency-injection.md` | Router + use case | `agent-toolbox.md` |
 | **Call data service from business service** | `atomic/integrations/http-communication/business-to-data-calls.md` | HTTP client code | None |
 | **Publish RabbitMQ event** | `atomic/integrations/rabbitmq/message-publishing.md` | Event publisher code | None |
 | **Consume RabbitMQ event** | `atomic/integrations/rabbitmq/message-consuming.md` | Consumer code | None |
-| **Create background worker** | `atomic/services/asyncio-workers/main-function-patterns.md` | Worker main.py | `AGENT_TOOLBOX.md` |
-| **Create Telegram bot** | `atomic/services/aiogram/bot-initialization.md`<br>`atomic/services/aiogram/handler-patterns.md` | Bot handlers | `AGENT_TOOLBOX.md` |
-| **Write tests** | `atomic/testing/unit-testing/pytest-setup.md`<br>`atomic/testing/service-testing/fastapi-testing-patterns.md` | Test files | `AGENT_TOOLBOX.md` |
-| **Run quality checks** | `AGENT_VERIFICATION_CHECKLIST.md` | Checklist results | `AGENT_TOOLBOX.md` |
-| **Create QA report** | `QA_REPORT_TEMPLATE.md` | QA report | None |
-| **Troubleshoot issues** | `troubleshooting.md` | Nothing (diagnosis) | `AGENT_TOOLBOX.md` |
+| **Create background worker** | `atomic/services/asyncio-workers/main-function-patterns.md` | Worker main.py | `agent-toolbox.md` |
+| **Create Telegram bot** | `atomic/services/aiogram/bot-initialization.md`<br>`atomic/services/aiogram/handler-patterns.md` | Bot handlers | `agent-toolbox.md` |
+| **Write tests** | `atomic/testing/unit-testing/pytest-setup.md`<br>`atomic/testing/service-testing/fastapi-testing-patterns.md` | Test files | `agent-toolbox.md` |
+| **Run quality checks** | `agent-verification-checklist.md` | Checklist results | `agent-toolbox.md` |
+| **Create QA report** | `qa-report-template.md` | QA report | None |
+| **Troubleshoot issues** | `troubleshooting.md` | Nothing (diagnosis) | `agent-toolbox.md` |
 
 ---
 
@@ -270,8 +270,8 @@ When framework documentation changes:
 ### Cross-References
 
 Keep aligned with:
-- `AI_CODE_GENERATION_MASTER_WORKFLOW.md` (source of truth for process)
-- `AGENT_CONTEXT_SUMMARY.md` (critical rules)
+- `ai-code-generation-master-workflow.md` (source of truth for process)
+- `agent-context-summary.md` (critical rules)
 - `INDEX.md` (full documentation map)
 - All atomic documentation (implementation rules)
 

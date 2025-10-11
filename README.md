@@ -46,7 +46,7 @@ git submodule init && git submodule update
 # Apply patterns from docs/atomic/ when setting up your environment in the working project.
 # See:
 # - docs/atomic/infrastructure/containerization/docker-compose-setup.md
-# - docs/reference/PROJECT_STRUCTURE.md
+# - docs/reference/project-structure.md
 ```
 
 ### **Key Benefits:**
