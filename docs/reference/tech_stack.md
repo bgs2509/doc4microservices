@@ -179,7 +179,7 @@ This section provides technology-specific implementation details for the **Impro
 - **Environment**:
   - **Development**: Optional (can access services directly)
   - **Production**: MANDATORY for all deployments
-- **Comment**: Compatible with Uvicorn/Gunicorn, TLS/HTTP2, WebSocket proxying. Essential for production security and performance.
+- **Comment**: Compatible with Uvicorn, TLS/HTTP2, WebSocket proxying. Essential for production security and performance.
 
 ### Python Interpreter
 - **Technology**: Python
@@ -345,11 +345,6 @@ This section provides technology-specific implementation details for the **Impro
 ---
 
 ## Servers and Deployment
-
-### WSGI Server
-- **Technology**: Gunicorn
-- **Libraries/Version**: gunicorn==23.0.0
-- **Comment**: Used as process manager with Uvicorn workers (`uvicorn.workers.UvicornWorker`). Compatible with Python 3.12+ and containers.
 
 ### ASGI Server
 - **Technology**: Uvicorn

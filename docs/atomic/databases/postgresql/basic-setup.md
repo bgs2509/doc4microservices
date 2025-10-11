@@ -25,7 +25,7 @@ services:
     container_name: ${PROJECT_NAME:-myapp}-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-myapp_db}
+      POSTGRES_DB: ${POSTGRES_DB:-microservices_db}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=en_US.UTF-8"
@@ -36,7 +36,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./scripts/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-myapp_db}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-microservices_db}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -145,7 +145,7 @@ echo "PostgreSQL initialization completed successfully"
 # PostgreSQL connection
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
-POSTGRES_DB=myapp_db
+POSTGRES_DB=microservices_db
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=changeme_in_production
 
@@ -209,7 +209,7 @@ class DatabaseConfig:
     def __init__(self):
         self.host = os.getenv("POSTGRES_HOST", "localhost")
         self.port = int(os.getenv("POSTGRES_PORT", "5432"))
-        self.database = os.getenv("POSTGRES_DB", "myapp_db")
+        self.database = os.getenv("POSTGRES_DB", "microservices_db")
         self.user = os.getenv("POSTGRES_USER", "postgres")
         self.password = os.getenv("POSTGRES_PASSWORD", "")
 
@@ -361,13 +361,13 @@ docker-compose ps postgres
 docker-compose logs -f postgres
 
 # Connect to PostgreSQL CLI
-docker-compose exec postgres psql -U postgres -d myapp_db
+docker-compose exec postgres psql -U postgres -d microservices_db
 
 # Check database size
-docker-compose exec postgres psql -U postgres -d myapp_db -c "\l+"
+docker-compose exec postgres psql -U postgres -d microservices_db -c "\l+"
 
 # Check active connections
-docker-compose exec postgres psql -U postgres -d myapp_db -c "SELECT * FROM pg_stat_activity;"
+docker-compose exec postgres psql -U postgres -d microservices_db -c "SELECT * FROM pg_stat_activity;"
 
 # Run migrations (Alembic)
 alembic upgrade head

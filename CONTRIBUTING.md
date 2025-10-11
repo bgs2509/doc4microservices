@@ -99,11 +99,11 @@ cp docs/atomic/TEMPLATE.md docs/atomic/{category}/{your-topic}.md
 
 ```bash
 # 1. Validate all documentation
-./scripts/validate_docs.sh --full
+./scripts/audit_docs.sh --full
 
 # 2. Check for critical issues
-./scripts/validate_docs.sh --links
-./scripts/validate_docs.sh --structure
+./scripts/audit_docs.sh --links
+./scripts/audit_docs.sh --structure
 
 # 3. Fix all CRITICAL and HIGH priority issues
 ```
@@ -112,7 +112,7 @@ cp docs/atomic/TEMPLATE.md docs/atomic/{category}/{your-topic}.md
 
 Before submitting a pull request, ensure:
 
-- [ ] All validation scripts pass (`./scripts/validate_docs.sh --full`)
+- [ ] All validation scripts pass (`./scripts/audit_docs.sh --full`)
 - [ ] No broken internal links
 - [ ] No TODO placeholders in final documents
 - [ ] All code examples use Python 3.12+ with type hints
@@ -137,7 +137,7 @@ Brief description of changes
 - [ ] Breaking change (structural reorganization)
 
 ## Testing
-- [ ] Ran `./scripts/validate_docs.sh --full`
+- [ ] Ran `./scripts/audit_docs.sh --full`
 - [ ] Tested all code examples
 - [ ] Verified all links
 
@@ -289,15 +289,15 @@ pytest tests/
 
 ```bash
 # Quick validation
-./scripts/validate_docs.sh --quick
+./scripts/audit_docs.sh --quick
 
 # Full audit
-./scripts/validate_docs.sh --full > audit_results.txt
+./scripts/audit_docs.sh --full > audit_results.txt
 
 # Check specific areas
-./scripts/validate_docs.sh --links
-./scripts/validate_docs.sh --structure
-./scripts/validate_docs.sh --spelling
+./scripts/audit_docs.sh --links
+./scripts/audit_docs.sh --structure
+./scripts/audit_docs.sh --spelling
 ```
 
 ---

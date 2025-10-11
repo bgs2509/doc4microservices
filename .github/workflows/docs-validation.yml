@@ -12,7 +12,7 @@ on:
       - 'CLAUDE.md'
       - 'README.md'
       - 'templates/**'
-      - 'scripts/validate_docs.sh'
+      - 'scripts/audit_docs.sh'
       - 'scripts/validate_docs.py'
   pull_request:
     paths:
@@ -45,7 +45,7 @@ jobs:
           echo "Repository: doc4microservices (AI-first documentation framework)"
           echo "Markdown files: $(find docs -name '*.md' | wc -l)"
           echo ""
-          chmod +x scripts/validate_docs.sh scripts/validate_docs.py
+          chmod +x scripts/audit_docs.sh scripts/validate_docs.py
 
       # ====================================================================
       # CRITICAL CHECKS (Must pass for documentation framework)
@@ -61,7 +61,7 @@ jobs:
           python scripts/validate_docs.py
 
           # Also run bash validator for comprehensive check
-          ./scripts/validate_docs.sh --links
+          ./scripts/audit_docs.sh --links
 
           echo "✅ All markdown links are valid"
 
@@ -69,7 +69,7 @@ jobs:
         id: structure
         run: |
           echo "=== Validating Documentation Structure ==="
-          ./scripts/validate_docs.sh --structure
+          ./scripts/audit_docs.sh --structure
           echo "✅ Documentation structure is consistent"
 
       - name: Check Stage 0 Documents (AI Navigation)
@@ -149,7 +149,7 @@ jobs:
         id: versions
         run: |
           echo "=== Checking Version Consistency ==="
-          ./scripts/validate_docs.sh --versions
+          ./scripts/audit_docs.sh --versions
           echo "✅ Version consistency check complete"
         continue-on-error: true
 
@@ -183,7 +183,7 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "**Action Required:** Fix critical documentation issues before merging." >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "Run locally: \`./scripts/validate_docs.sh --links\`" >> $GITHUB_STEP_SUMMARY
+            echo "Run locally: \`./scripts/audit_docs.sh --links\`" >> $GITHUB_STEP_SUMMARY
           fi
 
       - name: Comment PR with Results
@@ -215,7 +215,7 @@ jobs:
               comment += 'Please fix critical documentation issues:\n\n';
               if (linksStatus !== 'success') comment += '- Fix broken markdown links\n';
               if (stage0Status !== 'success') comment += '- Restore missing Stage 0 documents (critical for AI navigation)\n';
-              comment += '\nRun locally: `./scripts/validate_docs.sh --links`\n';
+              comment += '\nRun locally: `./scripts/audit_docs.sh --links`\n';
             }
 
             github.rest.issues.createComment({

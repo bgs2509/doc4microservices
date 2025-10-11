@@ -23,7 +23,7 @@
 | `docker-compose up -d` | optional service list | Docker daemon running | Services started in background | Start full stack for development | `docs/guides/development-commands.md` ("Docker Compose Operations") |
 | `docker-compose logs -f <service>` | `<service>` | Service already running | Streaming logs for service | Investigate service behaviour | `docs/guides/development-commands.md` ("Docker Compose Operations") |
 | `docker-compose exec <service> bash` | `<service>` | Container running | Shell inside service container | Run service-level diagnostics | `docs/guides/development-commands.md` ("Docker Compose Operations") |
-| `docker-compose --profile monitoring up -d` | none | Monitoring profile defined | Observability stack running | Enable monitoring suite | `docs/guides/development-commands.md` ("Observability Operations") |
+| `docker-compose --profile observability up -d` | none | Monitoring profile defined | Observability stack running | Enable monitoring suite | `docs/guides/development-commands.md` ("Observability Operations") |
 
 ## Diagnostics & Health Checks
 

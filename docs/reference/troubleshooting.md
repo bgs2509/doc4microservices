@@ -146,7 +146,7 @@ docker-compose logs -f rabbitmq
 docker-compose restart rabbitmq
 
 # Access management UI
-# http://localhost:15672 (admin/admin123)
+# http://localhost:15672 (admin/admin)
 ```
 
 ### Redis Connection Issues

@@ -190,11 +190,11 @@ When underlying technologies change (Python version, library versions, etc.):
 
 If a pattern becomes obsolete:
 
-1. Move document to `docs/legacy/`
-2. Add "DEPRECATED" notice at top of moved document
-3. Update links in related documents
-4. Remove from this README's category list
-5. Keep in `docs/INDEX.md` with ⚠️ DEPRECATED marker
+1. Add "DEPRECATED" notice at top of document
+2. Update links in related documents
+3. Remove from this README's category list
+4. Mark in `docs/INDEX.md` with ⚠️ DEPRECATED marker
+5. Consider removal after 6 months if no usage
 
 ### Regular Maintenance Tasks
 

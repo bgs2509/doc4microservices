@@ -33,7 +33,7 @@ Client → Business Service → HTTP → Data Service → Database
 
 ## Architectural Tenets
 
-- **Single Source of Truth** – the `docs/atomic/` tree defines authoritative guidance. Legacy `.mdc` rules remain available in `docs/legacy/` for historical reference.
+- **Single Source of Truth** – the `docs/atomic/` tree defines authoritative guidance for all service patterns and infrastructure setup.
 - **HTTP-only Data Access** – business services rely on typed clients that wrap HTTP calls and hide retry logic. Contracts are versioned (`/api/v1`) and validated with Pydantic schemas.
 - **Async First** – all services share a single event loop per process, using async drivers for databases, queues, and HTTP clients.
 - **Operational Transparency** – each service exposes `/health` and `/ready`, publishes Prometheus metrics, and emits structured logs with request correlation.
@@ -48,10 +48,9 @@ Client → Business Service → HTTP → Data Service → Database
 ## Migration Notes
 
 1. Inventory current services and classify them as business, data, or integration components.
-2. Move legacy rule files into `docs/legacy/` (already complete) and map each to its atomic successor.
-3. Establish typed HTTP clients for every data-service dependency, using the patterns in `docs/atomic/services/*`.
-4. Update CI/CD to run the mandatory verification steps described in `docs/atomic/architecture/quality-standards.md`.
-5. Communicate the new documentation baseline to every squad and deprecate direct references to `.mdc` files.
+2. Establish typed HTTP clients for every data-service dependency, using the patterns in `docs/atomic/services/*`.
+3. Update CI/CD to run the mandatory verification steps described in `docs/atomic/architecture/quality-standards.md`.
+4. Communicate the new documentation baseline to every squad following the patterns in `docs/atomic/`.
 
 ## Related Documents
 

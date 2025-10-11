@@ -44,7 +44,7 @@ Quality is enforced through automated gates and manual reviews. This document su
 ## Documentation Requirements
 
 - Reflect service changes in `docs/atomic/services/*` and `docs/INDEX.md`.
-- Archive superseded rules in `docs/legacy/` and note the replacement file.
+- Mark superseded documents with DEPRECATED notice and update replacement references.
 - Keep README files concise but accurate: include run/test/build commands and links to relevant atomic documents.
 
 ## Related Documents

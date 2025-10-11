@@ -73,18 +73,18 @@ docker-compose ps
 ### Start Monitoring Stack
 ```bash
 # Start with all monitoring services
-docker-compose --profile monitoring up -d
+docker-compose --profile observability up -d
 
 # Start only specific monitoring services
 docker-compose up prometheus grafana jaeger elasticsearch logstash kibana filebeat -d
 ```
 
 ### Access Monitoring Dashboards
-- **Grafana**: http://localhost:3000 (admin/admin123)
+- **Grafana**: http://localhost:3000 (admin/admin)
 - **Jaeger**: http://localhost:16686
 - **Kibana**: http://localhost:5601
 - **Prometheus**: http://localhost:9090
-- **RabbitMQ Management**: http://localhost:15672 (admin/admin123)
+- **RabbitMQ Management**: http://localhost:15672 (admin/admin)
 
 ### Monitoring Commands
 ```bash

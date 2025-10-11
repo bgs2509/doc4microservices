@@ -86,7 +86,7 @@ my_awesome_app/                      # Your project repository
 ### Framework Directory (`.framework/`)
 - **Immutable**: Never modify framework content when used as submodule
 - **Patterns**: Contains atomic rules, implementation guides, and automation rule sets
-- **Legacy**: Archived `.mdc` sources live in `docs/legacy/` for historical reference
+- **Documentation**: All patterns documented in `docs/atomic/` with single responsibility per file
 - **Updates**: Use `git submodule update --remote .framework` to get latest improvements
 
 ### Root-Level Configuration

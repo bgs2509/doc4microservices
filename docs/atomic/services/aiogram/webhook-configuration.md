@@ -40,7 +40,7 @@ async def telegram_webhook(request: Request) -> dict[str, str]:
     return {"status": "ok"}
 ```
 
-Run webhook server with Uvicorn/Gunicorn; polling must be disabled.
+Run webhook server with Uvicorn; polling must be disabled.
 
 ## Operational Considerations
 
