@@ -1,0 +1,337 @@
+name: AI Navigation Quality Gate
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - develop
+    paths:
+      - 'docs/reference/ai-navigation-matrix.md'
+      - 'docs/reference/agent-context-summary.md'
+      - 'docs/guides/ai-code-generation-master-workflow.md'
+      - 'docs/reference/maturity-levels.md'
+      - 'docs/reference/conditional-stage-rules.md'
+      - 'CLAUDE.md'
+  pull_request:
+    paths:
+      - 'docs/reference/ai-navigation-matrix.md'
+      - 'docs/reference/agent-context-summary.md'
+      - 'docs/guides/ai-code-generation-master-workflow.md'
+      - 'docs/reference/maturity-levels.md'
+      - 'docs/reference/conditional-stage-rules.md'
+      - 'CLAUDE.md'
+  workflow_dispatch:
+
+jobs:
+  ai-navigation-critical:
+    name: AI Navigation Critical Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Validate Stage 0 Initialization Sequence
+        id: stage-0
+        run: |
+          echo "=== Validating Stage 0 Initialization Sequence ==="
+          echo ""
+          echo "Stage 0 is CRITICAL: AI agents MUST read these documents in order:"
+
+          STAGE_0_DOCS=(
+            "CLAUDE.md"
+            "docs/reference/agent-context-summary.md"
+            "docs/guides/ai-code-generation-master-workflow.md"
+            "docs/reference/maturity-levels.md"
+          )
+
+          MISSING_COUNT=0
+          for doc in "${STAGE_0_DOCS[@]}"; do
+            if [ -f "$doc" ]; then
+              echo "✅ $doc"
+            else
+              echo "::error::CRITICAL: Missing Stage 0 document: $doc"
+              MISSING_COUNT=$((MISSING_COUNT + 1))
+            fi
+          done
+
+          if [ $MISSING_COUNT -gt 0 ]; then
+            echo "::error::Stage 0 sequence incomplete! Missing $MISSING_COUNT critical documents"
+            echo "AI agents cannot initialize without these documents!"
+            exit 1
+          fi
+
+          echo ""
+          echo "✅ Stage 0 initialization sequence is complete"
+
+      - name: Validate Navigation Matrix References
+        id: nav-matrix
+        run: |
+          echo "=== Validating Navigation Matrix References ==="
+          echo ""
+
+          if [ ! -f "docs/reference/ai-navigation-matrix.md" ]; then
+            echo "::error::CRITICAL: Navigation Matrix document missing!"
+            exit 1
+          fi
+
+          # Key documents referenced in Navigation Matrix
+          KEY_DOCS=(
+            "docs/guides/prompt-validation-guide.md"
+            "docs/reference/prompt-templates.md"
+            "docs/guides/requirements-intake-template.md"
+            "docs/guides/architecture-guide.md"
+            "docs/reference/tech_stack.md"
+            "docs/atomic/architecture/improved-hybrid-overview.md"
+            "docs/guides/implementation-plan-template.md"
+            "docs/reference/conditional-stage-rules.md"
+            "docs/checklists/service-naming-checklist.md"
+            "docs/atomic/architecture/naming/README.md"
+            "docs/atomic/infrastructure/containerization/docker-compose-setup.md"
+            "docs/atomic/infrastructure/containerization/dockerfile-patterns.md"
+            "docs/atomic/services/data-services/postgres-service-setup.md"
+            "docs/atomic/databases/postgresql/sqlalchemy-integration.md"
+            "docs/atomic/services/fastapi/application-factory.md"
+            "docs/atomic/services/fastapi/routing-patterns.md"
+            "docs/atomic/services/fastapi/dependency-injection.md"
+            "docs/atomic/architecture/ddd-hexagonal-principles.md"
+            "docs/atomic/integrations/http-communication/business-to-data-calls.md"
+            "docs/atomic/observability/logging/structured-logging.md"
+            "docs/atomic/services/asyncio-workers/basic-setup.md"
+            "docs/atomic/services/asyncio-workers/main-function-patterns.md"
+            "docs/atomic/services/aiogram/basic-setup.md"
+            "docs/atomic/services/aiogram/bot-initialization.md"
+            "docs/atomic/testing/unit-testing/pytest-setup.md"
+            "docs/atomic/testing/unit-testing/fixture-patterns.md"
+            "docs/quality/agent-verification-checklist.md"
+            "docs/reference/agent-toolbox.md"
+            "docs/reference/troubleshooting.md"
+            "docs/quality/qa-report-template.md"
+            "docs/reference/deliverables-catalog.md"
+          )
+
+          MISSING_COUNT=0
+          FOUND_COUNT=0
+
+          for doc in "${KEY_DOCS[@]}"; do
+            if [ -f "$doc" ]; then
+              FOUND_COUNT=$((FOUND_COUNT + 1))
+            else
+              echo "::warning::Referenced document missing: $doc"
+              MISSING_COUNT=$((MISSING_COUNT + 1))
+            fi
+          done
+
+          echo ""
+          echo "Navigation Matrix validation results:"
+          echo "✅ Found: $FOUND_COUNT documents"
+          echo "⚠️  Missing: $MISSING_COUNT documents"
+
+          if [ $MISSING_COUNT -gt 5 ]; then
+            echo "::error::Too many missing Navigation Matrix references ($MISSING_COUNT)"
+            echo "AI agents cannot navigate workflow with missing documents!"
+            exit 1
+          fi
+
+          if [ $MISSING_COUNT -gt 0 ]; then
+            echo "::warning::Some Navigation Matrix references are missing"
+          fi
+
+          echo ""
+          echo "✅ Navigation Matrix validation complete"
+
+      - name: Verify Maturity Levels Integration
+        id: maturity
+        run: |
+          echo "=== Verifying Maturity Levels Integration ==="
+          echo ""
+
+          WORKFLOW_DOCS=(
+            "docs/guides/prompt-validation-guide.md"
+            "docs/guides/implementation-plan-template.md"
+            "docs/quality/agent-verification-checklist.md"
+          )
+
+          MISSING_INTEGRATION=0
+          for doc in "${WORKFLOW_DOCS[@]}"; do
+            echo "Checking: $doc"
+            if [ ! -f "$doc" ]; then
+              echo "::error::Workflow document not found: $doc"
+              MISSING_INTEGRATION=$((MISSING_INTEGRATION + 1))
+              continue
+            fi
+
+            if grep -qi "maturity level\|Level [1-4]\|PoC\|Development\|Pre-Production\|Production" "$doc"; then
+              echo "✅ Maturity level guidance found"
+            else
+              echo "::warning file=$doc::No maturity level guidance found"
+              MISSING_INTEGRATION=$((MISSING_INTEGRATION + 1))
+            fi
+          done
+
+          echo ""
+          echo "Checking coverage thresholds..."
+          if [ -f "docs/quality/agent-verification-checklist.md" ]; then
+            if grep -qE "60%|75%|80%|85%" docs/quality/agent-verification-checklist.md; then
+              echo "✅ Coverage thresholds (60%/75%/80%/85%) found"
+            else
+              echo "::warning::Coverage thresholds not found in verification checklist"
+              MISSING_INTEGRATION=$((MISSING_INTEGRATION + 1))
+            fi
+          fi
+
+          echo ""
+          echo "Checking time estimates..."
+          if [ -f "docs/reference/maturity-levels.md" ]; then
+            if grep -qE "5.?min|10.?min|15.?min|30.?min" docs/reference/maturity-levels.md; then
+              echo "✅ Time estimates (5/10/15/30 min) found"
+            else
+              echo "::warning::Time estimates not found in maturity-levels.md"
+            fi
+          fi
+
+          if [ $MISSING_INTEGRATION -gt 1 ]; then
+            echo "::error::Maturity levels not properly integrated (missing in $MISSING_INTEGRATION places)"
+            exit 1
+          fi
+
+          echo ""
+          echo "✅ Maturity Levels properly integrated"
+
+      - name: Validate Architectural Constraints Documentation
+        id: architecture
+        run: |
+          echo "=== Validating Architectural Constraints Documentation ==="
+          echo ""
+
+          # Check HTTP-only data access principle
+          HTTP_MENTIONS=$(grep -rc "HTTP-only\|http_client\|HTTPClient" docs --include="*.md" 2>/dev/null | grep -v ":0" | wc -l)
+          echo "HTTP-only data access: mentioned in $HTTP_MENTIONS documents"
+
+          if [ $HTTP_MENTIONS -lt 10 ]; then
+            echo "::warning::HTTP-only principle mentioned in fewer than 10 documents (found: $HTTP_MENTIONS)"
+          else
+            echo "✅ HTTP-only principle well-documented"
+          fi
+
+          # Check DEFAULT TO 3-PART naming
+          echo ""
+          if grep -rq "DEFAULT TO 3-PART" docs --include="*.md"; then
+            NAMING_COUNT=$(grep -rc "DEFAULT TO 3-PART" docs --include="*.md" | grep -v ":0" | wc -l)
+            echo "✅ DEFAULT TO 3-PART naming guidance found ($NAMING_COUNT documents)"
+          else
+            echo "::error::DEFAULT TO 3-PART naming guidance not found"
+            exit 1
+          fi
+
+          # Check RabbitMQ mentions
+          echo ""
+          RABBITMQ_MENTIONS=$(grep -rc "RabbitMQ" docs --include="*.md" 2>/dev/null | grep -v ":0" | wc -l)
+          echo "RabbitMQ: mentioned in $RABBITMQ_MENTIONS documents"
+
+          if [ $RABBITMQ_MENTIONS -lt 20 ]; then
+            echo "::warning::RabbitMQ mentioned in fewer than 20 documents (found: $RABBITMQ_MENTIONS)"
+          else
+            echo "✅ RabbitMQ well-documented"
+          fi
+
+          # Check Service Separation document
+          echo ""
+          if [ -f "docs/atomic/architecture/service-separation-principles.md" ]; then
+            echo "✅ Service separation principles document exists"
+          else
+            echo "::error::CRITICAL: Missing service-separation-principles.md"
+            exit 1
+          fi
+
+          # Check Data Access Architecture document
+          if [ -f "docs/atomic/architecture/data-access-architecture.md" ]; then
+            echo "✅ Data access architecture document exists"
+          else
+            echo "::warning::Missing data-access-architecture.md"
+          fi
+
+          echo ""
+          echo "✅ Architectural constraints validation complete"
+
+      - name: Check Atomic Documentation Coverage
+        id: atomic
+        run: |
+          echo "=== Checking Atomic Documentation Coverage ==="
+          echo ""
+
+          TOTAL_ATOMIC=$(find docs/atomic -name "*.md" -type f 2>/dev/null | wc -l)
+          echo "Total atomic documents: $TOTAL_ATOMIC"
+
+          if [ $TOTAL_ATOMIC -lt 100 ]; then
+            echo "::warning::Atomic documentation count seems low: $TOTAL_ATOMIC (expected: 150+)"
+          fi
+
+          echo ""
+          echo "Coverage by category:"
+          for dir in architecture services integrations databases infrastructure observability testing security; do
+            if [ -d "docs/atomic/$dir" ]; then
+              count=$(find "docs/atomic/$dir" -name "*.md" 2>/dev/null | wc -l)
+              echo "  $dir: $count documents"
+
+              # Check minimum coverage per category
+              case "$dir" in
+                services)
+                  if [ $count -lt 20 ]; then
+                    echo "    ::warning::Low service documentation coverage"
+                  fi
+                  ;;
+                integrations)
+                  if [ $count -lt 15 ]; then
+                    echo "    ::warning::Low integration documentation coverage"
+                  fi
+                  ;;
+                infrastructure)
+                  if [ $count -lt 15 ]; then
+                    echo "    ::warning::Low infrastructure documentation coverage"
+                  fi
+                  ;;
+              esac
+            fi
+          done
+
+          echo ""
+          echo "✅ Atomic documentation coverage check complete"
+
+  summary:
+    name: AI Navigation Validation Summary
+    runs-on: ubuntu-latest
+    needs: ai-navigation-critical
+    if: always()
+
+    steps:
+      - name: Generate Summary
+        run: |
+          echo "## 🤖 AI Navigation Validation Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Critical AI Infrastructure Checks" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Component | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Stage 0 Sequence | ${{ needs.ai-navigation-critical.result == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Navigation Matrix | ${{ needs.ai-navigation-critical.result == 'success' && '✅' || '⚠️' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Maturity Levels | ${{ needs.ai-navigation-critical.result == 'success' && '✅' || '⚠️' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Architectural Constraints | ${{ needs.ai-navigation-critical.result == 'success' && '✅' || '⚠️' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Atomic Documentation | ${{ needs.ai-navigation-critical.result == 'success' && '✅' || '⚠️' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ needs.ai-navigation-critical.result }}" = "success" ]; then
+            echo "### ✅ All AI Navigation Checks Passed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Framework documentation is ready for AI-assisted code generation." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ AI Navigation Checks Failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Action Required:** Critical AI navigation infrastructure is broken!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "AI agents cannot function without these documents. Please fix before merging." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
