@@ -64,6 +64,45 @@ Conduct a comprehensive documentation audit of this project:
    - Check dependency compatibility matrix
    - Verify Docker image tags alignment
 
+9. **AI Navigation & Workflow Validation** (NEW - Critical for AI-first framework)
+   - Verify Stage 0 initialization sequence (CLAUDE.md → agent-context-summary.md → workflow → maturity-levels.md)
+   - Validate Navigation Matrix accuracy (all referenced documents exist)
+   - Check workflow coherence (entry/exit criteria alignment)
+   - Detect circular dependencies in reading order
+   - Ensure maturity levels integrated into workflow stages
+
+10. **Submodule Path Validation** (NEW - Framework-as-submodule model)
+   - Ensure documentation works in standalone and submodule modes
+   - Detect hardcoded absolute paths that break in submodule
+   - Verify examples show both path variants where relevant
+   - Check CLAUDE.md guidance mentions both usage modes
+
+11. **Maturity Levels Consistency** (NEW - Core framework concept)
+   - Verify features correctly marked per maturity level (✅/❌)
+   - Ensure conditional stage rules align with maturity-levels.md
+   - Check upgrade paths documented
+   - Validate time estimates consistency (5/10/15/30 min)
+   - Verify coverage thresholds per level (60%/75%/80%/85%)
+
+12. **Architectural Constraints Consistency** (NEW - Mandatory patterns)
+   - Verify HTTP-only data access mentioned consistently
+   - Check service separation principles in examples
+   - Ensure API Gateway mandatory for production (Level 3+)
+   - Validate RabbitMQ mandatory for async communication
+   - Check DEFAULT TO 3-PART naming guidance consistency
+
+13. **Atomic Documentation Coverage** (NEW - Implementation patterns)
+   - Verify all atomic docs referenced in Navigation Matrix exist
+   - Check atomic docs cover all patterns mentioned in workflow
+   - Find orphaned atomic docs (not referenced anywhere)
+   - Validate atomic docs completeness per service type
+
+14. **Agent Toolbox Command Validation** (NEW - Executable commands)
+   - Verify all commands in agent-toolbox.md are executable
+   - Check tool versions align with tech_stack.md
+   - Ensure development-commands.md consistent with agent-toolbox.md
+   - Test sample commands for syntax correctness
+
 ## DELIVERABLES
 
 Create a detailed report with:
@@ -101,6 +140,42 @@ Create a detailed report with:
 - Conflicting version numbers
 - Mismatched dependencies
 - Outdated technology references
+
+#### AI Navigation & Workflow Issues (NEW)
+- Broken Stage 0 initialization sequence
+- Missing documents in Navigation Matrix
+- Entry/exit criteria misalignment between stages
+- Circular reading dependencies detected
+- Maturity levels not integrated into workflow
+
+#### Submodule Compatibility Issues (NEW)
+- Hardcoded absolute paths found
+- Documentation missing submodule usage guidance
+- Examples don't show both standalone/.framework/ paths
+
+#### Maturity Levels Issues (NEW)
+- Features incorrectly marked for maturity levels
+- Conditional rules misaligned with maturity-levels.md
+- Time estimates inconsistent across documents
+- Coverage thresholds not matching level requirements
+
+#### Architectural Constraints Issues (NEW)
+- Code examples showing direct database access in business services
+- Service separation violated in examples
+- API Gateway not mandatory for Level 3+ examples
+- RabbitMQ missing from async patterns
+- 4-part naming used without justification
+
+#### Atomic Documentation Issues (NEW)
+- Referenced atomic docs missing
+- Orphaned atomic docs found
+- Coverage gaps for service types
+- Navigation Matrix references broken
+
+#### Toolbox Command Issues (NEW)
+- Non-executable commands in agent-toolbox.md
+- Tool versions mismatched with tech_stack.md
+- Command inconsistency between toolbox and development-commands.md
 
 For each issue, provide:
 - **Priority**: CRITICAL / HIGH / MEDIUM / LOW
@@ -276,6 +351,100 @@ Audit technology versions across docs:
 - Validate package.json/requirements.txt versions
 ```
 
+### AI Navigation Validation (NEW)
+```
+Validate AI agent navigation and workflow:
+- Check Stage 0 initialization: CLAUDE.md → agent-context-summary.md → workflow → maturity-levels.md
+- Validate Navigation Matrix: all docs in "Documents to Read" exist
+- Check entry/exit criteria alignment between stages
+- Detect circular dependencies (A→B→C→A)
+- Verify maturity levels mentioned in Stage 1, 3, 5 docs
+- Ensure conditional stage rules reference maturity-levels.md
+
+Report:
+- Broken navigation paths with file:line
+- Missing documents blocking workflow stages
+- Circular dependency chains
+- Maturity level integration gaps
+```
+
+### Submodule Path Audit (NEW)
+```
+Ensure framework works as standalone and submodule:
+- Find absolute project paths (/home/user/project)
+- Check for root-absolute paths (/docs/)
+- Verify CLAUDE.md mentions both usage modes
+- Validate relative path consistency
+- Check examples show both docs/ and .framework/docs/ where relevant
+
+Report:
+- Hardcoded paths with locations
+- Missing submodule guidance
+- Incompatible path references
+```
+
+### Maturity Levels Audit (NEW)
+```
+Verify maturity levels consistency:
+- Extract Feature Comparison Matrix from maturity-levels.md
+- Cross-reference with conditional-stage-rules.md
+- Check workflow docs mention maturity levels (prompt-validation, planning, verification)
+- Validate time estimates (L1=5min, L2=10min, L3=15min, L4=30min)
+- Verify coverage thresholds (60%/75%/80%/85%) in verification docs
+
+Report:
+- Feature misalignment per level
+- Time estimate conflicts
+- Coverage threshold inconsistencies
+- Missing maturity level guidance in workflow
+```
+
+### Architectural Constraints Audit (NEW)
+```
+Validate mandatory architectural patterns:
+- Check code examples for HTTP-only data access (no direct DB in business services)
+- Verify service separation in examples (FastAPI/Aiogram/Worker separate)
+- Ensure Nginx mandatory for Level 3+ examples
+- Check RabbitMQ used for async communication
+- Validate DEFAULT TO 3-PART naming (template_{context}_{domain}_{type})
+
+Report:
+- Anti-patterns in code examples (direct DB access, etc.)
+- Missing architectural constraints in guides
+- Naming convention violations
+- Infrastructure gaps per maturity level
+```
+
+### Atomic Documentation Coverage (NEW)
+```
+Verify atomic documentation completeness:
+- Extract all atomic doc references from workflow, navigation matrix, planning template
+- Verify each referenced atomic doc exists
+- Find orphaned atomic docs (exist but never referenced)
+- Check coverage per service type (FastAPI, Aiogram, Workers, Data Services)
+
+Report:
+- Missing atomic docs (referenced but don't exist)
+- Orphaned atomic docs (exist but not referenced)
+- Coverage gaps by service type
+- Broken atomic doc references in Navigation Matrix
+```
+
+### Toolbox Command Audit (NEW)
+```
+Validate agent toolbox commands:
+- Extract all commands from agent-toolbox.md
+- Check tool availability and versions vs tech_stack.md
+- Compare commands between agent-toolbox.md and development-commands.md
+- Test non-destructive commands for syntax (uv --version, ruff --version)
+
+Report:
+- Tools used but not documented in tech_stack.md
+- Command syntax discrepancies
+- Version mismatches
+- Non-executable command patterns
+```
+
 ---
 
 ## Automation Script Template
@@ -423,12 +592,103 @@ check_language_in_file() {
     done
 }
 
+# Check AI navigation patterns in a single markdown file
+# Usage: check_ai_navigation_in_file <file_path>
+check_ai_navigation_in_file() {
+    local file="$1"
+
+    # Check for Stage 0 documents in workflow docs
+    if echo "$file" | grep -q "workflow\|CLAUDE.md"; then
+        # Verify Stage 0 sequence references
+        for doc in "CLAUDE.md" "agent-context-summary.md" "ai-code-generation-master-workflow.md" "maturity-levels.md"; do
+            if grep -q "$doc" "$file" 2>/dev/null; then
+                local referenced_path=$(grep -o "[^(]*${doc}" "$file" | head -1)
+                if [ -n "$referenced_path" ] && [ ! -f "$referenced_path" ]; then
+                    echo "AI_NAV: $file references $doc at non-existent path: $referenced_path"
+                fi
+            fi
+        done
+    fi
+
+    # Check for Navigation Matrix references
+    if echo "$file" | grep -q "navigation-matrix\|implementation-plan"; then
+        grep -oE 'docs/[^`)\s]*\.md' "$file" 2>/dev/null | while read -r ref; do
+            if [ ! -f "$ref" ]; then
+                echo "AI_NAV: $file references missing doc: $ref"
+            fi
+        done
+    fi
+}
+
+# Check for hardcoded absolute paths that break in submodule mode
+# Usage: check_submodule_paths_in_file <file_path>
+check_submodule_paths_in_file() {
+    local file="$1"
+
+    # Skip code blocks for path checking
+    sed '/^```/,/^```/d' "$file" | grep -nE '/home/|/Users/|^/docs/' 2>/dev/null | while IFS=: read -r line content; do
+        echo "SUBMODULE: $file:$line - Absolute path: ${content:0:100}"
+    done
+}
+
+# Check maturity level consistency in workflow documents
+# Usage: check_maturity_levels_in_file <file_path>
+check_maturity_levels_in_file() {
+    local file="$1"
+
+    # Check if workflow/planning docs mention maturity levels
+    if echo "$file" | grep -qE "prompt-validation|implementation-plan|verification-checklist"; then
+        if ! grep -qi "maturity level\|Level [1-4]\|PoC\|Development\|Pre-Production\|Production" "$file"; then
+            echo "MATURITY: $file - Missing maturity level guidance"
+        fi
+    fi
+
+    # Check for coverage thresholds in verification docs
+    if echo "$file" | grep -q "verification"; then
+        if ! grep -qE "60%|75%|80%|85%" "$file"; then
+            echo "MATURITY: $file - Missing level-specific coverage thresholds"
+        fi
+    fi
+}
+
+# Check architectural constraints in code examples
+# Usage: check_architecture_patterns_in_file <file_path>
+check_architecture_patterns_in_file() {
+    local file="$1"
+    local temp_code="/tmp/arch_check_$$.py"
+
+    # Extract Python code blocks
+    awk '/^```python/,/^```/' "$file" | sed '1d;$d' > "$temp_code"
+
+    if [ -s "$temp_code" ]; then
+        # Check for direct DB access in business service examples
+        if echo "$file" | grep -qE "business|use-case"; then
+            if grep -qE "from sqlalchemy import|session\.execute|session\.commit|db\.query" "$temp_code"; then
+                echo "ARCHITECTURE: $file - Direct database access in business service example (violates HTTP-only)"
+            fi
+        fi
+
+        # Check for HTTP client usage in business services
+        if echo "$file" | grep -q "use-case"; then
+            if ! grep -qE "HTTPClient|http_client|\.get\(|\.post\(" "$temp_code"; then
+                echo "ARCHITECTURE: $file - Use case example doesn't show HTTP client pattern"
+            fi
+        fi
+    fi
+
+    rm -f "$temp_code"
+}
+
 # Export all helper functions for use in subshells
 export -f check_link_in_file
 export -f check_spelling_in_file
 export -f check_code_in_file
 export -f check_readability_in_file
 export -f check_language_in_file
+export -f check_ai_navigation_in_file
+export -f check_submodule_paths_in_file
+export -f check_maturity_levels_in_file
+export -f check_architecture_patterns_in_file
 export DOCS_DIR
 
 # ============================================================================
@@ -542,11 +802,160 @@ check_versions() {
     rm -f "$VERSIONS_FILE"
 }
 
+# Function: Check AI Navigation & Workflow (NEW)
+check_ai_navigation() {
+    echo "Checking AI navigation and workflow (NEW)..."
+
+    # Check Stage 0 initialization sequence
+    echo "Verifying Stage 0 sequence..."
+    for doc in CLAUDE.md \
+               docs/reference/agent-context-summary.md \
+               docs/guides/ai-code-generation-master-workflow.md \
+               docs/reference/maturity-levels.md; do
+        [ ! -f "$doc" ] && echo "CRITICAL: Missing Stage 0 document: $doc"
+    done
+
+    # Check Navigation Matrix references
+    if [ -f "docs/reference/ai-navigation-matrix.md" ]; then
+        echo "Validating Navigation Matrix references..."
+        grep -oE 'docs/[^`)\s]*\.md' docs/reference/ai-navigation-matrix.md | sort -u | while read -r ref; do
+            [ ! -f "$ref" ] && echo "AI_NAV: Navigation Matrix references missing: $ref"
+        done
+    fi
+
+    # Parallel check for navigation issues in all docs
+    process_md_files check_ai_navigation_in_file
+}
+
+# Function: Check Submodule Path Compatibility (NEW)
+check_submodule_paths() {
+    echo "Checking submodule path compatibility (NEW)..."
+
+    # Check for absolute paths
+    echo "Finding hardcoded absolute paths..."
+    grep -rn '/home/\|/Users/' "$DOCS_DIR" README.md CLAUDE.md 2>/dev/null | \
+        grep -v '.git' | head -20
+
+    # Parallel check for path issues
+    process_md_files check_submodule_paths_in_file
+
+    # Check CLAUDE.md mentions both modes
+    if [ -f "CLAUDE.md" ]; then
+        if ! grep -q "submodule\|\.framework/" CLAUDE.md; then
+            echo "SUBMODULE: CLAUDE.md missing submodule usage guidance"
+        fi
+    fi
+}
+
+# Function: Check Maturity Levels Consistency (NEW)
+check_maturity_levels() {
+    echo "Checking maturity levels consistency (NEW)..."
+
+    # Check maturity level integration in workflow
+    for doc in docs/guides/prompt-validation-guide.md \
+               docs/guides/implementation-plan-template.md \
+               docs/quality/agent-verification-checklist.md; do
+        if [ -f "$doc" ]; then
+            if ! grep -qi "maturity level\|Level [1-4]" "$doc"; then
+                echo "MATURITY: $doc missing maturity level guidance"
+            fi
+        fi
+    done
+
+    # Check coverage thresholds
+    if [ -f "docs/quality/agent-verification-checklist.md" ]; then
+        if ! grep -qE "60%|75%|80%|85%" docs/quality/agent-verification-checklist.md; then
+            echo "MATURITY: agent-verification-checklist.md missing level-specific thresholds"
+        fi
+    fi
+
+    # Parallel check for maturity level consistency
+    process_md_files check_maturity_levels_in_file
+}
+
+# Function: Check Architectural Constraints (NEW)
+check_architecture_patterns() {
+    echo "Checking architectural constraints (NEW)..."
+
+    # Check for HTTP-only data access mentions
+    echo "Validating HTTP-only data access principle..."
+    http_mentions=$(grep -rc "HTTP-only\|http_client\|HTTPClient" "$DOCS_DIR" --include="*.md" | grep -v ":0" | wc -l)
+    echo "HTTP-only pattern mentioned in $http_mentions documents"
+
+    # Check for 3-part naming guidance
+    echo "Validating naming conventions..."
+    if ! grep -rq "DEFAULT TO 3-PART\|default to 3-part" "$DOCS_DIR"; then
+        echo "ARCHITECTURE: Missing 'DEFAULT TO 3-PART' naming guidance"
+    fi
+
+    # Parallel check for architecture violations in code examples
+    process_md_files check_architecture_patterns_in_file
+}
+
+# Function: Check Atomic Documentation Coverage (NEW)
+check_atomic_coverage() {
+    echo "Checking atomic documentation coverage (NEW)..."
+
+    # Extract atomic doc references
+    echo "Finding referenced atomic docs..."
+    ATOMIC_REFS="/tmp/atomic_refs_$$.txt"
+    grep -rhoE 'docs/atomic/[^`)\s]*\.md' docs/guides/ docs/reference/ 2>/dev/null | \
+        sort -u > "$ATOMIC_REFS"
+
+    # Check if referenced docs exist
+    if [ -s "$ATOMIC_REFS" ]; then
+        while read -r ref; do
+            [ ! -f "$ref" ] && echo "ATOMIC: Referenced but missing: $ref"
+        done < "$ATOMIC_REFS"
+    fi
+
+    # Find orphaned atomic docs
+    echo "Finding orphaned atomic docs..."
+    if [ -d "docs/atomic" ]; then
+        comm -23 \
+            <(find docs/atomic -name "*.md" | sort) \
+            <(cat "$ATOMIC_REFS") | head -10 | while read -r orphan; do
+                echo "ATOMIC: Orphaned (not referenced): $orphan"
+            done
+    fi
+
+    rm -f "$ATOMIC_REFS"
+}
+
+# Function: Check Toolbox Command Validity (NEW)
+check_toolbox_commands() {
+    echo "Checking agent toolbox commands (NEW)..."
+
+    # Check if toolbox exists
+    if [ ! -f "docs/reference/agent-toolbox.md" ]; then
+        echo "TOOLBOX: agent-toolbox.md not found"
+        return 1
+    fi
+
+    # Extract commands from toolbox
+    echo "Extracting commands from agent-toolbox.md..."
+    TOOLBOX_CMDS="/tmp/toolbox_cmds_$$.txt"
+    grep -oE 'uv run [a-z]+|docker-compose [a-z]+|pytest|ruff|mypy|bandit' \
+        docs/reference/agent-toolbox.md | sort -u > "$TOOLBOX_CMDS"
+
+    # Check for tool availability
+    for tool in uv ruff mypy pytest bandit docker-compose; do
+        if grep -q "$tool" "$TOOLBOX_CMDS"; then
+            if ! grep -q "$tool" docs/reference/tech_stack.md 2>/dev/null; then
+                echo "TOOLBOX: Tool '$tool' used but not documented in tech_stack.md"
+            fi
+        fi
+    done
+
+    rm -f "$TOOLBOX_CMDS"
+}
+
 # Main execution
 case "$MODE" in
     --quick)
         check_links
         check_spelling
+        check_ai_navigation
         ;;
     --links)
         check_links
@@ -569,7 +978,35 @@ case "$MODE" in
     --versions)
         check_versions
         ;;
+    --ai-navigation)
+        check_ai_navigation
+        ;;
+    --submodule)
+        check_submodule_paths
+        ;;
+    --maturity)
+        check_maturity_levels
+        ;;
+    --architecture)
+        check_architecture_patterns
+        ;;
+    --atomic)
+        check_atomic_coverage
+        ;;
+    --toolbox)
+        check_toolbox_commands
+        ;;
+    --ai-full)
+        echo "=== AI-Specific Audits ==="
+        check_ai_navigation
+        check_submodule_paths
+        check_maturity_levels
+        check_architecture_patterns
+        check_atomic_coverage
+        check_toolbox_commands
+        ;;
     --full)
+        echo "=== Standard Audits ==="
         check_links
         check_files
         check_structure
@@ -579,10 +1016,39 @@ case "$MODE" in
         check_readability
         check_language
         check_versions
+        echo ""
+        echo "=== AI-Specific Audits (NEW) ==="
+        check_ai_navigation
+        check_submodule_paths
+        check_maturity_levels
+        check_architecture_patterns
+        check_atomic_coverage
+        check_toolbox_commands
         ;;
     *)
         echo "Unknown mode: $MODE"
-        echo "Usage: $0 [--quick|--full|--links|--structure|--spelling|--code|--readability|--language|--versions]"
+        echo ""
+        echo "Usage: $0 [MODE]"
+        echo ""
+        echo "Standard Modes:"
+        echo "  --quick         Quick check (links, spelling, AI navigation)"
+        echo "  --full          Full audit (all standard + AI checks)"
+        echo "  --links         Markdown link validation"
+        echo "  --structure     Directory structure validation"
+        echo "  --spelling      Spell checking"
+        echo "  --code          Code example validation"
+        echo "  --readability   Readability analysis"
+        echo "  --language      English-only validation"
+        echo "  --versions      Version consistency check"
+        echo ""
+        echo "AI-Specific Modes (NEW):"
+        echo "  --ai-full       Run all AI-specific audits"
+        echo "  --ai-navigation AI workflow navigation validation"
+        echo "  --submodule     Submodule path compatibility"
+        echo "  --maturity      Maturity levels consistency"
+        echo "  --architecture  Architectural constraints validation"
+        echo "  --atomic        Atomic documentation coverage"
+        echo "  --toolbox       Agent toolbox command validation"
         exit 1
         ;;
 esac
@@ -820,14 +1286,203 @@ EOF
 chmod +x .git/hooks/pre-push
 ```
 
+### AI Navigation Validation (NEW)
+```bash
+# Check AI workflow navigation
+./scripts/audit_docs.sh --ai-navigation
+
+# Verify Stage 0 sequence manually
+for doc in CLAUDE.md \
+           docs/reference/agent-context-summary.md \
+           docs/guides/ai-code-generation-master-workflow.md \
+           docs/reference/maturity-levels.md; do
+  [ -f "$doc" ] && echo "✅ $doc" || echo "❌ MISSING: $doc"
+done
+
+# Check Navigation Matrix references
+if [ -f "docs/reference/ai-navigation-matrix.md" ]; then
+  grep -oE 'docs/[^`)\s]*\.md' docs/reference/ai-navigation-matrix.md | \
+    while read ref; do
+      [ -f "$ref" ] && echo "✅ $ref" || echo "❌ MISSING: $ref"
+    done
+fi
+```
+
+### Submodule Path Validation (NEW)
+```bash
+# Check for hardcoded absolute paths
+./scripts/audit_docs.sh --submodule
+
+# Find all absolute paths manually
+grep -rn '/home/\|/Users/' docs/ README.md CLAUDE.md | grep -v '.git'
+
+# Check CLAUDE.md mentions both modes
+grep -i "submodule\|\.framework/" CLAUDE.md
+```
+
+### Maturity Levels Consistency (NEW)
+```bash
+# Check maturity level integration
+./scripts/audit_docs.sh --maturity
+
+# Verify maturity levels in workflow docs
+for doc in docs/guides/prompt-validation-guide.md \
+           docs/guides/implementation-plan-template.md \
+           docs/quality/agent-verification-checklist.md; do
+  echo "=== $doc ==="
+  grep -i "maturity level\|Level [1-4]\|PoC\|Development\|Production" "$doc" || \
+    echo "⚠️ No maturity level guidance found"
+done
+
+# Check coverage thresholds
+grep -E "60%|75%|80%|85%" docs/quality/agent-verification-checklist.md
+```
+
+### Architectural Constraints Validation (NEW)
+```bash
+# Check architectural patterns in documentation
+./scripts/audit_docs.sh --architecture
+
+# Check for HTTP-only data access mentions
+grep -rc "HTTP-only\|http_client\|HTTPClient" docs/ --include="*.md" | grep -v ":0"
+
+# Check for 3-part naming guidance
+grep -rn "DEFAULT TO 3-PART\|default to 3-part" docs/
+
+# Find direct DB access anti-patterns in examples
+grep -rn "from sqlalchemy import\|session.execute" docs/ --include="*.md" | \
+  grep -v "data_service"
+```
+
+### Atomic Documentation Coverage (NEW)
+```bash
+# Check atomic doc coverage
+./scripts/audit_docs.sh --atomic
+
+# List all referenced atomic docs
+grep -rhoE 'docs/atomic/[^`)\s]*\.md' docs/guides/ docs/reference/ | sort -u
+
+# Find orphaned atomic docs
+comm -23 \
+  <(find docs/atomic -name "*.md" | sort) \
+  <(grep -rhoE 'docs/atomic/[^`)\s]*\.md' docs/guides/ docs/reference/ | sort -u)
+
+# Check coverage by service type
+for type in fastapi aiogram asyncio-workers data-services; do
+  echo "=== $type ==="
+  find docs/atomic/services/$type -name "*.md" 2>/dev/null | wc -l
+done
+```
+
+### Toolbox Command Validation (NEW)
+```bash
+# Check toolbox commands
+./scripts/audit_docs.sh --toolbox
+
+# Extract and verify commands
+grep -oE 'uv run [a-z]+|ruff|mypy|pytest' docs/reference/agent-toolbox.md | sort -u
+
+# Check tools documented in tech_stack.md
+for tool in uv ruff mypy pytest bandit docker-compose; do
+  grep -q "$tool" docs/reference/tech_stack.md && \
+    echo "✅ $tool" || echo "⚠️ $tool not in tech_stack.md"
+done
+
+# Compare toolbox vs development-commands
+diff -u \
+  <(grep -oE 'uv run [a-z]+' docs/reference/agent-toolbox.md | sort -u) \
+  <(grep -oE 'uv run [a-z]+' docs/guides/development-commands.md | sort -u)
+```
+
+### Run All AI-Specific Audits (NEW)
+```bash
+# Run all AI-specific checks at once
+./scripts/audit_docs.sh --ai-full
+
+# Generate AI-specific audit report
+./scripts/audit_docs.sh --ai-full > AI_AUDIT_REPORT_$(date +%Y%m%d).md
+
+# CI/CD: Run AI audits in pipeline
+./scripts/audit_docs.sh --ai-full
+if [ $? -ne 0 ]; then
+  echo "::error::AI-specific documentation issues found"
+  exit 1
+fi
+```
+
 ---
 
 ## Maintenance Schedule
 
+### Standard Checks
 - **Weekly**: Automated link checking in CI
+- **Bi-weekly**: Spell checking and code validation
 - **Monthly**: Full audit with AI agent
 - **Quarterly**: Technology version consistency check
 - **Yearly**: Comprehensive structure review
+
+### AI-Specific Checks (NEW)
+- **Daily (CI/CD)**: AI navigation validation on every PR
+- **Weekly**: Maturity levels and architectural constraints audit
+- **Bi-weekly**: Atomic documentation coverage check
+- **Monthly**: Toolbox command validation and submodule path audit
+- **Before major releases**: Full AI audit (`--ai-full`)
+
+---
+
+## What's New in This Version
+
+This updated audit template adds **7 critical categories** specifically designed for AI-first microservices framework:
+
+### 🎯 **High Priority Additions**
+
+1. **AI Navigation & Workflow Validation** (Objective 9)
+   - Ensures AI agents can navigate 7-stage workflow
+   - Validates Stage 0 initialization sequence
+   - Checks Navigation Matrix completeness
+   - Detects circular dependencies
+
+2. **Maturity Levels Consistency** (Objective 11)
+   - Verifies 4 maturity levels (PoC → Production)
+   - Validates conditional stage rules
+   - Checks coverage thresholds (60%/75%/80%/85%)
+
+3. **Architectural Constraints Consistency** (Objective 12)
+   - Validates HTTP-only data access in examples
+   - Checks service separation principles
+   - Ensures DEFAULT TO 3-PART naming
+   - Verifies mandatory infrastructure per level
+
+4. **Atomic Documentation Coverage** (Objective 13)
+   - Validates all atomic doc references
+   - Finds orphaned documentation
+   - Checks coverage per service type
+
+### 🛠️ **Medium Priority Additions**
+
+5. **Submodule Path Validation** (Objective 10)
+   - Ensures framework works as standalone AND submodule
+   - Detects hardcoded absolute paths
+   - Validates relative path consistency
+
+6. **Toolbox Command Validation** (Objective 14)
+   - Verifies executable commands
+   - Checks tool version alignment
+   - Validates command consistency
+
+### 📊 **New Features**
+
+- **6 new focused audit prompts** for targeted checks
+- **6 new shell functions** with parallel processing
+- **New audit modes**: `--ai-full`, `--ai-navigation`, `--submodule`, `--maturity`, `--architecture`, `--atomic`, `--toolbox`
+- **Enhanced CI/CD examples** for AI-specific validations
+- **10+ new usage examples** with practical commands
+
+### 🚀 **Performance Improvements**
+
+- All new functions use parallel processing where applicable
+- Optimized grep patterns for large documentation trees
+- Efficient temporary file handling
 
 ---
 
@@ -989,6 +1644,7 @@ timeout 300 find docs -name "*.md" -print0 | \
 
 ## Notes
 
+### General Maintenance
 - Keep this prompt template updated as project evolves
 - Add new audit categories as needed
 - Integrate with CI/CD for automated checks
@@ -996,3 +1652,37 @@ timeout 300 find docs -name "*.md" -print0 | \
 - Include in documentation review process
 - Apply shell scripting best practices for performance
 - Benchmark critical operations when optimizing
+
+### AI-Specific Considerations (NEW)
+- **AI navigation audits are critical** - broken Stage 0 sequence blocks all AI generation
+- **Maturity levels drive conditional generation** - inconsistencies cause incorrect code generation
+- **Architectural constraints must be consistent** - AI learns from examples, bad examples = bad code
+- **Atomic docs are building blocks** - missing atomic docs break implementation phases
+- **Submodule compatibility is mandatory** - framework must work in both modes
+
+### Recommended Audit Frequency by Priority
+
+**Critical (blocks AI generation)**:
+- AI Navigation Validation → Daily in CI/CD
+- Stage 0 document validation → On every doc change
+- Navigation Matrix validation → On every workflow doc change
+
+**High (affects code quality)**:
+- Architectural Constraints → Weekly
+- Maturity Levels Consistency → Weekly
+- Atomic Documentation Coverage → Bi-weekly
+
+**Medium (affects usability)**:
+- Submodule Path Validation → Monthly
+- Toolbox Command Validation → Monthly
+
+**Standard (general quality)**:
+- Links, spelling, readability → As per original schedule
+
+### Integration with Development Workflow
+
+1. **Pre-commit**: Run `--quick` (includes AI navigation)
+2. **Pre-push**: Run `--ai-navigation` + `--links`
+3. **CI/CD Pipeline**: Run `--ai-full` on workflow doc changes
+4. **Before Release**: Run `--full` (includes all standard + AI checks)
+5. **Monthly Review**: Generate full audit report for documentation health tracking
