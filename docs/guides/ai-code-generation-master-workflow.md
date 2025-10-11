@@ -288,7 +288,7 @@ Please provide these details so I can ensure architecture alignment.
 3. Read `use-case-implementation-guide.md`
 4. **Read naming convention documents** (MANDATORY for all service naming decisions):
    - `docs/checklists/service-naming-checklist.md` — quick decision guide
-   - `docs/atomic/architecture/naming-conventions.md` Section 2.3 — 10 serious reasons for 4-part naming
+   - `docs/atomic/architecture/naming/README.md` Section 2.3 — 10 serious reasons for 4-part naming
 5. Read service-specific atomic docs based on services needed AND maturity level:
    - If FastAPI → read `docs/atomic/services/fastapi/*`
    - If Aiogram → read `docs/atomic/services/aiogram/*`
@@ -338,7 +338,7 @@ Please provide these details so I can ensure architecture alignment.
 - `docs/reference/conditional-stage-rules.md` (for sub-stage logic)
 - `docs/guides/use-case-implementation-guide.md`
 - `docs/checklists/service-naming-checklist.md` (MANDATORY)
-- `docs/atomic/architecture/naming-conventions.md` Section 2.3 (MANDATORY)
+- `docs/atomic/architecture/naming/README.md` Section 2.3 (MANDATORY)
 - `docs/atomic/services/**/*` (based on required services AND level)
 - `docs/atomic/integrations/**/*` (based on integrations)
 - `docs/reference/agent-toolbox.md`

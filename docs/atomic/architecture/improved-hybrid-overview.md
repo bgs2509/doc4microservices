@@ -57,7 +57,7 @@ Client → Business Service → HTTP → Data Service → Database
 
 - `docs/atomic/architecture/service-separation-principles.md` — Service boundary definitions and separation rules
 - `docs/atomic/architecture/project-structure-patterns.md` — Repository and module organization
-- `docs/atomic/architecture/naming-conventions.md` — Service and component naming standards
+- `docs/atomic/architecture/naming/README.md` — Service and component naming standards
 - `docs/atomic/architecture/context-registry.md` — Authorized context names for services
 - `docs/atomic/architecture/data-access-architecture.md` — HTTP-only data access patterns
 - `docs/atomic/services/fastapi/basic-setup.md` — FastAPI service implementation

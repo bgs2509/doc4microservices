@@ -45,7 +45,7 @@
 - `docs/guides/architecture-guide.md`
 - `docs/atomic/architecture/improved-hybrid-overview.md`
 - `docs/atomic/architecture/data-access-architecture.md`
-- `docs/atomic/architecture/naming-conventions.md`
+- `docs/atomic/architecture/naming/README.md`
 - `docs/guides/implementation-plan-template.md`
 
 ## Maintenance

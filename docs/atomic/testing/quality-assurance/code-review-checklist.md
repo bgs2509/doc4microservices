@@ -723,4 +723,4 @@ message = "Hello, {}".format(name)  # Personal preference
 - `docs/atomic/testing/quality-assurance/linting-standards.md` — Code linting standards with Ruff
 - `docs/atomic/testing/quality-assurance/type-checking.md` — Static type checking with mypy
 - `docs/atomic/architecture/architecture-principles.md` — Core architecture guidelines
-- `docs/atomic/architecture/naming-conventions.md` — Service and variable naming standards
+- `docs/atomic/architecture/naming/README.md` — Service and variable naming standards

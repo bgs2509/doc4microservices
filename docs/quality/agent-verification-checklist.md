@@ -42,7 +42,7 @@
 |-------|--------|-----------------|----------|--------|
 | Project structure compliance | Review against `docs/reference/project-structure.md` | Files placed correctly |  |  |
 | Shared components usage | Confirm adherence to `docs/guides/shared_components.md` | No duplication or rule violations |  |  |
-| Naming conventions | Spot-check against `docs/atomic/architecture/naming-conventions.md` | No prohibited names |  |  |
+| Naming conventions | Spot-check against `docs/atomic/architecture/naming/README.md` | No prohibited names |  |  |
 | Documentation updates | Ensure relevant docs updated (plans, ADRs, etc.) | Artefacts listed in `docs/reference/deliverables-catalog.md` |  |  |
 
 ## Release Gate

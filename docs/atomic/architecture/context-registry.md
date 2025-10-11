@@ -132,7 +132,7 @@ Before adding a context, verify:
 
 ## Related Documents
 
-- `docs/atomic/architecture/naming-conventions.md` — Comprehensive naming patterns for services
+- `docs/atomic/architecture/naming/README.md` — Comprehensive naming patterns for services
 - `docs/atomic/architecture/service-separation-principles.md` — Service boundary definitions
 - `docs/atomic/architecture/improved-hybrid-overview.md` — Overall architecture approach
 - `docs/guides/template-naming-guide.md` — Template service renaming instructions

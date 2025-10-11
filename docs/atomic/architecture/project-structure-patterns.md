@@ -124,6 +124,6 @@ my_awesome_app/
 
 ## Related Documents
 
-- `docs/atomic/architecture/naming-conventions.md`
+- `docs/atomic/architecture/naming/README.md`
 - `docs/reference/project-structure.md`
 - Legacy reference: `docs/legacy/architecture/ms_best_practices_rules.mdc`
