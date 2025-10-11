@@ -562,8 +562,6 @@ docker exec postgres-replica1 pg_ctl promote
 - [PostgreSQL Basic Setup](../../databases/postgresql/basic-setup.md) - Initial PostgreSQL configuration
 - [Connection Pooling](connection-pooling.md) - Connection management patterns
 - [Performance Optimization](performance-optimization.md) - Query and indexing optimization
-- [Monitoring PostgreSQL](../../observability/monitoring-postgresql.md) - Metrics and alerts
-- [Backup Strategies](../../infrastructure/backup-strategies.md) - Backup and disaster recovery
 - [Maturity Levels](../../../reference/maturity-levels.md) - Level 4 (Production) requirements
 
 ## Production Checklist
