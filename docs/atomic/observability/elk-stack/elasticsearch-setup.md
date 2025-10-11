@@ -16,7 +16,7 @@ version: '3.8'
 
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
@@ -46,7 +46,7 @@ version: '3.8'
 
 services:
   elasticsearch-master:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
     container_name: elasticsearch-master
     environment:
       - node.name=elasticsearch-master
@@ -69,7 +69,7 @@ services:
       - elastic
 
   elasticsearch-data1:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
     container_name: elasticsearch-data1
     environment:
       - node.name=elasticsearch-data1
@@ -90,7 +90,7 @@ services:
       - elastic
 
   elasticsearch-data2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
     container_name: elasticsearch-data2
     environment:
       - node.name=elasticsearch-data2

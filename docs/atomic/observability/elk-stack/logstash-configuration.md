@@ -87,7 +87,7 @@ version: '3.8'
 
 services:
   logstash:
-    image: docker.elastic.co/logstash/logstash:8.11.0
+    image: docker.elastic.co/logstash/logstash:8.15.0
     container_name: logstash
     ports:
       - "5044:5044"  # Beats input
@@ -296,7 +296,7 @@ curl -X GET "http://localhost:9600/_node/hot_threads?pretty"
 # Enable monitoring
 docker run -d \
   -p 9600:9600 \
-  docker.elastic.co/logstash/logstash:8.11.0 \
+  docker.elastic.co/logstash/logstash:8.15.0 \
   -e "xpack.monitoring.enabled=true" \
   -e "xpack.monitoring.elasticsearch.hosts=http://elasticsearch:9200"
 ```

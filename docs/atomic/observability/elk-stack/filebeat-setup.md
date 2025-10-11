@@ -14,7 +14,7 @@ version: '3.8'
 
 services:
   filebeat:
-    image: docker.elastic.co/beats/filebeat:8.11.0
+    image: docker.elastic.co/beats/filebeat:8.15.0
     container_name: filebeat
     user: root
     volumes:
