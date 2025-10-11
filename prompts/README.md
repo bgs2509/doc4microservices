@@ -18,7 +18,7 @@ Reusable prompt templates for:
 Reference prompts using `@` mentions:
 
 ```
-@prompts/documentation_audit.md run full audit
+@prompts/documentation_audit_v2.md run full audit
 ```
 
 ### In Scripts
@@ -27,17 +27,17 @@ Reference prompts from scripts:
 
 ```bash
 # Read prompt template
-cat prompts/documentation_audit.md
+cat prompts/documentation_audit_v2.md
 
 # Use with AI agent
-claude-code "$(cat prompts/documentation_audit.md)"
+claude-code "$(cat prompts/documentation_audit_v2.md)"
 ```
 
 ## Available Prompts
 
 | Prompt | Purpose | When to Use |
 |--------|---------|-------------|
-| `documentation_audit.md` | Comprehensive documentation audit with purpose-alignment focus | Monthly audits, before releases, when docs change |
+| `documentation_audit_v2.md` | Comprehensive documentation audit (v2.1) with Smoke Tests, Execution Protocol, and Config Consistency validation | Monthly audits, before releases, when docs change |
 
 ## Adding New Prompts
 
