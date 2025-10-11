@@ -56,4 +56,3 @@ All services in the platform rely on Python's asynchronous runtimes. Mismanaging
 - `docs/atomic/services/fastapi/lifespan-management.md`
 - `docs/atomic/services/asyncio-workers/signal-handling.md`
 - `docs/atomic/integrations/rabbitmq/asyncio-integration.md`
-- Legacy reference: `docs/legacy/architecture/ms_best_practices_rules.mdc`

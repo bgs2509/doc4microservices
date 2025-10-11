@@ -62,4 +62,3 @@ def build_lifespan(settings: Settings):
 
 - `docs/atomic/services/fastapi/dependency-injection.md`
 - `docs/atomic/architecture/event-loop-management.md`
-- Legacy reference: `docs/legacy/services/fastapi_rules.mdc`

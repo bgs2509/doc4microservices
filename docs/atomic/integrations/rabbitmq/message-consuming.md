@@ -34,4 +34,3 @@ async def consume(queue):
 
 - `docs/atomic/services/asyncio-workers/error-handling.md`
 - `docs/atomic/integrations/rabbitmq/error-handling.md`
-- Legacy reference: `docs/legacy/infrastructure/rabbitmq_rules.mdc`

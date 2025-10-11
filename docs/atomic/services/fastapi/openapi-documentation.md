@@ -53,4 +53,3 @@ async def create_user(...):
 
 - `docs/atomic/services/fastapi/schema-validation.md`
 - `docs/atomic/architecture/improved-hybrid-overview.md`
-- Legacy reference: `docs/legacy/services/fastapi_rules.mdc`

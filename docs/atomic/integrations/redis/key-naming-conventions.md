@@ -31,4 +31,3 @@ Consistent keys prevent collisions and make debugging easier. Follow a three-par
 
 - `docs/atomic/integrations/redis/idempotency-patterns.md`
 - `docs/atomic/integrations/redis/caching-strategies.md`
-- Legacy reference: `docs/legacy/infrastructure/redis_rules.mdc`

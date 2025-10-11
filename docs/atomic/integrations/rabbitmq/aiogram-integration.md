@@ -39,4 +39,3 @@ Handlers receive the channel via dependency injection (`async def handle(message
 
 - `docs/atomic/services/aiogram/dependency-injection.md`
 - `docs/atomic/integrations/rabbitmq/testing-patterns.md`
-- Legacy reference: `docs/legacy/infrastructure/rabbitmq_rules.mdc`

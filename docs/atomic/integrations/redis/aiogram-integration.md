@@ -47,4 +47,3 @@ async def handle_photo(message: Message, redis: Redis) -> None:
 
 - `docs/atomic/services/aiogram/dependency-injection.md`
 - `docs/atomic/integrations/redis/idempotency-patterns.md`
-- Legacy reference: `docs/legacy/infrastructure/redis_rules.mdc`

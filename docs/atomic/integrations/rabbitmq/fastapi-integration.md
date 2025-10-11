@@ -47,4 +47,3 @@ def get_rabbitmq_channel(request: Request) -> Channel:
 
 - `docs/atomic/services/fastapi/lifespan-management.md`
 - `docs/atomic/integrations/rabbitmq/testing-patterns.md`
-- Legacy reference: `docs/legacy/infrastructure/rabbitmq_rules.mdc`

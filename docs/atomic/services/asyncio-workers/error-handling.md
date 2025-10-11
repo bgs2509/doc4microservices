@@ -53,4 +53,3 @@ class PhotoConsumer:
 
 - `docs/atomic/services/asyncio-workers/task-management.md`
 - `docs/atomic/observability/logging/log-correlation.md`
-- Legacy reference: `docs/legacy/services/asyncio_rules.mdc`

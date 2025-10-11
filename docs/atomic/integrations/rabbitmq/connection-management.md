@@ -34,4 +34,3 @@ async def build_connection(url: str):
 
 - `docs/atomic/integrations/rabbitmq/exchange-queue-declaration.md`
 - `docs/atomic/services/asyncio-workers/dependency-management.md`
-- Legacy reference: `docs/legacy/infrastructure/rabbitmq_rules.mdc`

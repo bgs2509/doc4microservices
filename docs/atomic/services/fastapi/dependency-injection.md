@@ -73,4 +73,3 @@ def test_override_user_service() -> None:
 
 - `docs/atomic/services/fastapi/lifespan-management.md`
 - `docs/atomic/architecture/service-separation-principles.md`
-- Legacy reference: `docs/legacy/services/fastapi_rules.mdc`

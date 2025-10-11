@@ -311,6 +311,13 @@ grep -rn "docs/legacy" docs/ | wc -l  # Should be 0
    - Ensure development-commands.md consistent with agent-toolbox.md
    - Test sample commands for syntax correctness
 
+### 15. Obsolete Files & Cleanup (NEW - Maintenance hygiene)
+   - Find backup files (.bak, .backup, *_backup.*)
+   - Identify old version files (.old, *_old.*, *_v1.*)
+   - Detect temporary files (.tmp, ~, .swp, .DS_Store)
+   - Check for duplicate scripts with same functionality
+   - Report files that should be removed or archived
+
 
 ## DELIVERABLES (ENHANCED)
 
@@ -1856,6 +1863,157 @@ fi
 ```
 
 **Expected Outcome**: Shared components documentation report.
+
+### 15. Obsolete Files & Cleanup
+
+**Goal**: Identify backup files, old versions, temp files, and duplicate scripts that should be removed.
+
+**Validation Commands**:
+
+```bash
+# Check for obsolete files
+echo "=== Checking for Obsolete Files ==="
+
+# 1. Backup files
+echo "Step 1: Checking backup files..."
+find . -type f \( -name "*.bak" -o -name "*.backup" -o -name "*_backup.*" -o -name "*~" \) \
+  ! -path "./.git/*" ! -path "./node_modules/*" 2>/dev/null > /tmp/backups.txt
+
+BACKUP_COUNT=$(wc -l < /tmp/backups.txt)
+if [ $BACKUP_COUNT -gt 0 ]; then
+  echo "  ⚠️  Found $BACKUP_COUNT backup files:"
+  cat /tmp/backups.txt | head -10
+  if [ $BACKUP_COUNT -gt 10 ]; then
+    echo "  ... and $((BACKUP_COUNT - 10)) more"
+  fi
+else
+  echo "  ✅ No backup files found"
+fi
+
+# 2. Old version files
+echo "Step 2: Checking old version files..."
+find . -type f \( -name "*.old" -o -name "*_old.*" -o -name "*_v[0-9].*" -o -name "*.deprecated" \) \
+  ! -path "./.git/*" ! -path "./node_modules/*" 2>/dev/null > /tmp/old_versions.txt
+
+OLD_COUNT=$(wc -l < /tmp/old_versions.txt)
+if [ $OLD_COUNT -gt 0 ]; then
+  echo "  ⚠️  Found $OLD_COUNT old version files:"
+  cat /tmp/old_versions.txt | head -10
+  if [ $OLD_COUNT -gt 10 ]; then
+    echo "  ... and $((OLD_COUNT - 10)) more"
+  fi
+else
+  echo "  ✅ No old version files found"
+fi
+
+# 3. Temporary files
+echo "Step 3: Checking temporary files..."
+find . -type f \( -name "*.tmp" -o -name "*.swp" -o -name ".DS_Store" -o -name "Thumbs.db" \) \
+  ! -path "./.git/*" ! -path "./node_modules/*" 2>/dev/null > /tmp/temp_files.txt
+
+TEMP_COUNT=$(wc -l < /tmp/temp_files.txt)
+if [ $TEMP_COUNT -gt 0 ]; then
+  echo "  ⚠️  Found $TEMP_COUNT temporary files:"
+  cat /tmp/temp_files.txt | head -10
+  if [ $TEMP_COUNT -gt 10 ]; then
+    echo "  ... and $((TEMP_COUNT - 10)) more"
+  fi
+else
+  echo "  ✅ No temporary files found"
+fi
+
+# 4. Duplicate scripts (same functionality)
+echo "Step 4: Checking for duplicate scripts..."
+if [ -d "scripts/" ]; then
+  # Look for scripts with similar names/purposes
+  SCRIPTS=$(find scripts/ -type f \( -name "*.sh" -o -name "*.py" \) 2>/dev/null)
+
+  # Check for audit/validate/check duplicates
+  AUDIT_COUNT=$(echo "$SCRIPTS" | grep -iE "audit|validate|check" | wc -l)
+  if [ $AUDIT_COUNT -gt 1 ]; then
+    echo "  ⚠️  Found $AUDIT_COUNT scripts with audit/validate/check functionality:"
+    echo "$SCRIPTS" | grep -iE "audit|validate|check"
+    echo "  ℹ️  Manual review recommended to identify duplicates"
+  else
+    echo "  ✅ No obvious duplicate scripts found"
+  fi
+else
+  echo "  ℹ️  No scripts/ directory found"
+fi
+
+# 5. Summary
+echo ""
+echo "=== OBSOLETE FILES SUMMARY ==="
+echo "Backup files: $BACKUP_COUNT"
+echo "Old versions: $OLD_COUNT"
+echo "Temp files: $TEMP_COUNT"
+echo "Scripts to review: $AUDIT_COUNT"
+echo ""
+
+TOTAL_OBSOLETE=$((BACKUP_COUNT + OLD_COUNT + TEMP_COUNT))
+if [ $TOTAL_OBSOLETE -gt 0 ]; then
+  echo "⚠️  Total obsolete files: $TOTAL_OBSOLETE (recommend cleanup)"
+else
+  echo "✅ No obsolete files found - project is clean!"
+fi
+```
+
+**Expected Outcome**: Obsolete files report with recommendations for cleanup.
+
+**Priority Assignment**:
+- Backup files: **MEDIUM** (clutter, confusion about which is current)
+- Old versions: **MEDIUM** (git already keeps history)
+- Temp files: **LOW** (usually ignored, but bloat repo size)
+- Duplicate scripts: **MEDIUM** (maintenance overhead)
+
+**Impact**:
+- Backup files confuse contributors ("which file is current?")
+- Old versions are redundant (git history keeps all versions)
+- Temp files increase repository size unnecessarily
+- Duplicate scripts create maintenance burden
+
+**Fix Commands**:
+
+```bash
+# IMPORTANT: Review files before deletion!
+# List files first:
+cat /tmp/backups.txt
+cat /tmp/old_versions.txt
+cat /tmp/temp_files.txt
+
+# If safe to delete:
+
+# Remove backup files
+while read -r file; do
+  echo "Removing backup: $file"
+  rm "$file"
+done < /tmp/backups.txt
+
+# Remove old versions
+while read -r file; do
+  echo "Removing old version: $file"
+  rm "$file"
+done < /tmp/old_versions.txt
+
+# Remove temporary files
+while read -r file; do
+  echo "Removing temp file: $file"
+  rm "$file"
+done < /tmp/temp_files.txt
+
+# For duplicate scripts: rename old one
+# Example:
+mv scripts/old_audit.sh scripts/old_audit.sh.deprecated
+```
+
+**Verification**:
+
+```bash
+# Re-run checks - should show 0 files
+find . -name "*.bak" ! -path "./.git/*" | wc -l  # Expected: 0
+find . -name "*.old" ! -path "./.git/*" | wc -l  # Expected: 0
+find . -name "*.tmp" ! -path "./.git/*" | wc -l  # Expected: 0
+```
 
 ---
 

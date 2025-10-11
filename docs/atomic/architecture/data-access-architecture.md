@@ -63,4 +63,3 @@ Data services encapsulate all database interactions and expose domain-specific H
 - `docs/atomic/services/data-services/postgres-service-setup.md`
 - `docs/atomic/services/data-services/mongo-service-setup.md`
 - `docs/atomic/integrations/http-communication/http-client-patterns.md`
-- Legacy reference: `docs/legacy/architecture/data-access-rules.mdc`

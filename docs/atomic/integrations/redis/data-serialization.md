@@ -38,4 +38,3 @@ async def read_json(redis, key: str) -> Any | None:
 
 - `docs/atomic/integrations/redis/caching-strategies.md`
 - `docs/atomic/services/data-services/repository-patterns.md`
-- Legacy reference: `docs/legacy/infrastructure/redis_rules.mdc`

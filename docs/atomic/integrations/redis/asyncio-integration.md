@@ -34,4 +34,3 @@ async def process_event(event, redis):
 
 - `docs/atomic/services/asyncio-workers/dependency-management.md`
 - `docs/atomic/integrations/redis/testing-patterns.md`
-- Legacy reference: `docs/legacy/infrastructure/redis_rules.mdc`

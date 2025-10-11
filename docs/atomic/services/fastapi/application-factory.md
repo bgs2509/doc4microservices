@@ -73,4 +73,3 @@ def test_health_endpoint() -> None:
 
 - `docs/atomic/services/fastapi/lifespan-management.md`
 - `docs/atomic/architecture/project-structure-patterns.md`
-- Legacy reference: `docs/legacy/services/fastapi_rules.mdc`

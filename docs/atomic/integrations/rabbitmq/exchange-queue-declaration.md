@@ -40,4 +40,3 @@ async def ensure_topology(channel):
 
 - `docs/atomic/integrations/rabbitmq/message-publishing.md`
 - `docs/atomic/integrations/rabbitmq/message-consuming.md`
-- Legacy reference: `docs/legacy/infrastructure/rabbitmq_rules.mdc`

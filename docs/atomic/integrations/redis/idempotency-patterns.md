@@ -33,4 +33,3 @@ async def check_idempotency(redis, key: str, ttl: int = 3600) -> bool:
 
 - `docs/atomic/integrations/redis/key-naming-conventions.md`
 - `docs/atomic/services/fastapi/performance-optimization.md`
-- Legacy reference: `docs/legacy/infrastructure/redis_rules.mdc`

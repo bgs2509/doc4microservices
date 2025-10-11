@@ -59,4 +59,3 @@ dp.update.middleware(RequestIDMiddleware())
 
 - `docs/atomic/services/aiogram/handler-patterns.md`
 - `docs/atomic/observability/logging/request-id-tracking.md`
-- Legacy reference: `docs/legacy/services/aiogram_rules.mdc`

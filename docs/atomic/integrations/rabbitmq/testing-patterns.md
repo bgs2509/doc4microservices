@@ -28,4 +28,3 @@ Verify messaging behaviour using a mix of fakes and live brokers.
 
 - `docs/atomic/testing/integration-testing/rabbitmq-testing.md`
 - `docs/atomic/integrations/rabbitmq/error-handling.md`
-- Legacy reference: `docs/legacy/infrastructure/rabbitmq_rules.mdc`

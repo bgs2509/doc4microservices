@@ -113,7 +113,6 @@ def bad_example():
 
 - `docs/atomic/{category}/{related-file}.md` — Brief description of what this related doc covers
 - `docs/atomic/{category}/{another-related-file}.md` — Brief description of what this related doc covers
-- Legacy reference: `docs/legacy/{old-file}.mdc` — (if applicable, when migrating from old documentation)
 
 > **TIP**:
 > - Architecture docs → link to service setup docs that implement the principles

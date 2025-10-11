@@ -62,4 +62,3 @@ if __name__ == "__main__":
 
 - `docs/atomic/services/asyncio-workers/main-function-patterns.md`
 - `docs/atomic/architecture/event-loop-management.md`
-- Legacy reference: `docs/legacy/services/asyncio_rules.mdc`

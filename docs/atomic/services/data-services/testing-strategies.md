@@ -35,4 +35,3 @@ Data services must prove correctness across repositories, HTTP endpoints, and in
 
 - `docs/atomic/testing/integration-testing/database-testing.md`
 - `docs/atomic/services/data-services/http-api-design.md`
-- Legacy reference: `docs/legacy/architecture/data-access-rules.mdc`

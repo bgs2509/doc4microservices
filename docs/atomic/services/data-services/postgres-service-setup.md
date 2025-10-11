@@ -61,4 +61,3 @@ Use lifespan to create engine/session factory once and inject sessions per reque
 
 - `docs/atomic/services/data-services/repository-patterns.md`
 - `docs/atomic/services/data-services/transaction-management.md`
-- Legacy reference: `docs/legacy/architecture/data-access-rules.mdc`

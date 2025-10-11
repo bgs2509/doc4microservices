@@ -28,4 +28,3 @@ Testing ensures Redis usage remains correct across services.
 
 - `docs/atomic/testing/integration-testing/redis-testing.md`
 - `docs/atomic/integrations/redis/idempotency-patterns.md`
-- Legacy reference: `docs/legacy/infrastructure/redis_rules.mdc`

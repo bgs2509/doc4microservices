@@ -47,4 +47,3 @@ async def test_create_user_returns_201(fastapi_client, fake_user_service):
 
 - `docs/atomic/testing/integration-testing/http-integration-testing.md`
 - `docs/atomic/architecture/quality-standards.md`
-- Legacy reference: `docs/legacy/services/fastapi_rules.mdc`

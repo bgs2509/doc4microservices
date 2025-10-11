@@ -33,4 +33,3 @@ Redis accelerates read-heavy workflows and rate limiting. Choose caching tactics
 
 - `docs/atomic/integrations/http-communication/timeout-retry-patterns.md`
 - `docs/atomic/services/data-services/http-api-design.md`
-- Legacy reference: `docs/legacy/infrastructure/redis_rules.mdc`

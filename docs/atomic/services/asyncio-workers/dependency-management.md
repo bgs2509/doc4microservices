@@ -48,4 +48,3 @@ async def build_dependencies(settings: Settings, stack: AsyncExitStack) -> Depen
 
 - `docs/atomic/services/asyncio-workers/task-management.md`
 - `docs/atomic/services/asyncio-workers/error-handling.md`
-- Legacy reference: `docs/legacy/services/asyncio_rules.mdc`

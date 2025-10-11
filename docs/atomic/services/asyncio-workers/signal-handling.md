@@ -52,4 +52,3 @@ finally:
 
 - `docs/atomic/services/asyncio-workers/task-management.md`
 - `docs/atomic/observability/logging/structured-logging.md`
-- Legacy reference: `docs/legacy/services/asyncio_rules.mdc`

@@ -32,4 +32,3 @@ class PhotoReceivedEvent(BaseModel):
 
 - `docs/atomic/services/data-services/repository-patterns.md`
 - `docs/atomic/architecture/ddd-hexagonal-principles.md`
-- Legacy reference: `docs/legacy/infrastructure/rabbitmq_rules.mdc`

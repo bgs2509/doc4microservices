@@ -39,4 +39,3 @@ Error responses follow Problem Details (`error-handling.md`).
 
 - `docs/atomic/services/data-services/testing-strategies.md`
 - `docs/atomic/integrations/http-communication/business-to-data-calls.md`
-- Legacy reference: `docs/legacy/architecture/data-access-rules.mdc`

@@ -51,4 +51,3 @@ See `webhook-configuration.md` for production webhook setups when polling is not
 
 - `docs/atomic/services/aiogram/dependency-injection.md`
 - `docs/atomic/architecture/event-loop-management.md`
-- Legacy reference: `docs/legacy/services/aiogram_rules.mdc`

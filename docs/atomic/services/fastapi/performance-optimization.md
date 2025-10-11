@@ -36,4 +36,3 @@ Tune FastAPI services for predictable latency and throughput while avoiding prem
 
 - `docs/atomic/architecture/quality-standards.md`
 - `docs/atomic/services/fastapi/testing-strategies.md`
-- Legacy reference: `docs/legacy/services/fastapi_rules.mdc`

@@ -65,4 +65,3 @@ async def list_users(...):
 
 - `docs/atomic/services/fastapi/error-handling.md`
 - `docs/atomic/testing/unit-testing/fixture-patterns.md`
-- Legacy reference: `docs/legacy/services/fastapi_rules.mdc`

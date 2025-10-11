@@ -36,4 +36,3 @@ async def publish_photo_received(exchange, payload, request_id: str) -> None:
 
 - `docs/atomic/integrations/rabbitmq/dto-contracts.md`
 - `docs/atomic/integrations/rabbitmq/idempotency-patterns.md`
-- Legacy reference: `docs/legacy/infrastructure/rabbitmq_rules.mdc`

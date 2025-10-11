@@ -51,4 +51,3 @@ async def handle_photo(
 
 - `docs/atomic/services/aiogram/dependency-injection.md`
 - `docs/atomic/services/aiogram/testing-strategies.md`
-- Legacy reference: `docs/legacy/services/aiogram_rules.mdc`

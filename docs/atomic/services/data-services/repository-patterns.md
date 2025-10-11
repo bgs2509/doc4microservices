@@ -66,4 +66,3 @@ class AnalyticsRepository:
 
 - `docs/atomic/services/data-services/transaction-management.md`
 - `docs/atomic/architecture/ddd-hexagonal-principles.md`
-- Legacy reference: `docs/legacy/architecture/data-access-rules.mdc`

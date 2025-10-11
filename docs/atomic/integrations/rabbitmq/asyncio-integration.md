@@ -33,4 +33,3 @@ async def bootstrap_rabbitmq(url: str):
 
 - `docs/atomic/services/asyncio-workers/main-function-patterns.md`
 - `docs/atomic/integrations/rabbitmq/testing-patterns.md`
-- Legacy reference: `docs/legacy/infrastructure/rabbitmq_rules.mdc`

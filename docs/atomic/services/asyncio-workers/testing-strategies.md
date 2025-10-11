@@ -38,4 +38,3 @@ async def test_process_photo_retries_on_recoverable_error(fake_deps, photo_consu
 
 - `docs/atomic/testing/service-testing/asyncio-testing-patterns.md`
 - `docs/atomic/services/asyncio-workers/error-handling.md`
-- Legacy reference: `docs/legacy/services/asyncio_rules.mdc`

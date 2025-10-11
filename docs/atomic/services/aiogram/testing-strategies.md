@@ -37,4 +37,3 @@ async def test_handle_photo_publishes_event(fake_message, fake_redis, fake_rabbi
 
 - `docs/atomic/testing/service-testing/aiogram-testing-patterns.md`
 - `docs/atomic/architecture/quality-standards.md`
-- Legacy reference: `docs/legacy/services/aiogram_rules.mdc`

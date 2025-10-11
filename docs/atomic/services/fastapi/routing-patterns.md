@@ -63,4 +63,3 @@ async def create_user(
 
 - `docs/atomic/services/fastapi/schema-validation.md`
 - `docs/atomic/services/fastapi/error-handling.md`
-- Legacy reference: `docs/legacy/services/fastapi_rules.mdc`

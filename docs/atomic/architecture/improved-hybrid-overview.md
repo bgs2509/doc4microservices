@@ -62,4 +62,3 @@ Client → Business Service → HTTP → Data Service → Database
 - `docs/atomic/architecture/data-access-architecture.md` — HTTP-only data access patterns
 - `docs/atomic/services/fastapi/basic-setup.md` — FastAPI service implementation
 - `docs/atomic/infrastructure/docker-compose.md` — Container orchestration setup
-- Legacy context: `docs/legacy/architecture/ms_best_practices_rules.mdc`

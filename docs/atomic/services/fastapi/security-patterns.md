@@ -52,4 +52,3 @@ async def require_user(token: str = Security(reusable_oauth2)) -> CurrentUser:
 
 - `docs/atomic/services/fastapi/error-handling.md`
 - `docs/atomic/architecture/quality-standards.md`
-- Legacy reference: `docs/legacy/services/fastapi_rules.mdc`

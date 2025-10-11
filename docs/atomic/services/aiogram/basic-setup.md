@@ -81,4 +81,3 @@ if __name__ == "__main__":
 
 - `docs/atomic/services/aiogram/bot-initialization.md`
 - `docs/atomic/architecture/service-separation-principles.md`
-- Legacy reference: `docs/legacy/services/aiogram_rules.mdc`

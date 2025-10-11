@@ -56,4 +56,3 @@ async def receive_caption(message: Message, state: FSMContext) -> None:
 
 - `docs/atomic/services/aiogram/dependency-injection.md`
 - `docs/atomic/integrations/redis/key-naming-conventions.md`
-- Legacy reference: `docs/legacy/services/aiogram_rules.mdc`

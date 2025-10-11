@@ -52,4 +52,3 @@ Quality is enforced through automated gates and manual reviews. This document su
 - `docs/atomic/testing/*`
 - `docs/atomic/observability/*`
 - `docs/atomic/architecture/service-separation-principles.md`
-- Legacy reference: `docs/legacy/quality/testing-standards.mdc`

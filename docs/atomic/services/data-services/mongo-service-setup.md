@@ -52,4 +52,3 @@ Use lifespan to connect/disconnect the client. Expose specific databases/collect
 
 - `docs/atomic/services/data-services/repository-patterns.md`
 - `docs/atomic/services/data-services/http-api-design.md`
-- Legacy reference: `docs/legacy/architecture/data-access-rules.mdc`

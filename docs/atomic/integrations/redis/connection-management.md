@@ -41,4 +41,3 @@ def build_redis(url: str) -> Redis:
 
 - `docs/atomic/integrations/redis/key-naming-conventions.md`
 - `docs/atomic/services/fastapi/dependency-injection.md`
-- Legacy reference: `docs/legacy/infrastructure/redis_rules.mdc`

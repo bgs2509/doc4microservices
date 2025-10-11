@@ -65,4 +65,3 @@ app.add_exception_handler(NotFoundError, not_found_handler)
 
 - `docs/atomic/observability/logging/structured-logging.md`
 - `docs/atomic/services/fastapi/security-patterns.md`
-- Legacy reference: `docs/legacy/services/fastapi_rules.mdc`

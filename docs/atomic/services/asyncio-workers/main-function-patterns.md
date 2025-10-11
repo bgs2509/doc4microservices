@@ -48,4 +48,3 @@ async def main() -> None:
 
 - `docs/atomic/services/asyncio-workers/signal-handling.md`
 - `docs/atomic/services/asyncio-workers/task-management.md`
-- Legacy reference: `docs/legacy/services/asyncio_rules.mdc`

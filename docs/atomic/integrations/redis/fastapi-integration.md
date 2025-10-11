@@ -50,4 +50,3 @@ def get_redis(app = Depends()) -> Redis:
 
 - `docs/atomic/services/fastapi/dependency-injection.md`
 - `docs/atomic/integrations/redis/testing-patterns.md`
-- Legacy reference: `docs/legacy/infrastructure/redis_rules.mdc`

@@ -48,4 +48,3 @@ async def stop_tasks(tasks: Iterable[asyncio.Task[None]]) -> None:
 
 - `docs/atomic/services/asyncio-workers/error-handling.md`
 - `docs/atomic/architecture/event-loop-management.md`
-- Legacy reference: `docs/legacy/services/asyncio_rules.mdc`

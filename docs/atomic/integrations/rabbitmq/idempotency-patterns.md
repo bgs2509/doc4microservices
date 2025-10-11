@@ -30,4 +30,3 @@ async def process_event(event, redis):
 
 - `docs/atomic/integrations/redis/idempotency-patterns.md`
 - `docs/atomic/services/asyncio-workers/task-management.md`
-- Legacy reference: `docs/legacy/infrastructure/rabbitmq_rules.mdc`

@@ -132,4 +132,3 @@ class HealthResponse(BaseModel):
 
 - `docs/atomic/services/fastapi/application-factory.md`
 - `docs/atomic/architecture/service-separation-principles.md`
-- Legacy reference: `docs/legacy/services/fastapi_rules.mdc`

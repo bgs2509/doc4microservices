@@ -57,4 +57,3 @@ The Improved Hybrid Approach relies on Domain-Driven Design (DDD) and Hexagonal 
 - `docs/atomic/architecture/project-structure-patterns.md`
 - `docs/atomic/services/fastapi/application-factory.md`
 - `docs/atomic/services/data-services/repository-patterns.md`
-- Legacy reference: `docs/legacy/architecture/ms_best_practices_rules.mdc`

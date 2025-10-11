@@ -53,4 +53,3 @@ Run webhook server with Uvicorn/Gunicorn; polling must be disabled.
 
 - `docs/atomic/services/aiogram/bot-initialization.md`
 - `docs/atomic/services/aiogram/handler-patterns.md`
-- Legacy reference: `docs/legacy/services/aiogram_rules.mdc`

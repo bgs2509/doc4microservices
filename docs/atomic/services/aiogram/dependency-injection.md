@@ -59,4 +59,3 @@ Aiogram injects dependency values into handler parameters using the keys returne
 
 - `docs/atomic/services/aiogram/middleware-setup.md`
 - `docs/atomic/services/aiogram/testing-strategies.md`
-- Legacy reference: `docs/legacy/services/aiogram_rules.mdc`

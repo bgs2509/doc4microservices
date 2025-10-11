@@ -38,4 +38,3 @@ async def handle_payload(message: IncomingMessage) -> None:
 
 - `docs/atomic/services/asyncio-workers/error-handling.md`
 - `docs/atomic/integrations/rabbitmq/idempotency-patterns.md`
-- Legacy reference: `docs/legacy/infrastructure/rabbitmq_rules.mdc`

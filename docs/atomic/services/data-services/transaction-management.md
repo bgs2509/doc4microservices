@@ -58,4 +58,3 @@ async with await client.start_session() as session:
 
 - `docs/atomic/services/data-services/repository-patterns.md`
 - `docs/atomic/services/data-services/testing-strategies.md`
-- Legacy reference: `docs/legacy/architecture/data-access-rules.mdc`

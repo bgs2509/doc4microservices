@@ -57,4 +57,3 @@ This guide defines the boundaries between business, data, and platform services 
 - `docs/atomic/architecture/context-registry.md` — Authorized context names
 - `docs/atomic/services/fastapi/dependency-injection.md` — DI patterns for FastAPI
 - `docs/atomic/data-flow/http-communication.md` — Inter-service HTTP patterns
-- Legacy reference: `docs/legacy/architecture/ms_best_practices_rules.mdc`
