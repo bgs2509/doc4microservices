@@ -31,7 +31,7 @@
 | Check | Command | Expected Result | Evidence | Status |
 |-------|---------|-----------------|----------|--------|
 | Full test suite | `uv run pytest` or plan-specific command | Tests pass |  |  |
-| Coverage threshold | `uv run pytest --cov=app --cov-report=html --cov-report=xml` | Coverage meets **level-specific threshold**:<br>• Level 1: ≥ 60%<br>• Level 2: ≥ 75%<br>• Level 3: ≥ 80%<br>• Level 4: ≥ 85%<br><br>**Reference**: See `docs/reference/maturity-levels.md` (SSOT) |  |  |
+| Coverage threshold | `uv run pytest --cov=src --cov-report=html --cov-report=xml` | Coverage meets **level-specific threshold**:<br>• Level 1: ≥ 60%<br>• Level 2: ≥ 75%<br>• Level 3: ≥ 80%<br>• Level 4: ≥ 85%<br><br>**Reference**: See `docs/reference/maturity-levels.md` (SSOT) |  |  |
 | Coverage artefacts | Inspect `htmlcov/`, `coverage.xml` | Reports generated |  |  |
 
 **Note**: Coverage thresholds are defined in `docs/reference/maturity-levels.md` (Single Source of Truth). If thresholds change, update only maturity-levels.md; this document references it.

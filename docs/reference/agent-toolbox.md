@@ -42,7 +42,7 @@
 | `uv run ruff format . --check` | none | Dependencies installed | Formatting check status | Verify formatting without changes | `docs/guides/development-commands.md` ("Code Quality Commands") |
 | `uv run mypy .` | none | Dependencies installed | Type-check report | Ensure static typing compliance | `docs/guides/development-commands.md` ("Code Quality Commands") |
 | `uv run bandit -r .` | none | Dependencies installed | Security scan report | Detect common security issues | `docs/guides/development-commands.md` ("Code Quality Commands") |
-| `uv run pytest --cov=app --cov-report=html --cov-report=xml` | optional `-k`, `-n` | Test suite available | Test results + coverage artefacts | Run tests with coverage before delivery | `docs/guides/development-commands.md` ("Testing Commands") |
+| `uv run pytest --cov=src --cov-report=html --cov-report=xml` | optional `-k`, `-n` | Test suite available | Test results + coverage artefacts | Run tests with coverage before delivery | `docs/guides/development-commands.md` ("Testing Commands") |
 
 ## Release & Recovery
 

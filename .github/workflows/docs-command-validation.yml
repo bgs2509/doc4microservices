@@ -1,0 +1,97 @@
+name: Documentation Command Validation
+
+# Purpose: Prevent regression of command path issues in documentation
+# Validates that coverage commands use correct --cov=src (not --cov=app)
+# Related: Problem #11 from documentation audit (Critical - Silent Failure Pattern)
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**/*.md'
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - 'docs/**/*.md'
+
+jobs:
+  validate-coverage-commands:
+    name: Validate Coverage Command Paths
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for incorrect --cov=app pattern
+        id: check_cov_app
+        run: |
+          echo "=== Checking for --cov=app pattern in documentation ==="
+          if grep -r "\-\-cov=app" docs/; then
+            echo ""
+            echo "❌ VALIDATION FAILED"
+            echo "Found --cov=app in documentation (should be --cov=src)"
+            echo ""
+            echo "Why this is critical:"
+            echo "• Templates use src/ directory structure (NOT app/)"
+            echo "• --cov=app returns 0% coverage (silent failure)"
+            echo "• Blocks AI agent Stage 5 verification"
+            echo ""
+            echo "Fix: Replace all --cov=app with --cov=src"
+            exit 1
+          else
+            echo "✅ VALIDATION PASSED: No --cov=app found"
+          fi
+
+      - name: Verify correct --cov=src usage
+        if: success()
+        run: |
+          echo "=== Confirming --cov=src is present ==="
+          COUNT=$(grep -r "\-\-cov=src" docs/ | wc -l)
+          echo "Found $COUNT occurrences of --cov=src"
+
+          if [ "$COUNT" -lt 6 ]; then
+            echo "⚠️ WARNING: Expected at least 6 occurrences of --cov=src"
+            echo "Found only $COUNT occurrences"
+            echo "This might indicate missing coverage commands in documentation"
+          else
+            echo "✅ CONFIRMED: Correct coverage command usage"
+          fi
+
+      - name: Validate command consistency across files
+        if: success()
+        run: |
+          echo "=== Checking command consistency ==="
+          echo ""
+          echo "Files with coverage commands:"
+          grep -rl "\-\-cov=" docs/ | sort
+          echo ""
+          echo "Ensuring all files use consistent --cov=src pattern..."
+
+          # Check if any file mixes --cov=app and --cov=src
+          for file in $(grep -rl "\-\-cov=" docs/); do
+            if grep -q "\-\-cov=app" "$file" 2>/dev/null; then
+              echo "❌ FAILED: $file contains --cov=app"
+              exit 1
+            fi
+          done
+
+          echo "✅ PASSED: All files use consistent --cov=src"
+
+      - name: Documentation validation summary
+        if: always()
+        run: |
+          echo ""
+          echo "=== Validation Summary ==="
+          echo "Validation Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+          echo "Checked Files: docs/**/*.md"
+          echo ""
+          echo "Critical Pattern Checks:"
+          echo "• --cov=app (prohibited): $(grep -r "\-\-cov=app" docs/ 2>/dev/null | wc -l) occurrences"
+          echo "• --cov=src (required): $(grep -r "\-\-cov=src" docs/ 2>/dev/null | wc -l) occurrences"
+          echo ""
+          echo "Related Documentation:"
+          echo "• Canonical Commands: docs/guides/development-commands.md"
+          echo "• Agent Verification: docs/quality/agent-verification-checklist.md"
+          echo "• Agent Toolbox: docs/reference/agent-toolbox.md"

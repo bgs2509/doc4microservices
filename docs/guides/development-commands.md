@@ -232,7 +232,7 @@ uv run ruff check . && uv run ruff format . --check && uv run mypy . && uv run b
 uv run pytest
 
 # Run with coverage
-uv run pytest --cov=app --cov-report=html --cov-report=xml
+uv run pytest --cov=src --cov-report=html --cov-report=xml
 
 # Run specific test categories
 uv run pytest tests/unit/              # Unit tests only
@@ -249,14 +249,14 @@ uv run pytest -n auto
 ### Coverage Analysis
 ```bash
 # Generate HTML coverage report
-uv run pytest --cov=app --cov-report=html
+uv run pytest --cov=src --cov-report=html
 open htmlcov/index.html
 
 # Coverage with missing lines
-uv run pytest --cov=app --cov-report=term-missing
+uv run pytest --cov=src --cov-report=term-missing
 
 # Set coverage threshold
-uv run pytest --cov=app --cov-fail-under=80
+uv run pytest --cov=src --cov-fail-under=80
 ```
 
 > **Target**: 100% test coverage for critical paths
