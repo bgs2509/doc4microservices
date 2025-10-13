@@ -4,7 +4,7 @@ Define and enforce test coverage standards to ensure code quality and reduce pro
 
 This document establishes coverage targets, configuration patterns, and enforcement strategies for Python services in this platform. Proper coverage tracking helps identify untested code paths, supports refactoring confidence, and serves as a quality gate in CI/CD pipelines.
 
-Coverage requirements differ by maturity level: PoC projects may skip coverage entirely, Development projects should target 60%+, Pre-Production 70%+, and Production-ready services must maintain 80%+ coverage with strict enforcement.
+Coverage requirements differ by maturity level: PoC projects may skip coverage entirely, Development projects should target 60%+, Pre-Production 75%+, and Production-ready services must maintain 80%+ coverage with strict enforcement. **See `docs/reference/maturity-levels.md` for definitive thresholds per level.**
 
 ## Configuration
 
@@ -83,10 +83,12 @@ output = coverage.xml
 
 | Maturity Level | Minimum Coverage | Enforcement | Typical Use Case |
 |----------------|------------------|-------------|------------------|
-| **PoC** | 0% (optional) | None | Proof of concept, rapid prototyping |
-| **Development** | 60%+ | Warning only | Active development, MVP |
-| **Pre-Production** | 70%+ | CI warning | Staging, beta testing |
-| **Production** | 80%+ | **CI failure** | Production services |
+| **Level 1: PoC** | ≥ 60% | None | Proof of concept, rapid prototyping |
+| **Level 2: Development** | ≥ 75% | Warning only | Active development, MVP |
+| **Level 3: Pre-Production** | ≥ 80% | CI warning | Staging, beta testing |
+| **Level 4: Production** | ≥ 85% | **CI failure** | Production services |
+
+> **SSOT**: See `docs/reference/maturity-levels.md` for authoritative thresholds.
 
 ### CORRECT: Production Coverage Enforcement
 
