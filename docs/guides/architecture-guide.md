@@ -163,6 +163,8 @@ These constraints are **NON-NEGOTIABLE** and must be followed in all implementat
 - **Caching**: Redis for all service types (idempotency, cache, sessions)
 - **Tracing**: Request ID and OpenTelemetry trace propagation
 
+> **DETAILED SEPARATION PRINCIPLES**: For comprehensive service separation rationale, patterns, and anti-patterns, see [Service Separation Principles](../atomic/architecture/service-separation-principles.md).
+
 ---
 
 ## Data Access Architecture
@@ -189,6 +191,8 @@ The Improved Hybrid Approach uses dedicated data services to centralize all data
 - **No Direct Database Connections**: Business services never connect directly to databases
 - **Request Context**: All requests include request_id and user_id for tracing
 - **Error Handling**: Proper HTTP status code handling and retry logic
+
+> **WHY THIS MATTERS**: The separation of business and data services is a core architectural principle. For the complete rationale, patterns, and common pitfalls, see [Service Separation Principles](../atomic/architecture/service-separation-principles.md).
 
 ### Data Access Patterns
 
