@@ -29,17 +29,17 @@
 | **4.2** | **Data Layer (PostgreSQL)** | **ALL** | • `docs/atomic/services/data-services/postgres-service-setup.md`<br>• `docs/atomic/databases/postgresql/sqlalchemy-integration.md` | • PostgreSQL service<br>• Models, repositories<br>• HTTP API<br>• Migrations | • Data service health checks pass<br>• HTTP API functional |
 | **4.2b** | **+ MongoDB (optional)** | **IF user requested** | • `docs/atomic/services/data-services/mongo-service-setup.md` | • MongoDB service | • MongoDB API functional |
 | **4.3** | **Business Logic (Core)** | **ALL** | • `docs/atomic/services/fastapi/application-factory.md`<br>• `docs/atomic/services/fastapi/routing-patterns.md`<br>• `docs/atomic/services/fastapi/dependency-injection.md`<br>• `docs/atomic/services/fastapi/schema-validation.md`<br>• `docs/atomic/services/fastapi/error-handling.md`<br>• `docs/atomic/architecture/ddd-hexagonal-principles.md`<br>• `docs/atomic/integrations/http-communication/business-to-data-calls.md` | **Domain Layer**:<br>• Entities, Value objects<br><br>**Application Layer**:<br>• Use cases, DTOs<br><br>**Infrastructure Layer**:<br>• HTTP clients (to data services)<br><br>**API Layer**:<br>• FastAPI routers<br>• Request/response schemas | • API endpoints functional<br>• HTTP-only data access verified |
-| **4.3b** | **+ Structured Logging** | **≥ Level 2** | • `docs/atomic/observability/logging/structured-logging.md`<br>• `docs/atomic/observability/logging/context-propagation.md` | • Logger setup<br>• Request ID propagation<br>• Error logging | • Logs are structured JSON<br>• Correlation IDs present |
-| **4.3c** | **+ Prometheus Metrics** | **≥ Level 3** | • `docs/atomic/observability/metrics/prometheus-integration.md`<br>• `docs/atomic/observability/metrics/custom-metrics.md` | • Metrics endpoints<br>• Custom business metrics | • `/metrics` endpoint works<br>• Grafana dashboards |
-| **4.3d** | **+ OAuth/JWT + Tracing** | **Level 4 only** | • `docs/atomic/services/fastapi/oauth-jwt.md`<br>• `docs/atomic/observability/tracing/jaeger-integration.md` | • OAuth 2.0 / JWT auth<br>• RBAC middleware<br>• Distributed tracing | • Auth functional<br>• Traces visible in Jaeger |
+| **4.3b** | **+ Structured Logging** | **≥ Level 2** | • `docs/atomic/observability/logging/structured-logging.md`<br>• `docs/atomic/observability/logging/log-correlation.md` | • Logger setup<br>• Request ID propagation<br>• Error logging | • Logs are structured JSON<br>• Correlation IDs present |
+| **4.3c** | **+ Prometheus Metrics** | **≥ Level 3** | • `docs/atomic/observability/metrics/prometheus-setup.md`<br>• `docs/atomic/observability/metrics/custom-metrics.md` | • Metrics endpoints<br>• Custom business metrics | • `/metrics` endpoint works<br>• Grafana dashboards |
+| **4.3d** | **+ OAuth/JWT + Tracing** | **Level 4 only** | • `docs/atomic/services/fastapi/oauth-jwt.md` *(TODO: not yet created)*<br>• `docs/atomic/observability/tracing/jaeger-configuration.md` | • OAuth 2.0 / JWT auth<br>• RBAC middleware<br>• Distributed tracing | • Auth functional<br>• Traces visible in Jaeger |
 | **4.4** | **Background Workers (optional)** | **IF user requested** | • `docs/atomic/services/asyncio-workers/basic-setup.md`<br>• `docs/atomic/services/asyncio-workers/main-function-patterns.md`<br>• `docs/atomic/services/asyncio-workers/signal-handling.md`<br>• `docs/atomic/integrations/rabbitmq/message-consuming.md` | • Worker implementations<br>• RabbitMQ consumers<br>• Main entrypoint with signal handling | • Workers start successfully<br>• Event consumption working |
-| **4.4b** | **+ Structured Logging (Workers)** | **≥ Level 2 AND Workers requested** | • `docs/atomic/observability/logging/worker-logging.md` | • Worker logger setup | • Worker logs structured |
+| **4.4b** | **+ Structured Logging (Workers)** | **≥ Level 2 AND Workers requested** | • `docs/atomic/observability/logging/structured-logging.md` *(adapted for workers)* | • Worker logger setup | • Worker logs structured |
 | **4.5** | **Telegram Bot (optional)** | **IF user requested** | • `docs/atomic/services/aiogram/basic-setup.md`<br>• `docs/atomic/services/aiogram/bot-initialization.md`<br>• `docs/atomic/services/aiogram/handler-patterns.md`<br>• `docs/atomic/integrations/rabbitmq/aiogram-integration.md` | • Bot handlers (commands, messages)<br>• RabbitMQ event listeners<br>• Main entrypoint | • Bot responds to commands<br>• Event-based notifications working |
-| **4.5b** | **+ Structured Logging (Bot)** | **≥ Level 2 AND Bot requested** | • `docs/atomic/observability/logging/bot-logging.md` | • Bot logger setup | • Bot logs structured |
+| **4.5b** | **+ Structured Logging (Bot)** | **≥ Level 2 AND Bot requested** | • `docs/atomic/observability/logging/structured-logging.md` *(adapted for bots)* | • Bot logger setup | • Bot logs structured |
 | **4.6** | **Testing (Basic)** | **ALL** | • `docs/atomic/testing/unit-testing/pytest-setup.md`<br>• `docs/atomic/testing/unit-testing/fixture-patterns.md`<br>• `docs/atomic/testing/service-testing/fastapi-testing-patterns.md` | • `pytest.ini`<br>• `conftest.py`<br>• Unit tests (core layers)<br>• Service tests | • All tests pass<br>• Coverage ≥ 60% (Level 1) |
 | **4.6b** | **+ Integration Tests** | **≥ Level 2** | • `docs/atomic/testing/integration-testing/testcontainers-setup.md`<br>• `docs/atomic/testing/unit-testing/mocking-strategies.md` | • Integration tests (with testcontainers)<br>• Enhanced mocking | • Coverage ≥ 75% |
-| **4.6c** | **+ E2E Tests** | **≥ Level 3** | • `docs/atomic/testing/end-to-end/api-testing.md` | • End-to-end API tests | • Coverage ≥ 80% |
-| **4.6d** | **+ Security Tests** | **Level 4 only** | • `docs/atomic/testing/security/bandit-configuration.md`<br>• `docs/atomic/testing/security/penetration-testing.md` | • Security test suite<br>• Bandit config | • Coverage ≥ 85%<br>• Security tests pass |
+| **4.6c** | **+ E2E Tests** | **≥ Level 3** | • `docs/atomic/testing/end-to-end-testing/e2e-test-setup.md` | • End-to-end API tests | • Coverage ≥ 80% |
+| **4.6d** | **+ Security Tests** | **Level 4 only** | • `docs/atomic/testing/quality-assurance/linting-standards.md` *(includes Bandit)*<br>• `docs/atomic/testing/end-to-end-testing/performance-testing.md` | • Security test suite<br>• Bandit config | • Coverage ≥ 85%<br>• Security tests pass |
 | **5** | **Quality Verification** | **ALL** (criteria vary by level) | • `docs/quality/agent-verification-checklist.md`<br>• `docs/reference/agent-toolbox.md`<br>• `docs/reference/maturity-levels.md` (for coverage targets)<br>• `docs/reference/troubleshooting.md` (if issues) | • Completed verification checklist<br>• Coverage reports (HTML + XML)<br>• Evidence logs/screenshots | **ALL checks must pass**:<br>✅ Linting (Ruff): 0 errors<br>✅ Formatting: No drift<br>✅ Type checking (Mypy): 0 errors<br>✅ Security (Bandit): 0 high severity<br>✅ Tests: All pass<br>✅ Coverage: **Level-dependent** (60%/75%/80%/85%)<br>✅ Project structure: Compliant<br>✅ Naming: Follows conventions |
 | **6** | **QA Report & Handoff** | **ALL** | • `docs/quality/qa-report-template.md`<br>• `docs/reference/deliverables-catalog.md` | • Final QA Report<br>• Deliverables summary<br>• Deployment guide<br>• Updated DELIVERABLES_CATALOG | • QA report approved by stakeholder<br>• All deliverables documented<br>• Deployment instructions verified<br>• Sign-off obtained |
 
@@ -151,22 +151,22 @@ FOR each sub-stage in [4.1, 4.1b, 4.1c, 4.1d, 4.2, 4.2b, 4.3, 4.3b, 4.3c, 4.3d, 
 
 | Task | Read These Documents | Generate This | Use This Tool |
 |------|---------------------|---------------|---------------|
-| **Validate a user prompt** | `prompt-validation-guide.md` | Validation note or clarification | `prompt-templates.md` |
-| **Understand architecture** | `architecture-guide.md`<br>`atomic/architecture/improved-hybrid-overview.md` | Nothing (learning) | None |
-| **Structure requirements** | `requirements-intake-template.md` | Completed intake doc | `prompt-templates.md` |
-| **Plan implementation** | `implementation-plan-template.md`<br>`use-case-implementation-guide.md` | Implementation plan | `agent-toolbox.md` |
-| **Setup Docker** | `atomic/infrastructure/containerization/docker-compose-setup.md` | docker-compose.yml | `agent-toolbox.md` |
-| **Create PostgreSQL service** | `atomic/services/data-services/postgres-service-setup.md`<br>`atomic/databases/postgresql/sqlalchemy-integration.md` | Models, repositories, API | `agent-toolbox.md` |
-| **Create FastAPI endpoint** | `atomic/services/fastapi/routing-patterns.md`<br>`atomic/services/fastapi/dependency-injection.md` | Router + use case | `agent-toolbox.md` |
-| **Call data service from business service** | `atomic/integrations/http-communication/business-to-data-calls.md` | HTTP client code | None |
-| **Publish RabbitMQ event** | `atomic/integrations/rabbitmq/message-publishing.md` | Event publisher code | None |
-| **Consume RabbitMQ event** | `atomic/integrations/rabbitmq/message-consuming.md` | Consumer code | None |
-| **Create background worker** | `atomic/services/asyncio-workers/main-function-patterns.md` | Worker main.py | `agent-toolbox.md` |
-| **Create Telegram bot** | `atomic/services/aiogram/bot-initialization.md`<br>`atomic/services/aiogram/handler-patterns.md` | Bot handlers | `agent-toolbox.md` |
-| **Write tests** | `atomic/testing/unit-testing/pytest-setup.md`<br>`atomic/testing/service-testing/fastapi-testing-patterns.md` | Test files | `agent-toolbox.md` |
-| **Run quality checks** | `agent-verification-checklist.md` | Checklist results | `agent-toolbox.md` |
-| **Create QA report** | `qa-report-template.md` | QA report | None |
-| **Troubleshoot issues** | `troubleshooting.md` | Nothing (diagnosis) | `agent-toolbox.md` |
+| **Validate a user prompt** | `docs/guides/prompt-validation-guide.md` | Validation note or clarification | `docs/reference/prompt-templates.md` |
+| **Understand architecture** | `docs/guides/architecture-guide.md`<br>`docs/atomic/architecture/improved-hybrid-overview.md` | Nothing (learning) | None |
+| **Structure requirements** | `docs/guides/requirements-intake-template.md` | Completed intake doc | `docs/reference/prompt-templates.md` |
+| **Plan implementation** | `docs/guides/implementation-plan-template.md`<br>`docs/guides/use-case-implementation-guide.md` | Implementation plan | `docs/reference/agent-toolbox.md` |
+| **Setup Docker** | `docs/atomic/infrastructure/containerization/docker-compose-setup.md` | docker-compose.yml | `docs/reference/agent-toolbox.md` |
+| **Create PostgreSQL service** | `docs/atomic/services/data-services/postgres-service-setup.md`<br>`docs/atomic/databases/postgresql/sqlalchemy-integration.md` | Models, repositories, API | `docs/reference/agent-toolbox.md` |
+| **Create FastAPI endpoint** | `docs/atomic/services/fastapi/routing-patterns.md`<br>`docs/atomic/services/fastapi/dependency-injection.md` | Router + use case | `docs/reference/agent-toolbox.md` |
+| **Call data service from business service** | `docs/atomic/integrations/http-communication/business-to-data-calls.md` | HTTP client code | None |
+| **Publish RabbitMQ event** | `docs/atomic/integrations/rabbitmq/message-publishing.md` | Event publisher code | None |
+| **Consume RabbitMQ event** | `docs/atomic/integrations/rabbitmq/message-consuming.md` | Consumer code | None |
+| **Create background worker** | `docs/atomic/services/asyncio-workers/main-function-patterns.md` | Worker main.py | `docs/reference/agent-toolbox.md` |
+| **Create Telegram bot** | `docs/atomic/services/aiogram/bot-initialization.md`<br>`docs/atomic/services/aiogram/handler-patterns.md` | Bot handlers | `docs/reference/agent-toolbox.md` |
+| **Write tests** | `docs/atomic/testing/unit-testing/pytest-setup.md`<br>`docs/atomic/testing/service-testing/fastapi-testing-patterns.md` | Test files | `docs/reference/agent-toolbox.md` |
+| **Run quality checks** | `docs/quality/agent-verification-checklist.md` | Checklist results | `docs/reference/agent-toolbox.md` |
+| **Create QA report** | `docs/quality/qa-report-template.md` | QA report | None |
+| **Troubleshoot issues** | `docs/reference/troubleshooting.md` | Nothing (diagnosis) | `docs/reference/agent-toolbox.md` |
 
 ---
 
@@ -218,36 +218,36 @@ Use this decision tree:
 When multiple atomic documents are listed for a single phase, read them in this recommended order:
 
 **1. Architecture principles first** (understand constraints before implementation)
-   - `ddd-hexagonal-principles.md`
-   - `service-separation-principles.md`
-   - `data-access-architecture.md`
-   - `naming-conventions.md`
+   - `docs/atomic/architecture/ddd-hexagonal-principles.md`
+   - `docs/atomic/architecture/service-separation-principles.md`
+   - `docs/atomic/architecture/data-access-architecture.md`
+   - `docs/atomic/architecture/naming-conventions.md`
 
 **2. Setup/scaffolding documents** (project structure)
-   - `basic-setup.md`
-   - `application-factory.md`
-   - `bot-initialization.md`
-   - `main-function-patterns.md`
+   - `docs/atomic/services/fastapi/basic-setup.md`
+   - `docs/atomic/services/fastapi/application-factory.md`
+   - `docs/atomic/services/aiogram/bot-initialization.md`
+   - `docs/atomic/services/asyncio-workers/main-function-patterns.md`
 
 **3. Core implementation patterns** (business logic)
-   - `routing-patterns.md`
-   - `handler-patterns.md`
-   - `dependency-injection.md`
-   - `schema-validation.md`
-   - `repository-patterns.md`
+   - `docs/atomic/services/fastapi/routing-patterns.md`
+   - `docs/atomic/services/aiogram/handler-patterns.md`
+   - `docs/atomic/services/fastapi/dependency-injection.md`
+   - `docs/atomic/services/fastapi/schema-validation.md`
+   - `docs/atomic/services/data-services/repository-patterns.md`
 
 **4. Integration patterns** (external communication)
-   - `http-communication/business-to-data-calls.md`
-   - `rabbitmq/message-publishing.md`
-   - `rabbitmq/message-consuming.md`
-   - `redis/caching-patterns.md`
+   - `docs/atomic/integrations/http-communication/business-to-data-calls.md`
+   - `docs/atomic/integrations/rabbitmq/message-publishing.md`
+   - `docs/atomic/integrations/rabbitmq/message-consuming.md`
+   - `docs/atomic/integrations/redis/caching-patterns.md` *(TODO: document not yet created)*
 
 **5. Advanced features** (observability, security, error handling)
-   - `middleware-setup.md`
-   - `error-handling.md`
-   - `structured-logging.md`
-   - `metrics-integration.md`
-   - `oauth-jwt.md`
+   - `docs/atomic/services/aiogram/middleware-setup.md`
+   - `docs/atomic/services/fastapi/error-handling.md`
+   - `docs/atomic/observability/logging/structured-logging.md`
+   - `docs/atomic/observability/metrics/custom-metrics.md`
+   - `docs/atomic/services/fastapi/oauth-jwt.md` *(TODO: document not yet created)*
 
 **Rationale**: This order ensures AI understands:
 - **Why** before **how** (architecture → implementation)
@@ -270,8 +270,8 @@ When framework documentation changes:
 ### Cross-References
 
 Keep aligned with:
-- `ai-code-generation-master-workflow.md` (source of truth for process)
-- `agent-context-summary.md` (critical rules)
+- `docs/guides/ai-code-generation-master-workflow.md` (source of truth for process)
+- `docs/reference/agent-context-summary.md` (critical rules)
 - `INDEX.md` (full documentation map)
 - All atomic documentation (implementation rules)
 
