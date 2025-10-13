@@ -20,7 +20,7 @@ This prompt helps AI agents conduct comprehensive documentation audits to identi
 2. **READ ENTIRE TEMPLATE** before starting
    - Don't skip to OBJECTIVES and start immediately
    - Read through Automation Script Template section (appears later in this document)
-   - Understand the full scope: 14 objectives, validation commands, verification protocol
+   - Understand the full scope: 17 objectives, validation commands, verification protocol
 
 3. **RUN SMOKE TESTS FIRST** (30 seconds) before deep audit
    - Understand documentation scope and identify critical issues quickly
@@ -111,6 +111,25 @@ echo "✅ pyproject.toml configured" || echo "⚠️ pyproject.toml missing tool
 # This creates broken developer experience - commands fail despite being documented
 ```
 
+# ===================================================================
+# SMOKE TEST 7: Command path validation (Silent failure detection)
+# ===================================================================
+```bash
+# Check if templates use src/ or app/ directory
+echo "=== SMOKE TEST 7: Command Path Validation (Silent Failures) ==="
+echo "Template directory structure:"
+find templates/services -maxdepth 2 -type d -name "src" -o -name "app" 2>/dev/null | head -10
+
+# Check coverage commands in docs
+echo ""
+echo "Coverage commands in documentation:"
+grep -rh "\-\-cov=" docs/ 2>/dev/null | grep -oh "\-\-cov=[a-zA-Z_/]*" | sort -u
+
+# Expected: Coverage paths must match actual template structure
+# CRITICAL: --cov=app (if templates use src/) → Silent failure (coverage=0%)
+# If mismatch found → CRITICAL ISSUE (blocks Stage 5 verification, wastes debugging time)
+```
+
 **DECISION POINT based on smoke test results:**
 
 | Smoke Test | Result | Action |
@@ -119,7 +138,8 @@ echo "✅ pyproject.toml configured" || echo "⚠️ pyproject.toml missing tool
 | Test 4 (Broken links sample) | > 0 | **HIGH PRIORITY.** Note in report, proceed with full link validation. |
 | Test 5 (Stage 0 docs) | Any missing | **CRITICAL.** AI agents cannot work. Report immediately. |
 | Test 6 (pyproject.toml) | ⚠️ | **MEDIUM PRIORITY.** Note config gap, proceed with audit. |
-| All tests pass | ✅ | Proceed with full 16-objective audit. |
+| Test 7 (Command paths) | Mismatch | **CRITICAL.** Silent failures cause false negatives in CI/CD. Report immediately. |
+| All tests pass | ✅ | Proceed with full 17-objective audit. |
 
 ### ⚠️ Anti-Patterns to Avoid
 
@@ -134,6 +154,7 @@ echo "✅ pyproject.toml configured" || echo "⚠️ pyproject.toml missing tool
 | Say "several files have issues" (vague) | Provide exact `file:line` locations for EVERY issue |
 | **Assume configs are correct if they exist** | **Cross-validate config values against actual usage in docs (Objective 16)** |
 | **Only check docs/ directory for issues** | **Also check root-level configs (pyproject.toml, .env.example, docker-compose.yml, CONTRIBUTING.md)** |
+| **Trust commands work if they execute successfully** | **Verify command paths match actual project structure (Objective 17) - silent failures return wrong results!** |
 | **Trust that "template exists" means it works** | **Check template files have README, correct naming, and match documentation claims** |
 
 ---
@@ -415,6 +436,99 @@ done
 - **Credential Issues**: List any weak/mismatched credentials
 - **Tool Config Gaps**: List tools documented but not configured in pyproject.toml
 - **Missing Scripts**: List scripts referenced in CONTRIBUTING.md but not found on disk
+
+
+### 17. Command Path Validation ⚡ MANDATORY COMMANDS (NEW - Silent failure prevention)
+
+**CRITICAL**: Commands in documentation must reference actual directory structures in templates/services.
+
+**PROBLEM PATTERN (Silent Failure):**
+- Command executes successfully (exit 0)
+- Returns wrong result (e.g., coverage=0% when actual code exists)
+- No error message - appears to work but gives false negatives
+- Blocks quality gates and CI/CD pipelines
+
+**ROOT CAUSE:** Documentation commands reference non-existent paths (e.g., `--cov=app` when templates use `src/`).
+
+```bash
+# ========================================
+# STEP 1: Verify template directory structure
+# ========================================
+echo "Step 1: Checking template directory structures..."
+find templates/services -maxdepth 2 -type d -name "src" -o -name "app" 2>/dev/null
+
+# VALIDATION: Document ACTUAL directory names used in templates
+# COMMON: All templates use src/ (NOT app/)
+
+# ========================================
+# STEP 2: Check pytest coverage commands
+# ========================================
+echo "Step 2: Checking pytest coverage commands in docs..."
+grep -rn "\-\-cov=" docs/ 2>/dev/null | grep -v "^\s*#" | tee /tmp/coverage_commands.txt
+
+# Extract unique coverage paths
+grep -oh "\-\-cov=[a-zA-Z_/]*" /tmp/coverage_commands.txt | sort -u
+
+# VALIDATION: Must match actual template structure
+# ❌ BAD: --cov=app (if templates use src/)
+# ✅ GOOD: --cov=src
+
+# ========================================
+# STEP 3: Check Docker Compose service names
+# ========================================
+echo "Step 3: Validating Docker Compose service references..."
+
+# Extract service names from docker-compose.yml
+grep -E "^\s+[a-z_]+:" docker-compose.yml 2>/dev/null | awk '{print $1}' | tr -d ':' | sort > /tmp/compose_services.txt
+
+# Extract service names referenced in docs
+grep -rho "docker-compose exec [a-z_]+" docs/ 2>/dev/null | awk '{print $3}' | sort -u > /tmp/doc_services.txt
+
+# Find mismatches
+comm -13 /tmp/compose_services.txt /tmp/doc_services.txt > /tmp/service_mismatches.txt
+
+# VALIDATION: All service names in docs must exist in docker-compose.yml
+# COMMON ERROR: Docs reference `postgres_db` but compose has `postgres`
+
+# ========================================
+# STEP 4: Check environment variable paths
+# ========================================
+echo "Step 4: Checking environment variable paths..."
+
+# Check for absolute paths in .env.example
+grep -E "^[A-Z_]+=/" .env.example templates/infrastructure/.env.example 2>/dev/null | grep -v "^\s*#"
+
+# Check if docs reference those paths consistently
+# VALIDATION: Path variables must be consistent across configs and docs
+
+# ========================================
+# STEP 5: Check API endpoint paths in examples
+# ========================================
+echo "Step 5: Validating API endpoint examples..."
+
+# Extract API paths from documentation examples
+grep -rho "http://localhost:[0-9]*/[a-z_/]*" docs/ 2>/dev/null | sort -u > /tmp/doc_endpoints.txt
+
+# If main.py or routers exist, extract actual endpoint definitions
+find templates/services -name "main.py" -o -name "router*.py" 2>/dev/null | while read file; do
+  grep -oh "@router\.\(get\|post\|put\|delete\)(\"[^\"]*\")" "$file" 2>/dev/null | sed 's/.*("\(.*\)".*/\1/'
+done | sort -u > /tmp/actual_endpoints.txt
+
+# VALIDATION: Document actual endpoints, not fictional examples
+```
+
+**Report Format:**
+- **Template Structure**: List actual src/ vs app/ usage across all templates
+- **Coverage Path Mismatches**: List any `--cov=` commands referencing non-existent directories
+- **Service Name Mismatches**: List docker-compose exec commands referencing non-existent services
+- **Environment Path Issues**: List absolute path mismatches between configs and docs
+- **API Endpoint Discrepancies**: List documented endpoints that don't match actual code
+
+**WHY THIS IS CRITICAL:**
+- Silent failures waste hours of debugging time
+- False negatives in CI/CD cause missed bugs in production
+- AI agents get stuck in Stage 5 (Quality Verification) with "coverage=0%" errors
+- New developers copy broken commands from documentation
 
 
 ## DELIVERABLES (ENHANCED)
@@ -1773,7 +1887,49 @@ An audit using V2 template missed 5 critical config consistency issues affecting
 
 ---
 
-This V2.1 template fixes ALL known failure modes.
+**Failure Mode 3: Command Path Validation Failure - Silent Failures (October 2025)**
+
+Critical issue discovered post-v2.1 where documented commands executed successfully but returned wrong results:
+- **Issue**: Coverage commands used `--cov=app` but all 5 templates use `src/` directory
+- **Impact**: Commands returned coverage=0% (false negative) despite actual code existing
+- **Affected files**: 6 occurrences across 3 critical documentation files:
+  - docs/quality/agent-verification-checklist.md (Stage 5 quality gates)
+  - docs/guides/development-commands.md (canonical command reference)
+  - docs/reference/agent-toolbox.md (machine-readable commands)
+
+**Silent Failure Pattern** (most dangerous type):
+- ✅ Command executes successfully (exit code 0)
+- ✅ No error message displayed
+- ❌ Returns wrong result (coverage=0% when should be 70-85%)
+- ❌ Appears to work but gives false negatives
+- ❌ Blocks AI agent Stage 5 (Quality Verification) with cryptic "coverage below threshold" errors
+- ❌ Wastes hours of debugging time (developers think code has no tests, not that command is wrong)
+
+**Root cause**:
+- Commands documented without validating against actual project structure
+- No smoke test for path validation
+- Template structure (src/ vs app/) not cross-checked with commands
+- Trusted that "command executes" means "command works correctly"
+
+**Real-world impact timeline**:
+- Day 1: Developer copies `pytest --cov=app` from docs
+- Day 1: Runs command → sees "coverage=0%" → confused (code clearly exists)
+- Day 1-3: Debugs pytest config, test discovery, assumes bug in coverage tool
+- Day 3: AI agent hits same issue in Stage 5 → reports "Cannot meet 80% threshold" (has 0%)
+- Day 4: Manual review discovers path mismatch (should be `--cov=src`)
+- **Total time wasted**: 4 developer-days debugging a 1-character documentation error
+
+**Prevention required**:
+1. **Objective 17**: Command Path Validation (cross-check commands against actual structure)
+2. **Smoke Test 7**: Quick path mismatch detection (10 seconds vs 4 days debugging)
+3. **CI Workflow**: `.github/workflows/docs-command-validation.yml` blocks PRs with wrong paths
+4. **Anti-pattern**: Don't trust "command succeeds" → verify results match expectations
+
+**Fix**: Added Objective 17 (Command Path Validation), Smoke Test 7 (path mismatch detection), CI workflow for automated prevention, and anti-pattern for trusting successful execution.
+
+---
+
+This V2.2 template fixes ALL known failure modes.
 
 ### When to Update This Template
 
@@ -1810,9 +1966,10 @@ If an audit using this template still misses critical issues:
 
 ## END OF TEMPLATE
 
-**Version**: 2.1
-**Last Updated**: 2025-10-11
+**Version**: 2.2
+**Last Updated**: 2025-10-13
 **Changelog**:
+- v2.2 (2025-10-13): Added Objective 17 (Command Path Validation - silent failure prevention), Smoke Test 7 (command path mismatch detection), anti-pattern for trusting successful command execution, Failure Mode 3 case study (--cov=app→src issue)
 - v2.1 (2025-10-11): Added Objective 16 (Config Consistency Validation), Smoke Test 6 (pyproject.toml), anti-patterns for config validation, Failure Mode 2 case study
 - v2.0 (2025-10-11): Complete rewrite with mandatory execution protocol, explicit validation commands, smoke tests, verification protocol
 - v1.0 (2025-10-10): Original template (proved insufficient - missed 64+ critical issues)
@@ -3003,7 +3160,49 @@ An audit using V2 template missed 5 critical config consistency issues affecting
 
 ---
 
-This V2.1 template fixes ALL known failure modes.
+**Failure Mode 3: Command Path Validation Failure - Silent Failures (October 2025)**
+
+Critical issue discovered post-v2.1 where documented commands executed successfully but returned wrong results:
+- **Issue**: Coverage commands used `--cov=app` but all 5 templates use `src/` directory
+- **Impact**: Commands returned coverage=0% (false negative) despite actual code existing
+- **Affected files**: 6 occurrences across 3 critical documentation files:
+  - docs/quality/agent-verification-checklist.md (Stage 5 quality gates)
+  - docs/guides/development-commands.md (canonical command reference)
+  - docs/reference/agent-toolbox.md (machine-readable commands)
+
+**Silent Failure Pattern** (most dangerous type):
+- ✅ Command executes successfully (exit code 0)
+- ✅ No error message displayed
+- ❌ Returns wrong result (coverage=0% when should be 70-85%)
+- ❌ Appears to work but gives false negatives
+- ❌ Blocks AI agent Stage 5 (Quality Verification) with cryptic "coverage below threshold" errors
+- ❌ Wastes hours of debugging time (developers think code has no tests, not that command is wrong)
+
+**Root cause**:
+- Commands documented without validating against actual project structure
+- No smoke test for path validation
+- Template structure (src/ vs app/) not cross-checked with commands
+- Trusted that "command executes" means "command works correctly"
+
+**Real-world impact timeline**:
+- Day 1: Developer copies `pytest --cov=app` from docs
+- Day 1: Runs command → sees "coverage=0%" → confused (code clearly exists)
+- Day 1-3: Debugs pytest config, test discovery, assumes bug in coverage tool
+- Day 3: AI agent hits same issue in Stage 5 → reports "Cannot meet 80% threshold" (has 0%)
+- Day 4: Manual review discovers path mismatch (should be `--cov=src`)
+- **Total time wasted**: 4 developer-days debugging a 1-character documentation error
+
+**Prevention required**:
+1. **Objective 17**: Command Path Validation (cross-check commands against actual structure)
+2. **Smoke Test 7**: Quick path mismatch detection (10 seconds vs 4 days debugging)
+3. **CI Workflow**: `.github/workflows/docs-command-validation.yml` blocks PRs with wrong paths
+4. **Anti-pattern**: Don't trust "command succeeds" → verify results match expectations
+
+**Fix**: Added Objective 17 (Command Path Validation), Smoke Test 7 (path mismatch detection), CI workflow for automated prevention, and anti-pattern for trusting successful execution.
+
+---
+
+This V2.2 template fixes ALL known failure modes.
 
 ### When to Update This Template
 
@@ -3040,9 +3239,10 @@ If an audit using this template still misses critical issues:
 
 ## END OF TEMPLATE
 
-**Version**: 2.1
-**Last Updated**: 2025-10-11
+**Version**: 2.2
+**Last Updated**: 2025-10-13
 **Changelog**:
+- v2.2 (2025-10-13): Added Objective 17 (Command Path Validation - silent failure prevention), Smoke Test 7 (command path mismatch detection), anti-pattern for trusting successful command execution, Failure Mode 3 case study (--cov=app→src issue)
 - v2.1 (2025-10-11): Added Objective 16 (Config Consistency Validation), Smoke Test 6 (pyproject.toml), anti-patterns for config validation, Failure Mode 2 case study
 - v2.0 (2025-10-11): Complete rewrite with mandatory execution protocol, explicit validation commands, smoke tests, verification protocol
 - v1.0 (2025-10-10): Original template (proved insufficient - missed 64+ critical issues)
