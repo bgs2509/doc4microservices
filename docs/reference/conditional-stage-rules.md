@@ -203,7 +203,7 @@ AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
 - `docs/atomic/observability/logging/structured-logging.md`
 - `docs/atomic/observability/logging/request-id-tracking.md`
 - `docs/atomic/observability/error-tracking/sentry-integration.md`
-- `docs/atomic/services/fastapi/middleware-setup.md`
+- `docs/atomic/services/aiogram/middleware-setup.md` *(adapt for FastAPI)*
 
 **Additional Generation:**
 - Structured logging (JSON format)
@@ -255,7 +255,7 @@ AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
 - `docs/atomic/infrastructure/api-gateway/security-hardening.md` (basic)
 - `docs/atomic/infrastructure/containerization/multi-stage-builds.md`
 - `docs/atomic/observability/metrics/prometheus-setup.md`
-- `docs/atomic/observability/metrics/grafana-dashboards.md`
+- `docs/atomic/observability/metrics/dashboards.md`
 
 **Additional Generation:**
 - Nginx configuration (reverse proxy, rate limiting, CORS)
@@ -275,8 +275,8 @@ AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
 #### 4.3: Business Logic (+ Metrics)
 
 **Additional Documents:**
-- `docs/atomic/observability/metrics/application-metrics.md`
-- `docs/atomic/services/fastapi/metrics-integration.md`
+- `docs/atomic/observability/metrics/service-metrics.md`
+- `docs/atomic/observability/metrics/custom-metrics.md`
 
 **Additional Generation:**
 - Prometheus metrics endpoints
@@ -328,7 +328,7 @@ AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
 - `docs/atomic/observability/elk-stack/elasticsearch-setup.md`
 - `docs/atomic/observability/elk-stack/logstash-configuration.md`
 - `docs/atomic/observability/elk-stack/kibana-dashboards.md`
-- `docs/atomic/observability/tracing/jaeger-setup.md`
+- `docs/atomic/observability/tracing/jaeger-configuration.md`
 - `docs/atomic/infrastructure/databases/postgresql-replication.md`
 - `docs/atomic/infrastructure/deployment/production-deployment.md`
 
@@ -342,8 +342,8 @@ AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
 #### 4.2: Data Layer (+ Replication)
 
 **Additional Documents:**
-- `docs/atomic/databases/postgresql-advanced/replication-strategies.md`
-- `docs/atomic/databases/postgresql-advanced/backup-restore.md`
+- `docs/atomic/infrastructure/databases/postgresql-replication.md` *(covers replication strategies)*
+- `docs/atomic/file-storage/backup-strategies.md` *(adapt for PostgreSQL backups)*
 
 **Additional Generation:**
 - PostgreSQL replication config
@@ -356,9 +356,9 @@ AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
 - `docs/atomic/security/authentication-authorization-guide.md`
 - `docs/atomic/security/authorization-patterns.md` (RBAC)
 - `docs/atomic/security/session-management-patterns.md`
-- `docs/atomic/observability/tracing/jaeger-integration.md`
+- `docs/atomic/observability/tracing/jaeger-configuration.md`
 - `docs/atomic/services/fastapi/security-patterns.md`
-- `docs/atomic/integrations/cross-service/circuit-breaker-patterns.md`
+- `docs/atomic/integrations/cross-service/circuit-breaker-patterns.md` *(TODO: document not yet created)*
 
 **Additional Generation:**
 - OAuth 2.0 / JWT authentication
