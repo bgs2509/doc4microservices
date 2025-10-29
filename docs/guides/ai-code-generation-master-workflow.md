@@ -555,7 +555,7 @@ uv run ruff check .
 uv run ruff format . --check
 uv run mypy .
 uv run bandit -r .
-uv run pytest --cov=services --cov-report=html --cov-report=xml
+uv run pytest --cov=src --cov-report=html --cov-report=xml
 ```
 
 **Exit Criteria**: All code generated, all tests pass, coverage ≥ **level-dependent threshold**:
@@ -618,7 +618,7 @@ uv run pytest --cov=services --cov-report=html --cov-report=xml
 | Check | Command | Result | Evidence |
 |-------|---------|--------|----------|
 | Unit tests | `uv run pytest` | ✅ PASS | 287 passed, 0 failed |
-| Coverage | `pytest --cov=services` | ✅ 82% | htmlcov/index.html |
+| Coverage | `pytest --cov=src` | ✅ 82% | htmlcov/index.html |
 | **Coverage threshold** | **Level 3 requires ≥ 80%** | **✅ MET** | 82% ≥ 80% |
 
 ## Artifact Validation
@@ -1028,7 +1028,7 @@ uv run mypy .                            # ✅ 0 type errors
 uv run bandit -r .                       # ✅ 0 high severity
 
 # Testing
-uv run pytest --cov=services --cov-report=html
+uv run pytest --cov=src --cov-report=html
 # ✅ 287 passed, 0 failed
 # ✅ Coverage: 87%
 ```
