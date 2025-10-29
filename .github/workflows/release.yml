@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: recursive
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Generate Release Notes
+      id: release_notes
+      run: |
+        # Extract version from tag
+        VERSION=${GITHUB_REF#refs/tags/v}
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+        # Extract changelog for this version
+        awk '/## \['"$VERSION"'\]/,/## \[/{if (/## \[/ && !/## \['"$VERSION"'\]/) exit; print}' CHANGELOG.md > release_notes.md
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        body_path: release_notes.md
+        draft: false
+        prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
+        files: |
+          LICENSE
+          README.md
+          CHANGELOG.md
+
+    - name: Create Archive
+      run: |
+        # Create a clean archive without .git
+        mkdir -p dist
+        tar --exclude='.git' --exclude='dist' --exclude='__pycache__' \
+            --exclude='*.pyc' --exclude='.pytest_cache' \
+            -czf dist/doc4microservices-${{ env.VERSION }}.tar.gz .
+
+        # Create checksum
+        cd dist
+        sha256sum doc4microservices-${{ env.VERSION }}.tar.gz > doc4microservices-${{ env.VERSION }}.tar.gz.sha256
+
+    - name: Upload Release Assets
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          dist/doc4microservices-${{ env.VERSION }}.tar.gz
+          dist/doc4microservices-${{ env.VERSION }}.tar.gz.sha256
