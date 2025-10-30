@@ -127,23 +127,26 @@ AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
 #### 4.3: Business Logic (Core only)
 
 **Documents to Read:**
+- `docs/atomic/architecture/project-structure-patterns.md` (DDD/Hexagonal structure)
 - `docs/atomic/services/fastapi/application-factory.md`
 - `docs/atomic/services/fastapi/routing-patterns.md`
 - `docs/atomic/services/fastapi/dependency-injection.md`
 - `docs/atomic/services/fastapi/schema-validation.md`
 - `docs/atomic/integrations/http-communication/business-to-data-calls.md`
+- `docs/atomic/observability/logging/structured-logging.md`
 
 **Generate:**
+- Full DDD/Hexagonal structure (`src/` with all layers: api, application, domain, infrastructure, schemas, core)
 - FastAPI service (routers, use cases, domain entities)
 - HTTP client to data service
+- Structured JSON logging (`src/core/logging.py` with python-json-logger)
 - Basic error handling
 
 **Skip:**
-- ❌ Structured logging (use print/console logs)
-- ❌ Health check endpoints
-- ❌ Prometheus metrics
-- ❌ Request ID middleware
-- ❌ Error tracking integration (Sentry)
+- ❌ Request ID middleware (added in Level 2)
+- ❌ Health check endpoints (added in Level 2)
+- ❌ Prometheus metrics (added in Level 3)
+- ❌ Error tracking integration (Sentry - added in Level 2)
 - ❌ OpenAPI customization (use defaults)
 
 #### 4.6: Testing (Basic)
@@ -200,17 +203,18 @@ AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
 #### 4.3: Business Logic (+ Observability)
 
 **Additional Documents:**
-- `docs/atomic/observability/logging/structured-logging.md`
 - `docs/atomic/observability/logging/request-id-tracking.md`
 - `docs/atomic/observability/error-tracking/sentry-integration.md`
 - `docs/atomic/services/aiogram/middleware-setup.md` *(adapt for FastAPI)*
 
 **Additional Generation:**
-- Structured logging (JSON format)
-- Request ID middleware
-- Health check endpoints (`/health`, `/ready`)
+- Request ID middleware (`src/middleware/request_id.py`)
+- Update `src/core/logging.py` to include request IDs in JSON logs
+- Health check endpoints (`/health`, `/ready` in `src/api/v1/health_router.py`)
 - Error tracking integration (Sentry-ready, not deployed)
 - Custom OpenAPI metadata
+
+**Note:** Structured JSON logging already present from Level 1, only request ID tracking added.
 
 **Still Skip:**
 - ❌ Prometheus metrics

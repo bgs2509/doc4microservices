@@ -44,8 +44,8 @@ Validate business idea, build MVP, demonstrate to stakeholders.
 - ❌ No production deployment configs
 
 #### Observability
-- ❌ Console logs only (print statements OK)
-- ❌ No structured logging
+- ✅ Structured logging (JSON format via python-json-logger)
+- ❌ No request ID tracking
 - ❌ No metrics
 - ❌ No tracing
 - ❌ No error tracking
@@ -69,20 +69,33 @@ Validate business idea, build MVP, demonstrate to stakeholders.
 project/
 ├── services/
 │   ├── template_business_api/              # FastAPI
-│   │   ├── main.py
-│   │   ├── routers/
-│   │   ├── domain/
-│   │   └── tests/
-│   └── template_data_postgres_api/      # Data service
-│       ├── main.py
-│       ├── models/
-│       ├── repositories/
-│       └── tests/
+│   │   ├── src/                            # DDD structure (see project-structure-patterns.md)
+│   │   │   ├── api/v1/
+│   │   │   ├── application/
+│   │   │   ├── domain/
+│   │   │   ├── infrastructure/
+│   │   │   ├── schemas/
+│   │   │   └── core/
+│   │   ├── tests/unit/
+│   │   ├── Dockerfile
+│   │   └── requirements.txt
+│   └── template_data_postgres_api/         # Data service
+│       ├── src/
+│       │   ├── api/v1/
+│       │   ├── models/
+│       │   ├── repositories/
+│       │   └── core/
+│       ├── tests/unit/
+│       ├── Dockerfile
+│       └── requirements.txt
+├── shared/                       # Cross-service DTOs, events
 ├── docker-compose.yml            # Local dev only
 ├── .env.example
 ├── Makefile
 └── README.md
 ```
+
+> **Note**: Level 1 uses full DDD/Hexagonal structure (`src/` directory) from the start to enable additive evolution to higher levels without restructuring. See `docs/atomic/architecture/project-structure-patterns.md` for details.
 
 ### Use Cases
 - MVP for investors
@@ -110,10 +123,11 @@ Enable active team development with proper observability and debugging tools.
 ### What's Added to Level 1
 
 #### Observability (+++)
-- ✅ **Structured Logging** (JSON format, request IDs)
+- ✅ **Request ID Tracking** (middleware for request correlation)
 - ✅ **Health Check Endpoints** (`/health`, `/ready`)
 - ✅ **Error Tracking Integration** (Sentry-ready, not deployed)
 - ✅ **OpenAPI Documentation** (Swagger UI auto-generated)
+- Note: Structured JSON logging already present in Level 1
 - ❌ No Prometheus metrics yet
 - ❌ No distributed tracing
 - ❌ No ELK stack
@@ -134,18 +148,22 @@ Enable active team development with proper observability and debugging tools.
 ```
 services/
 ├── template_business_api/
-│   ├── logging_config.py         # NEW: Structured logging
-│   ├── middleware/                # NEW: Request ID, error handling
-│   │   ├── request_id.py
-│   │   └── error_handler.py
-│   └── observability/             # NEW: Health checks
-│       └── health.py
-├── shared/
-│   └── logging/                   # NEW: Shared logging utils
-│       └── formatters.py
+│   └── src/
+│       ├── middleware/            # NEW: Request ID, error handling
+│       │   ├── request_id.py
+│       │   └── error_handler.py
+│       ├── api/v1/
+│       │   └── health_router.py   # NEW: Health check endpoints
+│       └── core/
+│           └── logging.py         # UPDATED: Add request ID to JSON logs
+├── tests/
+│   └── integration/               # NEW: Integration tests
+│       └── test_api_integration.py
 docker-compose.dev.yml             # NEW: Dev overrides
 docker-compose.test.yml            # NEW: Test environment
 ```
+
+> **Note**: All Level 1 files unchanged. Only additions: `middleware/`, `health_router.py`, `integration/` tests, and docker-compose overrides.
 
 ### Use Cases
 - Active development teams
@@ -367,8 +385,8 @@ scripts/
 | Docker Compose | ✅ | ✅ | ✅ | ✅ |
 | Basic Tests | ✅ | ✅ | ✅ | ✅ |
 | **Observability** |
-| Console Logs | ✅ | ❌ | ❌ | ❌ |
-| Structured Logging | ❌ | ✅ | ✅ | ✅ |
+| Structured Logging (JSON) | ✅ | ✅ | ✅ | ✅ |
+| Request ID Tracking | ❌ | ✅ | ✅ | ✅ |
 | Health Endpoints | ❌ | ✅ | ✅ | ✅ |
 | Prometheus Metrics | ❌ | ❌ | ✅ | ✅ |
 | Grafana Dashboards | ❌ | ❌ | ✅ | ✅ |
