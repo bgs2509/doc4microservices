@@ -26,6 +26,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 - Improved Hybrid Approach architecture
 - Mandatory constraints (HTTP-only data access, service separation, etc.)
 - **Maturity levels** (PoC ~5 min, Development ~10 min, Pre-Production ~15 min, Production ~30 min)
+  - **Core Principle**: Maturity Level = Scope Selector (how many features), NOT Quality Selector (how complete)
+  - Level 1: min(features) × 100% completion | Level 4: all(features) × 100% completion
+  - All levels require complete, production-quality code; only infrastructure features and coverage thresholds vary
 - Where to find specific information during workflow execution
 
 ### **Stage 1-6: Dynamic Reading** (During workflow execution)

@@ -84,7 +84,7 @@ AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
 | **4.3** | Business Logic | **EXECUTE** (Core only) |
 | **4.4** | Background Workers | **CONDITIONAL** (if user requested) |
 | **4.5** | Telegram Bot | **CONDITIONAL** (if user requested) |
-| **4.6** | Testing | **EXECUTE** (Basic tests, 60% coverage) |
+| **4.6** | Testing | **EXECUTE** (Complete unit tests, 60% threshold) |
 
 #### 4.1: Infrastructure (Basic)
 
@@ -166,7 +166,7 @@ AI: Deviation from FastAPI REST default → Create ADR-003-graphql-api.md
 - ❌ Security tests
 
 **Quality Criteria (Stage 5):**
-- Coverage ≥ 60% (relaxed)
+- Coverage ≥ 60% (complete code, lower threshold)
 - Ruff + Mypy pass
 - No Bandit requirement
 

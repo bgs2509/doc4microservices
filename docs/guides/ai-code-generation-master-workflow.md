@@ -281,11 +281,19 @@ Please provide these details so I can ensure architecture alignment.
 **AI Actions**:
 1. Read `implementation-plan-template.md`
 2. Read `maturity-levels.md` and `conditional-stage-rules.md` to understand what features to include
-3. Read `use-case-implementation-guide.md`
-4. **Read naming convention documents** (MANDATORY for all service naming decisions):
+3. **IF Level 1 (PoC)**: Perform scope reduction:
+   - List ALL features from requirements
+   - Prioritize by business criticality
+   - Select top 20-30% most critical features for Level 1
+   - Plan **100% complete implementation** for selected features only
+   - Exclude remaining features entirely (not partially, not with TODOs)
+   - Quality gate: every UI element must have handler, every FSM state must have complete flow, every endpoint must be fully implemented
+   - Remember: Level 1 = fewer features, NOT partial features
+4. Read `use-case-implementation-guide.md`
+5. **Read naming convention documents** (MANDATORY for all service naming decisions):
    - `docs/checklists/service-naming-checklist.md` — quick decision guide
    - `docs/atomic/architecture/naming/README.md` Section 2.3 — 10 serious reasons for 4-part naming
-5. Read service-specific atomic docs based on services needed AND maturity level:
+6. Read service-specific atomic docs based on services needed AND maturity level:
    - If FastAPI → read `docs/atomic/services/fastapi/*`
    - If Aiogram → read `docs/atomic/services/aiogram/*`
    - If Workers → read `docs/atomic/services/asyncio-workers/*`
@@ -293,29 +301,29 @@ Please provide these details so I can ensure architecture alignment.
    - **If Level ≥ 2** → read `docs/atomic/observability/logging/*`
    - **If Level ≥ 3** → read `docs/atomic/infrastructure/api-gateway/*`, `docs/atomic/observability/metrics/*`
    - **If Level = 4** → read `docs/atomic/observability/elk-stack/*`, `docs/atomic/observability/tracing/*`
-6. Read integration atomic docs:
+7. Read integration atomic docs:
    - `docs/atomic/integrations/redis/*`
    - `docs/atomic/integrations/rabbitmq/*`
    - `docs/atomic/integrations/http-communication/*`
-7. Create implementation plan with **CONDITIONAL phases** based on maturity level:
+8. Create implementation plan with **CONDITIONAL phases** based on maturity level:
    - **Phase 1**: Infrastructure setup (Docker, services scaffolding) — **ALL levels**
    - **Phase 2**: Data layer (PostgreSQL/MongoDB services with repositories) — **ALL levels**
    - **Phase 3**: Business logic (FastAPI endpoints, use cases) — **ALL levels**
    - **Phase 4**: Background workers (credit scoring, payment processing) — **IF user requested**
    - **Phase 5**: Telegram bot (notifications, commands) — **IF user requested**
    - **Phase 6**: Testing & quality (unit, integration, e2e tests) — **ALL levels** (criteria vary by level)
-8. Map each phase to:
+9. Map each phase to:
    - Specific tasks
    - Atomic documents to follow
    - Commands from `agent-toolbox.md`
    - **Required At Level** (which sub-stages to execute)
    - Definition of Done
-9. **Add "Maturity Level Features" section** showing:
+10. **Add "Maturity Level Features" section** showing:
    - ✅ **Included features** at selected level
    - ❌ **Skipped features** (available at higher levels)
    - Upgrade path if user wants to add features later
-10. Identify risks and mitigations
-11. Create ADR if significant architectural decisions needed:
+11. Identify risks and mitigations
+12. Create ADR if significant architectural decisions needed:
     **Create ADR when:**
     - Technology choice deviates from framework defaults (e.g., using Redis Streams instead of RabbitMQ)
     - Multiple implementation approaches exist (e.g., sync vs async, REST vs GraphQL)

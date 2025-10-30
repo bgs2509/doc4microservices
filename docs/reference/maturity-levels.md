@@ -18,6 +18,8 @@ Level 1 (PoC)  →  Level 2 (Development)  →  Level 3 (Pre-Production)  →  L
 ### Goal
 Validate business idea, build MVP, demonstrate to stakeholders.
 
+**Scope Strategy**: Level 1 includes approximately 20-30% of total planned features, but each included feature must be 100% complete, fully tested, and production-quality. Maturity levels differ by **scope** (how many features), NOT by implementation completeness (quality of code).
+
 ### Target Audience
 - Solo developers testing an idea
 - Startups building first prototype
@@ -59,7 +61,7 @@ Validate business idea, build MVP, demonstrate to stakeholders.
 #### Quality
 - ✅ Basic linting (Ruff)
 - ✅ Basic type checking (Mypy)
-- ✅ Unit tests (low coverage OK, ~60%)
+- ✅ Unit tests (≥60% coverage required)
 - ❌ No security scanning
 - ❌ No integration tests
 
@@ -95,7 +97,7 @@ project/
 └── README.md
 ```
 
-> **Note**: Level 1 uses full DDD/Hexagonal structure (`src/` directory) from the start to enable additive evolution to higher levels without restructuring. See `docs/atomic/architecture/project-structure-patterns.md` for details.
+> **Note**: Level 1 uses full DDD/Hexagonal structure (`src/` directory) from the start to enable additive evolution to higher levels without restructuring. **All included features must be 100% complete and functional** — the 60% coverage threshold applies to complete, production-quality code, not partial implementations. Higher levels add more features and infrastructure, not completion of unfinished work. See `docs/atomic/architecture/project-structure-patterns.md` for details.
 
 ### Use Cases
 - MVP for investors
