@@ -88,6 +88,7 @@ git submodule init && git submodule update
 - 🎯 **Navigation matrix** - Stage-by-stage documentation mapping
 - 📋 **Templates & checklists** - Ready-to-use patterns
 - 🔄 **Auto-generation** - From requirements to working code
+- 🌐 **AGENTS.md standard** - Industry-standard auto-read file (GitHub Copilot, Cursor, Cline, Aider, Claude Code)
 
 ### Documentation
 - 📚 **200+ documentation files** - Comprehensive coverage
@@ -198,6 +199,38 @@ Quick ways to contribute:
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/yourusername/doc4microservices/tags).
 
 Current stable version: **1.0.0**
+
+## 🤖 AI Agent Compatibility
+
+This framework uses **AGENTS.md** as the primary instruction file for AI coding agents, following the industry-standard convention adopted by major AI tools:
+
+### Supported AI Agents (Auto-Load)
+- ✅ **GitHub Copilot** - Native AGENTS.md support
+- ✅ **Cursor AI** - Via `.cursorrules` symlink
+- ✅ **Cline (VSCode)** - Via `.clinerules` symlink
+- ✅ **Aider** - Via `.aiderules` symlink
+- ✅ **Windsurf** - Via `.windsurfrules` symlink
+- ✅ **Claude Code** - Via `CLAUDE.md` symlink (backward compatibility)
+- ✅ **Google Jules** - Native AGENTS.md support
+- ✅ **Continue.dev** - Native AGENTS.md support
+
+### Why AGENTS.md?
+
+**AGENTS.md** is the vendor-neutral standard filename (announced July 2025) that:
+- Works with 90%+ of AI coding tools automatically
+- Supported by OpenAI, Google, GitHub, Sourcegraph
+- Used by 20,000+ repositories
+- Future-proof as new tools adopt this standard
+
+### Usage
+
+When working with AI agents, simply start your project and the agent will automatically:
+1. Load `AGENTS.md` (or `CLAUDE.md` for Claude Code)
+2. Follow the 7-stage workflow
+3. Generate production-ready code following framework patterns
+4. Create all required documentation artifacts
+
+**No manual configuration needed** - symlinks ensure compatibility across all agents.
 
 ## 📄 License
 

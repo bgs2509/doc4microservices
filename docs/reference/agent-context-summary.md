@@ -6,7 +6,7 @@
 
 - **Framework Model**: Framework-as-submodule (`README.md`). Application code lives outside `.framework/`; the framework supplies patterns, infrastructure, and rules.
 - **Architecture Paradigm**: Improved Hybrid Approach with HTTP-only data access, dedicated data services, Nginx API Gateway, and event-driven coordination (`docs/guides/architecture-guide.md`).
-- **Primary Entry Point**: `CLAUDE.md` explains how AI agents should traverse documentation and obey mandatory constraints.
+- **Primary Entry Point**: `AGENTS.md` (or `AGENTS.md` symlink) explains how AI agents should traverse documentation and obey mandatory constraints. This follows the industry-standard filename adopted by GitHub Copilot, Cursor, and other AI coding agents.
 
 ## Mandatory References
 
@@ -52,7 +52,7 @@
 **Complete 7-stage process**: See `docs/guides/ai-code-generation-master-workflow.md`
 
 **Quick summary**:
-1. **Stage 0: Initialization** → Load framework context (CLAUDE.md, this file, Master Workflow)
+1. **Stage 0: Initialization** → Load framework context (AGENTS.md, this file, Master Workflow)
 2. **Stage 1: Prompt Validation** → `docs/guides/prompt-validation-guide.md` — **SELECT MATURITY LEVEL (1-4)**
 3. **Stage 2: Requirements Intake** → populate `docs/guides/requirements-intake-template.md`
 4. **Stage 3: Implementation Planning** → use `docs/guides/implementation-plan-template.md`

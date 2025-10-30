@@ -23,7 +23,7 @@ When an AI agent starts working with this framework, it **MUST** read documents 
 #### **Stage 0: Initialization** (Before receiving user prompt)
 
 Read these 4 documents in order:
-1. **CLAUDE.md** — Entry point, framework overview
+1. **AGENTS.md** — Entry point, framework overview
 2. **docs/reference/agent-context-summary.md** — Critical rules snapshot
 3. **THIS DOCUMENT** — Complete workflow process
 4. **docs/reference/maturity-levels.md** — 4 maturity levels (PoC to Production)
@@ -96,7 +96,7 @@ graph TB
 **Entry Criteria**: AI agent assigned to a new task.
 
 **AI Actions**:
-1. Read `CLAUDE.md` → understand framework model
+1. Read `AGENTS.md` → understand framework model
 2. Read `agent-context-summary.md` → load critical rules
 3. Read this document → understand workflow
 4. Load context about:
@@ -105,7 +105,7 @@ graph TB
    - Available templates and tools
 
 **Documents Read**:
-- `CLAUDE.md`
+- `AGENTS.md`
 - `docs/reference/agent-context-summary.md`
 - `docs/guides/ai-code-generation-master-workflow.md` (this file)
 - `docs/reference/maturity-levels.md`
@@ -741,7 +741,7 @@ This matrix shows **exactly what AI should read at each stage** and what it shou
 
 | Stage | Phase | Documents to Read | AI Generates | Templates/Tools | Success Criteria |
 |-------|-------|-------------------|--------------|-----------------|------------------|
-| **0** | Initialization | `CLAUDE.md`<br>`agent-context-summary.md`<br>`ai-code-generation-master-workflow.md` | - | - | Context loaded |
+| **0** | Initialization | `AGENTS.md`<br>`agent-context-summary.md`<br>`ai-code-generation-master-workflow.md` | - | - | Context loaded |
 | **1** | Prompt Validation | `prompt-validation-guide.md`<br>`prompt-templates.md` (if needed) | Validation note OR clarification request | `prompt-templates.md` | All mandatory fields present |
 | **2** | Requirements Intake | `requirements-intake-template.md`<br>`architecture-guide.md`<br>`tech_stack.md`<br>`atomic/architecture/*` | Requirements Intake document | `prompt-templates.md` | Requirements approved |
 | **3** | Planning | `implementation-plan-template.md`<br>`use-case-implementation-guide.md`<br>`atomic/services/**/*` (relevant)<br>`atomic/integrations/**/*` (relevant) | Implementation Plan<br>Optional ADR | `architecture-decision-log-template.md`<br>`agent-toolbox.md` | Plan approved |
@@ -764,7 +764,7 @@ This section shows a **condensed example** of the complete workflow for a P2P le
 
 ### Stage 0: Initialization
 
-**AI reads**: CLAUDE.md → agent-context-summary.md → ai-code-generation-master-workflow.md
+**AI reads**: AGENTS.md → agent-context-summary.md → ai-code-generation-master-workflow.md
 
 **AI learns**:
 - Framework uses Improved Hybrid Approach
@@ -1299,7 +1299,7 @@ Keep aligned with:
 
 | Question | Answer |
 |----------|--------|
-| Where do I start? | Read CLAUDE.md → agent-context-summary.md → this document |
+| Where do I start? | Read AGENTS.md → agent-context-summary.md → this document |
 | What's the high-level process? | 7 stages: Init → Validation → Intake → Planning → Generation → Verification → Handoff |
 | What do I read at each stage? | See [Part 3: Navigation Matrix](#part-3-navigation-matrix) |
 | How do I validate prompts? | `prompt-validation-guide.md` + `prompt-templates.md` |

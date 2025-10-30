@@ -82,7 +82,7 @@ Ask: **"Can this domain word refer to 3+ different operations in this context?"*
 | **Python Constant** | `{NOUN}_{QUALIFIER}` | `DATABASE_URL`, `MAX_RETRIES` | `_` |
 | **Python Module/File** | `{class_name}.py` | `user_service.py`, `order_dto.py` | `_` |
 | **Folder/Package** | `{service_name}/` | `finance_lending_api/` | `_` |
-| **Documentation (entry points)** | `SCREAMING_SNAKE_CASE` | `README.md`, `CLAUDE.md` | None |
+| **Documentation (entry points)** | `SCREAMING_SNAKE_CASE` | `README.md`, `AGENTS.md` | None |
 | **Documentation (content)** | `kebab-case` | `naming-conventions.md`, `architecture-guide.md` | `-` |
 | **Docker Compose Service** | `{service_name}` | `finance_lending_api` | `_` |
 | **Kubernetes Service** | `{service-name}` | `finance-lending-api` | `-` |
@@ -212,7 +212,7 @@ See [naming-conversion.md](naming-conversion.md) for complete function code with
 
 **Entry Points** (SCREAMING_SNAKE_CASE):
 - `README.md` — Project/directory entry point
-- `CLAUDE.md` — AI agent entry point
+- `AGENTS.md` — AI agent entry point
 - `LICENSE` — Legal entry point
 - `CONTRIBUTING.md` — Contributor entry point (optional)
 

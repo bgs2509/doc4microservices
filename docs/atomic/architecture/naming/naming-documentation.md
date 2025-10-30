@@ -12,7 +12,7 @@ Documentation files fall into two categories with different naming conventions:
 
 | Category | Pattern | Example | Purpose |
 |----------|---------|---------|---------|
-| **Entry Points** | SCREAMING_SNAKE_CASE | `README.md`, `CLAUDE.md` | First files humans/AI read |
+| **Entry Points** | SCREAMING_SNAKE_CASE | `README.md`, `AGENTS.md` | First files humans/AI read |
 | **Content Files** | kebab-case | `naming-conventions.md` | Reference and guide documents |
 
 ### Decision Rule
@@ -29,7 +29,7 @@ Ask: **"Is this the FIRST file someone reads when discovering this project/direc
 
 ```
 README.md            # Project/directory main entry
-CLAUDE.md           # AI agent instructions
+AGENTS.md           # AI agent instructions
 LICENSE             # Legal terms
 CONTRIBUTING.md     # Contribution guidelines
 CHANGELOG.md        # Version history
@@ -49,7 +49,7 @@ CODE_OF_CONDUCT.md  # Community standards
 ```
 project/
 ├── README.md              # Project entry point
-├── CLAUDE.md             # AI entry point
+├── AGENTS.md             # AI entry point
 ├── LICENSE               # Legal entry point
 ├── docs/
 │   ├── README.md         # Docs entry point
@@ -260,7 +260,7 @@ README.es.md        # Spanish
 | File Type | Example | Pattern |
 |-----------|---------|---------|
 | Project entry | `README.md` | SCREAMING |
-| AI instructions | `CLAUDE.md` | SCREAMING |
+| AI instructions | `AGENTS.md` | SCREAMING |
 | Legal | `LICENSE` | SCREAMING |
 | Guide | `setup-guide.md` | kebab-case |
 | Reference | `api-reference.md` | kebab-case |

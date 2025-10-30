@@ -7,7 +7,7 @@
 
 | Document | Direct Path | Submodule Path | Purpose |
 |----------|-------------|----------------|---------|
-| **Main Entry Point** | [CLAUDE.md](../CLAUDE.md) | `.framework/CLAUDE.md` | Complete developer guide |
+| **Main Entry Point** | [AGENTS.md](../AGENTS.md) | `.framework/AGENTS.md` | Complete developer guide |
 | **Project Overview** | [README.md](../README.md) | `.framework/README.md` | Project introduction and quick start |
 | **Architecture Guide** | [guides/architecture-guide.md](guides/architecture-guide.md) | `.framework/docs/guides/architecture-guide.md` | Canonical source of architectural principles |
 | **Technical Specifications** | [reference/tech_stack.md](reference/tech_stack.md) | `.framework/docs/reference/tech_stack.md` | Technology versions and configurations |
@@ -69,7 +69,7 @@ Centralised atomic documentation for domain-specific rules. See [INDEX.md](INDEX
 
 | Task | Documents |
 |------|-----------|
-| **Quick start** | [README.md](../README.md) → [CLAUDE.md](../CLAUDE.md) |
+| **Quick start** | [README.md](../README.md) → [AGENTS.md](../AGENTS.md) |
 | **Understand architecture** | [architecture-guide.md](guides/architecture-guide.md) |
 | **Run commands** | [development-commands.md](guides/development-commands.md) |
 | **Create new use case** | [use-case-implementation-guide.md](guides/use-case-implementation-guide.md) |

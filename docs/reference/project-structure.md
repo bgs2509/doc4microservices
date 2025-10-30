@@ -16,7 +16,7 @@ When you add this framework as a submodule, your project structure should follow
 my_awesome_app/                      # Your project repository
 ├── .framework/                      # Git submodule (this repository)
 │   ├── docs/                       # Atomic knowledge base and guides
-│   └── CLAUDE.md                   # AI instructions
+│   └── AGENTS.md                   # AI instructions
 ├── services/                        # All microservices (independent deployable units)
 │   ├── template_business_api/                # FastAPI REST API service (port 8000)
 │   │   ├── src/                    # Service source code (DDD/Hexagonal structure)

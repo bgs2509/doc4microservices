@@ -112,7 +112,7 @@ Main document content...
 
 ---
 
-> **NAVIGATION**: To return to main guide see [CLAUDE.md](LINKS_REFERENCE.md#core-documentation)
+> **NAVIGATION**: To return to main guide see [AGENTS.md](LINKS_REFERENCE.md#core-documentation)
 ```
 
 ## Writing Principles
