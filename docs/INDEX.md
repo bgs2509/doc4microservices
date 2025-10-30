@@ -18,6 +18,7 @@ The documentation is organised into atomic knowledge modules. Use this index as 
 ### Core Guides
 - [Architecture Guide](guides/architecture-guide.md) — canonical architectural principles
 - [AI Code Generation Master Workflow](guides/ai-code-generation-master-workflow.md) — complete 7-stage AI process (unified workflow)
+- [Requirements Traceability Guide](guides/requirements-traceability-guide.md) — ensuring 100% requirement coverage with Req ID tracking
 - [Development Commands](guides/development-commands.md) — command reference for local workflows
 - [Use Case Implementation Guide](guides/use-case-implementation-guide.md) — step-by-step delivery process
 - [Shared Components Guide](guides/shared-components.md) — shared infrastructure components

@@ -204,8 +204,12 @@ Please provide these details so I can ensure architecture alignment.
 6. Fill `requirements-intake-template.md`:
    - Business Context & Objectives
    - **Target Configuration** (maturity level, optional modules, estimated time)
-   - Functional Requirements (table format)
-   - Non-Functional Constraints
+   - **IMPORTANT**: Assign unique Req IDs (FR-001, UI-001, NF-001) to EVERY requirement for traceability
+   - Functional Requirements (table format with Req ID, Feature, Priority, Description, Acceptance Criteria, Implementation Status)
+   - UI/UX Requirements (for UI-heavy projects, with Req ID column)
+   - Non-Functional Requirements (measurable constraints only, with Req ID)
+   - **Requirements Summary** (count total FR, UI, NF requirements for coverage tracking)
+   - Non-Functional Constraints (general, not measurable)
    - Dependencies & Integrations
    - Data & Storage Considerations
    - Scope Boundaries
@@ -305,7 +309,12 @@ Please provide these details so I can ensure architecture alignment.
    - `docs/atomic/integrations/redis/*`
    - `docs/atomic/integrations/rabbitmq/*`
    - `docs/atomic/integrations/http-communication/*`
-8. Create implementation plan with **CONDITIONAL phases** based on maturity level:
+8. **CRITICAL**: Create Requirements Traceability Matrix:
+   - Extract ALL Req IDs (FR-*, UI-*, NF-*) from completed Requirements Intake
+   - Map EACH Req ID → Phase → Specific Tasks
+   - Document mapping in `implementation-plan-template.md` § Requirements Traceability Matrix
+   - Verify no orphaned requirements (all Req IDs from Stage 2 appear in RTM)
+9. Create implementation plan with **CONDITIONAL phases** based on maturity level:
    - **Phase 1**: Infrastructure setup (Docker, services scaffolding) — **ALL levels**
    - **Phase 2**: Data layer (PostgreSQL/MongoDB services with repositories) — **ALL levels**
    - **Phase 3**: Business logic (FastAPI endpoints, use cases) — **ALL levels**
@@ -603,11 +612,18 @@ uv run pytest --cov=src --cov-report=html --cov-report=xml
 1. Read `agent-verification-checklist.md`
 2. Read `maturity-levels.md` to understand **level-specific criteria** (coverage thresholds, security requirements, etc.)
 3. Execute ALL checks in order:
+   - **Requirements coverage** (100% or stakeholder-approved descope) — **CRITICAL: PRIMARY QUALITY GATE**
    - **Environment checks** (Python version, UV installed)
    - **Static analysis** (Ruff, Mypy, Bandit)
    - **Testing** (pytest with coverage — **threshold varies by level**)
    - **Artifact validation** (project structure, 3-part naming by default)
-4. Capture evidence for each check
+4. **Requirements Coverage Verification** (NEW — see `agent-verification-checklist.md` § Requirements Coverage Verification):
+   - Extract all Req IDs from Stage 2 (Requirements Intake)
+   - Verify EACH Req ID has Status "✅ Done" in Implementation Plan RTM (Stage 3)
+   - Verify Evidence (code file path) exists for each requirement
+   - Calculate coverage: implemented / total × 100%
+   - **GATE**: If coverage < 100% → BLOCK Stage 6 (unless stakeholder approves descope)
+5. Capture evidence for each check
 5. If ANY check fails:
    - Fix the issue
    - Re-run failed check

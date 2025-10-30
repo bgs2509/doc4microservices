@@ -30,6 +30,7 @@
 | Prompt validation | `docs/guides/prompt-validation-guide.md` |
 | Prompt augmentation snippets | `docs/reference/prompt-templates.md` |
 | Requirements capture | `docs/guides/requirements-intake-template.md` |
+| **Requirements traceability** | **`docs/guides/requirements-traceability-guide.md`** — **100% coverage methodology** |
 | Delivery planning | `docs/guides/implementation-plan-template.md` |
 | Tooling catalog | `docs/reference/agent-toolbox.md` |
 | Deliverables inventory | `docs/reference/deliverables-catalog.md` |
@@ -40,12 +41,13 @@
 
 ## Critical Rules Snapshot
 
-1. **Service Separation**: FastAPI, Aiogram, and AsyncIO workers run in separate processes/containers (`docs/atomic/architecture/service-separation-principles.md`).
-2. **Data Access**: Business services must call data services over HTTP; direct database access is prohibited (`docs/atomic/architecture/data-access-architecture.md`).
-3. **API Gateway**: Nginx is MANDATORY for production deployments (TLS, load balancing, rate limiting) (`docs/atomic/infrastructure/api-gateway/`).
-4. **Eventing**: RabbitMQ is the mandatory broker for asynchronous communication (`docs/atomic/integrations/rabbitmq/`).
-5. **Naming**: **DEFAULT TO 3-PART** naming (`{context}_{domain}_{type}`). Use 4-part ONLY when domain is ambiguous (burden of proof required). See `docs/atomic/architecture/naming/naming-4part-reasons.md` for 10 serious reasons. Use `docs/checklists/service-naming-checklist.md` for quick decision.
-6. **Quality Gates**: Ruff, mypy, bandit, pytest, and coverage thresholds are non-negotiable (`docs/guides/development-commands.md`).
+1. **Requirements Coverage**: **100% requirement coverage MANDATORY** — ALL requirements from Stage 2 must be implemented by Stage 5 (or explicitly descoped with approval). Use Req ID tracking (FR-*, UI-*, NF-*) throughout workflow (`docs/guides/requirements-traceability-guide.md`).
+2. **Service Separation**: FastAPI, Aiogram, and AsyncIO workers run in separate processes/containers (`docs/atomic/architecture/service-separation-principles.md`).
+3. **Data Access**: Business services must call data services over HTTP; direct database access is prohibited (`docs/atomic/architecture/data-access-architecture.md`).
+4. **API Gateway**: Nginx is MANDATORY for production deployments (TLS, load balancing, rate limiting) (`docs/atomic/infrastructure/api-gateway/`).
+5. **Eventing**: RabbitMQ is the mandatory broker for asynchronous communication (`docs/atomic/integrations/rabbitmq/`).
+6. **Naming**: **DEFAULT TO 3-PART** naming (`{context}_{domain}_{type}`). Use 4-part ONLY when domain is ambiguous (burden of proof required). See `docs/atomic/architecture/naming/naming-4part-reasons.md` for 10 serious reasons. Use `docs/checklists/service-naming-checklist.md` for quick decision.
+7. **Quality Gates**: Ruff, mypy, bandit, pytest, and test coverage thresholds are non-negotiable (`docs/guides/development-commands.md`).
 
 ## Workflow Overview
 
@@ -54,11 +56,11 @@
 **Quick summary**:
 1. **Stage 0: Initialization** → Load framework context (AGENTS.md, this file, Master Workflow)
 2. **Stage 1: Prompt Validation** → `docs/guides/prompt-validation-guide.md` — **SELECT MATURITY LEVEL (1-4)**
-3. **Stage 2: Requirements Intake** → populate `docs/guides/requirements-intake-template.md`
-4. **Stage 3: Implementation Planning** → use `docs/guides/implementation-plan-template.md`
+3. **Stage 2: Requirements Intake** → populate `docs/guides/requirements-intake-template.md` — **ASSIGN REQ IDs (FR-*, UI-*, NF-*)**
+4. **Stage 3: Implementation Planning** → use `docs/guides/implementation-plan-template.md` — **CREATE RTM (map Req IDs → tasks)**
 5. **Stage 4: Code Generation** → **CONDITIONAL** based on maturity level per `docs/reference/conditional-stage-rules.md`
-6. **Stage 5: Verification** → `docs/quality/agent-verification-checklist.md` (criteria vary by level)
-7. **Stage 6: Reporting & Handoff** → `docs/quality/qa-report-template.md`, update `docs/reference/deliverables-catalog.md`
+6. **Stage 5: Verification** → `docs/quality/agent-verification-checklist.md` — **VERIFY 100% REQUIREMENTS COVERAGE** (PRIMARY GATE)
+7. **Stage 6: Reporting & Handoff** → `docs/quality/qa-report-template.md` with **Requirements Coverage Matrix**, update `docs/reference/deliverables-catalog.md`
 
 **Navigation**: Use `docs/reference/ai-navigation-matrix.md` for exact document mapping at each stage.
 

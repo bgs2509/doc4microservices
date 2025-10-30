@@ -25,11 +25,44 @@
 
 ## Functional Requirements
 
-| Feature / Capability | Priority (Must / Should / Could) | Description | Acceptance Notes |
-|----------------------|----------------------------------|-------------|------------------|
-|                      |                                  |             |                  |
+| **Req ID** | Feature / Capability | Priority (Must / Should / Could) | Description | Acceptance Criteria | **Implementation Status** |
+|------------|----------------------|----------------------------------|-------------|---------------------|--------------------------|
+| FR-001     | (example)            | Must                             | (example)   | (example)           | **Pending** |
 
-## Non-Functional Constraints
+> **NOTE**: Assign unique Req ID (FR-001, FR-002, ...) to EVERY functional requirement for traceability. See `docs/guides/requirements-traceability-guide.md` for Req ID lifecycle.
+
+## UI/UX Requirements (for UI-heavy projects)
+
+> **WHEN TO USE**: For projects with detailed UI/UX specifications (Telegram bots, web frontends, mobile apps). Skip this section if project has minimal UI (API-only services).
+
+| **Req ID** | UI Element / Screen | Priority (Must / Should / Could) | Description | Acceptance Criteria | **Implementation Status** |
+|------------|-------------------|----------------------------------|-------------|---------------------|--------------------------|
+| UI-001     | (example: Login screen) | Must                          | (example: Email/password with "Forgot?" link) | (example: Redirect to /dashboard on success) | **Pending** |
+
+> **NOTE**: Assign unique Req ID (UI-001, UI-002, ...) to EVERY UI element, screen, modal, button, or form. Critical for ensuring 100% UI coverage in large UX/UI prompts.
+
+## Non-Functional Requirements (measurable constraints)
+
+> **WHEN TO USE**: For performance, security, compliance, or availability requirements that can be objectively measured and verified.
+
+| **Req ID** | Constraint Type | Target / SLA | Description | Acceptance Criteria | **Implementation Status** |
+|------------|----------------|--------------|-------------|---------------------|--------------------------|
+| NF-001     | (example: Performance) | (example: < 200ms p95) | (example: API latency) | (example: Load test confirms < 200ms) | **Pending** |
+
+> **NOTE**: Assign Req ID (NF-001, NF-002, ...) only to measurable constraints that can be verified (e.g., latency < 200ms, uptime > 99.9%). Skip subjective constraints.
+
+## Requirements Summary
+
+> **PURPOSE**: Track total requirement count for coverage calculation in Stage 5 (Verification) and Stage 6 (QA Report).
+
+- **Total Functional (FR-*):** [count]
+- **Total UI/UX (UI-*):** [count or "N/A" if API-only]
+- **Total Non-Functional (NF-*):** [count or "0" if none]
+- **Grand Total:** [sum]
+
+> **TRACEABILITY**: See `docs/guides/requirements-traceability-guide.md` for Req ID lifecycle through all workflow stages. Coverage verification mandatory in Stage 5.
+
+## Non-Functional Constraints (general)
 
 - Performance / SLA expectations:
 - Security / compliance requirements:

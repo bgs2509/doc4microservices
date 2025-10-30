@@ -36,6 +36,75 @@
 
 **Note**: Coverage thresholds are defined in `docs/reference/maturity-levels.md` (Single Source of Truth). If thresholds change, update only maturity-levels.md; this document references it.
 
+## Requirements Coverage Verification
+
+> **PURPOSE**: Verify ALL requirements from Requirements Intake are implemented without exceptions. This is the **PRIMARY quality gate** ensuring user prompt completeness.
+
+> **CRITICAL**: This check is **MANDATORY for ALL maturity levels (1-4)**. Without 100% requirements coverage (or explicit descope approval), workflow CANNOT proceed to Stage 6 (QA Report & Handoff).
+
+| Check | Action | Expected Result | Evidence | Status |
+|-------|--------|-----------------|----------|--------|
+| **Requirements traceability** | **Step 1**: Open Requirements Intake document (from Stage 2)<br>**Step 2**: Extract all Req IDs (FR-*, UI-*, NF-*) — count total<br>**Step 3**: Open Implementation Plan RTM (from Stage 3)<br>**Step 4**: For EACH Req ID, verify:<br>• Status = "✅ Done"<br>• Evidence (code file path) exists<br>• Code actually implements the requirement<br>**Step 5**: Calculate coverage = implemented / total × 100% | **100% coverage**: ALL requirements (FR-*, UI-*, NF-*) marked "✅ Done" with valid Evidence in Implementation Plan RTM<br><br>**OR**<br><br>Descoped requirements have stakeholder approval documented (see Failure Handling below) | Requirements Coverage Matrix in QA Report<br><br>Evidence examples:<br>• `services/api/src/api/v1/users.py:20`<br>• `services/bot/src/handlers/register.py:15`<br>• Test results confirming functionality |  |
+| **UX/UI element coverage** | **For UI-heavy projects only** (Telegram bots, web UIs):<br>**Step 1**: Extract all UI-* Req IDs from Requirements Intake<br>**Step 2**: For EACH UI element:<br>• Verify handler/view code exists<br>• Verify FSM states complete (for bots)<br>• Verify error messages implemented<br>• Verify e2e tests exist | **ALL** UI elements from prompt implemented:<br>• All screens/modals present<br>• All buttons/forms functional<br>• All error messages displayed<br>• No placeholder text ("Coming soon", "TODO") | Screenshots (optional)<br>E2e test results<br>Manual verification checklist |  |
+| **Feature completeness** | **Step 1**: grep for incomplete markers:<br>`grep -r "TODO\|FIXME\|XXX\|PLACEHOLDER" services/`<br>**Step 2**: Verify each feature 100% complete:<br>• All handlers have FSM states (bots)<br>• All endpoints have business logic (APIs)<br>• No partial implementations<br>**Step 3**: Verify tests exist for each feature | **Zero incomplete markers**<br>**Every feature 100% functional**:<br>• All handlers have complete FSM flows<br>• All endpoints have full business logic<br>• All database operations have error handling<br>• All external API calls have retry logic | Code review results<br>grep output showing 0 matches<br>Test coverage report |  |
+
+### Requirements Coverage Thresholds
+
+| Coverage % | Status | Action Required |
+|-----------|--------|-----------------|
+| **100%** | ✅ **PASS** | Proceed to Release Gate checks |
+| **95-99%** | ⚠️ **WARNING** | Review missing requirements:<br>• Can they be implemented quickly?<br>• Should they be descoped with approval?<br>• Document decision in QA Report |
+| **< 95%** | ❌ **FAIL** | **BLOCK** Stage 6 (QA Report)<br>**MUST**:<br>• Implement missing requirements, OR<br>• Get explicit stakeholder descope approval<br>• Document in QA Report § Defects & Risks |
+
+### Descope Process (if coverage < 100%)
+
+If stakeholder approves descoping requirements:
+
+1. **Update Implementation Plan RTM**:
+   ```markdown
+   | Req ID | Status |
+   |--------|--------|
+   | FR-015 | ⚠️ **Descoped** (Approved by [Name] on [Date]) |
+   ```
+
+2. **Document in QA Report** § Defects & Risks:
+   ```markdown
+   ## Descoped Requirements
+   | Req ID | Feature | Reason | Approved By | Date |
+   |--------|---------|--------|-------------|------|
+   | FR-015 | Advanced search filters | Low priority for MVP, defer to v2 | John Doe (Product Owner) | 2025-10-30 |
+   ```
+
+3. **Recalculate coverage** (excluding descoped):
+   ```
+   Adjusted Coverage = Implemented / (Total - Descoped) × 100%
+   ```
+
+4. **Adjusted coverage MUST be 100%** to proceed
+
+### Failure Handling for Requirements Coverage
+
+If coverage verification fails:
+
+**Attempt 1** (immediate):
+- Identify which Req IDs are missing (Status ≠ "✅ Done")
+- Check if they were accidentally marked wrong status
+- Fix status if code exists but not marked
+
+**Attempt 2** (if still failing):
+- Review missing requirements with stakeholder
+- Decide: implement now OR descope with approval
+- If descope: follow Descope Process above
+- If implement: return to Stage 4, implement, then re-verify
+
+**Attempt 3** (escalation):
+- If still < 100% and no descope approval:
+  - **HALT** workflow
+  - Generate escalation report (see agent-verification-checklist.md § Escalation Output Template)
+  - Await user decision: implement OR approve descope OR cancel workflow
+
+**Hard Limit**: Maximum 3 attempts. After 3rd failure → FORCE ESCALATION to user.
+
 ## Artefact Validation
 
 | Check | Action | Expected Result | Evidence | Status |

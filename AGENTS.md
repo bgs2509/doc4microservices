@@ -69,7 +69,8 @@ After initialization, AI reads documents **on-demand** based on the current work
 ### Agent Templates & Checklists
 
 - **[Prompt Validation Guide](docs/INDEX.md#agent-templates-checklists)** — ensure user prompt completeness before any work.
-- **[Requirements Intake Template](docs/INDEX.md#agent-templates-checklists)** — structured capture of inputs.
+- **[Requirements Intake Template](docs/INDEX.md#agent-templates-checklists)** — structured capture of inputs with Req ID tracking.
+- **[Requirements Traceability Guide](docs/INDEX.md#core-guides)** — 100% requirement coverage methodology.
 - **[Implementation Plan Template](docs/INDEX.md#agent-templates-checklists)** — planning artefact for approval.
 - **[Agent Verification Checklist](docs/INDEX.md#agent-templates-checklists)** — mandatory quality gates.
 - **[QA Report Template](docs/INDEX.md#agent-templates-checklists)** — final summary for stakeholders.
