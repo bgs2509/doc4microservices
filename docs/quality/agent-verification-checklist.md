@@ -40,7 +40,7 @@
 
 | Check | Action | Expected Result | Evidence | Status |
 |-------|--------|-----------------|----------|--------|
-| Project structure compliance | Review against `docs/reference/project-structure.md` | Files placed correctly |  |  |
+| Project structure compliance | Review against `docs/reference/project-structure.md` (§Creating the Project Structure)<br>Verify ALL directories created before file generation | • All `services/*/src/*` directories exist<br>• DDD layers present (`domain/`, `application/`, `infrastructure/`)<br>• `shared/` directory exists with subdirectories<br>• `tests/` subdirectories present (`unit/`, `integration/`)<br>• Conditional directories created per maturity level |  |  |
 | Shared components usage | Confirm adherence to `docs/guides/shared_components.md` | No duplication or rule violations |  |  |
 | Naming conventions | Spot-check against `docs/atomic/architecture/naming/README.md` | No prohibited names |  |  |
 | Documentation updates | Ensure relevant docs updated (plans, ADRs, etc.) | Artefacts listed in `docs/reference/deliverables-catalog.md` |  |  |

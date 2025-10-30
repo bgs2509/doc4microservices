@@ -81,6 +81,113 @@ my_awesome_app/                      # Your project repository
 └── README.md                        # Project documentation
 ```
 
+## Creating the Project Structure
+
+This section provides explicit commands to create the complete directory structure before generating any code.
+
+### Automated Setup (Recommended)
+
+If using the provided templates with Makefile:
+
+```bash
+make setup  # Creates all directories with DDD/Hexagonal layers
+```
+
+See `templates/infrastructure/Makefile` for complete automation.
+
+### Manual Setup (Step-by-Step)
+
+If generating from scratch or customizing the structure, execute these commands:
+
+```bash
+# Core service directories with DDD/Hexagonal layers
+# FastAPI Business Logic Service
+mkdir -p services/template_business_api/src/{api/v1,application/{use_cases,dtos},domain/{entities,value_objects,services},infrastructure/{http_clients,rabbitmq},schemas,core}
+mkdir -p services/template_business_api/tests/{unit,integration,service}
+
+# Aiogram Telegram Bot Service
+mkdir -p services/template_business_bot/src/{handlers,middlewares,filters,core}
+mkdir -p services/template_business_bot/tests/{unit,integration}
+
+# AsyncIO Background Worker Service
+mkdir -p services/template_business_worker/src/{workers,tasks,core}
+mkdir -p services/template_business_worker/tests/{unit,integration}
+
+# PostgreSQL Data Access Service
+mkdir -p services/template_data_postgres_api/src/{api/v1,models,repositories,core}
+mkdir -p services/template_data_postgres_api/tests/{unit,integration}
+mkdir -p services/template_data_postgres_api/alembic/versions
+
+# MongoDB Data Access Service (optional)
+mkdir -p services/template_data_mongo_api/src/{api/v1,models,repositories,core}
+mkdir -p services/template_data_mongo_api/tests/{unit,integration}
+
+# Shared components across services
+mkdir -p shared/{dtos,events,utils}
+
+# API Gateway (Level 3+)
+mkdir -p nginx/{conf.d,certs,html}
+
+# Infrastructure and Observability (Level 3+)
+mkdir -p infrastructure/monitoring/{prometheus,grafana/provisioning/datasources,grafana/dashboards}
+
+# Logging Infrastructure (Level 4)
+mkdir -p infrastructure/logging/{elasticsearch,logstash,kibana}
+
+# Working directories
+mkdir -p logs backups
+```
+
+### Conditional Directories by Maturity Level
+
+**Level 1-2 (Core - PoC, Development):**
+- ✅ `services/` - All microservices with DDD layers
+- ✅ `shared/` - Cross-service components
+- ✅ `logs/` - Application logs
+- ❌ Skip nginx/, infrastructure/
+
+**Level 3+ (Pre-Production, Production):**
+- ✅ All Level 1-2 directories
+- ✅ `nginx/` - API Gateway with SSL/TLS
+- ✅ `infrastructure/monitoring/` - Prometheus, Grafana
+
+**Level 4 (Production with Full Observability):**
+- ✅ All Level 3 directories
+- ✅ `infrastructure/logging/` - ELK Stack
+- ✅ Enhanced security and backup directories
+
+> **Reference**: See [Maturity Levels](maturity-levels.md) for complete feature matrix per level and conditional generation rules.
+
+### Service-Specific Layer Details
+
+For complete explanation of DDD/Hexagonal layers within each service's `src/` directory, see [Project Structure Patterns](../atomic/architecture/project-structure-patterns.md).
+
+**Quick layer reference:**
+- **`src/api/`** - Transport adapters (FastAPI routers, REST endpoints)
+- **`src/application/`** - Use cases, orchestration logic, application DTOs
+- **`src/domain/`** - Business entities, value objects, domain services
+- **`src/infrastructure/`** - Repositories, HTTP clients, message broker integrations
+- **`src/schemas/`** - Pydantic models for request/response validation
+- **`src/core/`** - Configuration, logging setup, dependency injection
+
+### Verification
+
+After creating the structure, verify it:
+
+```bash
+# Verify service directories exist
+tree -L 3 -d services/
+
+# Verify shared components
+ls -la shared/
+
+# Verify infrastructure (Level 3+)
+ls -la nginx/conf.d/
+ls -la infrastructure/monitoring/
+```
+
+**Expected output**: All directories should exist before generating any code files.
+
 ## Directory Structure Explanation
 
 ### Framework Directory (`.framework/`)

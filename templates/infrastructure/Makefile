@@ -58,11 +58,27 @@ setup: ## Initial project setup
 		cp .env.example .env; \
 		echo "$(YELLOW)⚠ Please edit .env file with your configuration$(RESET)"; \
 	fi
-	@mkdir -p services/{template_business_api,template_business_bot,template_business_worker,template_data_postgres_api,template_data_mongo_api}
-	@mkdir -p nginx/certs nginx/conf.d
-	@mkdir -p infrastructure/monitoring/{prometheus,grafana}
-	@mkdir -p logs
-	@echo "$(GREEN)✓ Project setup complete$(RESET)"
+	@echo "$(YELLOW)Creating service directories with DDD/Hexagonal layers...$(RESET)"
+	@mkdir -p services/template_business_api/src/{api/v1,application/{use_cases,dtos},domain/{entities,value_objects,services},infrastructure/{http_clients,rabbitmq},schemas,core}
+	@mkdir -p services/template_business_api/tests/{unit,integration,service}
+	@mkdir -p services/template_business_bot/src/{handlers,middlewares,filters,core}
+	@mkdir -p services/template_business_bot/tests/{unit,integration}
+	@mkdir -p services/template_business_worker/src/{workers,tasks,core}
+	@mkdir -p services/template_business_worker/tests/{unit,integration}
+	@mkdir -p services/template_data_postgres_api/src/{api/v1,models,repositories,core}
+	@mkdir -p services/template_data_postgres_api/tests/{unit,integration}
+	@mkdir -p services/template_data_postgres_api/alembic/versions
+	@mkdir -p services/template_data_mongo_api/src/{api/v1,models,repositories,core}
+	@mkdir -p services/template_data_mongo_api/tests/{unit,integration}
+	@echo "$(YELLOW)Creating shared components...$(RESET)"
+	@mkdir -p shared/{dtos,events,utils}
+	@echo "$(YELLOW)Creating infrastructure directories...$(RESET)"
+	@mkdir -p nginx/{certs,conf.d,html}
+	@mkdir -p infrastructure/monitoring/{prometheus,grafana/provisioning/datasources,grafana/dashboards}
+	@mkdir -p infrastructure/logging/{elasticsearch,logstash,kibana}
+	@mkdir -p logs backups
+	@echo "$(GREEN)✓ Complete project structure created$(RESET)"
+	@echo "$(CYAN)Verify structure: tree -L 3 -d services/$(RESET)"
 
 # ════════════════════════════════════════════════════════════════════════════════
 # DEVELOPMENT

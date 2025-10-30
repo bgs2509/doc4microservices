@@ -355,15 +355,22 @@ Please provide these details so I can ensure architecture alignment.
 **Duration**: 3 days
 
 **Tasks**:
-1. Project initialization
-   - Create repository structure per `project-structure.md`
-   - Copy Docker Compose from templates
-   - Configure .env
+1. **Project structure creation** (MANDATORY FIRST STEP)
+   - Read `docs/reference/project-structure.md` § Creating the Project Structure
+   - Execute mkdir commands to create complete directory tree
+   - Create all services with DDD/Hexagonal layers (`src/{api,application,domain,infrastructure,schemas,core}/`)
+   - Create `shared/`, `tests/` subdirectories
+   - **DoD**: All directories exist, verified with `tree -L 3 -d services/`
+
+2. Infrastructure configuration
+   - Generate docker-compose.yml (5 services)
+   - Generate .env.example from templates
+   - Generate Makefile with development commands
    - **DoD**: `docker-compose up` succeeds, all containers healthy
 
-2. Service scaffolding
-   - Generate 5 services (api, bot, worker, db_postgres, db_mongo)
-   - Follow `docs/atomic/services/*/basic-setup.md`
+3. Service scaffolding
+   - Generate Dockerfiles for each service
+   - Generate requirements.txt for each service
    - **DoD**: All services respond to health checks
 
 **References**:
@@ -404,17 +411,31 @@ For EACH phase in the implementation plan:
 
 ##### **Phase 1: Infrastructure Setup**
 
+**CRITICAL: Project Structure Creation Must Be First Step**
+
 **AI Reads**:
+- `docs/reference/project-structure.md` (§Creating the Project Structure) — **READ THIS FIRST**
+- `docs/atomic/architecture/project-structure-patterns.md` (DDD/Hexagonal layers)
 - `docs/atomic/infrastructure/containerization/docker-compose-setup.md`
 - `docs/atomic/infrastructure/containerization/dockerfile-patterns.md`
 - `docs/atomic/infrastructure/configuration/environment-variables.md`
 
-**AI Generates**:
-- `docker-compose.yml` (development)
-- `docker-compose.prod.yml` (production)
-- `.env.example`
-- `Makefile` (development commands)
-- Service directories with Dockerfiles
+**AI Generates (in this order)**:
+
+1. **Complete directory structure** (MANDATORY FIRST STEP):
+   - Execute mkdir commands from project-structure.md § Creating the Project Structure
+   - Create all services with `src/{api,application,domain,infrastructure,schemas,core}/`
+   - Create `shared/{dtos,events,utils}/`
+   - Create `tests/{unit,integration,service}/` for each service
+   - Create conditional directories based on maturity level (nginx/ for Level 3+, infrastructure/ for Level 3+)
+   - **DoD**: All directories exist and verified with `tree -L 3 -d services/`
+
+2. Infrastructure configuration files:
+   - `docker-compose.yml` (development)
+   - `docker-compose.prod.yml` (production, Level 3+)
+   - `.env.example`
+   - `Makefile` (development commands)
+   - Service-specific Dockerfiles
 
 **Validation**:
 ```bash
